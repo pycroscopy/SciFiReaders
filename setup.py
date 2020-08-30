@@ -14,7 +14,7 @@ requirements = ['numpy>=1.10',
                 'toolz',  # dask installation failing without this
                 'cytoolz',  # dask installation failing without this
                 'dask>=0.10',
-                'sidpy>=0.0.2'
+                'sidpy>=0.0.2',
                 ]
 
 setup(
