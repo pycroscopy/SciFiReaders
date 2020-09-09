@@ -8,7 +8,7 @@ Reader for proprietary dm3 file format
 9/08/2020
 
 This document illustrates an example of extracting data out of dm3
-(Digirtal Micrograph) file.
+(Digital Micrograph) file.
 
 
 Introduction
@@ -23,14 +23,10 @@ few python packages that will be necessary in the later steps.
 """
 import numpy as np
 import matplotlib.pyplot as plt
-#import file_tools_nsid as ft
-
 
 import sys
 sys.path.append('../../sidpy')
 from sidpy.io.interface_utils import openfile_dialog, get_QT_app
-sys.path.append('../../pyNSID')
-import pyNSID
 sys.path.append('../')
 from ScopeReaders.em.tem.dm3_reader import DM3Reader
 
@@ -48,7 +44,7 @@ file_name = openfile_dialog()
 print(file_name)
 
 # catch a bad selection or cancelling of file selection
-if len(file_name)<3 or file_name[-4:]!='.dm3':
+if len(file_name) < 3 or file_name[-4:] != '.dm3':
     print('File not supported')
     exit()
 
@@ -74,4 +70,3 @@ dataset = dm3_reader.read()
 dataset.plot()
 
 ####################################################################################
-
