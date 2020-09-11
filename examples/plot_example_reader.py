@@ -323,8 +323,7 @@ for axis, bias_ind in zip(axes, np.linspace(0, len(bias_vec), 9, endpoint=False,
 ####################################################################################
 # 2. Populating the ``Dataset`` object
 # ====================================
-data_set = sidpy.Dataset.from_array(raw_data_3d, name='Raw_Data',
-                                    units=main_units, title='STS data')
+data_set = sidpy.Dataset.from_array(raw_data_3d, name='Raw_Data')
 print(data_set)
 
 ####################################################################################
@@ -355,6 +354,7 @@ print(data_set)
 
 ####################################################################################
 # Visualize the dataset object
+data_set.plot()
 
 ####################################################################################
 # How does one turn such ad-hoc code into a ``Reader`` class?
