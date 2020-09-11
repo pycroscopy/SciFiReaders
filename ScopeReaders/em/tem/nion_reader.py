@@ -97,11 +97,8 @@ class NionReader(Reader):
 
     def __init__(self, file_path, verbose=False):
         """
-        file_path: filepath to dm3 file.
+        file_path: file path to .ndata file.
         """
-        warn('This Reader will eventually be moved to the ScopeReaders package'
-             '. Be prepared to change your import statements',
-             FutureWarning)
 
         super(NionReader, self).__init__(file_path)
 

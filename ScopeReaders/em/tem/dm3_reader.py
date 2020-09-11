@@ -164,10 +164,6 @@ class DM3Reader(Reader):
         """
         file_path: filepath to dm3 file.
         """
-        warn('This Reader will eventually be moved to the ScopeReaders package'
-             '. Be prepared to change your import statements',
-             FutureWarning)
-
         super(DM3Reader, self).__init__(file_path)
 
         # initialize variables ##
