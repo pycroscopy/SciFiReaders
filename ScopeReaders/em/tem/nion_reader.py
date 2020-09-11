@@ -131,6 +131,15 @@ class NionReader(Reader):
             except IOError:
                 raise IOError("File {} does not seem to be of Nion`s .h5 format".format(self.__filename))
 
+    def can_read(self):
+        """
+        Tests whether or not the provided file has a .ndata extension
+        Returns
+        -------
+
+        """
+        return super(NionReader, self).can_read(extension='ndata')
+
     def read(self):
         if self.extension == '.ndata':
             try:
