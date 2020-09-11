@@ -224,7 +224,26 @@ class DM3Reader(Reader):
         # ... then read it
         self.__f.close()
 
+    def can_read(self):
+        """
+        Tests whether or not the provided file has a .dm3 extension
+        Returns
+        -------
+
+        """
+        # TODO: @gduscher to elaborate if this is not a sufficient check
+        return super(DM3Reader, self).can_read(extension='dm3')
+
     def read(self):
+        """
+        Extracts data and metadata present in the provided file
+
+        Returns
+        -------
+        dataset : sidpy.Dataset
+            Dataset object containing the data and metadata
+        """
+        t1 = time.time()
         try:
             self.__f = open(self.__filename, 'rb')
         except FileNotFoundError:
@@ -236,7 +255,6 @@ class DM3Reader(Reader):
         little_endian = (le == 1)
         # ... then read it
         self.__read_tag_group()
-
 
         if self.verbose:
             print("-- %s Tags read --" % len(self.__storedTags))
