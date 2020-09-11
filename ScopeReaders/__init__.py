@@ -7,8 +7,20 @@ Submodules
 .. autosummary::
     :toctree: _autosummary
 
+    dm3_reader
+
 """
 from .__version__ import version as __version__
+"""
+Tools to read, write data in h5NSID files
+
+Submodules
+----------
+
+.. autosummary::
+    :toctree: _autosummary
+
+"""
 
 
 __all__ = ['__version__']
