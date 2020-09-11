@@ -12,8 +12,6 @@ import sys
 from os import path, remove  # File Path formatting
 import numpy as np  # For array operations
 from igor import binarywave as bw
-
-sys.path.insert(0,'/Users/rvv/PycharmProjects/sidpy')
 import sidpy as sid
 from sidpy.sid import Reader
 
