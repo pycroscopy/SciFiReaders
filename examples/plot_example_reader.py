@@ -1,7 +1,7 @@
 """
-===================================
-Reader for proprietary file formats
-===================================
+=================
+Creating a Reader
+=================
 
 **Suhas Somnath**
 
