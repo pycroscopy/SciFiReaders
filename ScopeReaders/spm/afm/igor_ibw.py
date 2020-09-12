@@ -4,12 +4,11 @@ Created on Wed Dec 07 16:04:34 2016
 
 Updated on Fri Sep 11 15:22:00 2020 for ScopeReader
 
-@author: Suhas Somnath, Chris R. Smith, Raj Giri, Rama Vasudevan
+@author: Suhas Somnath, Chris R. Smith, Raj Giridhargopal, Rama Vasudevan
 """
 
 from __future__ import division, print_function, absolute_import, unicode_literals
 import sys
-from os import path, remove  # File Path formatting
 import numpy as np  # For array operations
 from igor import binarywave as bw
 import sidpy as sid
