@@ -25,8 +25,7 @@ class IgorIBWReader(Reader):
     images or force curves
     """
 
-    def reader(self, verbose=False,
-               parm_encoding='utf-8'):
+    def read(self, verbose=False, parm_encoding='utf-8'):
         """
         Reads the file given in file_path into a sidpy dataset
 
