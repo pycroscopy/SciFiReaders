@@ -18,36 +18,32 @@ from sidpy.sid import Reader
 if sys.version_info.major == 3:
     unicode = str
 
+
 class IgorIBWReader(Reader):
     """
-    Translates Igor Binary Wave (.ibw) files containing images or force curves to .h5
+    Extracts data and metadata from Igor Binary Wave (.ibw) files containing
+    images or force curves
     """
 
-    def translate(self, file_path, verbose=False,
-                parm_encoding='utf-8'):
+    def reader(self, verbose=False,
+               parm_encoding='utf-8'):
         """
         Reads the file given in file_path into a sidpy dataset
 
         Parameters
         ----------
-        file_path : String / unicode
-            Absolute path of the .ibw file
         verbose : Boolean (Optional)
             Whether or not to show  print statements for debugging
-        append_path : string (Optional)
-            h5_file to add these data to, must be a path to the h5_file on disk
-        grp_name : string (Optional)
-            Change from default "Measurement" name to something specific
         parm_encoding : str, optional
-            Codec to be used to decode the bytestrings into Python strings if needed.
-            Default 'utf-8'
+            Codec to be used to decode the bytestrings into Python strings if
+            needed. Default 'utf-8'
 
         Returns
         -------
-        SidpyDataset : List of sidpy datasets. Multi-channel inputs are
-                    separated into individual dataset objects
+        sidpy.Dataset : List of sidpy.Dataset objects.
+            Multi-channel inputs are separated into individual dataset objects
         """
-        file_path = path.abspath(file_path)
+        file_path = self._input_file_path
 
         # Load the ibw file first
         ibw_obj = bw.load(file_path)
@@ -252,10 +248,3 @@ class IgorIBWReader(Reader):
         """
 
         return super(IgorIBWReader, self).can_read(extension='ibw')
-
-    def _parse_file_path(self, input_path):
-        pass
-
-    def _read_data(self):
-        pass
-
