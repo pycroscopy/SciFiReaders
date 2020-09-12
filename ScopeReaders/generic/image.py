@@ -57,15 +57,13 @@ class ImageReader(Reader):
 
         return image_path
 
-    def read(self, image_path, bin_factor=None, interp_func=Image.BICUBIC,
+    def read(self, bin_factor=None, interp_func=Image.BICUBIC,
              normalize=False, **image_args):
         """
         Translates the image in the provided file into a USID HDF5 file
 
         Parameters
         ----------------
-        image_path : str
-            Absolute path to folder holding the image files
         bin_factor : uint or array-like of uint, optional
             Down-sampling factor for each dimension.  Default is None.
             If specifying different binning for each dimension, please specify as (height binning, width binning)
@@ -81,7 +79,7 @@ class ImageReader(Reader):
         ----------
 
         """
-        image_path = self._parse_file_path(image_path)
+        image_path = self._parse_file_path(self._input_file_path)
 
         image = read_image(image_path, **image_args)
         image_parms = dict()
@@ -191,3 +189,5 @@ def read_image(image_path, as_grayscale=True, as_numpy_array=True, *args, **kwar
             # Open the image as a numpy array
             return np.asarray(img_obj)
         return img_obj
+
+

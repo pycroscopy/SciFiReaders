@@ -168,7 +168,6 @@ class DM3Reader(Reader):
 
         # initialize variables ##
         self.verbose = verbose
-        self.__filename = file_path
         self.__chosenImage = 1
         # - track currently read group
         self.__cur_group_level = -1
@@ -179,7 +178,7 @@ class DM3Reader(Reader):
         self.__curTagName = ''
         # - open file for reading
         try:
-            self.__f = open(self.__filename, 'rb')
+            self.__f = open(self._input_file_path, 'rb')
         except FileNotFoundError:
             raise FileNotFoundError('File not found')
 
@@ -203,9 +202,9 @@ class DM3Reader(Reader):
             is_dm3 = False
         # check file header, raise Exception if not DM3
         if not is_dm3:
-            raise TypeError("%s does not appear to be a DM3 or DM4 file." % os.path.split(self.__filename)[1])
+            raise TypeError("%s does not appear to be a DM3 or DM4 file." % os.path.split(self._input_file_path)[1])
         elif self.verbose:
-            print("%s appears to be a DM3 file" % self.__filename)
+            print("%s appears to be a DM3 file" % self._input_file_path)
         self.file_version = file_version
         self.file_size = file_size
 
@@ -241,7 +240,7 @@ class DM3Reader(Reader):
         """
         t1 = time.time()
         try:
-            self.__f = open(self.__filename, 'rb')
+            self.__f = open(self._input_file_path, 'rb')
         except FileNotFoundError:
             raise FileNotFoundError('File not found')
 
@@ -269,7 +268,7 @@ class DM3Reader(Reader):
 
         self.set_data_type(dataset)
 
-        path, file_name = os.path.split(self.__filename)
+        path, file_name = os.path.split(self._input_file_path)
         basename, extension = os.path.splitext(file_name)
         dataset.title = basename
 
@@ -620,7 +619,7 @@ class DM3Reader(Reader):
     # ## END utility functions ###
 
     def get_filename(self):
-        return self.__filename
+        return self._input_file_path
 
     filename = property(get_filename)
 
@@ -687,7 +686,7 @@ class DM3Reader(Reader):
             data_dim = 3
 
         if self.verbose:
-            print("Notice: image data in %s starts at %s" % (os.path.split(self.__filename)[1], hex(data_offset)))
+            print("Notice: image data in %s starts at %s" % (os.path.split(self._input_file_path)[1], hex(data_offset)))
             print("Notice: image size: %sx%s px" % (im_width, im_height))
 
         # check if DataType is implemented, then read
