@@ -149,6 +149,16 @@ class ImageReader(Reader):
 
         return data_set
 
+    def can_read(self):
+        """
+        Tests whether or not the provided file has a .ndata extension
+        Returns
+        -------
+
+        """
+        exts = ['jpg', 'jpeg', 'png', 'tiff', 'bmp', 'csv', 'txt']
+        return super(ImageReader, self).can_read(extension=exts)
+
 
 def read_image(image_path, as_grayscale=True, as_numpy_array=True, *args, **kwargs):
     """
@@ -189,5 +199,3 @@ def read_image(image_path, as_grayscale=True, as_numpy_array=True, *args, **kwar
             # Open the image as a numpy array
             return np.asarray(img_obj)
         return img_obj
-
-
