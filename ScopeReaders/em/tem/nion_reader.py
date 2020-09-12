@@ -104,9 +104,9 @@ class NionReader(Reader):
 
         # initialize variables ##
         self.verbose = verbose
-        self.__filename = file_path
+        self._input_file_path = file_path
 
-        path, file_name = os.path.split(self.__filename)
+        path, file_name = os.path.split(self._input_file_path)
         self.basename, self.extension = os.path.splitext(file_name)
         self.data_cube = None
         self.original_metadata = {}
@@ -114,22 +114,22 @@ class NionReader(Reader):
 
             # - open file for reading
             try:
-                self.__f = open(self.__filename, "rb")
+                self.__f = open(self._input_file_path, "rb")
             except FileNotFoundError:
                 raise FileNotFoundError('File not found')
             try:
                 local_files, dir_files, eocd = parse_zip(self.__f)
             except IOError:
-                raise IOError("File {} does not seem to be of Nion`s .ndata format".format(self.__filename))
+                raise IOError("File {} does not seem to be of Nion`s .ndata format".format(self._input_file_path))
             self.__f.close()
         elif self.extension == '.h5':
             try:
-                fp = h5py.File(self.__filename, mode='a')
+                fp = h5py.File(self._input_file_path, mode='a')
                 if 'data' not in fp:
-                    raise IOError("File {} does not seem to be of Nion`s .h5 format".format(self.__filename))
+                    raise IOError("File {} does not seem to be of Nion`s .h5 format".format(self._input_file_path))
                 fp.close()
             except IOError:
-                raise IOError("File {} does not seem to be of Nion`s .h5 format".format(self.__filename))
+                raise IOError("File {} does not seem to be of Nion`s .h5 format".format(self._input_file_path))
 
     def can_read(self):
         """
@@ -143,7 +143,7 @@ class NionReader(Reader):
     def read(self):
         if self.extension == '.ndata':
             try:
-                self.__f = open(self.__filename, "rb")
+                self.__f = open(self._input_file_path, "rb")
             except FileNotFoundError:
                 raise FileNotFoundError('File not found')
             local_files, dir_files, eocd = parse_zip(self.__f)
@@ -165,7 +165,7 @@ class NionReader(Reader):
             self.__f.close()
         elif self.extension == '.h5':
             # TODO: use lazy load for large datasets
-            self.__f = h5py.File(self.__filename, 'a')
+            self.__f = h5py.File(self._input_file_path, 'a')
             if 'data' in self.__f:
                 json_properties = self.__f['data'].attrs.get("properties", "")
                 self.data_cube = self.__f['data'][:]
@@ -187,7 +187,7 @@ class NionReader(Reader):
             if 'title' in dataset.original_metadata:
                 dataset.title = dataset.original_metadata['title']
             else:
-                path, file_name = os.path.split(self.__filename)
+                path, file_name = os.path.split(self._input_file_path)
                 basename, extension = os.path.splitext(file_name)
                 dataset.title = basename
 
@@ -265,7 +265,7 @@ class NionReader(Reader):
 
 
     def get_filename(self):
-        return self.__filename
+        return self._input_file_path
 
     filename = property(get_filename)
 
