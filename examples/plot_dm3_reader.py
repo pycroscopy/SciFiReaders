@@ -25,7 +25,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import sys
-sys.path.append('../../sidpy')
 from sidpy.io.interface_utils import openfile_dialog, get_QT_app
 sys.path.append('../')
 from ScopeReaders.em.tem.dm3_reader import DM3Reader

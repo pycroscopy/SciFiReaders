@@ -30,8 +30,11 @@ import sys
 import numpy as np
 import os
 
+import sidpy
 from sidpy import Reader
-from sidpy.sid import Dimension, Dataset
+from sidpy.sid.dimension import Dimension, DimensionTypes
+from sidpy.sid.dataset import DataTypes, Dataset
+
 from sidpy.base.dict_utils import nest_dict
 
 __all__ = ["DM3Reader", "version"]
@@ -164,10 +167,6 @@ class DM3Reader(Reader):
         """
         file_path: filepath to dm3 file.
         """
-        warn('This Reader will eventually be moved to the ScopeReaders package'
-             '. Be prepared to change your import statements',
-             FutureWarning)
-
         super(DM3Reader, self).__init__(file_path)
 
         # initialize variables ##
@@ -267,8 +266,9 @@ class DM3Reader(Reader):
     def set_data_type(self, dataset):
         image_number = len(dataset.original_metadata['ImageList']) - 1
         spectral_dim = False
-        for axis in dataset.axes.values():
-            if axis.dimension_type == 'spectral':
+        print(dataset._axes)
+        for dim, axis in dataset._axes.items():
+            if axis.dimension_type == DimensionTypes.SPECTRAL:
                 spectral_dim = True
 
         dataset.data_type = 'unknown'
@@ -285,7 +285,7 @@ class DM3Reader(Reader):
                         dataset.data_type = 'image'
                         dataset.metadata['image_type'] = 'survey image'
 
-        if dataset.data_type == 'unknown':
+        if dataset.data_type == DataTypes.UNKNOWN:
             if len(dataset.shape) > 3:
                 raise NotImplementedError('Data_type not implemented yet')
             elif len(dataset.shape) == 3:
@@ -321,17 +321,17 @@ class DM3Reader(Reader):
             values = (np.arange(dataset.shape[int(dim)]) - dimension_tags['Origin']) * dimension_tags['Scale']
 
             if 'eV' == units:
-                dataset.set_dimension(int(dim), Dimension('energy_loss', values, units=units,
+                dataset.set_dimension(int(dim), Dimension(values,'energy_loss', units=units,
                                                           quantity='energy-loss', dimension_type='spectral'))
             elif 'eV' in units:
-                dataset.set_dimension(int(dim), Dimension('energy', values, units=units,
+                dataset.set_dimension(int(dim), Dimension(values,'energy', units=units,
                                                           quantity='energy', dimension_type='spectral'))
             elif '1/' in units or units in ['mrad', 'rad']:
-                dataset.set_dimension(int(dim), Dimension(reciprocal_name, values, units=units,
+                dataset.set_dimension(int(dim), Dimension(values, reciprocal_name, units=units,
                                                           quantity='reciprocal distance', dimension_type='reciprocal'))
                 reciprocal_name = chr(ord(reciprocal_name) + 1)
             else:
-                dataset.set_dimension(int(dim), Dimension(spatial_name, values, units=units,
+                dataset.set_dimension(int(dim), Dimension(values, spatial_name, units=units,
                                                           quantity='distance', dimension_type='spatial'))
                 spatial_name = chr(ord(spatial_name) + 1)
 
