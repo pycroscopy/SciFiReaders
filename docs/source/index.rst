@@ -1,19 +1,19 @@
-.. pyNSID documentation master file, created by
+.. ScopeReaders documentation master file, created by
    sphinx-quickstart on Sun Jul 12 16:57:01 2020.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-pyNSID Documentation
-====================
+ScopeReaders Documentation
+==========================
 
-**Framework for storing, visualizing, and processing N-Dimensional Spectroscopic and Imaging Data (NSID)**
+**Tools for extracting data and metadata from materials microscopy / spectroscopy files**
 
-Jump to our `GitHub project page <https://github.com/pycroscopy/pyNSID>`_
+Jump to our `GitHub project page <https://github.com/pycroscopy/ScopeReaders>`_
 
 .. toctree::
    :glob:
    :maxdepth: 1
-   :caption: pyNSID
+   :caption: ScopeReaders
 
    about
 
