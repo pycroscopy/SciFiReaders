@@ -15,14 +15,12 @@ from __future__ import division, print_function, absolute_import, unicode_litera
 import json
 import struct
 import h5py
-from warnings import warn
 import sys
 import numpy as np
 import os
 
 
-from sidpy import Reader
-from sidpy.sid import Dimension, Dataset
+import sidpy
 
 __all__ = ["NionReader", "version"]
 
@@ -55,7 +53,6 @@ def parse_zip(fp):
     """
     local_files = {}
     dir_files = {}
-    eocd = None
     fp.seek(0)
     while True:
         pos = fp.tell()
@@ -93,17 +90,14 @@ def parse_zip(fp):
     return local_files, dir_files, eocd
 
 
-class NionReader(Reader):
+class NionReader(sidpy.Reader):
 
     def __init__(self, file_path, verbose=False):
         """
         file_path: filepath to dm3 file.
         """
-        warn('This Reader will eventually be moved to the ScopeReaders package'
-             '. Be prepared to change your import statements',
-             FutureWarning)
 
-        super(NionReader, self).__init__(file_path)
+        super().__init__(file_path)
 
         # initialize variables ##
         self.verbose = verbose
@@ -113,6 +107,7 @@ class NionReader(Reader):
         self.basename, self.extension = os.path.splitext(file_name)
         self.data_cube = None
         self.original_metadata = {}
+        self.dimensions = []
         if self.extension == '.ndata':
 
             # - open file for reading
@@ -165,7 +160,25 @@ class NionReader(Reader):
                 self.data_cube = self.__f['data'][:]
                 self.original_metadata = json.loads(json_properties)
 
-        dataset = Dataset.from_array(self.data_cube)
+        self.get_dimensions()
+        # Need to switch image dimensions in Nion format
+        image_dims = []
+        for dim, axis in enumerate(self.dimensions):
+            print(dim, axis)
+            if axis.dimension_type == sidpy.DimensionTypes.SPATIAL:
+                image_dims.append(dim)
+        print('image_dims', image_dims)
+        print(self.data_cube.shape)
+        if len(image_dims) == 2:
+            self.data_cube = np.swapaxes(self.data_cube, image_dims[0], image_dims[1])
+            temp = self.dimensions[image_dims[0]].copy()
+            self.dimensions[image_dims[0]] = self.dimensions[image_dims[1]].copy()
+            self.dimensions[image_dims[1]] = temp
+
+        dataset = sidpy.Dataset.from_array(self.data_cube)
+
+        for dim, axis in enumerate(self.dimensions):
+            dataset.set_dimension(dim, axis)
 
         dataset.original_metadata = self.original_metadata
         if 'dimensional_calibrations' in dataset.original_metadata:
@@ -190,19 +203,17 @@ class NionReader(Reader):
         else:
             dataset.source = 'NionReader'
 
-        self.set_dimensions(dataset)
-
         self.set_data_type(dataset)
-
-        dataset.modality = 'generic'
+        dataset.modality = 'STEM data'
+        dataset.h5_dataset = None
 
         return dataset
 
     def set_data_type(self, dataset):
 
         spectral_dim = False
-        for axis in dataset.axes.values():
-            if axis.dimension_type == 'spectral':
+        for axis in dataset._axes.values():
+            if axis.dimension_type == sidpy.DimensionTypes.SPECTRAL:
                 spectral_dim = True
 
         if len(dataset.shape) > 3:
@@ -211,52 +222,57 @@ class NionReader(Reader):
             if spectral_dim:
                 dataset.data_type = 'spectrum_image'
             else:
-                dataset.data_type = 'image_stack'
-                for dim,axis in dataset.axes.items():
-                    if axis.dimension_type != 'spatial':
-                        dataset.set_dimension(int(dim), Dimension('frame', axis.values, units='frame',
-                                                                  quantity='stack',
-                                                                  dimension_type='frame'))
+                dataset.data_type = 'IMAGE_STACK'
+                for dim, axis in dataset._axes.items():
+                    if axis.dimension_type != sidpy.DimensionTypes.SPATIAL:
+                        dataset.set_dimension(dim, sidpy.Dimension(axis.values,
+                                                                   name='frame',
+                                                                   units='frame',
+                                                                   quantity='stack',
+                                                                   dimension_type=sidpy.DimensionTypes.TEMPORAL))
                         break
+
         elif len(dataset.shape) == 2:
             if spectral_dim:
-                dataset.data_type = 'spectrum_image'
+                dataset.data_type = sidpy.DataTypes.SPECTRAL_IMAGE
             else:
-                dataset.data_type = 'image'
+                dataset.data_type = sidpy.DataTypes.IMAGE
         elif len(dataset.shape) == 1:
             if spectral_dim:
-                dataset.data_type = 'spectrum'
+                dataset.data_type = sidpy.DataTypes.SPECTRUM
             else:
-                dataset.data_type = 'line_plot'
+                dataset.data_type = sidpy.DataTypes.LINE_PLOT
 
-    def set_dimensions(self, dataset):
-        dic = dataset.original_metadata
+    def get_dimensions(self):
+        dic = self.original_metadata
 
         reciprocal_name = 'u'
         spatial_name = 'x'
 
         if 'dimensional_calibrations' in dic:
+
             for dim in range(len(dic['dimensional_calibrations'])):
                 dimension_tags = dic['dimensional_calibrations'][dim]
                 units = dimension_tags['units']
-                values = (np.arange(dataset.shape[int(dim)]) - dimension_tags['offset']) * dimension_tags['scale']
+                values = (np.arange(self.data_cube.shape[int(dim)])-dimension_tags['offset'])*dimension_tags['scale']
 
                 if 'eV' == units:
-                    dataset.set_dimension(int(dim), Dimension('energy_loss', values, units=units,
-                                                              quantity='energy-loss', dimension_type='spectral'))
+                    self.dimensions.append(sidpy.Dimension(values, name='energy_loss', units=units,
+                                                           quantity='energy-loss', dimension_type='spectral'))
                 elif 'eV' in units:
-                    dataset.set_dimension(int(dim), Dimension('energy', values, units=units,
-                                                              quantity='energy', dimension_type='spectral'))
+                    self.dimensions.append(sidpy.Dimension(values, name='energy', units=units,
+                                                           quantity='energy', dimension_type='spectral'))
                 elif '1/' in units or units in ['mrad', 'rad']:
-                    dataset.set_dimension(int(dim), Dimension(reciprocal_name, values, units=units,
-                                                              quantity='reciprocal distance',
-                                                              dimension_type='reciprocal'))
+                    self.dimensions.append(sidpy.Dimension(values, name=reciprocal_name, units=units,
+                                                           quantity='reciprocal distance', dimension_type='reciprocal'))
                     reciprocal_name = chr(ord(reciprocal_name) + 1)
                 elif 'nm' in units:
-                    dataset.set_dimension(int(dim), Dimension(spatial_name, values, units=units,
-                                                              quantity='distance', dimension_type='spatial'))
+                    self.dimensions.append(sidpy.Dimension(values, name=spatial_name, units=units,
+                                                           quantity='distance', dimension_type='spatial'))
                     spatial_name = chr(ord(spatial_name) + 1)
-
+                else:
+                    self.dimensions.append(sidpy.Dimension(values, name='generic', units='generic',
+                                                           quantity='generic', dimension_type='UNKNOWN'))
 
     def get_filename(self):
         return self.__filename
