@@ -218,6 +218,20 @@ class Usid_reader(Reader):
             units = 'generic'
             
         return quantity, units
+    
+    def _get_metadata(main_dataset):
+        metadata = {}
+        #We get all the attributes corresponding to main_dataset
+        atts = sidpy.hdf_utils.get_attributes(main_dataset)
+        for attr_name in (atts):
+            #We omit h5py reference files
+            if not isinstance(atts[attr_name], (h5py.h5r.Reference, h5py.h5r.RegionReference)):
+                #We do not want quantity of units either
+                if not (attr_name != 'quantity' or attr_name != 'units'):
+                    metadata[attr_name] = atts[attr_name]
+                    
+        return metadata
+        
         
     
     
@@ -244,6 +258,7 @@ class Usid_reader(Reader):
             if main_dataset.dtype.names is not None:
                 #Get descriptors of the main dataset
                 dims, dim_labels, dim_types, dim_quantities, dim_units, dim_values = Usid_reader._get_dimension_descriptors(main_dataset, verbose = self.verbose)
+                
                 for name in (main_dataset.dtype.names):
                     sid_dataset = sidpy.Dataset.from_array(main_dataset.get_n_dim_form()[name])
                     #Get descriptors (units) of the output quantity
@@ -256,6 +271,9 @@ class Usid_reader(Reader):
                                                        quantity=dim_quantities[i],
                                                        dimension_type=dim_types[i]))
                     
+                    # Dealing with metadata
+                    meta_data = Usid_reader._get_metadata(main_dataset)
+                    sid_dataset.metadata.update(meta_data)
                     sid_datasets.append(sid_dataset)
             
             #For a non-compound dataset
@@ -273,6 +291,8 @@ class Usid_reader(Reader):
                                                    units=dim_units[i],
                                                    quantity=dim_quantities[i],
                                                    dimension_type=dim_types[i]))
+                
+                meta_data = Usid_reader._get_metadata(main_dataset)
                 sid_datasets.append(sid_dataset)
                     
             
