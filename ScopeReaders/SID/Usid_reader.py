@@ -266,7 +266,7 @@ class Usid_reader(Reader):
                     
                     #Set dimensions for the main dataset
                     for i in range(len(dim_labels)):
-                        sid_dataset.set_dimension(dims[i], sidpy.Dimension(dim_labels[i],dim_values[i],
+                        sid_dataset.set_dimension(dims[i], sidpy.Dimension(dim_values[i],name = dim_labels[i],
                                                        units=dim_units[i],
                                                        quantity=dim_quantities[i],
                                                        dimension_type=dim_types[i]))
@@ -287,10 +287,10 @@ class Usid_reader(Reader):
                 
                 #Set dimensions for the main dataset
                 for i in range(len(dim_labels)):
-                    sid_dataset.set_dimension(dims[i], sidpy.Dimension(dim_labels[i],dim_values[i],
-                                                   units=dim_units[i],
-                                                   quantity=dim_quantities[i],
-                                                   dimension_type=dim_types[i]))
+                    sid_dataset.set_dimension(dims[i], sidpy.Dimension(dim_values[i],name = dim_labels[i],
+                                                       units=dim_units[i],
+                                                       quantity=dim_quantities[i],
+                                                       dimension_type=dim_types[i]))
                 
                 meta_data = Usid_reader._get_metadata(main_dataset)
                 sid_datasets.append(sid_dataset)
@@ -312,7 +312,4 @@ class Usid_reader(Reader):
         Returns
         -------
         """
-        pass
-        
-    
-     
+        pass   
