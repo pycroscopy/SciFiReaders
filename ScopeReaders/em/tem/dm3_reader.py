@@ -176,9 +176,11 @@ class DM3Reader(sidpy.Reader):
         self.__filename = file_path
         self.__chosen_image = -1
 
+
+    
         # - open file for reading
         try:
-            self.__f = open(self.__filename, 'rb')
+            self.__f = open(self._input_file_path, 'rb')
         except FileNotFoundError:
             raise FileNotFoundError('File not found')
 
@@ -209,10 +211,12 @@ class DM3Reader(sidpy.Reader):
             self.endian_str = '<'
 
         # check file header, raise Exception if not DM3
+
         if not is_dm:
             raise TypeError("%s does not appear to be a DM3 or DM4 file." % os.path.split(self.__filename)[1])
+
         elif self.verbose:
-            print("%s appears to be a DM3 file" % self.__filename)
+            print("%s appears to be a DM3 file" % self._input_file_path)
         self.file_version = file_version
         self.file_size = file_size
 
@@ -225,9 +229,28 @@ class DM3Reader(sidpy.Reader):
         # don't read but close file
         self.__f.close()
 
+    def can_read(self):
+        """
+        Tests whether or not the provided file has a .dm3 extension
+        Returns
+        -------
+
+        """
+        # TODO: @gduscher to elaborate if this is not a sufficient check
+        return super(DM3Reader, self).can_read(extension='dm3')
+
     def read(self):
+        """
+        Extracts data and metadata present in the provided file
+
+        Returns
+        -------
+        dataset : sidpy.Dataset
+            Dataset object containing the data and metadata
+        """
+        t1 = time.time()
         try:
-            self.__f = open(self.__filename, 'rb')
+            self.__f = open(self._input_file_path, 'rb')
         except FileNotFoundError:
             raise FileNotFoundError('File not found')
 
@@ -252,9 +275,11 @@ class DM3Reader(sidpy.Reader):
 
         # ... then read it
 
+
         self.__stored_tags = {'DM': {'file_version': file_version, 'file_size': file_size}}
 
         self.__read_tag_group(self.__stored_tags)
+
 
         if self.verbose:
             print("-- %s Tags read --" % len(self.__stored_tags))
@@ -275,6 +300,7 @@ class DM3Reader(sidpy.Reader):
 
         self.set_dimensions(dataset)
         self.set_data_type(dataset)
+
 
         dataset.title = basename
         dataset.modality = 'generic'
@@ -331,7 +357,7 @@ class DM3Reader(sidpy.Reader):
 
         for dim, dimension_tags in dimensions_dict.items():
             # Fix annoying scale of spectrum_images in Zeiss  and SEM images
-            if dimension_tags['Units'] == 'µm':
+            if dimension_tags['Units'] == 'Âµm':
                 dimension_tags['Units'] = 'nm'
                 dimension_tags['Scale'] *= 1000.0
 
@@ -534,7 +560,7 @@ class DM3Reader(sidpy.Reader):
     # ## END utility functions ###
 
     def get_filename(self):
-        return self.__filename
+        return self._input_file_path
 
     filename = property(get_filename)
 
@@ -583,10 +609,12 @@ class DM3Reader(sidpy.Reader):
         if self.__chosen_image < 0:
             raise IOError('Did not find data in file')
 
+
         # get relevant Tags
         byte_data = self.__stored_tags['ImageList'][str(self.__chosen_image)]['ImageData']['Data']
         data_type = self.__stored_tags['ImageList'][str(self.__chosen_image)]['ImageData']['DataType']
         dimensions = self.__stored_tags['ImageList'][str(self.__chosen_image)]['ImageData']['Dimensions']
+
 
         # get shape from Dimensions
         shape = []
