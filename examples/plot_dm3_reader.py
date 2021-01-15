@@ -1,7 +1,7 @@
 """
-======================================
-Reader for proprietary dm3 file format
-======================================
+==============
+Using a Reader
+==============
 
 **Gerd Duscher**
 
@@ -25,7 +25,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import sys
-sys.path.append('../../sidpy')
 from sidpy.io.interface_utils import openfile_dialog, get_QT_app
 sys.path.append('../')
 from ScopeReaders.em.tem.dm3_reader import DM3Reader
@@ -40,7 +39,9 @@ app = get_QT_app()
 
 # Then we can open QT file dialog to select a file
 
-file_name = openfile_dialog()
+# file_name = openfile_dialog()
+file_name = "C:/Users/gduscher/OneDrive - University of Tennessee/2020 Experiment/2020-09-20/10-EELS Acquire (dark ref corrected)CLDAl.dm3"
+
 print(file_name)
 
 # catch a bad selection or cancelling of file selection

@@ -1,7 +1,7 @@
 """
-===================================
-Reader for proprietary file formats
-===================================
+=================
+Creating a Reader
+=================
 
 **Suhas Somnath**
 
@@ -239,18 +239,12 @@ num_pos = num_rows * num_cols
 spectra_length = int(parm_dict['z-points'])
 
 # We will assume that data was collected from -3 nm to +7 nm on the Y-axis or along the rows
-y_qty = 'Y'
-y_units = 'nm'
 y_vec = np.linspace(-3, 7, num_rows, endpoint=True)
 
 # We will assume that data was collected from -5 nm to +5 nm on the X-axis or along the columns
-x_qty = 'X'
-x_units = 'nm'
 x_vec = np.linspace(-5, 5, num_cols, endpoint=True)
 
 # The bias was sampled from -1 to +1 V in the experiment. Here is how we generate the Bias axis:
-bias_qty = 'Bias'
-bias_units = 'V'
 bias_vec = np.linspace(-1, 1, spectra_length)
 
 ####################################################################################
@@ -310,7 +304,7 @@ main_units = 'nA'
 # Here is a visualization of the current-voltage spectra at a few locations:
 
 fig, axes = sidpy.plot_utils.plot_curves(bias_vec, raw_data_2d, num_plots=9,
-                                        x_label=bias_qty + '(' + bias_units + ')',
+                                        x_label='bias (V)',
                                         y_label=main_qty + '(' + main_units + ')',
                                         title='Current-Voltage Spectra at different locations',
                                         fig_title_yoffset=1.05)
@@ -329,24 +323,38 @@ for axis, bias_ind in zip(axes, np.linspace(0, len(bias_vec), 9, endpoint=False,
 ####################################################################################
 # 2. Populating the ``Dataset`` object
 # ====================================
-
-####################################################################################
-# Central data
+data_set = sidpy.Dataset.from_array(raw_data_3d, name='Raw_Data')
+print(data_set)
 
 ####################################################################################
 # Dimensions
+data_set.set_dimension(0, sidpy.Dimension('y', y_vec,units='nm',
+                                          quantity='Length',
+                                          dimension_type='spatial'))
+data_set.set_dimension(1, sidpy.Dimension('x', x_vec, units='nm',
+                                          quantity='Length',
+                                          dimension_type='spatial'))
+data_set.set_dimension(2, sidpy.Dimension('bias', bias_vec,
+                                          quantity='Bias',
+                                          dimension_type='spectral'))
 
 ####################################################################################
-# Generic top level metadata
+# Generic top level metadata can be added as you go along
+data_set.data_type = 'Current'
+data_set.units = main_units
+data_set.quantity = main_qty
 
 ####################################################################################
 # Instrument-specific metadata
+data_set.metadata = parm_dict
 
 ####################################################################################
 # Print the dataset object
+print(data_set)
 
 ####################################################################################
 # Visualize the dataset object
+data_set.plot()
 
 ####################################################################################
 # How does one turn such ad-hoc code into a ``Reader`` class?
