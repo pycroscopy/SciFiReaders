@@ -7,23 +7,11 @@ Submodules
 .. autosummary::
     :toctree: _autosummary
 
-    dm3_reader
-
 """
 from .__version__ import version as __version__
-"""
-Tools to read, write data in h5NSID files
+from ScopeReaders import em, generic, ion, spm
 
-Submodules
-----------
-
-.. autosummary::
-    :toctree: _autosummary
-
-"""
-
-
-__all__ = ['__version__']
+__all__ = ['__version__', 'em', 'generic', 'ion', 'spm']
 # Traditional hierarchical approach - importing submodules
 
 

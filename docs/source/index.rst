@@ -10,21 +10,26 @@ ScopeReaders Documentation
 
 Jump to our `GitHub project page <https://github.com/pycroscopy/ScopeReaders>`_
 
-Documentation Index
--------------------
-.. currentmodule:: index
+.. toctree::
+   :glob:
+   :maxdepth: 1
+   :caption: ScopeReaders
 
+   about
+
+Source code API
+---------------
 .. autosummary::
-   :template: module.rst
+   :toctree: _autosummary
+   :template: custom-module-template.rst
+   :recursive:
+   ScopeReaders
+
+* :ref:`modindex`
 
 .. toctree::
-    about
-    auto_examples/index
+   :glob:
+   :maxdepth: 2
+   :caption: Examples
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   notebooks/**/index
