@@ -79,10 +79,12 @@ class IgorIBWReader(Reader):
                 data_set.quantity = chan_labels[channel]
 
                 #Add dimension info
-                data_set.set_dimension(0, sid.Dimension('x', np.linspace(0, parm_dict['FastScanSize'], num_cols),
+                data_set.set_dimension(0, sid.Dimension(np.linspace(0, parm_dict['FastScanSize'], num_cols),
+                                                        name = 'x',
                                                         units=chan_units[channel], quantity = 'x',
                                                         dimension_type='spatial'))
-                data_set.set_dimension(1, sid.Dimension('y', np.linspace(0, parm_dict['SlowScanSize'], num_rows),
+                data_set.set_dimension(1, sid.Dimension(np.linspace(0, parm_dict['SlowScanSize'], num_rows),
+                                                        name = 'y',
                                                         units=chan_units[channel], quantity='y',
                                                         dimension_type='spatial'))
 
