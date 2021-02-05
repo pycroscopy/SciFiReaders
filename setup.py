@@ -6,7 +6,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, 'README.rst')) as f:
     long_description = f.read()
 
-with open(os.path.join(here, 'ScopeReaders/__version__.py')) as f:
+with open(os.path.join(here, 'SciFiReaders/__version__.py')) as f:
     __version__ = f.read().split("'")[1]
 
 # TODO: Move requirements to requirements.txt
@@ -19,7 +19,7 @@ requirements = ['numpy>=1.10',
                 ]
 
 setup(
-    name='ScopeReaders',
+    name='SciFiReaders',
     version=__version__,
     description='Tools for extracting data and metadata from materials '
                 'microscopy / spectroscopy files',
@@ -44,7 +44,7 @@ setup(
     keywords=['imaging', 'spectra', 'multidimensional', 'scientific'],
     packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*",
                                     "tests"]),
-    url='https://pycroscopy.github.io/ScopeReaders/about.html',
+    url='https://pycroscopy.github.io/SciFiReaders/about.html',
     license='MIT',
     author='Pycroscopy contributors',
     author_email='pycroscopy@gmail.com',
