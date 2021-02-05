@@ -166,7 +166,12 @@ class DM3Reader(sidpy.Reader):
 
     """
     file_path: filepath to dm3 file.
+
+    warn('This Reader will eventually be moved to the ScopeReaders package'
+         '. Be prepared to change your import statements',
+         FutureWarning)
     """
+
     def __init__(self, file_path, verbose=False):
         super().__init__(file_path)
 
@@ -177,7 +182,7 @@ class DM3Reader(sidpy.Reader):
 
         # - open file for reading
         try:
-            self.__f = open(self._input_file_path, 'rb')
+            self.__f = open(self.__filename, 'rb')
         except FileNotFoundError:
             raise FileNotFoundError('File not found')
 
@@ -209,9 +214,8 @@ class DM3Reader(sidpy.Reader):
         # check file header, raise Exception if not DM3
         if not is_dm:
             raise TypeError("%s does not appear to be a DM3 or DM4 file." % os.path.split(self.__filename)[1])
-
         elif self.verbose:
-            print("%s appears to be a DM3 file" % self._input_file_path)
+            print("%s appears to be a DM3 file" % self.__filename)
         self.file_version = file_version
         self.file_size = file_size
 
@@ -224,28 +228,9 @@ class DM3Reader(sidpy.Reader):
         # don't read but close file
         self.__f.close()
 
-    def can_read(self):
-        """
-        Tests whether or not the provided file has a .dm3 extension
-        Returns
-        -------
-
-        """
-        # TODO: @gduscher to elaborate if this is not a sufficient check
-        return super(DM3Reader, self).can_read(extension='dm3')
-
     def read(self):
-        """
-        Extracts data and metadata present in the provided file
-
-        Returns
-        -------
-        dataset : sidpy.Dataset
-            Dataset object containing the data and metadata
-        """
-        t1 = time.time()
         try:
-            self.__f = open(self._input_file_path, 'rb')
+            self.__f = open(self.__filename, 'rb')
         except FileNotFoundError:
             raise FileNotFoundError('File not found')
 
@@ -269,6 +254,7 @@ class DM3Reader(sidpy.Reader):
             self.endian_str = '<'
 
         # ... then read it
+
         self.__stored_tags = {'DM': {'file_version': file_version, 'file_size': file_size}}
 
         self.__read_tag_group(self.__stored_tags)
@@ -282,17 +268,30 @@ class DM3Reader(sidpy.Reader):
 
         path, file_name = os.path.split(self.__filename)
         basename, extension = os.path.splitext(file_name)
-
         dataset = sidpy.Dataset.from_array(self.data_cube, name=basename)
         self.__stored_tags['DM']['chosen_image'] = self.__chosen_image
         dataset.original_metadata = self.get_tags()
 
-        dataset.quantity = 'intensity'
-        dataset.units = 'counts'
-
         self.set_dimensions(dataset)
         self.set_data_type(dataset)
+        # convert linescan to spectral image
+        if self.spectral_dim and dataset.ndim == 2:
+            old_dataset = dataset.copy()
+            meta = dataset.original_metadata.copy()
+            basename = dataset.name
+            data = np.array(dataset).reshape(dataset.shape[0], 1, dataset.shape[1])
+            dataset = sidpy.Dataset.from_array(data, name=basename)
+            dataset.original_metadata = meta
+            dataset.set_dimension(0, old_dataset.dim_0)
 
+            dataset.set_dimension(1, sidpy.Dimension([1], name='y', units='pixels',
+                                                     quantity='distance', dimension_type='spatial'))
+            dataset.set_dimension(2, old_dataset.dim_1)
+            dataset.data_type = sidpy.DataType.SPECTRAL_IMAGE  # 'linescan'
+
+
+        dataset.quantity = 'intensity'
+        dataset.units = 'counts'
         dataset.title = basename
         dataset.modality = 'generic'
         dataset.source = 'DM3Reader'
@@ -306,6 +305,7 @@ class DM3Reader(sidpy.Reader):
         for dim, axis in dataset._axes.items():
             if axis.dimension_type == sidpy.DimensionType.SPECTRAL:
                 spectral_dim = True
+        self.spectral_dim = spectral_dim
 
         dataset.data_type = 'unknown'
         if 'ImageTags' in dataset.original_metadata['ImageList'][str(self.__chosen_image)]:
@@ -330,6 +330,7 @@ class DM3Reader(sidpy.Reader):
                     dataset.data_type = 'image_stack'
             elif len(dataset.shape) == 2:
                 if spectral_dim:
+                    basename = dataset.name
                     dataset.data_type = sidpy.DataType.SPECTRAL_IMAGE
                 else:
                     dataset.data_type = 'image'
@@ -348,7 +349,7 @@ class DM3Reader(sidpy.Reader):
 
         for dim, dimension_tags in dimensions_dict.items():
             # Fix annoying scale of spectrum_images in Zeiss  and SEM images
-            if dimension_tags['Units'] == 'Âµm':
+            if dimension_tags['Units'] == 'µm':
                 dimension_tags['Units'] = 'nm'
                 dimension_tags['Scale'] *= 1000.0
 
@@ -551,7 +552,7 @@ class DM3Reader(sidpy.Reader):
     # ## END utility functions ###
 
     def get_filename(self):
-        return self._input_file_path
+        return self.__filename
 
     filename = property(get_filename)
 
