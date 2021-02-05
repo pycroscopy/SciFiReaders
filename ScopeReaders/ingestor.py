@@ -4,12 +4,9 @@ Utilities for automated ingestion of data and metadata in proprietary file forma
 
 from __future__ import division, unicode_literals, print_function, absolute_import
 from warnings import warn
+from . import readers
 
-from .em.tem import DM3Reader, NionReader
-# import other translators
-
-all_translators = [DM3Reader, NionReader]
-
+all_translators = readers.all_readers
 
 def ingest(file_path):
     """

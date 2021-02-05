@@ -13,3 +13,5 @@ Submodules
 from .image import ImageReader
 
 __all__ = ['ImageReader']
+
+all_readers = [ImageReader]

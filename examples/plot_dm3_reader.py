@@ -21,13 +21,11 @@ Import all necessary packages
 There are a few setup procedures that need to be followed before any code is written. In this step, we simply load a
 few python packages that will be necessary in the later steps.
 """
-import numpy as np
-import matplotlib.pyplot as plt
 
 import sys
-from sidpy.io.interface_utils import openfile_dialog, get_QT_app
+from sidpy.io.interface_utils import get_QT_app
 sys.path.append('../')
-from ScopeReaders.em.tem.dm3_reader import DM3Reader
+from ScopeReaders.microscopy.em.tem import DM3Reader
 
 ####################################################################################
 # Open a file dialog

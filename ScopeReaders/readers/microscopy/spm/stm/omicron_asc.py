@@ -269,4 +269,4 @@ class AscReader(Reader):
 
         """
 
-        return super(IgorIBWReader, self).can_read(extension='asc')
+        return super(AscReader, self).can_read(extension='asc')

@@ -14,3 +14,5 @@ from .dm3_reader import DM3Reader
 from .nion_reader import NionReader
 
 __all__ = ['DM3Reader', 'NionReader']
+
+all_readers = [DM3Reader, NionReader]
