@@ -10,12 +10,21 @@ with open(os.path.join(here, 'SciFiReaders/__version__.py')) as f:
     __version__ = f.read().split("'")[1]
 
 # TODO: Move requirements to requirements.txt
-requirements = ['numpy>=1.10',
+requirements = [# basic
+                'numpy>=1.10',
                 'toolz',  # dask installation failing without this
                 'cytoolz',  # dask installation failing without this
                 'dask>=0.10',
                 'sidpy>=0.0.2',
-                'pillow>=5.4.0'
+                # generic:
+                'pillow>=5.4.0',
+                # SID
+                'pyUSID',
+                'pyNSID',
+                # microscopy
+                # spm/afm
+                'igor',
+                # em/tem:
                 ]
 
 setup(
