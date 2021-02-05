@@ -1,3 +1,3 @@
-ScopeReaders
+SciFiReaders
 ============
-Tools for extracting data and metadata from materials microscopy / spectroscopy files
+Tools for extracting data and metadata from scientific data files
