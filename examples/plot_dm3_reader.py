@@ -52,7 +52,7 @@ if len(file_name) < 3 or file_name[-4:] != '.dm3':
 ####################################################################################
 # Read file
 # =========
-# We use the ScopeReader to read the file into a sidpy dataset.
+# We use the Reader to read the file into a sidpy dataset.
 # All metadata (absolutely everything) is saved in the ``original_metadata`` attribute
 # of the sidpy Dataset. If the selected file is not a dm3 File you get an ``IOError``.
 

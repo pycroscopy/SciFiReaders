@@ -5,7 +5,7 @@
 # from the environment for the first two.
 SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
-SPHINXPROJ    = ScopeReaders
+SPHINXPROJ    = SciFiReaders
 SOURCEDIR     = source
 BUILDDIR      = build
 

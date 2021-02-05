@@ -47,7 +47,7 @@ for root, dirs, files in os.walk(examples_source):
 
 # -- Project information -----------------------------------------------------
 
-project = 'ScopeReaders'
+project = 'SciFiReaders'
 copyright = '2020, Pycroscopy contributors'
 author = 'Pycroscopy contributors'
 
@@ -184,7 +184,7 @@ html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
-#html_title = u'ScopeReaders ' + sr_version
+#html_title = u'SciFiReaders ' + sr_version
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #html_short_title = None
@@ -276,7 +276,7 @@ html_search_language = 'en'
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'ScopeReadersdoc'
+htmlhelp_basename = 'SciFiReadersdoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -303,7 +303,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'ScopeReaders.tex', 'ScopeReaders Documentation',
+    (master_doc, 'SciFiReaders.tex', 'SciFiReaders Documentation',
      'Suhas Somnath, Cris R. Smith, and contributors', 'manual'),
 ]
 
@@ -332,7 +332,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'ScopeReaders', 'ScopeReaders Documentation',
+    (master_doc, 'SciFiReaders', 'SciFiReaders Documentation',
      [author], 1)
 ]
 
@@ -343,8 +343,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'ScopeReaders', 'ScopeReaders Documentation',
-     author, 'ScopeReaders',
+    (master_doc, 'SciFiReaders', 'SciFiReaders Documentation',
+     author, 'SciFiReaders',
      'Utilities for storing, visualizing, and processing Spectroscopic and '
      'Imaging Data USID)',
      'Miscellaneous'),
