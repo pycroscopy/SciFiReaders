@@ -1,7 +1,7 @@
 from __future__ import division, print_function, unicode_literals, absolute_import
 import unittest
 import sys
-sys.path.append("../ScopeReaders/")
+sys.path.append("../SciFiReaders/")
 
 
 class TestImport(unittest.TestCase):
