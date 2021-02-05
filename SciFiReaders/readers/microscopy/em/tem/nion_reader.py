@@ -172,7 +172,7 @@ class NionReader(sidpy.Reader):
             if axis.dimension_type == sidpy.DimensionType.SPECTRAL:
                 spectral_dims.append(dim)
 
-        # convert line-scan to spectral_image
+        # convert line-scan nxN to spectral_image 1xnxN
         if len(spectral_dims) == 1:
             if self.data_cube.ndim > 1:
                 self.data_cube = self.data_cube.reshape(1, self.data_cube.shape[0], self.data_cube.shape[1])
