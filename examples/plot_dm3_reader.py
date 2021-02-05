@@ -25,7 +25,7 @@ few python packages that will be necessary in the later steps.
 import sys
 from sidpy.io.interface_utils import get_QT_app
 sys.path.append('../')
-from ScopeReaders.microscopy.em.tem import DM3Reader
+from SciFiReaders.microscopy.em.tem import DM3Reader
 
 ####################################################################################
 # Open a file dialog

@@ -20,7 +20,7 @@ import sphinx_rtd_theme
 matplotlib.use('agg')
 sys.path.insert(0, os.path.abspath('../..'))
 #sys.setrecursionlimit(1500)
-from ScopeReaders import __version__ as sr_version
+from SciFiReaders import __version__ as sr_version
 
 
 # - Copy over examples folder to docs/source

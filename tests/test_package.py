@@ -7,6 +7,6 @@ sys.path.append("../ScopeReaders/")
 class TestImport(unittest.TestCase):
 
     def test_basic(self):
-        import ScopeReaders as sr
+        import SciFiReaders as sr
         print(sr.__version__)
         self.assertTrue(True)
