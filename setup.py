@@ -34,7 +34,7 @@ setup(
                 'files',
     long_description=long_description,
     classifiers=[
-        'Development Status :: 0 - Gamma',
+        'Development Status :: 1 - Apha',
         'Environment :: Console',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: MIT License',
