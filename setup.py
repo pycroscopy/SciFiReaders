@@ -10,7 +10,7 @@ with open(os.path.join(here, 'SciFiReaders/__version__.py')) as f:
     __version__ = f.read().split("'")[1]
 
 # TODO: Move requirements to requirements.txt
-requirements = [# basic
+requirements = [  # basic
                 'numpy>=1.10',
                 'toolz',  # dask installation failing without this
                 'cytoolz',  # dask installation failing without this
@@ -30,8 +30,8 @@ requirements = [# basic
 setup(
     name='SciFiReaders',
     version=__version__,
-    description='Tools for extracting data and metadata from materials '
-                'microscopy / spectroscopy files',
+    description='Tools for extracting data and metadata from scientific data '
+                'files',
     long_description=long_description,
     classifiers=[
         'Development Status :: 0 - Gamma',
