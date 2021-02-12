@@ -34,6 +34,9 @@ class ARhdf5Reader(Reader):
     or Tommaso Costanzo <tommaso.costanzo01@gmail.com> to get a
     copy of the converter. NOTE: the AR converter works only under
     windows.
+
+    NOTE: At this point, the z dimension vector is not correctly captured
+    Not immediately clear how to fix it. TODO: Check with Asylum
     """
 
     def read(self, verbose=False):
