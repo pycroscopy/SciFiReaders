@@ -1,3 +1,5 @@
 from .igor_ibw import IgorIBWReader
-__all__ = ['IgorIBWReader']
-all_readers = [IgorIBWReader]
+from .AR_hdf5  import ARhdf5Reader
+
+__all__ = ['IgorIBWReader', 'ARhdf5Reader']
+all_readers = [IgorIBWReader, ARhdf5Reader]
