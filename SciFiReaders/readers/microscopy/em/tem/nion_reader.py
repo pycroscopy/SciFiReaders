@@ -292,7 +292,7 @@ class NionReader(sidpy.Reader):
                                                        quantity='distance', dimension_type='spatial'))
                 spatial_name = chr(ord(spatial_name) + 1)
             else:
-                self.dimensions.append(sidpy.Dimension(values, name=f'generic_{dim}', units='generic',
+                self.dimensions.append(sidpy.Dimension(values, name='generic_{}'.format(dim), units='generic',
                                                        quantity='generic', dimension_type='UNKNOWN'))
 
     def get_filename(self):
