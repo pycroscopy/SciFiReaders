@@ -17,4 +17,21 @@ SciFiReaders
     :target: http://pepy.tech/project/SciFiReaders
     :alt: Downloads
 
-Tools for extracting data and metadata from scientific data files
+Tools for extracting data and metadata from scientific data files. Will read them into Sidpy datasets or lists of sidpy datasets. 
+
+Currently supporting the following formats:
+
+Generic:
+    - Image reader - for generic image formats
+Microscopy:
+    Electron microscopy:
+        - Nion
+        - DM3
+    Scanning probe microscopy:
+        - ARhdf5 (Asylum Research)
+        - Igor ibw
+        - Omicro asc
+    SID:
+        - USID (Universal spectral imaging data model)
+        - NSID (N-dimensional spectral imaging data model)
+
