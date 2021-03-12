@@ -75,7 +75,7 @@ class NanonisDatReader(Reader):
         for chan_ind, chan_name in enumerate(channel_names[1:]): #start from 1 because 0th column is the spectral one
 
             if verbose:
-                print('Making dataset with channel {}'.format(chan_name))
+                print('Making sidpy dataset with channel {}'.format(chan_name))
 
             # now write it to the sidpy dataset object
             data_set = sid.Dataset.from_array(raw_data[:,chan_ind+1], name=chan_name)
