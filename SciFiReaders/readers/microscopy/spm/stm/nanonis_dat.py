@@ -49,9 +49,11 @@ class NanonisDatReader(Reader):
         data_start = string_lines.index('[DATA]\n')
         header = string_lines[:data_start - 1]
 
-        channel_names = string_lines[data_start+1].split('\t')
-        channel_units = [re.search(r'\((.*?)\)',channel_names[ind]).group(1) for ind in range (len(channel_names))]
+        channel_names_with_units = string_lines[data_start+1].split('\t')
+        channel_names = [re.search(r'.* \((.*?)\)',channel_names_with_units[ind]).group(0) for ind in range (len(channel_names_with_units))]
+        channel_units = [re.search(r'\((.*?)\)',channel_names_with_units[ind]).group(1) for ind in range (len(channel_names_with_units))]
 
+        print(channel_names)
         # Extract parameters from the first few header lines
         parm_dict = self._read_parms(header)
 
