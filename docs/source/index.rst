@@ -6,9 +6,10 @@
 SciFiReaders Documentation
 ==========================
 
-**Tools for extracting data and metadata from materials microscopy / spectroscopy files**
+**Tools for extracting data and metadata from scientific data files**
 
-Jump to our `GitHub project page <https://github.com/pycroscopy/SciFiReaders>`_
+* Please the side panel on the left for other documentation pages on ``SciFiReaders``
+* Jump to our `GitHub project <https://github.com/pycroscopy/SciFiReaders>`_ to access the source code
 
 .. toctree::
    :glob:
@@ -16,6 +17,10 @@ Jump to our `GitHub project page <https://github.com/pycroscopy/SciFiReaders>`_
    :caption: SciFiReaders
 
    about
+   install
+   available_readers
+   contact
+
 
 Source code API
 ---------------
