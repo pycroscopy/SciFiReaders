@@ -23,7 +23,7 @@ class NanonisDatReader(Reader):
 
     """
 
-    def read(self, verbose=False, parm_encoding='utf-8'):
+    def read(self, verbose=False):
         """
         Reads the file given in file_path into a sidpy dataset
 
@@ -31,9 +31,6 @@ class NanonisDatReader(Reader):
         ----------
         verbose : Boolean (Optional)
             Whether or not to show  print statements for debugging
-        parm_encoding : str, optional
-            Codec to be used to decode the bytestrings into Python strings if
-            needed. Default 'utf-8'
 
         Returns
         -------
@@ -43,7 +40,6 @@ class NanonisDatReader(Reader):
 
         file_path = self._input_file_path
         folder_path, file_name = path.split(file_path)
-        file_name = file_name[:-4]
 
         # Extracting the raw data into memory
         file_handle = open(file_path, 'r')
@@ -59,16 +55,28 @@ class NanonisDatReader(Reader):
         # Extract parameters from the first few header lines
         parm_dict = self._read_parms(header)
 
+        if verbose:
+            print('Found parameters dictionary {}'.format(parm_dict))
+
         # Extract the STS data from subsequent lines
         raw_data = np.loadtxt(file_path, skiprows=data_start+2)
+        if verbose:
+            print('Read data of shape {}'.format(raw_data.shape))
 
-        # Generate the x / voltage / spectroscopic axis:
+        # Generate the x / voltage ß/ spectroscopic axis:
         volt_vec = raw_data[:,0]
-
+        if verbose:
+            print('Found spectroscopic vector of size {}'.format(volt_vec.shape))
+            print('Spectroscopy vector has title {}'.format(channel_names[0]))
+            print('Spectrsocopy vector values: {}'.format(volt_vec))
         datasets = [] #list of sidpy datasets that will be output
 
         # Add quantity and units
         for chan_ind, chan_name in enumerate(channel_names[1:]): #start from 1 because 0th column is the spectral one
+
+            if verbose:
+                print('Making dataset with channel {}'.format(chan_name))
+
             # now write it to the sidpy dataset object
             data_set = sid.Dataset.from_array(raw_data[:,chan_ind+1], name=chan_name)
             data_set.data_type = 'spectrum'
