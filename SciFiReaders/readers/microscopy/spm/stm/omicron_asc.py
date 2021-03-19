@@ -23,6 +23,7 @@ class AscReader(Reader):
     It seems they are probably NOT compatible with matrix controller outputs.
     See the group discussion at https://groups.google.com/g/pycroscopy/c/d7lcGnlPFpo/m/UEysliC8CAAJ
 
+    TODO: At this point this AscReader does not appear to work for non-Z spec files. Needs to be fixed!
     """
 
     def read(self, verbose=False, parm_encoding='utf-8'):
@@ -54,7 +55,7 @@ class AscReader(Reader):
 
         # Extract parameters from the first few header lines
         parm_dict, num_headers = self._read_parms(string_lines)
-
+        if verbose: print(parm_dict)
         num_rows = int(parm_dict['Main-y_pixels'])
         num_cols = int(parm_dict['Main-x_pixels'])
         num_pos = num_rows * num_cols
@@ -207,7 +208,7 @@ class AscReader(Reader):
 
         line = string_lines[1]
         if line.startswith('# Created by SPIP'):
-            line = line.replace('# Created by SPIP ', '').replace('\n', '')
+            line = line.replace('# Created by SPIP ', '').replace('\n', ' ')
             ind = line.index(' ')
             temp_dict['SPIP_version'] = line[:ind]
             temp_dict['creation_time'] = line[ind + 1:]
@@ -222,14 +223,18 @@ class AscReader(Reader):
             line = line.replace('# ', '')
             line = line.replace('\n', '')
             temp = line.split('=')
-            test = temp[1].strip()
             try:
-                test = float(test)
-                # convert those values that should be integers:
-                if test % 1 == 0:
-                    test = int(test)
-            except ValueError:
+                test = temp[1].strip()
+                try:
+                    test = float(test)
+                    # convert those values that should be integers:
+                    if test % 1 == 0:
+                        test = int(test)
+                except ValueError:
+                    pass
+            except IndexError:
                 pass
+
             temp_dict[temp[0].strip().replace('-', '_')] = test
 
         main_dict = {'Main': temp_dict.copy()}
