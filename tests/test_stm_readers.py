@@ -54,6 +54,8 @@ class TestNanonisDat(unittest.TestCase):
          'Z  (m)',
          'Excitation  (V)']
 
+        dim0_values = [datasets[ind].dim_0.values for ind in range(len(datasets))]
+
         for key in original_metadata:
             assert original_metadata[key] == metadata[key], "Metadata incorrect for key {}, should be {} " \
                     "but was read as {}".format(key, original_metadata[key], metadata[key])
@@ -69,8 +71,10 @@ class TestNanonisDat(unittest.TestCase):
                        "for dataset [{}] is {} but should be {}".format(ind, datasets[ind].data_descriptor,data_descriptors[ind])
 
             assert datasets[ind].shape[0]==256, "Dataset[{}] is of size 256 but was read in as {}".format(ind, datasets[ind].shape[0])
-            assert type(datasets[ind]._axes) == sidpy.sid.dimension.Dimension, "Dataset should have dimension type " \
+            assert type(datasets[ind]._axes[0]) == sidpy.sid.dimension.Dimension, "Dataset should have dimension type " \
                                            "of sidpy Dimension, but is instead {}".format(type(datasets[ind]._axes))
+
+            assert datasets[ind].dim_0.values == dim0_values[ind], "Dimension 0 for dataset {} did not match!".format(ind)
 
 class TestOmicronAsc(unittest.TestCase):
 
