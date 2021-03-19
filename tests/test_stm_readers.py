@@ -74,7 +74,7 @@ class TestNanonisDat(unittest.TestCase):
             assert type(datasets[ind]._axes[0]) == sidpy.sid.dimension.Dimension, "Dataset should have dimension type " \
                                            "of sidpy Dimension, but is instead {}".format(type(datasets[ind]._axes))
 
-            assert datasets[ind].dim_0.values == dim0_values[ind], "Dimension 0 for dataset {} did not match!".format(ind)
+            assert datasets[ind].dim_0.values.all() == dim0_values[ind].all(), "Dimension 0 for dataset {} did not match!".format(ind)
 
 class TestOmicronAsc(unittest.TestCase):
 
