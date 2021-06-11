@@ -8,7 +8,6 @@ Basic usage
 | `Read nion file <./read_nion_files.ipynb>`_
 | `Read nion file <./convert_hyperspy.ipynb>`_
 
-
 .. toctree::
    :maxdepth: 1
    :hidden:
