@@ -4,7 +4,8 @@ import numpy as np
 try:
     import hyperspy.api as hs
 except ModuleNotFoundError:
-    raise ModuleNotFoundError("Hyperspy is not installed")
+    pass
+    # raise ModuleNotFoundError("Hyperspy is not installed")
 
 
 def convert_hyperspy(s):
