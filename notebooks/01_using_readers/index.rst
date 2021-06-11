@@ -5,6 +5,7 @@ Thw following notebooks illustrate how one can use the ``Readers`` in ``SciFiRea
 
 * `Digital Micrograph DM3 files <./read_dm3_files.ipynb>`_
 * `Nion Company - Scanning Transmission Electron Microscope files <./read_nion_files.ipynb>`_
+* `Hyperspy - Hyperspy data conversion <./convert_hyperspy.ipynb>`_
 
 .. toctree::
    :maxdepth: 1
@@ -12,3 +13,4 @@ Thw following notebooks illustrate how one can use the ``Readers`` in ``SciFiRea
 
    read_dm3_files.ipynb
    read_nion_files.ipynb
+   convert_hyperspy.ipynb
