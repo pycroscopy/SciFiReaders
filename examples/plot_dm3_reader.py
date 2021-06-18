@@ -23,9 +23,9 @@ few python packages that will be necessary in the later steps.
 """
 
 import sys
-from sidpy.io.interface_utils import get_QT_app
+from sidpy.io.interface_utils import get_QT_app, openfile_dialog
 sys.path.append('../')
-from SciFiReaders.microscopy.em.tem import DM3Reader
+from SciFiReaders import DM3Reader
 
 ####################################################################################
 # Open a file dialog
@@ -37,8 +37,8 @@ app = get_QT_app()
 
 # Then we can open QT file dialog to select a file
 
-# file_name = openfile_dialog()
-file_name = "C:/Users/gduscher/OneDrive - University of Tennessee/2020 Experiment/2020-09-20/10-EELS Acquire (dark ref corrected)CLDAl.dm3"
+file_name = openfile_dialog()
+#file_name = "C:/Users/gduscher/OneDrive - University of Tennessee/2020 Experiment/2020-09-20/10-EELS Acquire (dark ref corrected)CLDAl.dm3"
 
 print(file_name)
 
