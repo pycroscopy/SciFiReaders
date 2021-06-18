@@ -14,7 +14,7 @@ requirements = [  # basic
                 'numpy>=1.10',
                 'toolz',  # dask installation failing without this
                 'cytoolz',  # dask installation failing without this
-                'dask>=0.10',
+                'dask>=2.20.0',
                 'sidpy>=0.0.2',
                 # generic:
                 'pillow>=5.4.0',
@@ -59,7 +59,7 @@ setup(
     author_email='pycroscopy@gmail.com',
     install_requires=requirements,
     setup_requires=['pytest-runner'],
-    tests_require=['unittest2;python_version<"3.0"', 'pytest'],
+    tests_require=['unittest2;python_version<"3.0"', 'pytest', 'hyperspy'],
     platforms=['Linux', 'Mac OSX', 'Windows 10/8.1/8/7'],
     # package_data={'sample':['dataset_1.dat']}
     test_suite='pytest',
