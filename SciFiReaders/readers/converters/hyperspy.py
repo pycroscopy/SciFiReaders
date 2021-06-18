@@ -76,6 +76,10 @@ def convert_hyperspy(s):
                 else:
                     dimension_type = 'reciprocal'
                 dim_array = np.arange(axis['size']) * axis['scale'] + axis['offset']
+                if axis['units'] == '' or not isinstance(axis['units'], str):
+                    axis['units'] = 'pixel'
+                if not isinstance(axis['name'], str):
+                    axis['name'] = str(key)
                 dataset.set_dimension(int(key[-1]), sidpy.Dimension(dim_array, name=axis['name'], units=axis['units'],
                                                                     quantity=axis['name'],
                                                                     dimension_type=dimension_type))
