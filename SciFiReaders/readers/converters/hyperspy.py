@@ -53,14 +53,18 @@ def convert_hyperspy(s):
                 dataset.data_type = 'image'
             elif s.data.ndim == 3:
                 dataset.data_type = 'image_stack'
+
             for key, axis in axes.items():
                 if axis['navigate']:
                     dimension_type = 'temporal'
                 else:
                     dimension_type = 'spatial'
                 dim_array = np.arange(axis['size']) * axis['scale'] + axis['offset']
-                if axis['units'] == '':
+                if axis['units'] == '' or not isinstance(axis['units'], str):
                     axis['units'] = 'pixel'
+                if not isinstance(axis['name'], str):
+                    axis['name'] = str(key)
+
                 dataset.set_dimension(int(key[-1]), sidpy.Dimension(dim_array, name=axis['name'], units=axis['units'],
                                                                     quantity=axis['name'],
                                                                     dimension_type=dimension_type))
@@ -78,7 +82,8 @@ def convert_hyperspy(s):
     dataset.metadata = dict(s.metadata)
     dataset.original_metadata = dict(s.original_metadata)
     dataset.title = dataset.metadata['General']['title']
-    dataset.units = dataset.metadata['Signal']['quantity '].split('(')[-1][:-1]
-    dataset.quantity = dataset.metadata['Signal']['quantity '].split('(')[0]
+    if 'quantity' in dataset.metadata['Signal']:
+        dataset.units = dataset.metadata['Signal']['quantity'].split('(')[-1][:-1]
+        dataset.quantity = dataset.metadata['Signal']['quantity'].split('(')[0]
     dataset.source = 'hyperspy'
     return dataset
