@@ -1,5 +1,5 @@
 """
-Utilities for automated ingestion of data and metadata in proprietary file formats
+Utilities for automated ingestion of data and metadata from proprietary file formats
 """
 
 from warnings import warn
@@ -8,16 +8,19 @@ from .readers import all_readers
 
 def ingest(file_path):
     """
-    Translates raw data file(s) in proprietary file formats into a h5USID file
+    Extracts sidpy.Dataset objects from proprietary data files.
+    The sidpy.Dataset object(s) would contain both raw data and metadata.
+    More than one Dataset object could be returned from this function.
 
     Parameters
     ----------
     file_path : str
-        Path to raw data file(s)
+        Path to raw data file
 
     Returns
     -------
-    Translated file (output of translator.read())
+    list
+        List of sidpy.Dataset objects
     """
     valid_readers = []
     for this_reader in all_readers:
