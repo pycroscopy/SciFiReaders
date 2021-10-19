@@ -20,9 +20,17 @@ Please `get in touch with us <./contact.html>`_ if you would like to contribute 
       * Asylum Research (ARhdf5)
       * Asylum Research / Igor (ibw)
     * Scanning Tunnelling Microscopy:
+
       * Omicron (asc)
+      * Nanonis (dat)
+* Spectroscopy
+
+  * Princeton Instruments CCD camera - Raman (SPE)
 
 * Pycroscopy Output formats:
 
   * USID (Universal spectral imaging data model)
   * NSID (N-dimensional spectral imaging data model)
+* Other libraries:
+
+  * ``HyperSpy.Signal``
