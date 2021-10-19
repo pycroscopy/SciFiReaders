@@ -8,11 +8,11 @@ Created on Fri May 14 2020
 @author: Sumner Harris
 """
 
-import sidpy
 import numpy as np
 import re
+from sidpy import Dataset, Dimension, Reader
 
-class RamanSpeReader(sidpy.Reader):
+class RamanSpeReader(Reader):
     
     def read(self):
         """
@@ -52,18 +52,18 @@ class RamanSpeReader(sidpy.Reader):
             f.close()
             
         # create the sidpy dataset
-        data_set = sidpy.Dataset.from_array(intensity, name='Raman Spectra')
+        data_set = Dataset.from_array(intensity, name='Raman Spectra')
 
         data_set.data_type = 'spectrum'
         data_set.units = 'counts'
         data_set.quantity = 'Intensity'
 
         # set dimensions
-        data_set.set_dimension(0, sidpy.Dimension(raman_shift_wavenumbers, name='Raman Shift',
+        data_set.set_dimension(0, Dimension(raman_shift_wavenumbers, name='Raman Shift',
                                                  units = 'cm-1',
                                                  quantity='Raman shift',
                                                  dimension_type='spectral'))
-        data_set.set_dimension(1, sidpy.Dimension(intensity, name='Intensity',
+        data_set.set_dimension(1, Dimension(intensity, name='Intensity',
                                                  units = 'counts',
                                                  quantity='intensity',
                                                  dimension_type='spectral'))        
