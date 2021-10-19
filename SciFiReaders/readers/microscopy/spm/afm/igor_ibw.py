@@ -89,7 +89,7 @@ class IgorIBWReader(Reader):
                                                         dimension_type='spatial'))
 
                 # append metadata
-                data_set.metadata = parm_dict
+                data_set.original_metadata = parm_dict
                 data_set.data_type = 'image'
 
                 #Finally, append it
@@ -132,7 +132,7 @@ class IgorIBWReader(Reader):
 
                 #append metadata
                 data_set.data_type = 'line_plot'
-                data_set.metadata = parm_dict
+                data_set.original_metadata = parm_dict
 
                 #Add dataset to list
                 datasets.append(data_set)
