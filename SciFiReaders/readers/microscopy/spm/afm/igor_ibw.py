@@ -71,7 +71,7 @@ class IgorIBWReader(Reader):
 
             for channel in range(images.shape[-1]):
                 #Convert it to sidpy dataset object
-                data_set = sid.Dataset.from_array(images[:,:,channel], name='Image')
+                data_set = sid.Dataset.from_array(images[:,:,channel], title=chan_labels[channel])
                 data_set.data_type = 'Image'
 
                 #Add quantity and units
@@ -120,7 +120,7 @@ class IgorIBWReader(Reader):
                 # For now, we'll shove the Z sensor data into the spectroscopic values.
 
                 #convert to sidpy dataset
-                data_set = sid.Dataset.from_array((images[:,channel,0]), name='Force Curve (from Igor)')
+                data_set = sid.Dataset.from_array((images[:,channel,0]), title=chan_labels[channel])
 
                 #Set units, quantity
                 data_set.units = chan_units[channel]
