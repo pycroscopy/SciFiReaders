@@ -25,7 +25,7 @@ class TestDM3Reader(unittest.TestCase):
 
     def test_load_wrong_file(self):
         # Test behaviour of wrong data file
-        file_path = '../data/STO_Image_Stack_(HAADF).h5'
+        file_path = './data/STO_Image_Stack_(HAADF).h5'
         with self.assertRaises(TypeError):
             reader = SciFiReaders.DM3Reader(file_path)
 
