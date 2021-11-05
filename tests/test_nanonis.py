@@ -1,6 +1,7 @@
 import unittest
 import sys
 import sidpy
+import os
 
 sys.path.append("../SciFiReaders/")
 from SciFiReaders import NanonisDatReader
@@ -11,6 +12,8 @@ class TestNanonisDat(unittest.TestCase):
 
     def test_load_test_dat_file(self):
         #Test if the test dat file can be read in correctly
+        print('Current directory')
+        print(os.path.abspath(os.path.curdir))
         file_path = './data/Bias-Spectroscopy041.dat'
         data_translator = NanonisDatReader(file_path)
         datasets = data_translator.read(verbose=False)
