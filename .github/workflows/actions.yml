@@ -54,8 +54,6 @@ jobs:
         pip install pytest-cov
         pip install hyperspy
         pwd
-        cd ..
-        pwd
         
         pytest --cov=./ --cov-report=xml
         
