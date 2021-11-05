@@ -14,8 +14,13 @@ class TestNanonisDat(unittest.TestCase):
         #Test if the test dat file can be read in correctly
         print('Current directory')
         print(os.path.abspath(os.path.curdir))
+        print('Contents of this directory')
+        print(os.listdir(os.path.abspath(os.path.curdir)))
         file_path = './data/Bias-Spectroscopy041.dat'
-        data_translator = NanonisDatReader(file_path)
+        full_path = os.path.join(os.path.join(os.path.abspath(os.path.curdir), 'data'), 'Bias-Spectroscopy041.dat')
+        print('Looking for following data file')
+        print(full_path)
+        data_translator = NanonisDatReader(full_path)
         datasets = data_translator.read(verbose=False)
         assert len(datasets)==24, "Length of dataset should be 24 but is instead {}".format(len(datasets))
         metadata = datasets[0].metadata
