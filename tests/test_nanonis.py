@@ -5,14 +5,14 @@ import os
 
 sys.path.append("../SciFiReaders/")
 from SciFiReaders import NanonisDatReader
-test_path = os.path.dirname(__file__)
+data_path = os.path.join(os.path.dirname(__file__), '../data')
 
 class TestNanonisDat(unittest.TestCase):
     #Tests the nanonis_dat reader
 
     def test_load_test_dat_file(self):
         #Test if the test dat file can be read in correctly
-        file_path = os.path.join (test_path, '../data/Bias-Spectroscopy041.dat')
+        file_path = os.path.join (data_path, 'Bias-Spectroscopy041.dat')
         data_translator = NanonisDatReader(file_path)
         datasets = data_translator.read(verbose=False)
         assert len(datasets)==24, "Length of dataset should be 24 but is instead {}".format(len(datasets))

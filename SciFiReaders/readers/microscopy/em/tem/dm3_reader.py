@@ -228,6 +228,9 @@ class DM3Reader(sidpy.Reader):
         # don't read but close file
         self.__f.close()
 
+    def close(self):
+        self.__f.close()
+
     def read(self):
         try:
             self.__f = open(self.__filename, 'rb')
