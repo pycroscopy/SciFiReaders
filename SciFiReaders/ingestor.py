@@ -1,40 +1,55 @@
 """
-Utilities for automated ingestion of data and metadata in proprietary file formats
+Utilities for automated ingestion of data and metadata from proprietary file formats
 """
 
-from __future__ import division, unicode_literals, print_function, absolute_import
 from warnings import warn
-from . import readers
+from .readers import all_readers
 
-all_translators = readers.all_readers
 
 def ingest(file_path):
     """
-    Translates raw data file(s) in proprietary file formats into a h5USID file
+    Extracts sidpy.Dataset objects from proprietary data files.
+    The sidpy.Dataset object(s) would contain both raw data and metadata.
+    More than one Dataset object could be returned from this function.
 
     Parameters
     ----------
     file_path : str
-        Path to raw data file(s)
+        Path to raw data file
 
     Returns
     -------
-    Translated file (output of translator.read())
+    list
+        List of sidpy.Dataset objects
     """
-    valid_translators = []
-    for translator in all_translators:
-        t = translator(file_path)
-        if t.can_read():
-            valid_translators.append(translator)
-    if len(valid_translators) == 0:
+    valid_readers = []
+    for this_reader in all_readers:
+        try:
+            t = this_reader(file_path)
+        except Exception:
+            continue
+        try:
+            # TODO: This code should be absorbed into the constructor. That can fail anyway
+            readable = t.can_read()
+        except Exception:
+            continue
+        if readable:
+            valid_readers.append(this_reader)
+            # print('{} is a valid reader'.format(this_reader))
+            
+    final_reader = valid_readers[0]
+    if len(valid_readers) == 0:
         raise TypeError(
-            "The automatic search for a suitable translator was unsuccessful")
-    elif len(valid_translators) > 1:
-        warn("Multiple translators may be able to read your file."
-             + "The {} will be applied.".format(valid_translators[-1])
+            "The automatic search for a suitable Reader was unsuccessful")
+    elif len(valid_readers) > 1:
+        warn("Multiple Reader s may be able to read your file."
+             + "The {} will be applied.".format(valid_readers[-1])
              + " Consider specifying 'force_translator'")
-        translated = valid_translators[-1](file_path).read()
-    else:
-        translated = valid_translators[0](file_path).read()
+        final_reader = valid_readers[-1]
+    
+    try:
+        extracted = final_reader(file_path).read()
+    except Exception:
+        return None
 
-    return translated
+    return extracted

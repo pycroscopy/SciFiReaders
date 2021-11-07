@@ -16,6 +16,10 @@ SciFiReaders
 .. image:: http://pepy.tech/badge/SciFiReaders
     :target: http://pepy.tech/project/SciFiReaders
     :alt: Downloads
+    
+.. image:: https://codecov.io/gh/pycroscopy/SciFiReaders/branch/master/graph/badge.svg?token=5511SG1YWE
+    :target: https://codecov.io/gh/pycroscopy/SciFiReaders
+    :alt: Coverage
 
 Tools for extracting data and metadata from scientific data files.
 Extracted information are returned as `sidpy.Dataset <https://pycroscopy.github.io/sidpy/_autosummary/sidpy.sid.dataset.Dataset.html#sidpy.sid.dataset.Dataset>`_ objects.

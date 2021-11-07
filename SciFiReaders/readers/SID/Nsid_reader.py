@@ -10,7 +10,6 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 import sys
-from warnings import warn
 
 import h5py
 import sidpy
@@ -39,7 +38,6 @@ class NSIDReader(sidpy.Reader):
         specific datasets or sub-trees that need to be read instead of opening
         the file again outside the context of this Reader.
         """
-
         super(NSIDReader, self).__init__(file_path)
 
         # Let h5py raise an OS error if a non-HDF5 file was provided

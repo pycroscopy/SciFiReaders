@@ -1,11 +1,19 @@
 from __future__ import division, print_function, unicode_literals, absolute_import
 import unittest
+import pytest
 import numpy as np
 import sys
-
 import sidpy
-import hyperspy.api as hs
-import hyperspy.datasets.artificial_data as ad
+
+hyperspy = pytest.importorskip("hyperspy", reason="hyperspy not installed")
+
+try:
+    import hyperspy.api as hs
+    import hyperspy.datasets.artificial_data as ad
+except ModuleNotFoundError:
+    hs = None
+    ad = None
+
 
 sys.path.append("../SciFiReaders/")
 import SciFiReaders

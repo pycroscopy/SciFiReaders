@@ -4,8 +4,7 @@ import numpy as np
 try:
     import hyperspy.api as hs
 except ModuleNotFoundError:
-    pass
-    # raise ModuleNotFoundError("Hyperspy is not installed")
+    hs = None
 
 
 def convert_hyperspy(s):
@@ -20,7 +19,8 @@ def convert_hyperspy(s):
     ------
     dataset: sidpy.Dataset
     """
-
+    if not hs:
+        raise ModuleNotFoundError("Hyperspy is not installed")
     if not isinstance(s, (hs.signals.Signal1D, hs.signals.Signal2D)):
         raise TypeError('This is not a hyperspy signal object')
     dataset = sidpy.Dataset.from_array(s, name=s.metadata.General.title)
