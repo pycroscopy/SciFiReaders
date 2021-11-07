@@ -10,12 +10,12 @@ sys.path.insert(0, "../SciFiReaders/")
 import SciFiReaders
 from SciFiReaders import EMDReader
 
-my_path = os.path.dirname(__file__)
+data_path = os.path.join(os.path.dirname(__file__), '../data')
+
 
 class TestEMDReader(unittest.TestCase):
     def test_data_available(self):
-        pass
-    """    file_name = '../data/fei_emd_spectrum.emd'
+        file_name = os.path.join(data_path, 'fei_emd_spectrum.emd')
         emd_reader = EMDReader(file_name)
         self.assertIsInstance(emd_reader, sidpy.Reader)
 
@@ -272,6 +272,6 @@ class TestEMDReader(unittest.TestCase):
                                   7.00000e+00, 3.00000e+00, 2.00000e+00, 2.00000e+00, 1.00000e+00])
         self.assertTrue(np.allclose(np.array(datasets[0])[100:200], array_100_200, rtol=1e-5, atol=1e-2))
 
-    """
+
 if __name__ == '__main__':
     unittest.main()
