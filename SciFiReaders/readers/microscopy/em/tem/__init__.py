@@ -12,7 +12,8 @@ Submodules
 """
 from .dm3_reader import DM3Reader
 from .nion_reader import NionReader
+from .emd_reader import EMDReader
 
-__all__ = ['DM3Reader', 'NionReader']
+__all__ = ['DM3Reader', 'NionReader', 'EMDReader']
 
-all_readers = [DM3Reader, NionReader]
+all_readers = [DM3Reader, NionReader, EMDReader]
