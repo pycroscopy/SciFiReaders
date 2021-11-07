@@ -23,6 +23,7 @@ __all__ = ["EMDReader", "version"]
 
 version = '0.1beta'
 
+
 debugLevel = 0  # 0=none, 1-3=basic, 4-5=simple, 6-10 verbose
 
 if sys.version_info.major == 3:
@@ -30,7 +31,6 @@ if sys.version_info.major == 3:
 
 
 class EMDReader(sidpy.Reader):
-
     def __init__(self, file_path):
         """
         Creates an instance of EMDReader which can read one or more HDF5
