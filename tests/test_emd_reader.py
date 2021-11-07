@@ -17,12 +17,15 @@ class TestEMDReader(unittest.TestCase):
     def test_data_available(self):
         file_name = os.path.join(data_path, 'fei_emd_spectrum.emd')
         emd_reader = EMDReader(file_name)
+
         self.assertIsInstance(emd_reader, sidpy.Reader)
+        emd_reader.close()
 
     def test_read_spectrum(self):
         file_name = os.path.join(data_path, 'fei_emd_spectrum.emd')
         emd_reader = EMDReader(file_name)
         datasets = emd_reader.read()
+        emd_reader.close()
 
         self.assertIsInstance(datasets[0], sidpy.Dataset)
         self.assertTrue(datasets[0].ndim == 1)
