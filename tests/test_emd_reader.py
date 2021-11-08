@@ -275,6 +275,27 @@ class TestEMDReader(unittest.TestCase):
                                   7.00000e+00, 3.00000e+00, 2.00000e+00, 2.00000e+00, 1.00000e+00])
         self.assertTrue(np.allclose(np.array(datasets[0])[100:200], array_100_200, rtol=1e-5, atol=1e-2))
 
+    def test_read_image(self):
+        file_name = os.path.join(data_path, 'fei_emd_image.emd')
+        emd_reader = EMDReader(file_name)
+        datasets = emd_reader.read()
+        emd_reader.close()
+
+        self.assertIsInstance(datasets[0], sidpy.Dataset)
+        self.assertTrue(datasets[0].data_type.name, 'IMAGE')
+        self.assertTrue(datasets[0].ndim == 2)
+        self.assertTrue(len(datasets) == 1)
+        print(datasets[0].original_metadata)
+        original_metadata = datasets[0].original_metadata
+
+        self.assertTrue(datasets[0].units == 'counts')
+        self.assertTrue(datasets[0].quantity == 'intensity')
+        self.assertIsInstance(datasets[0].x, sidpy.Dimension)
+        self.assertTrue(original_metadata['Core']['MetadataDefinitionVersion'] == '7.9')
+        self.assertTrue(original_metadata['Instrument']['Manufacturer'] == 'FEI Company')
+        self.assertTrue(original_metadata['Acquisition']['SourceType'] == 'XFEG')
+        self.assertTrue(original_metadata['Optics']['AccelerationVoltage'] == '200000')
+
 
 if __name__ == '__main__':
     unittest.main()
