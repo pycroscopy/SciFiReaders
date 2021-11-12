@@ -5,6 +5,8 @@ import sidpy
 
 sys.path.append("../SciFiReaders/")
 import SciFiReaders
+from SciFiReaders.readers.microscopy.em.tem import dm4_reader
+
 data_path = os.path.join(os.path.dirname(__file__), '../data')
 
 
@@ -18,6 +20,24 @@ class TestDM3Reader(unittest.TestCase):
         self.assertEqual(datasets.title, 'EELS_STO')
         self.assertEqual(datasets.source, 'DM3Reader')
         self.assertEqual(datasets.data_type.name, 'SPECTRUM')
+
+    def test_dm4(self):
+        file_path = os.path.join(data_path, 'EELS_STO.dm4')
+        dm4data = dm4_reader.DM4File.open(file_path)
+
+        tags = dm4data.read_directory()
+        print(tags.keys())
+
+
+    def test_load_dm4_file(self):
+        # Test if the test dm3 file can be read in correctly
+        file_path = os.path.join (data_path, 'EELS_STO.dm4')
+        reader = SciFiReaders.DM3Reader(file_path)
+        datasets = reader.read()
+        self.assertEqual(datasets.title, 'EELS_STO')
+        self.assertEqual(datasets.source, 'DM3Reader')
+        self.assertEqual(datasets.data_type.name, 'SPECTRUM')
+
 
     def test_load_no_file(self):
         file_path = os.path.join(data_path, 'EELS_STO.dm')

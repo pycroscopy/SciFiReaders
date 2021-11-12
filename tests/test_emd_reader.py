@@ -14,6 +14,7 @@ data_path = os.path.join(os.path.dirname(__file__), '../data')
 
 
 class TestEMDReader(unittest.TestCase):
+
     def test_data_available(self):
         file_name = os.path.join(data_path, 'fei_emd_spectrum.emd')
         emd_reader = EMDReader(file_name)
@@ -289,6 +290,7 @@ class TestEMDReader(unittest.TestCase):
         original_metadata = datasets[0].original_metadata
 
         self.assertTrue(datasets[0].units == 'counts')
+        self.assertTrue(datasets[0].shape == (512, 512))
         self.assertTrue(datasets[0].quantity == 'intensity')
         self.assertIsInstance(datasets[0].x, sidpy.Dimension)
         self.assertTrue(original_metadata['Core']['MetadataDefinitionVersion'] == '7.9')
