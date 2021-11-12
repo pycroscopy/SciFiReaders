@@ -5,30 +5,8 @@ import sidpy
 
 sys.path.append("../SciFiReaders/")
 import SciFiReaders
+
 data_path = os.path.join(os.path.dirname(__file__), '../data')
-
-
-class TestDM3Reader(unittest.TestCase):
-
-    def test_load_dm3_file(self):
-        # Test if the test dm3 file can be read in correctly
-        file_path = os.path.join (data_path, 'EELS_STO.dm3')
-        reader = SciFiReaders.DM3Reader(file_path)
-        datasets = reader.read()
-        self.assertEqual(datasets.title, 'EELS_STO')
-        self.assertEqual(datasets.source, 'DM3Reader')
-        self.assertEqual(datasets.data_type.name, 'SPECTRUM')
-
-    def test_load_no_file(self):
-        file_path = os.path.join(data_path, 'EELS_STO.dm')
-        with self.assertRaises(FileNotFoundError):
-            reader = SciFiReaders.DM3Reader(file_path)
-
-    def test_load_wrong_file(self):
-        # Test behaviour of wrong data file
-        file_path = os.path.join(data_path, 'STO_Image_Stack_(HAADF).h5')
-        with self.assertRaises(TypeError):
-            reader = SciFiReaders.DM3Reader(file_path)
 
 
 class TestNionReader(unittest.TestCase):

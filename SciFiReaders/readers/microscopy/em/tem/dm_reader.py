@@ -4,7 +4,7 @@
 Will move to Scope Reader
 
 ################################################################################
-# Python class for reading GATAN DM3 (DigitalMicrograph) files
+# Python class for reading GATAN DM3/DM4 (DigitalMicrograph) files
 # and extracting all metadata
 # --
 # tested on EELS spectra, spectrum images and single-image files and image-stacks
@@ -17,6 +17,7 @@ Will move to Scope Reader
 #
 # Extended for EELS support by Gerd Duscher, UTK 2012
 # Rewritten for integration of sidpy 2020
+# Added support for DM4 2021
 #
 # Works for python 3
 #
@@ -42,126 +43,89 @@ debugLevel = 0  # 0=none, 1-3=basic, 4-5=simple, 6-10 verbose
 if sys.version_info.major == 3:
     unicode = str
 
-
-# ### utility functions ###
-
-# ## binary data reading functions ###
-
-
-def read_long(f):
-    """Read 4 bytes as integer in file f"""
-    read_bytes = f.read(4)
-    return struct.unpack('>l', read_bytes)[0]
-
-
-def read_64_long(f):
-    read_bytes = f.read(8)
-    return struct.unpack('>Q', read_bytes)[0]
+DM4DataTypeDict = {2: {'num_bytes': 2, 'signed': True, 'type_format': 'h'},
+                   3: {'num_bytes': 4, 'signed': True, 'type_format': 'i'},
+                   4: {'num_bytes': 2, 'signed': False, 'type_format': 'H'},
+                   5: {'num_bytes': 4, 'signed': False, 'type_format': 'I'},
+                   6: {'num_bytes': 4, 'signed': False, 'type_format': 'f'},
+                   7: {'num_bytes': 8, 'signed': False, 'type_format': 'd'},  # 8byte float
+                   8: {'num_bytes': 1, 'signed': False, 'type_format': '?'},
+                   9: {'num_bytes': 1, 'signed': True, 'type_format': 'c'},
+                   10: {'num_bytes': 1, 'signed': True, 'type_format': 'b'},
+                   11: {'num_bytes': 8, 'signed': True, 'type_format': 'q'},
+                   12: {'num_bytes': 8, 'signed': True, 'type_format': 'Q'}
+                   }
 
 
-def read_short(f):
-    """Read 2 bytes as integer in file f"""
-    read_bytes = f.read(2)
-    return struct.unpack('>h', read_bytes)[0]
+def tag_is_directory(tag):
+    return tag.type == 20
 
 
-def read_byte(f):
-    """Read 1 byte as integer in file f"""
-    read_bytes = f.read(1)
-    return struct.unpack('>b', read_bytes)[0]
+def read_header_dm(dmfile):
+    dmfile.seek(0)
+    dm_version = struct.unpack_from('>I', dmfile.read(4))[0]  # int.from_bytes(dmfile.read(4), byteorder='big')
+    if dm_version == 3:
+        file_size = struct.unpack_from('>I', dmfile.read(8))[0]
+        dm_header_size = 4 + 4 + 4
+    elif dm_version == 4:
+        file_size = struct.unpack_from('>Q', dmfile.read(8))[0]
+        dm_header_size = 4 + 8 + 4
+    else:
+        raise TypeError('This is not a DM3 or DM4 File')
+    byteorder = struct.unpack_from('>I', dmfile.read(4))[0]
+    if byteorder == 1:
+        endian = '>'
+    else:
+        endian = '<'
+
+    return dm_version, file_size, endian, dm_header_size
 
 
-def read_bool(f):
-    """Read 1 byte as boolean in file f"""
-    read_val = read_byte(f)
-    return read_val != 0
+def _read_tag_name(dm_file):
+    tag_name_len = struct.unpack_from('>H', dm_file.read(2))[0]  # DM4 specifies this property as always big endian
+
+    tag_name = '0'
+    if tag_name_len > 0:
+        data = dm_file.read(tag_name_len)
+        try:
+            tag_name = data.decode('utf-8', errors='ignore')
+        except UnicodeDecodeError:
+            tag_name = None
+
+    return tag_name
 
 
-def read_char(f):
-    """Read 1 byte as char in file f"""
-    read_bytes = f.read(1)
-    return struct.unpack('c', read_bytes)[0]
+def _read_tag_garbage_str(dmfile):
+    """
+    DM4 has four bytes of % symbols in the tag.  Ensure it is there.
+    """
+    garbage_str = dmfile.read(4).decode('utf-8')
+    assert(garbage_str == '%%%%')
 
 
-def read_string(f, length=1):
+def _read_tag_data_info(dmfile, dm_version):
+    if dm_version == 3:
+        tag_array_length = struct.unpack('>l', dmfile.read(4))[0]
+        format_str = '>' + tag_array_length * 'l'  # Big endian signed long
+        tag_array_types = struct.unpack_from(format_str, dmfile.read(4 * tag_array_length))
+    else:
+        tag_array_length = struct.unpack_from('>Q', dmfile.read(8))[0]
+        # DM4 specifies this property as always big endian
+        format_str = '>' + tag_array_length * 'q'  # Big endian signed long
+
+        tag_array_types = struct.unpack_from(format_str, dmfile.read(8 * tag_array_length))
+
+    return tag_array_types
+
+
+def read_string(dm_file, length=1):
     """Read len bytes as a string in file f"""
-    read_bytes = f.read(length)
+    read_bytes = dm_file.read(length)
     str_fmt = '>' + str(length) + 's'
     return struct.unpack(str_fmt, read_bytes)[0]
 
 
-def read_le_short(f):
-    """Read 2 bytes as *little endian* integer in file f"""
-    read_bytes = f.read(2)
-    return struct.unpack('<h', read_bytes)[0]
-
-
-def read_le_long(f):
-    """Read 4 bytes as *little endian* integer in file f"""
-    read_bytes = f.read(4)
-    return struct.unpack('<l', read_bytes)[0]
-
-
-def read_leu_short(f):
-    """Read 2 bytes as *little endian* unsigned integer in file f"""
-    read_bytes = f.read(2)
-    return struct.unpack('<H', read_bytes)[0]
-
-
-def read_leu_long(f):
-    """Read 4 bytes as *little endian* unsigned integer in file f"""
-    read_bytes = f.read(4)
-    return struct.unpack('<L', read_bytes)[0]
-
-
-def read_le_float(f):
-    """Read 4 bytes as *little endian* float in file f"""
-    read_bytes = f.read(4)
-    return struct.unpack('<f', read_bytes)[0]
-
-
-def read_le_double(f):
-    """Read 8 bytes as *little endian* double in file f"""
-    read_bytes = f.read(8)
-    return struct.unpack('<d', read_bytes)[0]
-
-
-# constants for encoded data types ##
-SHORT = 2
-LONG = 3
-USHORT = 4
-ULONG = 5
-FLOAT = 6
-DOUBLE = 7
-BOOLEAN = 8
-CHAR = 9
-OCTET = 10
-STRUCT = 15
-STRING = 18
-ARRAY = 20
-
-# - association data type <--> reading function
-readFunc = {
-    SHORT: read_le_short,
-    LONG: read_le_long,
-    USHORT: read_leu_short,
-    ULONG: read_leu_long,
-    FLOAT: read_le_float,
-    DOUBLE: read_le_double,
-    BOOLEAN: read_bool,
-    CHAR: read_char,
-    OCTET: read_char,  # difference with char???
-}
-
-# other constants ##
-IMGLIST = "root.ImageList."
-OBJLIST = "root.DocumentObjectList."
-MAXDEPTH = 64
-
-
-# END constants ##
-
-class DM3Reader(sidpy.Reader):
+class DMReader(sidpy.Reader):
     debugLevel = -1
 
     """
@@ -182,83 +146,38 @@ class DM3Reader(sidpy.Reader):
 
         # - open file for reading
         try:
-            self.__f = open(self.__filename, 'rb')
+            self.__dm_file = open(self.__filename, 'rb')
         except FileNotFoundError:
             raise FileNotFoundError('File not found')
 
         # - create Tags repositories
         self.__stored_tags = {'DM': {}}
 
-        # check if this is valid DM3 file
-        is_dm = True
-        # read header (first 3 4-byte int)
-        # get version
-        file_version = read_long(self.__f)
-
-        # get indicated file size
-        if file_version == 3:
-            file_size = read_long(self.__f)
-        elif file_version == 4:
-            file_size = read_64_long(self.__f)
-        else:
-            is_dm = False
-        # get byte-ordering
-        le = read_long(self.__f)
-        little_endian = (le == 1)
-
-        if little_endian:
-            self.endian_str = '>'
-        else:
-            self.endian_str = '<'
-
-        # check file header, raise Exception if not DM3
-        if not is_dm:
-            raise TypeError("%s does not appear to be a DM3 or DM4 file." % os.path.split(self.__filename)[1])
-        elif self.verbose:
-            print("%s appears to be a DM3 file" % self.__filename)
-        self.file_version = file_version
-        self.file_size = file_size
-
+        self.dm_version, self.file_size, self.endian, self.dm_header_size = read_header_dm(self.__dm_file)
+        self.endian = '<'
         if self.verbose:
             print("Header info.:")
-            print("- file version:", file_version)
-            print("- le:", le)
-            print("- file size:", file_size, "bytes")
+            print("- file version:", self.dm_version)
+            print("- little endian:", self.endian)
+            print("- file size:", self.file_size, "bytes")
 
         # don't read but close file
-        self.__f.close()
+        self.close()
 
     def close(self):
-        self.__f.close()
+        self.__dm_file.close()
+
 
     def read(self):
         try:
-            self.__f = open(self.__filename, 'rb')
+            self.__dm_file = open(self.__filename, 'rb')
         except FileNotFoundError:
             raise FileNotFoundError('File not found')
-
+        self.__f = self.__dm_file
         t1 = time.time()
-        file_version = read_long(self.__f)
+        self.__dm_file.seek(self.dm_header_size)
 
-        # get indicated file size
-        if file_version == 3:
-            file_size = read_long(self.__f)
-        elif file_version == 4:
-            file_size = read_64_long(self.__f)
-        else:
-            is_dm = False
-        # get byte-ordering
-        le = read_long(self.__f)
-        little_endian = (le == 1)
-
-        if little_endian:
-            self.endian_str = '>'
-        else:
-            self.endian_str = '<'
-
-        # ... then read it
-
-        self.__stored_tags = {'DM': {'file_version': file_version, 'file_size': file_size}}
+        self.__stored_tags = {'DM': {'dm_version': self.dm_version, 'file_size': self.file_size}}
 
         self.__read_tag_group(self.__stored_tags)
 
@@ -297,14 +216,13 @@ class DM3Reader(sidpy.Reader):
         dataset.units = 'counts'
         dataset.title = basename
         dataset.modality = 'generic'
-        dataset.source = 'DM3Reader'
+        dataset.source = 'SciFiReaders.DMReader'
         dataset.original_metadata['DM']['full_file_name'] = self.__filename
 
         return dataset
 
     def set_data_type(self, dataset):
         spectral_dim = False
-        # print(dataset._axes)
         for dim, axis in dataset._axes.items():
             if axis.dimension_type == sidpy.DimensionType.SPECTRAL:
                 spectral_dim = True
@@ -386,30 +304,27 @@ class DM3Reader(sidpy.Reader):
     # utility functions
 
     def __read_tag_group(self, tags):
+        g_sorted = struct.unpack_from(self.endian + 'b', self.__dm_file.read(1))[0]
+        opened = struct.unpack_from(self.endian + 'b', self.__dm_file.read(1))[0]
 
-        g_sorted = read_byte(self.__f)
-        # is the group open?
-        opened = read_byte(self.__f)
-        # number of Tags
-        if self.file_version == 3:
-            n_tags = read_long(self.__f)
+        if self.dm_version == 3:
+            num_tags = struct.unpack_from('>l', self.__dm_file.read(4))[0]  # DM4 specifies this property as always big endian
         else:
-            n_tags = read_64_long(self.__f)
+            num_tags = struct.unpack_from('>Q', self.__dm_file.read(8))[0]  # DM4 specifies this property as always big endian
 
         # read Tags
-        for i in range(n_tags):
-            data = read_byte(self.__f)
-            is_data = (data == 21)
+        for i in range(num_tags):
+            tag_type = struct.unpack_from(self.endian + 'B', self.__dm_file.read(1))[0]
+            is_data = (tag_type == 21)
 
-            len_tag_label = read_short(self.__f)
-
-            if len_tag_label > 0:
-                tag_label = self.__f.read(len_tag_label).decode('latin-1')
-            else:
-                tag_label = '0'
+            tag_label = _read_tag_name(self.__dm_file)
+            if self.dm_version == 4:
+                num_tags = struct.unpack_from('>Q', self.__dm_file.read(8))[0]
+            if tag_label == '0':
                 for key in tags:
                     if key.isdigit():
                         tag_label = str(int(key) + 1)
+
             if is_data:
                 value = self.__read_any_data()
                 tags[tag_label] = value
@@ -418,62 +333,31 @@ class DM3Reader(sidpy.Reader):
                 self.__read_tag_group(tags[tag_label])
         return 1
 
-    def __encoded_type_size(self, et):
-        # returns the size in bytes of the data type
-        if et == 0:
-            width = 0
-        elif et in (BOOLEAN, CHAR, OCTET):
-            width = 1
-        elif et in (SHORT, USHORT):
-            width = 2
-        elif et in (LONG, ULONG, FLOAT):
-            width = 4
-        elif et == DOUBLE:
-            width = 8
-        else:
-            # returns -1 for unrecognised types
-            width = -1
-        return width
 
     def __read_any_data(self):
-        if self.file_version == 4:
-            tag_byte_length = struct.unpack_from('>Q', self.__f.read(8))[0]
-            # DM4 specifies this property as always big endian
+        _read_tag_garbage_str(self.__dm_file)
+        tag_array_types = _read_tag_data_info(self.__dm_file, self.dm_version)
+        encoded_type = tag_array_types[0]
 
-        delim = read_string(self.__f, 4)
-        if delim != b"%%%%":
-            raise Exception(hex(self.__f.tell()) + ": Tag Type delimiter not %%%%")
-        if self.file_version == 4:
-            n_in_tag = read_64_long(self.__f)
+        if encoded_type < 13:
+            data = self.__read_native_data(encoded_type)
+        elif encoded_type == 18:  # STRING
+            data = self.__read_string_data(tag_array_types[1])
+        elif encoded_type == 15:  # STRUCT:
+            data = self.__read_struct_data(tag_array_types)
+        elif encoded_type == 20:  # ARRAY:
+            data = self.__read_array_data(tag_array_types)
         else:
-            n_in_tag = read_long(self.__f)
-        # higher level function dispatching to handling data types to other functions
-        # - get Type category (short, long, array...)
-        if self.file_version == 4:
-            encoded_type = read_64_long(self.__f)
-        else:
-            encoded_type = read_long(self.__f)
-        # - calc size of encoded_type
-        et_size = self.__encoded_type_size(encoded_type)
-        if et_size > 0:
-            data = self.__read_native_data(encoded_type, et_size)
-        elif encoded_type == STRING:
-            string_size = read_long(self.__f)
-            data = self.__read_string_data(string_size)
-        elif encoded_type == STRUCT:
-            struct_types = self.__read_struct_types()
-            data = self.__read_struct_data(struct_types)
-        elif encoded_type == ARRAY:
-            array_types = self.__read_array_types()
-            data = self.__read_array_data(array_types)
-        else:
-            raise Exception("rAnD, " + hex(self.__f.tell()) + ": Can't understand encoded type")
+            raise Exception("rAnD, " + str(self.__f.tell()) + ": Can't understand encoded type")
         return data
 
-    def __read_native_data(self, encoded_type, et_size):
+    def __read_native_data(self, encoded_type):
         # reads ordinary data types
-        if encoded_type in readFunc.keys():
-            val = readFunc[encoded_type](self.__f)
+        if encoded_type in DM4DataTypeDict:
+            data_type = DM4DataTypeDict[encoded_type]
+            format_str = self.endian + data_type['type_format']
+            byte_data = self.__dm_file.read(data_type['num_bytes'])
+            val = struct.unpack_from(format_str, byte_data)[0]
         else:
             raise Exception("rND, " + hex(self.__f.tell()) + ": Unknown data type " + str(encoded_type))
         return val
@@ -488,30 +372,18 @@ class DM3Reader(sidpy.Reader):
             r_string = str(r_string, "utf_16_le")
         return r_string
 
-    def __read_array_types(self):
-        # determines the data types in an array data type
-        array_type = read_long(self.__f)
-        item_types = []
-        if array_type == STRUCT:
-            item_types = self.__read_struct_types()
-        elif array_type == ARRAY:
-            item_types = self.__read_array_types()
-        else:
-            item_types.append(array_type)
-        return item_types
-
     def __read_array_data(self, array_types):
         # reads array data
-        array_size = read_long(self.__f)
+        array_size = array_types[-1]
         item_size = 0
         encoded_type = 0
-        for i in range(len(array_types)):
-            encoded_type = int(array_types[i])
-            et_size = self.__encoded_type_size(encoded_type)
+        for i in range(len(array_types)-2):
+            encoded_type = int(array_types[i+1])
+            et_size = DM4DataTypeDict[encoded_type]['num_bytes']
             item_size += et_size
         buf_size = array_size * item_size
 
-        if len(array_types) == 1 and encoded_type == USHORT \
+        if len(array_types)-2 == 1 and encoded_type == 4 \
                 and array_size < 256:
             # treat as string
             val = self.__read_string_data(buf_size)
@@ -521,35 +393,11 @@ class DM3Reader(sidpy.Reader):
             val = self.__f.read(buf_size)
         return val
 
-    def __read_struct_types(self):
-        # analyses data types in a struct
-        if self.file_version == 4:
-            struct_name_length = read_64_long(self.__f)
-            n_fields = read_64_long(self.__f)
-        else:
-            struct_name_length = read_long(self.__f)
-            n_fields = read_long(self.__f)
-
-        field_types = []
-        name_length = 0
-        for i in range(n_fields):
-            if self.file_version == 4:
-                name_length = read_64_long(self.__f)
-                field_type = read_64_long(self.__f)
-            else:
-                name_length = read_long(self.__f)
-                field_type = read_long(self.__f)
-            field_types.append(field_type)
-        return field_types
-
     def __read_struct_data(self, struct_types):
         # reads struct data based on type info in structType
         data = []
-        for i in range(len(struct_types)):
-            encoded_type = struct_types[i]
-            et_size = self.__encoded_type_size(encoded_type)
-            # get data
-            data.append(self.__read_native_data(encoded_type, et_size))
+        for encoded_type in struct_types[4::2]:
+            data.append(self.__read_native_data(encoded_type))
         return data
 
     # ## END utility functions ###
@@ -625,7 +473,3 @@ class DM3Reader(sidpy.Reader):
         return raw_data
 
     data_cube = property(get_raw)
-
-
-if __name__ == '__main__':
-    pass  # print "DM3lib v.%s"%version
