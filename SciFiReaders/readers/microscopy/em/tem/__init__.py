@@ -7,13 +7,13 @@ Submodules
 .. autosummary::
     :toctree: _autosummary
 
-    dm3_reader
+    dm_reader
     nion_reader
 """
-from .dm_reader import DMReader
+from .dm_reader import DMReader, DM3Reader
 from .nion_reader import NionReader
 from .emd_reader import EMDReader
 
-__all__ = ['DMReader', 'NionReader', 'EMDReader']
+__all__ = ['DMReader', 'DM3Reader', 'NionReader', 'EMDReader']
 
-all_readers = [DMReader, NionReader, EMDReader]
+all_readers = [DMReader, DM3Reader, NionReader, EMDReader]
