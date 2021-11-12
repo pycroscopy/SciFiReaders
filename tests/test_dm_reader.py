@@ -22,7 +22,7 @@ class TestDMReader(unittest.TestCase):
 
     def test_load_dm4_file(self):
         file_path = os.path.join(data_path, 'EELS_STO.dm4')
-        reader = SciFiReaders.DMReader(file_path)
+        reader = SciFiReaders.DM3Reader(file_path)
         datasets = reader.read()
         self.assertEqual(datasets.title, 'EELS_STO')
         self.assertEqual(datasets.source, 'SciFiReaders.DMReader')

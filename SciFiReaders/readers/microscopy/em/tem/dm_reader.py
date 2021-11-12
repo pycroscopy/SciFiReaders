@@ -28,7 +28,7 @@ from __future__ import division, print_function, absolute_import, unicode_litera
 
 import struct
 import time
-import numpy
+import warnings
 
 import sys
 import numpy as np
@@ -61,18 +61,18 @@ def tag_is_directory(tag):
     return tag.type == 20
 
 
-def read_header_dm(dmfile):
-    dmfile.seek(0)
-    dm_version = struct.unpack_from('>I', dmfile.read(4))[0]  # int.from_bytes(dmfile.read(4), byteorder='big')
+def read_header_dm(dm_file):
+    dm_file.seek(0)
+    dm_version = struct.unpack_from('>I', dm_file.read(4))[0]  # int.from_bytes(dm_file.read(4), byteorder='big')
     if dm_version == 3:
-        file_size = struct.unpack_from('>I', dmfile.read(8))[0]
+        file_size = struct.unpack_from('>I', dm_file.read(8))[0]
         dm_header_size = 4 + 4 + 4
     elif dm_version == 4:
-        file_size = struct.unpack_from('>Q', dmfile.read(8))[0]
+        file_size = struct.unpack_from('>Q', dm_file.read(8))[0]
         dm_header_size = 4 + 8 + 4
     else:
         raise TypeError('This is not a DM3 or DM4 File')
-    byteorder = struct.unpack_from('>I', dmfile.read(4))[0]
+    byteorder = struct.unpack_from('>I', dm_file.read(4))[0]
     if byteorder == 1:
         endian = '>'
     else:
@@ -82,7 +82,7 @@ def read_header_dm(dmfile):
 
 
 def _read_tag_name(dm_file):
-    tag_name_len = struct.unpack_from('>H', dm_file.read(2))[0]  # DM4 specifies this property as always big endian
+    tag_name_len = struct.unpack_from('>H', dm_file.read(2))[0]  # DM specifies this property as always big endian
 
     tag_name = '0'
     if tag_name_len > 0:
@@ -95,25 +95,25 @@ def _read_tag_name(dm_file):
     return tag_name
 
 
-def _read_tag_garbage_str(dmfile):
+def _read_tag_garbage_str(dm_file):
     """
     DM4 has four bytes of % symbols in the tag.  Ensure it is there.
     """
-    garbage_str = dmfile.read(4).decode('utf-8')
+    garbage_str = dm_file.read(4).decode('utf-8')
     assert(garbage_str == '%%%%')
 
 
-def _read_tag_data_info(dmfile, dm_version):
+def _read_tag_data_info(dm_file, dm_version):
     if dm_version == 3:
-        tag_array_length = struct.unpack('>l', dmfile.read(4))[0]
+        tag_array_length = struct.unpack('>l', dm_file.read(4))[0]
         format_str = '>' + tag_array_length * 'l'  # Big endian signed long
-        tag_array_types = struct.unpack_from(format_str, dmfile.read(4 * tag_array_length))
+        tag_array_types = struct.unpack_from(format_str, dm_file.read(4 * tag_array_length))
     else:
-        tag_array_length = struct.unpack_from('>Q', dmfile.read(8))[0]
+        tag_array_length = struct.unpack_from('>Q', dm_file.read(8))[0]
         # DM4 specifies this property as always big endian
         format_str = '>' + tag_array_length * 'q'  # Big endian signed long
 
-        tag_array_types = struct.unpack_from(format_str, dmfile.read(8 * tag_array_length))
+        tag_array_types = struct.unpack_from(format_str, dm_file.read(8 * tag_array_length))
 
     return tag_array_types
 
@@ -129,7 +129,7 @@ class DMReader(sidpy.Reader):
     debugLevel = -1
 
     """
-    file_path: filepath to dm3 file.
+    file_path: filepath to dm3 or dm4 file.
 
     warn('This Reader will eventually be moved to the ScopeReaders package'
          '. Be prepared to change your import statements',
@@ -167,13 +167,12 @@ class DMReader(sidpy.Reader):
     def close(self):
         self.__dm_file.close()
 
-
     def read(self):
         try:
             self.__dm_file = open(self.__filename, 'rb')
         except FileNotFoundError:
             raise FileNotFoundError('File not found')
-        self.__f = self.__dm_file
+
         t1 = time.time()
         self.__dm_file.seek(self.dm_header_size)
 
@@ -210,7 +209,6 @@ class DMReader(sidpy.Reader):
                                                      quantity='distance', dimension_type='spatial'))
             dataset.set_dimension(2, old_dataset.dim_1)
             dataset.data_type = sidpy.DataType.SPECTRAL_IMAGE  # 'linescan'
-
 
         dataset.quantity = 'intensity'
         dataset.units = 'counts'
@@ -251,7 +249,7 @@ class DMReader(sidpy.Reader):
                     dataset.data_type = 'image_stack'
             elif len(dataset.shape) == 2:
                 if spectral_dim:
-                    basename = dataset.name
+                    # basename = dataset.name
                     dataset.data_type = sidpy.DataType.SPECTRAL_IMAGE
                 else:
                     dataset.data_type = 'image'
@@ -308,9 +306,9 @@ class DMReader(sidpy.Reader):
         opened = struct.unpack_from(self.endian + 'b', self.__dm_file.read(1))[0]
 
         if self.dm_version == 3:
-            num_tags = struct.unpack_from('>l', self.__dm_file.read(4))[0]  # DM4 specifies this property as always big endian
+            num_tags = struct.unpack_from('>l', self.__dm_file.read(4))[0]  # this property is always big endian
         else:
-            num_tags = struct.unpack_from('>Q', self.__dm_file.read(8))[0]  # DM4 specifies this property as always big endian
+            num_tags = struct.unpack_from('>Q', self.__dm_file.read(8))[0]  # this property is always big endian
 
         # read Tags
         for i in range(num_tags):
@@ -333,7 +331,6 @@ class DMReader(sidpy.Reader):
                 self.__read_tag_group(tags[tag_label])
         return 1
 
-
     def __read_any_data(self):
         _read_tag_garbage_str(self.__dm_file)
         tag_array_types = _read_tag_data_info(self.__dm_file, self.dm_version)
@@ -348,7 +345,7 @@ class DMReader(sidpy.Reader):
         elif encoded_type == 20:  # ARRAY:
             data = self.__read_array_data(tag_array_types)
         else:
-            raise Exception("rAnD, " + str(self.__f.tell()) + ": Can't understand encoded type")
+            raise Exception("rAnD, " + str(self.__dm_file.tell()) + ": Can't understand encoded type")
         return data
 
     def __read_native_data(self, encoded_type):
@@ -359,7 +356,7 @@ class DMReader(sidpy.Reader):
             byte_data = self.__dm_file.read(data_type['num_bytes'])
             val = struct.unpack_from(format_str, byte_data)[0]
         else:
-            raise Exception("rND, " + hex(self.__f.tell()) + ": Unknown data type " + str(encoded_type))
+            raise Exception("rND, " + hex(self.__dm_file.tell()) + ": Unknown data type " + str(encoded_type))
         return val
 
     def __read_string_data(self, string_size):
@@ -368,7 +365,7 @@ class DMReader(sidpy.Reader):
             r_string = ""
         else:
             # !!! *Unicode* string (UTF-16)... convert to Python unicode str
-            r_string = read_string(self.__f, string_size)
+            r_string = read_string(self.__dm_file, string_size)
             r_string = str(r_string, "utf_16_le")
         return r_string
 
@@ -390,7 +387,7 @@ class DMReader(sidpy.Reader):
         else:
             # treat as binary data
             # - store data size and offset as tags
-            val = self.__f.read(buf_size)
+            val = self.__dm_file.read(buf_size)
         return val
 
     def __read_struct_data(self, struct_types):
@@ -422,7 +419,7 @@ class DMReader(sidpy.Reader):
             3: '<c8',  # 8 byte complex (real, imaginary)
             4: '',  # ?
             # 4 byte packed complex (see below)
-            5: (numpy.int16, {'real': (numpy.int8, 0), 'imaginary': (numpy.int8, 1)}),
+            5: (np.int16, {'real': (np.int8, 0), 'imaginary': (np.int8, 1)}),
             6: '<u1',  # 1 byte integer unsigned ("byte")
             7: '<i4',  # 4 byte integer signed ("long")
             # I do not have any dm3 file with this format to test it.
@@ -435,8 +432,7 @@ class DMReader(sidpy.Reader):
             14: 'bool',  # 1 byte binary (ie 0 or 1)
             # Packed RGB. It must be a recent addition to the format because it does
             # not appear in http://www.microscopy.cen.dtu.dk/~cbb/info/dmformat/
-            23: (numpy.float32,
-                 {'R': ('<u1', 0), 'G': ('<u1', 1), 'B': ('<u1', 2), 'A': ('<u1', 3)}),
+            23: (np.float32, {'R': ('<u1', 0), 'G': ('<u1', 1), 'B': ('<u1', 2), 'A': ('<u1', 3)}),
         }
 
         # find main image
@@ -467,9 +463,13 @@ class DMReader(sidpy.Reader):
         if dt == '':
             raise TypeError('The datatype is not supported')
         else:
-            raw_data = numpy.frombuffer(byte_data, dtype=dt, count=numpy.cumprod(shape)[-1]).reshape(shape, order='F')
+            raw_data = np.frombuffer(byte_data, dtype=dt, count=np.cumprod(shape)[-1]).reshape(shape, order='F')
         # delete byte data in dictionary
         self.__stored_tags['ImageList'][str(self.__chosen_image)]['ImageData']['Data'] = 'read'
         return raw_data
 
     data_cube = property(get_raw)
+
+
+class DM3Reader(DMReader):
+    warnings.warn(DeprecationWarning('Use DMReader class instead marking\n Note that you can now read dm4 files too'))
