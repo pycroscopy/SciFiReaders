@@ -7,17 +7,12 @@ Created on Fri Nov 5 16:43:00 2021
 from __future__ import division, print_function, absolute_import, unicode_literals
 import numpy as np  # For array operations
 import sidpy as sid
-from sidpy.sid import Reader
-from os import path
-from warnings import warn
-import os
-from sidpy.sid import Reader, Dataset, Dimension, DimensionType
+from sidpy.sid import Reader, Dimension, DimensionType
 
 try:
     import nanonispy as nap
 except ModuleNotFoundError:
     nap = None
-
 
 class NanonisSXMReader(Reader):
 
