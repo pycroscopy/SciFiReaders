@@ -489,4 +489,3 @@ class DM3Reader(DMReader):
 
         warnings.warn(DeprecationWarning('Use DMReader class instead marking\n Note that you can now read dm4 files too'))
         super().__init__(file_path)
-
