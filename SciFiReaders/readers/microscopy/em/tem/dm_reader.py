@@ -292,11 +292,17 @@ class DMReader(sidpy.Reader):
                                                                 quantity='reciprocal distance',
                                                                 dimension_type=sidpy.DimensionType.RECIPROCAL))
                 reciprocal_name = chr(ord(reciprocal_name) + 1)
-            else:
+            elif 'm' in units:
                 units = 'counts'
                 dataset.set_dimension(int(dim), sidpy.Dimension(values, name=spatial_name, units=units,
                                                                 quantity='distance',
                                                                 dimension_type=sidpy.DimensionType.SPATIAL))
+                spatial_name = chr(ord(spatial_name) + 1)
+            else:
+                units = 'frame'
+                dataset.set_dimension(int(dim), sidpy.Dimension(values, name=spatial_name, units=units,
+                                                                quantity='number',
+                                                                dimension_type=sidpy.DimensionType.TEMPORAL))
                 spatial_name = chr(ord(spatial_name) + 1)
 
     # utility functions
@@ -343,7 +349,15 @@ class DMReader(sidpy.Reader):
         elif encoded_type == 15:  # STRUCT:
             data = self.__read_struct_data(tag_array_types)
         elif encoded_type == 20:  # ARRAY:
-            data = self.__read_array_data(tag_array_types)
+
+            if tag_array_types[1] == 15:
+                data = []
+                for i in range(tag_array_types[-1]):
+                    data.append(self.__read_struct_data(tag_array_types[1:]))
+            elif tag_array_types[1] == 20:
+                data = self.__read_array_data(tag_array_types[1:])
+            else:
+                data = self.__read_array_data(tag_array_types)
         else:
             raise Exception("rAnD, " + str(self.__dm_file.tell()) + ": Can't understand encoded type")
         return data
@@ -380,8 +394,7 @@ class DMReader(sidpy.Reader):
             item_size += et_size
         buf_size = array_size * item_size
 
-        if len(array_types)-2 == 1 and encoded_type == 4 \
-                and array_size < 256:
+        if len(array_types)-2 == 1 and encoded_type == 4 and array_size < 256:
             # treat as string
             val = self.__read_string_data(buf_size)
         else:
@@ -472,4 +485,15 @@ class DMReader(sidpy.Reader):
 
 
 class DM3Reader(DMReader):
-    warnings.warn(DeprecationWarning('Use DMReader class instead marking\n Note that you can now read dm4 files too'))
+    def __init__(self, file_path, verbose=False):
+
+        warnings.warn(DeprecationWarning('Use DMReader class instead marking\n Note that you can now read dm4 files too'))
+        super().__init__(file_path)
+
+
+file_path = 'C:\\Users\\gdusc\\OneDrive - University of Tennessee\\2020 Experiment\\Chenze-ZrO2-movies\\5-12.5_ to 13.2_, 0.1_ increment 5 photos each, align.dm3'
+reader = DMReader(file_path)
+d = reader.read()
+print(d.z.dimension_type)
+
+#d.plot()
