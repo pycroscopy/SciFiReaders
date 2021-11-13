@@ -490,10 +490,3 @@ class DM3Reader(DMReader):
         warnings.warn(DeprecationWarning('Use DMReader class instead marking\n Note that you can now read dm4 files too'))
         super().__init__(file_path)
 
-
-file_path = 'C:\\Users\\gdusc\\OneDrive - University of Tennessee\\2020 Experiment\\Chenze-ZrO2-movies\\5-12.5_ to 13.2_, 0.1_ increment 5 photos each, align.dm3'
-reader = DMReader(file_path)
-d = reader.read()
-print(d.z.dimension_type)
-
-#d.plot()
