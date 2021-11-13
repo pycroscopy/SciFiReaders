@@ -323,7 +323,7 @@ class DMReader(sidpy.Reader):
 
             tag_label = _read_tag_name(self.__dm_file)
             if self.dm_version == 4:
-                num_tags = struct.unpack_from('>Q', self.__dm_file.read(8))[0]
+                num_tags2 = struct.unpack_from('>Q', self.__dm_file.read(8))[0]
             if tag_label == '0':
                 for key in tags:
                     if key.isdigit():
@@ -487,13 +487,6 @@ class DMReader(sidpy.Reader):
 class DM3Reader(DMReader):
     def __init__(self, file_path, verbose=False):
 
-        warnings.warn(DeprecationWarning('Use DMReader class instead marking\n Note that you can now read dm4 files too'))
-        super().__init__(file_path)
-
-
-file_path = 'C:\\Users\\gdusc\\OneDrive - University of Tennessee\\2020 Experiment\\Chenze-ZrO2-movies\\5-12.5_ to 13.2_, 0.1_ increment 5 photos each, align.dm3'
-reader = DMReader(file_path)
-d = reader.read()
-print(d.z.dimension_type)
-
-#d.plot()
+        warnings.warn(DeprecationWarning('Use DMReader class instead marking\n '
+                                         'Note that you can now read dm4 files too'))
+        super().__init__(file_path, verbose=False)
