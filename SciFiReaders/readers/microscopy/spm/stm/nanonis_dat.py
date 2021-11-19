@@ -5,7 +5,6 @@ Created on Fri Mar 12 15:39:00 202`0`
 @author: Rama Vasudevan
 """
 
-from __future__ import division, print_function, absolute_import, unicode_literals
 import sys
 import numpy as np  # For array operations
 import sidpy as sid
@@ -13,8 +12,6 @@ from sidpy.sid import Reader
 import re
 from os import path
 
-if sys.version_info.major == 3:
-    unicode = str
 
 class NanonisDatReader(Reader):
     """
