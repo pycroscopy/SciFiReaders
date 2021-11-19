@@ -1,4 +1,9 @@
-from __future__ import division, print_function, unicode_literals, absolute_import
+"""
+Test of EMD Reader of ThermoFisher Velox files
+
+author: Gerd Duscher, UTK
+First Version 11/19/2021
+"""
 import unittest
 import numpy as np
 import sys
@@ -21,6 +26,8 @@ class TestEMDReader(unittest.TestCase):
 
         self.assertIsInstance(emd_reader, sidpy.Reader)
         emd_reader.close()
+
+
 
     def test_read_spectrum(self):
         file_name = os.path.join(data_path, 'fei_emd_spectrum.emd')
@@ -298,6 +305,29 @@ class TestEMDReader(unittest.TestCase):
         self.assertTrue(original_metadata['Acquisition']['SourceType'] == 'XFEG')
         self.assertTrue(original_metadata['Optics']['AccelerationVoltage'] == '200000')
 
+    def test_read_spectrum_image(self):
+        file_name = os.path.join(data_path, 'fei_emd_si.emd')
+        emd_reader = EMDReader(file_name)
+        datasets = emd_reader.read()
+        emd_reader.close()
+
+        self.assertIsInstance(datasets[0], sidpy.Dataset)
+        self.assertTrue(datasets[0].data_type.name, 'IMAGE_STACK')
+        self.assertTrue(datasets[0].data_type.name, 'SPECTRAL_IMAGE')
+        self.assertTrue(datasets[1].ndim == 3)
+        self.assertTrue(len(datasets) == 2)
+        print(datasets[0].original_metadata)
+        original_metadata = datasets[0].original_metadata
+
+        self.assertTrue(datasets[0].units == 'counts')
+        self.assertTrue(datasets[0].shape == (5, 16, 16))
+        self.assertTrue(datasets[1].shape == (512, 512, 4096))
+        self.assertTrue(datasets[0].quantity == 'intensity')
+        self.assertIsInstance(datasets[0].x, sidpy.Dimension)
+        self.assertTrue(original_metadata['Core']['MetadataDefinitionVersion'] == '7.9')
+        self.assertTrue(original_metadata['Instrument']['Manufacturer'] == 'FEI Company')
+        self.assertTrue(original_metadata['Acquisition']['SourceType'] == 'XFEG')
+        self.assertTrue(original_metadata['Optics']['AccelerationVoltage'] == '200000')
 
 if __name__ == '__main__':
     unittest.main()
