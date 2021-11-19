@@ -13,10 +13,12 @@ import sys
 
 import h5py
 import sidpy
-from pyNSID.io.hdf_utils import check_if_main, get_all_main, read_h5py_dataset
 
-if sys.version_info.major == 3:
-    unicode = str
+try:
+    from pyNSID.io.hdf_utils import check_if_main, get_all_main, \
+        read_h5py_dataset
+except ModuleNotFoundError:
+    check_if_main = get_all_main = read_h5py_dataset = None
 
 
 class NSIDReader(sidpy.Reader):
@@ -39,6 +41,9 @@ class NSIDReader(sidpy.Reader):
         the file again outside the context of this Reader.
         """
         super(NSIDReader, self).__init__(file_path)
+
+        if not check_if_main:
+            raise ModuleNotFoundError('Please install pyNSID to use this Reader')
 
         # Let h5py raise an OS error if a non-HDF5 file was provided
         self._h5_file = h5py.File(file_path, mode='r+')
