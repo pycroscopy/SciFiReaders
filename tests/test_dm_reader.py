@@ -1,7 +1,14 @@
+"""
+Test of DM3/DM4 Reader of Digital Microscope Suite files
+part of SciFiReader a pycroscopy package
+
+author: Gerd Duscher, UTK
+First Version 11/19/2021
+"""
+
 import unittest
 import sys
 import os
-import sidpy
 
 sys.path.append("../SciFiReaders/")
 import SciFiReaders
@@ -13,7 +20,7 @@ class TestDMReader(unittest.TestCase):
 
     def test_load_dm3_file(self):
         # Test if the test dm3 file can be read in correctly
-        file_path = os.path.join (data_path, 'EELS_STO.dm3')
+        file_path = os.path.join(data_path, 'EELS_STO.dm3')
         reader = SciFiReaders.DMReader(file_path)
         datasets = reader.read()
         self.assertEqual(datasets.title, 'EELS_STO')
@@ -22,7 +29,7 @@ class TestDMReader(unittest.TestCase):
 
     def test_load_dm4_file(self):
         file_path = os.path.join(data_path, 'EELS_STO.dm4')
-        reader = SciFiReaders.DM3Reader(file_path)
+        reader = SciFiReaders.DM3Reader(file_path, verbose=True)
         datasets = reader.read()
         self.assertEqual(datasets.title, 'EELS_STO')
         self.assertEqual(datasets.source, 'SciFiReaders.DMReader')
@@ -41,7 +48,7 @@ class TestDMReader(unittest.TestCase):
 
     def test_load_dm3_spectrum_image(self):
         # Test if the test dm3 file can be read in correctly
-        file_path = os.path.join (data_path, 'SI-EELS_Spectrum_Image.dm3')
+        file_path = os.path.join(data_path, 'SI-EELS_Spectrum_Image.dm3')
 
         reader = SciFiReaders.DMReader(file_path)
         datasets = reader.read()
@@ -52,7 +59,7 @@ class TestDMReader(unittest.TestCase):
 
     def test_load_dm3_image(self):
         # Test if the test dm3 file can be read in correctly
-        file_path = os.path.join (data_path, 'SI-Survey_Image.dm3')
+        file_path = os.path.join(data_path, 'SI-Survey_Image.dm3')
 
         reader = SciFiReaders.DMReader(file_path)
         datasets = reader.read()

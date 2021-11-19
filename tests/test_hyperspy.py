@@ -1,4 +1,11 @@
-from __future__ import division, print_function, unicode_literals, absolute_import
+"""
+Test of Hyperspy data converter
+part of SciFiReader a pycroscopy package
+
+author: Gerd Duscher, UTK
+First Version 11/19/2021
+"""
+
 import unittest
 import pytest
 import numpy as np

@@ -1,3 +1,11 @@
+"""
+Hyperspy dataset converter to sidpy
+part of SciFiReader, a pycroscopy package
+
+author: Gerd Duscher, UTK
+First Version 11/19/2021
+"""
+
 import sidpy
 import numpy as np
 

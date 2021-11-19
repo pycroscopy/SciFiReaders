@@ -1,3 +1,11 @@
+"""
+Test of Nion Reader of NION Swift files
+part of SciFiReader, a pycroscopy package
+
+author: Gerd Duscher, UTK
+First Version 11/19/2021
+"""
+
 import unittest
 import sys
 import os
