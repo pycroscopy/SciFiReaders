@@ -1,3 +1,11 @@
+"""
+Test of DM3/DM4 Reader of Digital Microscope Suite files
+part of SciFiReader a pycroscopy package
+
+author: Gerd Duscher, UTK
+First Version 11/19/2021
+"""
+
 import unittest
 import sys
 import os

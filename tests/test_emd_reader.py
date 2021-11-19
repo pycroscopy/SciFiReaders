@@ -1,5 +1,6 @@
 """
 Test of EMD Reader of ThermoFisher Velox files
+part of SciFiReader, a pycroscopy package
 
 author: Gerd Duscher, UTK
 First Version 11/19/2021
