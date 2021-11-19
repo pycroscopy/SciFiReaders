@@ -9,6 +9,7 @@ sys.path.append("../SciFiReaders/")
 
 data_path = os.path.join(os.path.dirname(__file__), '../data')
 
+
 class TestNanonisDat(unittest.TestCase):
     #Tests the nanonis_dat reader
 
