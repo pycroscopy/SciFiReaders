@@ -15,8 +15,8 @@ class TestNanonisDat(unittest.TestCase):
 
     def test_load_test_dat_file(self):
         #Test if the test dat file can be read in correctly
-        
-        file_path = '../data/Bias-Spectroscopy041.dat'
+
+        file_path = os.path.join(data_path, 'Bias-Spectroscopy041.dat')
         data_translator = sr.NanonisDatReader(file_path)
         datasets = data_translator.read(verbose=False)
         assert len(datasets)==24, "Length of dataset should be 24 but is instead {}".format(len(datasets))
@@ -82,6 +82,7 @@ class TestNanonisDat(unittest.TestCase):
                                            "of sidpy Dimension, but is instead {}".format(type(datasets[ind]._axes))
 
             assert datasets[ind].dim_0.values.all() == dim0_values[ind].all(), "Dimension 0 for dataset {} did not match!".format(ind)
+
 
 class TestNanonisSXM(unittest.TestCase):
 
