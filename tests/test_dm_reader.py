@@ -21,7 +21,8 @@ class TestDMReader(unittest.TestCase):
 
     def test_load_dm3_file(self):
         # Test if the test dm3 file can be read in correctly
-        file_name  = wget.download('https://raw.githubusercontent.com/pycroscopy/SciFiReaders/master/data/EELS_STO.dm3')
+        file_name  = wget.download(
+            'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/EELS_STO.dm3')
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
         self.assertEqual(datasets.title[:8], 'EELS_STO')
@@ -30,7 +31,7 @@ class TestDMReader(unittest.TestCase):
         os.remove(file_name)
 
     def test_load_dm4_file(self):
-        file_name = wget.download('https://raw.githubusercontent.com/pycroscopy/SciFiReaders/master/data/EELS_STO.dm4')
+        file_name = wget.download('https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/EELS_STO.dm4')
         reader = SciFiReaders.DMReader(file_name, verbose=True)
         datasets = reader.read()
         self.assertEqual(datasets.title[:8], 'EELS_STO')
@@ -46,7 +47,7 @@ class TestDMReader(unittest.TestCase):
     def test_load_wrong_file(self):
         # Test behaviour of wrong data file
         file_name = wget.download(
-            'https://raw.githubusercontent.com/pycroscopy/SciFiReaders/master/data/STO_Image_Stack_(HAADF).h5')
+            'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/STO_Image_Stack_(HAADF).h5')
         with self.assertRaises(TypeError):
             reader = SciFiReaders.DMReader(file_name)
         os.remove(file_name)
@@ -54,7 +55,7 @@ class TestDMReader(unittest.TestCase):
     def test_load_dm3_spectrum_image(self):
         # Test if the test dm3 file can be read in correctly
         file_name = wget.download(
-            'https://raw.githubusercontent.com/pycroscopy/SciFiReaders/master/data/SI-EELS_Spectrum_Image.dm3')
+            'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/SI-EELS_Spectrum_Image.dm3')
 
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
@@ -67,7 +68,7 @@ class TestDMReader(unittest.TestCase):
     def test_load_dm3_image(self):
         # Test if the test dm3 file can be read in correctly
         file_name = wget.download(
-            'https://raw.githubusercontent.com/pycroscopy/SciFiReaders/master/data/SI-Survey_Image.dm3')
+            'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/SI-Survey_Image.dm3')
 
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
