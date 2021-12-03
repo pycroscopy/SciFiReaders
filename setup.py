@@ -26,7 +26,7 @@ requirements = [  # basic
                 # spm/afm
                 'igor',
                 # em/tem:
-                ]
+               ]
 
 setup(
     name='SciFiReaders',
@@ -70,7 +70,6 @@ setup(
     # https://setuptools.readthedocs.io/en/latest/setuptools.html#declaring-dependencies
     extras_require={
         'hyperspy':  ["hyperspy"],
-        'wget': ["wget"],
         'igor': ["igor"],
         'nanonispy': ['nanonispy'],
         'sid': ['pyUSID', 'pyNSID']
