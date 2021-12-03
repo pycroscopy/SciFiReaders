@@ -7,15 +7,15 @@ Updated on Fri Sep 11 15:22:00 2020 for ScopeReader
 @author: Suhas Somnath, Chris R. Smith, Raj Giridhargopal, Rama Vasudevan
 """
 
-from __future__ import division, print_function, absolute_import, unicode_literals
 import sys
 import numpy as np  # For array operations
-from igor import binarywave as bw
 import sidpy as sid
 from sidpy.sid import Reader
 
-if sys.version_info.major == 3:
-    unicode = str
+try:
+    from igor import binarywave as bw
+except ModuleNotFoundError:
+    bw = None
 
 
 class IgorIBWReader(Reader):

@@ -1,0 +1,5 @@
+hyperspy
+igor
+nanonispy
+pyUSID
+pyNSID
