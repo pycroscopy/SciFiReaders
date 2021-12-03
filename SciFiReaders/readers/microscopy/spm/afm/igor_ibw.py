@@ -61,6 +61,7 @@ class IgorIBWReader(Reader):
 
         if images.shape[-1] != len(chan_labels):
             chan_labels = chan_labels[1:]  # for layer 0 null set errors in older AR software
+            chan_units = chan_units[1:]
 
         if images.ndim == 3:  # Image stack
             if verbose:
@@ -122,12 +123,15 @@ class IgorIBWReader(Reader):
                 #convert to sidpy dataset
                 data_set = sid.Dataset.from_array((images[:,channel,0]), title=chan_labels[channel])
 
+                if verbose:
+                    print('Channel {} and spec_data is {}'.format(channel, spec_data))
+
                 #Set units, quantity
                 data_set.units = chan_units[channel]
                 data_set.quantity = chan_labels[channel]
 
-                data_set.set_dimension(0, sid.Dimension('Z', spec_data,
-                                                        units=chan_units[0], quantity=chan_labels[0],
+                data_set.set_dimension(0, sid.Dimension(spec_data, name = chan_labels[channel],
+                                                        units=chan_units[channel], quantity=chan_labels[channel],
                                                         dimension_type='spectral'))
 
                 #append metadata
