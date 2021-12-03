@@ -23,7 +23,7 @@ class TestEMDReader(unittest.TestCase):
 
     def test_data_available(self):
         file_name = wget.download(
-            'https://raw.githubusercontent.com/pycroscopy/SciFiReaders/master/data/fei_emd_spectrum.emd')
+            'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/fei_emd_spectrum.emd')
         emd_reader = EMDReader(file_name)
 
         self.assertIsInstance(emd_reader, sidpy.Reader)
@@ -286,7 +286,7 @@ class TestEMDReader(unittest.TestCase):
 
     def test_read_image(self):
         file_name  = wget.download(
-            'https://raw.githubusercontent.com/pycroscopy/SciFiReaders/master/data/fei_emd_image.emd')
+            'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/fei_emd_image.emd')
         emd_reader = EMDReader(file_name)
         datasets = emd_reader.read()
         emd_reader.close()
@@ -310,7 +310,7 @@ class TestEMDReader(unittest.TestCase):
 
     def test_read_spectrum_image(self):
         file_name  = wget.download(
-            'https://raw.githubusercontent.com/pycroscopy/SciFiReaders/master/data/fei_emd_si.emd')
+            'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/fei_emd_si.emd')
         emd_reader = EMDReader(file_name)
         datasets = emd_reader.read()
         emd_reader.close()
