@@ -18,13 +18,6 @@ requirements = [  # basic
                 'sidpy>=0.0.2',
                 # generic:
                 'pillow>=5.4.0',
-                # SID
-                'pyUSID',
-                'pyNSID',
-                # microscopy
-                # spm/afm
-                'igor',
-                # em/tem:
                 ]
 
 setup(
@@ -69,6 +62,9 @@ setup(
     # https://setuptools.readthedocs.io/en/latest/setuptools.html#declaring-dependencies
     extras_require={
         'hyperspy':  ["hyperspy"],
+        'igor': ["igor"],
+        'nanonispy': ['nanonispy'],
+        'sid': ['pyUSID', 'pyNSID']
     },
     # If there are data files included in your packages that need to be
     # installed, specify them here.  If using Python 2.6 or less, then these

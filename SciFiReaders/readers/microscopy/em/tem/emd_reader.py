@@ -10,8 +10,6 @@
 # Works for python 3
 #
 ################################################################################
-from __future__ import division, print_function, absolute_import, unicode_literals
-
 import json
 import h5py
 import sys
