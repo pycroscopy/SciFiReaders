@@ -19,7 +19,6 @@ from SciFiReaders import EMDReader
 
 data_path = os.path.join(os.path.dirname(__file__), '../data')
 
-
 class TestEMDReader(unittest.TestCase):
 
     def test_data_available(self):
