@@ -160,7 +160,7 @@ class NionReader(sidpy.Reader):
                 json_properties = self.__f['data'].attrs.get("properties", "")
                 self.data_cube = self.__f['data'][:]
                 self.original_metadata = json.loads(json_properties)
-
+            self.__f.close()
         self.get_dimensions()
         # Need to switch image dimensions in Nion format
         image_dims = []

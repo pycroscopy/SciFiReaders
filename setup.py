@@ -18,7 +18,15 @@ requirements = [  # basic
                 'sidpy>=0.0.2',
                 # generic:
                 'pillow>=5.4.0',
-                ]
+                'wget',
+                # SID
+                'pyUSID',
+                'pyNSID',
+                # microscopy
+                # spm/afm
+                'igor',
+                # em/tem:
+               ]
 
 setup(
     name='SciFiReaders',
