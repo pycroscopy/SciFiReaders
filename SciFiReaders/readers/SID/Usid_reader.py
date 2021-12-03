@@ -10,8 +10,11 @@ import h5py
 import warnings
 import sidpy
 from sidpy.sid import Reader
-import pyUSID as usid
 
+try:
+    import pyUSID as usid
+except ModuleNotFoundError:
+    usid = None
 
 
 class Usid_reader(Reader):
@@ -44,7 +47,8 @@ class Usid_reader(Reader):
         super(Usid_reader, self).__init__(file_path)
         self.verbose = verbose
         
-        
+        if not usid:
+            raise ModuleNotFoundError('Please install pyUSID to use this Reader')
         try:
             self._file = h5py.File(self._input_file_path, mode = 'r')
         except FileNotFoundError:

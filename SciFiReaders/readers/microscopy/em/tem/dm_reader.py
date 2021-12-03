@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 """
-Will move to Scope Reader
-
+Part of SciFiReaders, a pycroscopy module
+Author: Gerd Duscher
 ################################################################################
 # Python class for reading GATAN DM3/DM4 (DigitalMicrograph) files
 # and extracting all metadata
@@ -17,8 +17,8 @@ Will move to Scope Reader
 #
 # Extended for EELS support by Gerd Duscher, UTK 2012
 # Rewritten for integration of sidpy 2020
-# Added support for DM4 2021
-#
+# Rewritten for added support of DM4 2021
+#    gleaned some ideas from https://github.com/jamesra/dm4reader
 # Works for python 3
 #
 ################################################################################
@@ -38,27 +38,20 @@ import sidpy
 
 version = '0.1beta'
 
-debugLevel = 0  # 0=none, 1-3=basic, 4-5=simple, 6-10 verbose
-
-if sys.version_info.major == 3:
-    unicode = str
-
 DM4DataTypeDict = {2: {'num_bytes': 2, 'signed': True, 'type_format': 'h'},
                    3: {'num_bytes': 4, 'signed': True, 'type_format': 'i'},
                    4: {'num_bytes': 2, 'signed': False, 'type_format': 'H'},
                    5: {'num_bytes': 4, 'signed': False, 'type_format': 'I'},
-                   6: {'num_bytes': 4, 'signed': False, 'type_format': 'f'},
-                   7: {'num_bytes': 8, 'signed': False, 'type_format': 'd'},  # 8byte float
-                   8: {'num_bytes': 1, 'signed': False, 'type_format': '?'},
-                   9: {'num_bytes': 1, 'signed': True, 'type_format': 'c'},
+                   6: {'num_bytes': 4, 'signed': True, 'type_format': 'f'},
+                   7: {'num_bytes': 8, 'signed': True, 'type_format': 'd'},  # 8byte float
+                   8: {'num_bytes': 1, 'signed': False, 'type_format': 'B'},
+                   9: {'num_bytes': 1, 'signed': False, 'type_format': 'c'},
                    10: {'num_bytes': 1, 'signed': True, 'type_format': 'b'},
-                   11: {'num_bytes': 8, 'signed': True, 'type_format': 'q'},
-                   12: {'num_bytes': 8, 'signed': True, 'type_format': 'Q'}
+                   11: {'num_bytes': 8, 'signed': True, 'type_format': 'q'},  # 8 bit long-long for DM4
+                   12: {'num_bytes': 8, 'signed': False, 'type_format': 'Q'}
                    }
 
-
-def tag_is_directory(tag):
-    return tag.type == 20
+# Utility functions
 
 
 def read_header_dm(dm_file):
@@ -74,9 +67,15 @@ def read_header_dm(dm_file):
         raise TypeError('This is not a DM3 or DM4 File')
     byteorder = struct.unpack_from('>I', dm_file.read(4))[0]
     if byteorder == 1:
-        endian = '>'
+        endian = '>'  # little nedian
     else:
-        endian = '<'
+        endian = '<'  # big endian
+
+    if dm_version == 4:  # not sure why
+        if endian == '<':
+            endian = '>'
+        else:
+            endian = '<'
 
     return dm_version, file_size, endian, dm_header_size
 
@@ -126,8 +125,6 @@ def read_string(dm_file, length=1):
 
 
 class DMReader(sidpy.Reader):
-    debugLevel = -1
-
     """
     file_path: filepath to dm3 or dm4 file.
 
@@ -154,7 +151,7 @@ class DMReader(sidpy.Reader):
         self.__stored_tags = {'DM': {}}
 
         self.dm_version, self.file_size, self.endian, self.dm_header_size = read_header_dm(self.__dm_file)
-        self.endian = '<'
+
         if self.verbose:
             print("Header info.:")
             print("- file version:", self.dm_version)
@@ -217,6 +214,7 @@ class DMReader(sidpy.Reader):
         dataset.source = 'SciFiReaders.DMReader'
         dataset.original_metadata['DM']['full_file_name'] = self.__filename
 
+        self.close()
         return dataset
 
     def set_data_type(self, dataset):
@@ -304,6 +302,11 @@ class DMReader(sidpy.Reader):
                                                                 quantity='number',
                                                                 dimension_type=sidpy.DimensionType.TEMPORAL))
                 spatial_name = chr(ord(spatial_name) + 1)
+
+        # For ill defined DM data
+        if dataset.data_type.name == 'IMAGE':
+            dataset.x.dimension_type = 'SPATiAL'
+            dataset.y.dimension_type = 'SPATiAL'
 
     # utility functions
 
@@ -489,4 +492,4 @@ class DM3Reader(DMReader):
 
         warnings.warn(DeprecationWarning('Use DMReader class instead marking\n '
                                          'Note that you can now read dm4 files too'))
-        super().__init__(file_path, verbose=False)
+        super().__init__(file_path, verbose=verbose)
