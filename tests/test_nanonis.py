@@ -19,7 +19,6 @@ class TestNanonisDat(unittest.TestCase):
 
     def test_load_test_dat_file(self):
         #Test if the test dat file can be read in correctly
-
         file_path = 'Bias-Spectroscopy.dat'
         data_translator = sr.NanonisDatReader(file_path)
         datasets = data_translator.read(verbose=False)
