@@ -3,6 +3,7 @@ import sys
 import SciFiReaders as sr
 import sidpy
 import wget
+import os
 
 #Download the required files
 wget.download("https://github.com/pycroscopy/SciFiDatasets/raw/main/data/Line0010Point0025.ibw?raw=true", 
@@ -671,6 +672,8 @@ class TestIgorIBW(unittest.TestCase):
                                            "of sidpy Dimension, but is instead {}".format(type(datasets[ind]._axes))
             assert datasets[ind].data_descriptor == data_descriptors[ind], "Dataset {} " \
             "should have descriptor {} but instead has descriptor {}".format(ind, data_descriptors[ind], datasets[ind].data_descriptor)
+
+        os.remove(file_path)
 
     def test_load_test_ibw_image_file(self):
         #Test if the IGOR Image IBW file can be read in correctly
@@ -1341,3 +1344,5 @@ class TestIgorIBW(unittest.TestCase):
 
             assert datasets[ind].data_descriptor == data_descriptors[ind], "Dataset {} " \
             "should have descriptor {} but instead has descriptor {}".format(ind, data_descriptors[ind], datasets[ind].data_descriptor)
+        
+        os.remove(file_path)

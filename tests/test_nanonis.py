@@ -22,6 +22,7 @@ class TestNanonisDat(unittest.TestCase):
         file_path = 'Bias-Spectroscopy.dat'
         data_translator = sr.NanonisDatReader(file_path)
         datasets = data_translator.read(verbose=False)
+        os.remove(file_path)
         assert len(datasets)==24, "Length of dataset should be 24 but is instead {}".format(len(datasets))
         metadata = datasets[0].metadata
         original_metadata ={'Experiment': 'bias spectroscopy',
@@ -93,6 +94,7 @@ class TestNanonisSXM(unittest.TestCase):
         file_path = 'NanonisSXM.sxm'
         reader = sr.NanonisSXMReader(file_path)
         datasets = reader.read()
+        os.remove(file_path)
         assert len(datasets)==20, "Length of dataset should be 20 but is instead {}".format(len(datasets))
         for ind in range(20):
             assert type(datasets[ind]) == sidpy.sid.dataset.Dataset, "Type of dataset expected \
