@@ -38,7 +38,7 @@ class BrukerAFMReader(Reader):
         Returns
         -------
         sidpy.Dataset : List of sidpy.Dataset objects.
-            Multi-channel inputs are separated into individual dataset objects
+            Multi-channel inputs are separated into individual sidpy dataset objects
         """
         self.file_path = self._input_file_path
         self.meta_data, other_parms = self._extract_metadata()
@@ -77,43 +77,62 @@ class BrukerAFMReader(Reader):
 
     def _read_force_curve(self):
         """
-        Reads the force curves from the proprietary file and writes them to HDF5 datasets
-        Parameters
-        ----------
-        h5_meas_grp : h5py.Group object
-            Reference to the measurement group
+        Reads the force curves from the proprietary file and writes them to sidpy dataset object
+        
         """
-        # since multiple channels will share the same position and spectroscopic dimensions, why not share them?
-        #h5_pos_inds, h5_pos_vals = write_ind_val_dsets(h5_meas_grp, Dimension('single', 'a. u.', 1), is_spectral=False)
-
+       
         # Find out the size of the force curves from the metadata:
         layer_info = None
         for class_name in self.meta_data.keys():
             if 'Ciao force image list' in class_name:
                 layer_info = self.meta_data[class_name]
                 break
+        
         tr_rt = [int(item) for item in layer_info['Samps/line'].split(' ')]
-
-        #h5_spec_inds, h5_spec_vals = write_ind_val_dsets(h5_meas_grp, Dimension('Z', 'nm', int(np.sum(tr_rt))),
-        #                                                 is_spectral=True)
+        m=0
         datasets = []
+        titles = []
+        metadata = []
         for class_name in self.meta_data.keys():
             if 'Ciao force image list' in class_name:
                 layer_info = self.meta_data[class_name]
                 quantity = layer_info.pop('Image Data_4')
+                title = quantity.split("\"")[1]
                 data = self._read_data_vector(layer_info)
-                datasets.append(data)
-                #h5_chan_grp = create_indexed_group(h5_meas_grp, 'Channel')
-                #write_main_dataset(h5_chan_grp, np.expand_dims(data, axis=0), 'Raw_Data',
-                #                   # Quantity and Units needs to be fixed by someone who understands these files better
-                #                   quantity, 'a. u.',
-                #                   None, None, dtype=np.float32, compression='gzip',
-                #                   h5_pos_inds=h5_pos_inds, h5_pos_vals=h5_pos_vals,
-                #                   h5_spec_inds=h5_spec_inds, h5_spec_vals=h5_spec_vals)
-                # Think about standardizing attributes
-                #write_simple_attrs(h5_chan_grp, layer_info)
+                self.data = data
+                data_split =  np.split(data, len(data)//tr_rt[m])
+                titles.append((title, quantity))
+                datasets.append(data_split)
+                metadata.append(layer_info)
+                m+=1
 
-        return datasets
+        xdata = datasets[1] #not sure if this is right but let's go with it.
+        title = titles[0][0]
+        quantity = titles[0][1]
+        
+        sid_datasets = []
+
+        for k in range(len(datasets[0])):
+            zdata = datasets[0][k]
+            xdata = datasets[1][k]
+            
+            data_set = sid.Dataset.from_array(zdata, title=title)
+            data_set.data_type = 'Spectrum'
+
+            #Add quantity and units
+            data_set.units = 'nm' #check this one
+            data_set.quantity = quantity
+
+            #Add dimension info
+            data_set.set_dimension(0, sid.Dimension(xdata,
+                                                    name = 'z',
+                                                    units='nm', quantity = 'z',
+                                                    dimension_type='spectral'))
+            
+            data_set.original_metadata = metadata[k]
+            sid_datasets.append(data_set)
+
+        return sid_datasets
 
     def _read_image_stack(self):
         """
@@ -139,10 +158,12 @@ class BrukerAFMReader(Reader):
         for class_name in self.meta_data.keys():
             if 'Ciao image list' in class_name:
                 layer_info = self.meta_data[class_name]
+                #print(layer_info)
                 quantity = layer_info.pop('Image Data_2')
+                title = quantity.split("\"")[1]
                 data = self._read_image_layer(layer_info)
                 num_cols, num_rows = data.shape
-                data_set = sid.Dataset.from_array(data, title='image')
+                data_set = sid.Dataset.from_array(data, title=title)
                 data_set.data_type = 'Image'
 
                 #Add quantity and units
@@ -152,7 +173,7 @@ class BrukerAFMReader(Reader):
                 #Add dimension info
                 data_set.set_dimension(0, sid.Dimension(np.linspace(0, num_samps_line, num_cols),
                                                         name = 'x',
-                                                        units='nm', quantity = quantity,
+                                                        units='nm', quantity = 'x',
                                                         dimension_type='spatial'))
                 data_set.set_dimension(1, sid.Dimension(np.linspace(0, num_lines, num_rows),
                                                         name = 'y',
@@ -160,7 +181,7 @@ class BrukerAFMReader(Reader):
                                                         dimension_type='spatial'))
 
                 # append metadata
-                #data_set.original_metadata = parm_dict
+                data_set.original_metadata = self.meta_data[class_name]
                 data_set.data_type = 'image'
 
                 datasets.append(data_set)
@@ -170,7 +191,7 @@ class BrukerAFMReader(Reader):
 
     def _read_force_map(self):
         """
-        Reads the scan image + force map from the proprietary file and writes it to HDF5 datasets
+        Reads the scan image + force map from the proprietary file and writes it to sidpy datasets
         Parameters
         ----------
         h5_meas_grp : h5py.Group object
@@ -319,32 +340,11 @@ class BrukerAFMReader(Reader):
     
     def can_read(self):
         """
-        Tests whether or not the provided file has a .ibw extension
+        Tests whether or not the provided file has a suitable extension
         Returns
         -------
-
+        not used for now...
+        
         """
-        return super(BrukerAFMReader, self).can_read(extension='ibw')
+        return super(BrukerAFMReader, self).can_read(extension='')
 
-
-"""
-There is a lot of work to do here still.
-The data needs to go into sidpy datasets
-The data needs to have metadata stored
-The quantity and units need to be checked
-The image titles need to be checked
-The force curve stuff needs to actually be done, it is numpy for now.
-
-To test this use the following
-import os
-import sys
-sys.path.insert(0,'/Users/rvv/Github/SciFiReaders')
-sys.path.insert(0,'/Users/rvv/Github/sidpy')
-import SciFiReaders as sf
-import sidpy as sid
-file_name = r'/Users/rvv/Downloads/TAP525_300k.001'
-
-reader = sf.BrukerAFMReader(file_name)
-reader.file_path = file_name
-
-"""
