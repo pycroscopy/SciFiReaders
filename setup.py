@@ -18,13 +18,7 @@ requirements = [  # basic
                 'sidpy>=0.0.2',
                 # generic:
                 'pillow>=5.4.0',
-                # SID
-                'pyUSID',
-                'pyNSID',
-                # microscopy
-                # spm/afm
-                'igor',
-                # em/tem:
+                # Reader specific ones go to extras
                ]
 
 setup(
