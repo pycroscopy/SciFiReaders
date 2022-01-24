@@ -11,7 +11,7 @@ out = 'image_bruker.001')
 wget.download("https://github.com/pycroscopy/SciFiDatasets/blob/main/data/TAP525_saphire.001?raw=true",
 out = 'force_bruker.001')
 
-sys.path.append("../SciFiReaders/")
+sys.path.append("../../../../../SciFiReaders/")
 
 class TestBruker(unittest.TestCase):
 

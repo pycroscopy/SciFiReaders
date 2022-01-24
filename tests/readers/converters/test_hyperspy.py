@@ -22,7 +22,7 @@ except ModuleNotFoundError:
     ad = None
 
 
-sys.path.append("../SciFiReaders/")
+sys.path.append("../../../SciFiReaders/")
 import SciFiReaders
 
 

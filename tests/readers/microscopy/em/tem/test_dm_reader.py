@@ -11,7 +11,7 @@ import sys
 import os
 from pywget import wget
 
-sys.path.append("../SciFiReaders/")
+sys.path.append("../../../../../SciFiReaders/")
 import SciFiReaders
 
 data_path = os.path.join(os.path.dirname(__file__), '../data')

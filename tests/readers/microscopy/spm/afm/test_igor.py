@@ -11,7 +11,7 @@ out = 'force_ibw.ibw')
 wget.download("https://github.com/pycroscopy/SciFiDatasets/blob/main/data/BTFO_DSO_Thick0000.ibw?raw=true",
 out = 'image_ibw.ibw')
 
-sys.path.append("../SciFiReaders/")
+sys.path.append("../../../../../SciFiReaders/")
 
 class TestIgorIBW(unittest.TestCase):
     #Tests the nanonis_dat reader

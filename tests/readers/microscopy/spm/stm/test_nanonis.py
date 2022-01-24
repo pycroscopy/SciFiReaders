@@ -11,7 +11,7 @@ out = 'Bias-Spectroscopy.dat')
 
 wget.download("https://github.com/pycroscopy/SciFiDatasets/blob/main/data/COOx_sample2286.sxm?raw=true",
 out = 'NanonisSXM.sxm')
-sys.path.append("../SciFiReaders/")
+sys.path.append("../../../../../SciFiReaders/")
 
 
 class TestNanonisDat(unittest.TestCase):

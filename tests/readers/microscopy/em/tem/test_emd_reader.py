@@ -13,7 +13,7 @@ from pywget import wget
 
 import sidpy
 
-sys.path.insert(0, "../SciFiReaders/")
+sys.path.insert(0, "../../../../../SciFiReaders/")
 import SciFiReaders
 from SciFiReaders import EMDReader
 
