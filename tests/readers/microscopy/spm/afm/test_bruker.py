@@ -1,23 +1,20 @@
 import unittest
 import sys
-import SciFiReaders as sr
 import sidpy
 from pywget import wget
 import os
-
-#Download the required files
-wget.download("https://github.com/pycroscopy/SciFiDatasets/blob/main/data/TAP525_300k.001?raw=true", 
-out = 'image_bruker.001')
-wget.download("https://github.com/pycroscopy/SciFiDatasets/blob/main/data/TAP525_saphire.001?raw=true",
-out = 'force_bruker.001')
-
 sys.path.append("../../../../../SciFiReaders/")
+import SciFiReaders as sr
+
+root_path = "https://github.com/pycroscopy/SciFiDatasets/blob/main/data"
+
 
 class TestBruker(unittest.TestCase):
 
     def test_load_test_bruker_force_file(self):
-         #Test if the force curve file can be successfully read
+        # Test if the force curve file can be successfully read
         file_path = 'force_bruker.001'
+        wget.download(root_path + "/TAP525_saphire.001?raw=true", out=file_path)
         data_translator = sr.BrukerAFMReader(file_path)
         datasets = data_translator.read(verbose=False)
         assert len(datasets)==2, "Length of dataset should be 2 but is instead {}".format(len(datasets))
@@ -33,8 +30,10 @@ class TestBruker(unittest.TestCase):
         os.remove(file_path)
 
     def test_load_test_bruker_image_file(self):
-        #Test if the Bruker images file can be read in correctly
+        # Test if the Bruker images file can be read in correctly
         file_path = 'image_bruker.001'
+        wget.download(root_path + "/TAP525_300k.001?raw=true", out=file_path)
+
         data_translator = sr.BrukerAFMReader(file_path)
         datasets = data_translator.read(verbose=True)
         

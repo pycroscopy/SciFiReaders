@@ -1,26 +1,27 @@
 import unittest
 import sys
-import SciFiReaders as sr
+
 import sidpy
 from pywget import wget
 import os
 
-#Download the required files
-wget.download("https://github.com/pycroscopy/SciFiDatasets/raw/main/data/Line0010Point0025.ibw?raw=true", 
-out = 'force_ibw.ibw')
-wget.download("https://github.com/pycroscopy/SciFiDatasets/blob/main/data/BTFO_DSO_Thick0000.ibw?raw=true",
-out = 'image_ibw.ibw')
-
 sys.path.append("../../../../../SciFiReaders/")
+import SciFiReaders as sr
+
+root_path = "https://github.com/pycroscopy/SciFiDatasets/blob/main/data"
+
 
 class TestIgorIBW(unittest.TestCase):
-    #Tests the nanonis_dat reader
+    # Tests the nanonis_dat reader
 
     def test_load_test_ibw_force_file(self):
 
-        #Test if the test dat file can be read in correctly
-        
+        # Test if the test dat file can be read in correctly
+
         file_path = 'force_ibw.ibw'
+        # Download the required files
+        wget.download(root_path + "/Line0010Point0025.ibw?raw=true", out=file_path)
+
         data_translator = sr.IgorIBWReader(file_path)
         datasets = data_translator.read(verbose=False)
         assert len(datasets)==3, "Length of dataset should be 3 but is instead {}".format(len(datasets))
@@ -677,7 +678,10 @@ class TestIgorIBW(unittest.TestCase):
 
     def test_load_test_ibw_image_file(self):
         #Test if the IGOR Image IBW file can be read in correctly
+
         file_path = 'image_ibw.ibw'
+        wget.download(root_path + "/BTFO_DSO_Thick0000.ibw?raw=true", out=file_path)
+
         data_translator = sr.IgorIBWReader(file_path)
         datasets = data_translator.read(verbose=True)
         assert len(datasets)==4, "Length of dataset should be 4 but is instead {}".format(len(datasets))
