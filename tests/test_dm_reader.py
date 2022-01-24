@@ -9,7 +9,7 @@ First Version 11/19/2021
 import unittest
 import sys
 import os
-import wget
+from pywget import wget
 
 sys.path.append("../SciFiReaders/")
 import SciFiReaders

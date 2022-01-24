@@ -2,7 +2,7 @@ import unittest
 import sys
 import SciFiReaders as sr
 import sidpy
-import wget
+from pywget import wget
 import os
 
 #Download the required files

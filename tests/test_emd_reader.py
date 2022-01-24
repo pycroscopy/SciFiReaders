@@ -9,7 +9,7 @@ import unittest
 import numpy as np
 import sys
 import os
-import wget
+from pywget import wget
 
 import sidpy
 
