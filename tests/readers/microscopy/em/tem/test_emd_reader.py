@@ -14,16 +14,15 @@ from pywget import wget
 import sidpy
 
 sys.path.insert(0, "../../../../../SciFiReaders/")
-import SciFiReaders
 from SciFiReaders import EMDReader
 
-data_path = os.path.join(os.path.dirname(__file__), '../data')
+data_path = 'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data'
+
 
 class TestEMDReader(unittest.TestCase):
 
     def test_data_available(self):
-        file_name = wget.download(
-            'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/fei_emd_spectrum.emd')
+        file_name = wget.download(data_path + '/fei_emd_spectrum.emd')
         emd_reader = EMDReader(file_name)
 
         self.assertIsInstance(emd_reader, sidpy.Reader)
@@ -285,8 +284,7 @@ class TestEMDReader(unittest.TestCase):
         os.remove(file_name)
 
     def test_read_image(self):
-        file_name  = wget.download(
-            'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/fei_emd_image.emd')
+        file_name  = wget.download(data_path + '/fei_emd_image.emd')
         emd_reader = EMDReader(file_name)
         datasets = emd_reader.read()
         emd_reader.close()
@@ -309,8 +307,7 @@ class TestEMDReader(unittest.TestCase):
         os.remove(file_name)
 
     def test_read_spectrum_image(self):
-        file_name  = wget.download(
-            'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/fei_emd_si.emd')
+        file_name  = wget.download(data_path + '/fei_emd_si.emd')
         emd_reader = EMDReader(file_name)
         datasets = emd_reader.read()
         emd_reader.close()
@@ -333,6 +330,7 @@ class TestEMDReader(unittest.TestCase):
         self.assertTrue(original_metadata['Acquisition']['SourceType'] == 'XFEG')
         self.assertTrue(original_metadata['Optics']['AccelerationVoltage'] == '200000')
         os.remove(file_name)
+
 
 if __name__ == '__main__':
     unittest.main()

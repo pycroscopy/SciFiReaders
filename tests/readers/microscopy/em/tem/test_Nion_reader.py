@@ -14,15 +14,14 @@ from pywget import wget
 sys.path.append("../../../../../SciFiReaders/")
 import SciFiReaders
 
-data_path = os.path.join(os.path.dirname(__file__), '../data')
+data_path = 'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data'
 
 
 class TestNionReader(unittest.TestCase):
 
     def test_load_nion_h5_file(self):
         # Test if the test h5 file can be read in correctly
-        file_name = wget.download(
-            'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/STO_Image_Stack_(HAADF).h5')
+        file_name = wget.download(data_path + '/STO_Image_Stack_(HAADF).h5')
         reader = SciFiReaders.NionReader(file_name)
         datasets = reader.read()
         self.assertEqual(datasets.title, '10-Recording of SuperScan (HAADF)')
@@ -32,8 +31,7 @@ class TestNionReader(unittest.TestCase):
 
     def test_load_nion_ndata_file(self):
         # Test if the test ndata file can be read in correctly
-        file_name = wget.download(
-            'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/STO_Image_(HAADF).ndata')
+        file_name = wget.download(data_path + '/STO_Image_(HAADF).ndata')
         reader = SciFiReaders.NionReader(file_name)
         datasets = reader.read()
         self.assertEqual(datasets.title, '19-SuperScan (HAADF) 9')
@@ -50,8 +48,7 @@ class TestNionReader(unittest.TestCase):
 
     def test_load_wrong_file(self):
         # Test behaviour of wrong data file
-        file_name = wget.download(
-            'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/EELS_STO.dm3')
+        file_name = wget.download(data_path + '/EELS_STO.dm3')
         reader = SciFiReaders.NionReader(file_name)
         datasets = reader.read()
         self.assertEqual(datasets.data_type.name, 'UNKNOWN')
