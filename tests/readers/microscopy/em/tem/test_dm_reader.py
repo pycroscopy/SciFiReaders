@@ -24,7 +24,7 @@ class TestDMReader(unittest.TestCase):
         file_name = wget.download(data_path + '/DMReader_EELS_STO.dm3')
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
-        self.assertEqual(datasets.title[:8], 'DMReader_EELS_STO')
+        self.assertEqual(datasets.title, 'DMReader_EELS_STO')
         self.assertEqual(datasets.source, 'SciFiReaders.DMReader')
         self.assertEqual(datasets.data_type.name, 'SPECTRUM')
         os.remove(file_name)
@@ -33,7 +33,7 @@ class TestDMReader(unittest.TestCase):
         file_name = wget.download(data_path + '/DMReader_EELS_STO.dm4')
         reader = SciFiReaders.DMReader(file_name, verbose=True)
         datasets = reader.read()
-        self.assertEqual(datasets.title[:8], 'DMReader_EELS_STO')
+        self.assertEqual(datasets.title, 'DMReader_EELS_STO')
         self.assertEqual(datasets.source, 'SciFiReaders.DMReader')
         self.assertEqual(datasets.data_type.name, 'SPECTRUM')
         os.remove(file_name)
@@ -47,7 +47,7 @@ class TestDMReader(unittest.TestCase):
         # Test behaviour of wrong data file
         file_name = wget.download(data_path + '/NionReader_Image_STO_HAADF.ndata')
         with self.assertRaises(TypeError):
-            reader = SciFiReaders.DMReader(file_name)
+            _ = SciFiReaders.DMReader(file_name)
         os.remove(file_name)
 
     def test_load_dm3_spectrum_image(self):
