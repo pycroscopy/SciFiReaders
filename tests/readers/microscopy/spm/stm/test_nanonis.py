@@ -2,24 +2,23 @@ import unittest
 import sys
 import os
 import numpy as np
-import SciFiReaders as sr
 import sidpy
 from pywget import wget
 
-wget.download("https://github.com/pycroscopy/SciFiDatasets/raw/main/data/Bias-Spectroscopy041.dat", 
-out = 'Bias-Spectroscopy.dat')
-
-wget.download("https://github.com/pycroscopy/SciFiDatasets/blob/main/data/COOx_sample2286.sxm?raw=true",
-out = 'NanonisSXM.sxm')
 sys.path.append("../../../../../SciFiReaders/")
+import SciFiReaders as sr
+
+root_path = "https://github.com/pycroscopy/SciFiDatasets/blob/main/data/microscopy/spm/stm/"
 
 
 class TestNanonisDat(unittest.TestCase):
-    #Tests the nanonis_dat reader
+    # Tests the nanonis_dat reader
 
     def test_load_test_dat_file(self):
-        #Test if the test dat file can be read in correctly
+        # Test if the test dat file can be read in correctly
         file_path = 'Bias-Spectroscopy.dat'
+        wget.download(root_path + "NanonisReader_BiasSpectroscopy.dat?raw=true", out=file_path)
+
         data_translator = sr.NanonisDatReader(file_path)
         datasets = data_translator.read(verbose=False)
         os.remove(file_path)
@@ -92,6 +91,8 @@ class TestNanonisSXM(unittest.TestCase):
 
     def test_load_nanonis_sxm(self):
         file_path = 'NanonisSXM.sxm'
+        wget.download(root_path + "NanonisReader_COOx_sample2286?raw=true", out=file_path)
+
         reader = sr.NanonisSXMReader(file_path)
         datasets = reader.read()
         os.remove(file_path)
