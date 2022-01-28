@@ -9,32 +9,31 @@ First Version 11/19/2021
 import unittest
 import sys
 import os
-import wget
+from pywget import wget
 
-sys.path.append("../SciFiReaders/")
+sys.path.append("../../../../../SciFiReaders/")
 import SciFiReaders
 
-data_path = os.path.join(os.path.dirname(__file__), '../data')
+data_path = 'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/reorg/data/microscopy/em/tem/'
 
 
 class TestDMReader(unittest.TestCase):
 
     def test_load_dm3_file(self):
         # Test if the test dm3 file can be read in correctly
-        file_name  = wget.download(
-            'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/EELS_STO.dm3')
+        file_name = wget.download(data_path + '/DMReader_EELS_STO.dm3')
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
-        self.assertEqual(datasets.title[:8], 'EELS_STO')
+        self.assertEqual(datasets.title, 'DMReader_EELS_STO')
         self.assertEqual(datasets.source, 'SciFiReaders.DMReader')
         self.assertEqual(datasets.data_type.name, 'SPECTRUM')
         os.remove(file_name)
 
     def test_load_dm4_file(self):
-        file_name = wget.download('https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/EELS_STO.dm4')
+        file_name = wget.download(data_path + '/DMReader_EELS_STO.dm4')
         reader = SciFiReaders.DMReader(file_name, verbose=True)
         datasets = reader.read()
-        self.assertEqual(datasets.title[:8], 'EELS_STO')
+        self.assertEqual(datasets.title, 'DMReader_EELS_STO')
         self.assertEqual(datasets.source, 'SciFiReaders.DMReader')
         self.assertEqual(datasets.data_type.name, 'SPECTRUM')
         os.remove(file_name)
@@ -46,20 +45,18 @@ class TestDMReader(unittest.TestCase):
 
     def test_load_wrong_file(self):
         # Test behaviour of wrong data file
-        file_name = wget.download(
-            'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/STO_Image_Stack_(HAADF).h5')
+        file_name = wget.download(data_path + '/NionReader_Image_STO_HAADF.ndata')
         with self.assertRaises(TypeError):
-            reader = SciFiReaders.DMReader(file_name)
+            _ = SciFiReaders.DMReader(file_name)
         os.remove(file_name)
 
     def test_load_dm3_spectrum_image(self):
         # Test if the test dm3 file can be read in correctly
-        file_name = wget.download(
-            'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/SI-EELS_Spectrum_Image.dm3')
+        file_name = wget.download(data_path + '/DMReader_SpectrumImage_SI-EELS.dm3')
 
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
-        self.assertEqual(datasets.title, 'SI-EELS_Spectrum_Image')
+        self.assertEqual(datasets.title, 'DMReader_SpectrumImage_SI-EELS')
         self.assertEqual(datasets.source, 'SciFiReaders.DMReader')
         self.assertEqual(datasets.data_type.name, 'SPECTRAL_IMAGE')
         self.assertEqual(datasets.shape, (6, 49, 1024))
@@ -67,12 +64,11 @@ class TestDMReader(unittest.TestCase):
 
     def test_load_dm3_image(self):
         # Test if the test dm3 file can be read in correctly
-        file_name = wget.download(
-            'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/SI-Survey_Image.dm3')
+        file_name = wget.download(data_path + '/DMReader_Image_SI-Survey.dm3')
 
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
-        self.assertEqual(datasets.title, 'SI-Survey_Image')
+        self.assertEqual(datasets.title, 'DMReader_Image_SI-Survey')
         self.assertEqual(datasets.source, 'SciFiReaders.DMReader')
         self.assertEqual(datasets.data_type.name, 'IMAGE')
         self.assertEqual(datasets.shape, (512, 512))

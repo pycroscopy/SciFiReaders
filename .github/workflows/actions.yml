@@ -50,10 +50,8 @@ jobs:
         
     - name: Generate coverage report
       run: |
-        pip install pytest
-        pip install pytest-cov
+        pip install pytest pytest-cov pywget
         pip install -r extras_require.txt
-        pwd
         
         pytest --cov=./ --cov-report=xml
         

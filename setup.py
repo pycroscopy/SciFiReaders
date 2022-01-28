@@ -18,14 +18,7 @@ requirements = [  # basic
                 'sidpy>=0.0.2',
                 # generic:
                 'pillow>=5.4.0',
-                'wget',
-                # SID
-                'pyUSID',
-                'pyNSID',
-                # microscopy
-                # spm/afm
-                'igor',
-                # em/tem:
+                # Reader specific ones go to extras
                ]
 
 setup(
@@ -41,14 +34,11 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Operating System :: OS Independent',
-        'Programming Language :: Cython',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: Implementation :: CPython',
         'Topic :: Scientific/Engineering :: Information Analysis'],
     keywords=['imaging', 'spectra', 'multidimensional', 'scientific'],
@@ -60,7 +50,7 @@ setup(
     author_email='pycroscopy@gmail.com',
     install_requires=requirements,
     setup_requires=['pytest-runner'],
-    tests_require=['unittest2;python_version<"3.0"', 'pytest', 'hyperspy'],
+    tests_require=['pytest', 'pywget', 'hyperspy'],
     platforms=['Linux', 'Mac OSX', 'Windows 10/8.1/8/7'],
     # package_data={'sample':['dataset_1.dat']}
     test_suite='pytest',
@@ -71,6 +61,7 @@ setup(
     extras_require={
         'hyperspy':  ["hyperspy"],
         'igor': ["igor"],
+        "gwyddion": ["gwyfile"],
         'nanonispy': ['nanonispy'],
         'sid': ['pyUSID', 'pyNSID']
     },

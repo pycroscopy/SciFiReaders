@@ -4,14 +4,14 @@ import os
 import numpy as np
 import SciFiReaders as sr
 import sidpy
-import wget
+from pywget import wget
 
 wget.download("https://github.com/pycroscopy/SciFiDatasets/raw/main/data/Bias-Spectroscopy041.dat", 
 out = 'Bias-Spectroscopy.dat')
 
 wget.download("https://github.com/pycroscopy/SciFiDatasets/blob/main/data/COOx_sample2286.sxm?raw=true",
 out = 'NanonisSXM.sxm')
-sys.path.append("../SciFiReaders/")
+sys.path.append("../../../../../SciFiReaders/")
 
 
 class TestNanonisDat(unittest.TestCase):
