@@ -14,7 +14,7 @@ from pywget import wget
 sys.path.append("../../../../../SciFiReaders/")
 import SciFiReaders
 
-data_path = 'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/reorg/data/microscopy/em/tem/'
+data_path = 'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/microscopy/em/tem/'
 
 
 class TestDMReader(unittest.TestCase):

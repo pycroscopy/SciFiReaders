@@ -6,7 +6,7 @@ import os
 sys.path.append("../../../../../SciFiReaders/")
 import SciFiReaders as sr
 
-root_path = "https://github.com/pycroscopy/SciFiDatasets/blob/reorg/data/microscopy/spm/afm/"
+root_path = "https://github.com/pycroscopy/SciFiDatasets/blob/main/data/microscopy/spm/afm/"
 
 
 class TestBruker(unittest.TestCase):
