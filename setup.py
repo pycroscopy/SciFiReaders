@@ -61,6 +61,7 @@ setup(
     extras_require={
         'hyperspy':  ["hyperspy"],
         'igor': ["igor"],
+        "gwyddion": ["gwyfile"],
         'nanonispy': ['nanonispy'],
         'sid': ['pyUSID', 'pyNSID']
     },

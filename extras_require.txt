@@ -3,3 +3,4 @@ igor
 nanonispy
 pyUSID
 pyNSID
+gwyfile
