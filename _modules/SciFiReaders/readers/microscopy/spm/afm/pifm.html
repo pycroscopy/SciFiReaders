@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SciFiReaders.readers.microscopy.spm.afm.pifm &mdash; SciFiReaders 0.0.4 documentation</title>
+      <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../../" id="documentation_options" src="../../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../../_static/jquery.js"></script>
+        <script src="../../../../../../_static/underscore.js"></script>
+        <script src="../../../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../../../../../../about.html" />
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../../../index.html" class="icon icon-home"> SciFiReaders
+          </a>
+              <div class="version">
+                0.0.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">SciFiReaders</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../about.html">SciFiReaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../available_readers.html">Available Readers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../contact.html">Contact us</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../notebooks/00_developing_a_reader/index.html">Creating a Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../notebooks/01_using_readers/index.html">Using Readers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">SciFiReaders</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../../../index.html">Module code</a> &raquo;</li>
+      <li>SciFiReaders.readers.microscopy.spm.afm.pifm</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for SciFiReaders.readers.microscopy.spm.afm.pifm</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Mon Sep 13 21:46:14 2021</span>
+
+<span class="sd">@author: Raj</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sidpy</span> <span class="k">as</span> <span class="nn">sid</span>
+<span class="kn">from</span> <span class="nn">sidpy.sid</span> <span class="kn">import</span> <span class="n">Reader</span>
+<span class="kn">from</span> <span class="nn">sidpy.sid</span> <span class="kn">import</span> <span class="n">Dimension</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">h5py</span>
+
+<span class="kn">from</span> <span class="nn">pyNSID.io.hdf_io</span> <span class="kn">import</span> <span class="n">write_nsid_dataset</span>
+<span class="kn">from</span> <span class="nn">pyNSID.io.hdf_io</span> <span class="kn">import</span> <span class="n">create_indexed_group</span><span class="p">,</span> <span class="n">write_simple_attrs</span>
+
+<div class="viewcode-block" id="PiFMTranslator"><a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.html#SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator">[docs]</a><span class="k">class</span> <span class="nc">PiFMTranslator</span><span class="p">(</span><span class="n">Reader</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class that writes images, spectrograms, point spectra and associated ancillary data sets to h5 file in pyUSID data</span>
+<span class="sd">    structure.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PiFMTranslator.read"><a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.html#SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span> <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file_path : String / unicode</span>
+<span class="sd">            Absolute path of the .ibw file</span>
+<span class="sd">        verbose : Boolean (Optional)</span>
+<span class="sd">            Whether or not to show  print statements for debugging</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        sidpy.Dataset : List of sidpy.Dataset objects.</span>
+<span class="sd">            Image layers are saved as separate Dataset objects</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_path</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_anfatec_params</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_file_desc</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_spectrograms</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_imgs</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_spectra</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_datasets</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span></div>
+
+<div class="viewcode-block" id="PiFMTranslator.create_h5"><a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.html#SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.create_h5">[docs]</a>    <span class="k">def</span> <span class="nf">create_h5</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">append_path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Writes a new HDF5 file with the translated data</span>
+<span class="sd">        </span>
+<span class="sd">        append_path : string (Optional)</span>
+<span class="sd">            h5_file to add these data to, must be a path to the h5_file on disk</span>
+<span class="sd">        overwrite : bool (optional, default=False)</span>
+<span class="sd">            If True, will overwrite an existing .h5 file of the same name        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_hdf5_file</span><span class="p">(</span><span class="n">append_path</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_datasets_hdf5</span><span class="p">()</span>
+        
+        <span class="k">return</span></div>
+        
+<div class="viewcode-block" id="PiFMTranslator.get_path"><a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.html#SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.get_path">[docs]</a>    <span class="k">def</span> <span class="nf">get_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;writes full path, directory, and file name as attributes to class&quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_file_path</span>
+        <span class="n">full_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">full_path</span><span class="p">)</span>
+        <span class="c1"># file name</span>
+        <span class="n">basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">full_path</span> <span class="o">=</span> <span class="n">full_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="n">directory</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basename</span> <span class="o">=</span> <span class="n">basename</span></div>
+
+<div class="viewcode-block" id="PiFMTranslator.read_anfatec_params"><a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.html#SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.read_anfatec_params">[docs]</a>    <span class="k">def</span> <span class="nf">read_anfatec_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;reads the scan parameters and writes them to a dictionary&quot;&quot;&quot;</span>
+        
+        <span class="n">params_dictionary</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;ISO-8859-1&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">params</span><span class="p">:</span>
+                    <span class="n">sline</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)]</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sline</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">sline</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;;&#39;</span><span class="p">:</span>
+                        <span class="n">params_dictionary</span><span class="p">[</span><span class="n">sline</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">sline</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="c1">#in ANFATEC parameter files, all attributes are written before file references.</span>
+                    <span class="k">if</span> <span class="n">sline</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;FileDesc&#39;</span><span class="p">):</span>
+                        <span class="n">params</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params_dictionary</span> <span class="o">=</span> <span class="n">params_dictionary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_len</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">params_dictionary</span><span class="p">[</span><span class="s1">&#39;xPixel&#39;</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">params_dictionary</span><span class="p">[</span><span class="s1">&#39;yPixel&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="PiFMTranslator.read_file_desc"><a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.html#SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.read_file_desc">[docs]</a>    <span class="k">def</span> <span class="nf">read_file_desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;reads spectrogram, image, and spectra file descriptions and stores all to dictionary where</span>
+<span class="sd">        the key:value pairs are filename:[all descriptors]&quot;&quot;&quot;</span>
+        
+        <span class="n">spectrogram_desc</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">img_desc</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">spectrum_desc</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">pspectrum_desc</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;ISO-8859-1&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+
+                <span class="n">sline</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)]</span>
+                <span class="c1">#if true, then file describes image.</span>
+
+                <span class="k">if</span> <span class="n">sline</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;FileDescBegin&#39;</span><span class="p">):</span>
+                    <span class="n">no_descriptors</span> <span class="o">=</span> <span class="mi">5</span>
+                    <span class="n">file_desc</span> <span class="o">=</span> <span class="p">[]</span>
+
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">no_descriptors</span><span class="p">):</span>
+
+                        <span class="n">line_desc</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)]</span>
+                        <span class="n">file_desc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line_desc</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="c1">#img_desc[&#39;filename&#39;] = caption, scale, physical unit, offset</span>
+                    <span class="n">img_desc</span><span class="p">[</span><span class="n">file_desc</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">file_desc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+                <span class="c1">#if true, file describes spectrogram (ie hyperspectral image)</span>
+                <span class="k">if</span> <span class="n">sline</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;FileDesc2Begin&#39;</span><span class="p">):</span>
+
+                    <span class="n">no_descriptors</span> <span class="o">=</span> <span class="mi">10</span>
+                    <span class="n">file_desc</span> <span class="o">=</span> <span class="p">[]</span>
+
+                    <span class="k">for</span> <span class="n">i</span>  <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">no_descriptors</span><span class="p">):</span>
+                        <span class="n">line_desc</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)]</span>
+                        <span class="n">file_desc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line_desc</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="c1">#caption, bytes perpixel, scale, physical unit, offset, offset, datatype, bytes per reading</span>
+                    <span class="c1">#filename wavelengths, phys units wavelengths.</span>
+                    <span class="n">spectrogram_desc</span><span class="p">[</span><span class="n">file_desc</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">file_desc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+                <span class="k">if</span> <span class="n">sline</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;AFMSpectrumDescBegin&#39;</span><span class="p">):</span>
+
+                    <span class="n">file_desc</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="n">line_desc</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)][</span><span class="mi">1</span><span class="p">]</span>
+
+                    <span class="k">if</span> <span class="s1">&#39;powerspectrum&#39;</span> <span class="ow">in</span> <span class="n">line_desc</span><span class="p">:</span>
+                        <span class="n">no_descriptors</span> <span class="o">=</span> <span class="mi">2</span>
+
+                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">no_descriptors</span><span class="p">):</span>
+
+                            <span class="n">line_desc</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)]</span>
+                            <span class="n">file_desc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line_desc</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                        <span class="c1">#file name, position x, position y</span>
+                        <span class="n">pspectrum_desc</span><span class="p">[</span><span class="n">file_desc</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">file_desc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+                    <span class="k">else</span><span class="p">:</span>
+
+                        <span class="n">no_descriptors</span> <span class="o">=</span> <span class="mi">7</span>
+                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">no_descriptors</span><span class="p">):</span>
+                            <span class="n">line_desc</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)]</span>
+                            <span class="n">file_desc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line_desc</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                        <span class="c1">#file name, position x, position y</span>
+                        <span class="n">spectrum_desc</span><span class="p">[</span><span class="n">file_desc</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">file_desc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_desc</span> <span class="o">=</span> <span class="n">img_desc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spectrogram_desc</span> <span class="o">=</span> <span class="n">spectrogram_desc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spectrum_desc</span> <span class="o">=</span> <span class="n">spectrum_desc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pspectrum_desc</span> <span class="o">=</span> <span class="n">pspectrum_desc</span></div>
+        
+<div class="viewcode-block" id="PiFMTranslator.read_spectrograms"><a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.html#SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.read_spectrograms">[docs]</a>    <span class="k">def</span> <span class="nf">read_spectrograms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;reads spectrograms, associated spectral values, and saves them in two dictionaries&quot;&quot;&quot;</span>
+        
+        <span class="n">spectrograms</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">spectrogram_spec_vals</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="k">for</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">descriptors</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectrogram_desc</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+            <span class="n">spec_vals_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">,</span> <span class="n">file_name</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;.int&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;Wavelengths.txt&#39;</span><span class="p">))</span>
+            <span class="c1">#if true, data is acquired with polarizer, with an attenuation data column</span>
+         
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">spec_vals_i</span><span class="p">)</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">spectrogram_spec_vals</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">spec_vals_i</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+                <span class="n">attenuation</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">attenuation</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">spec_vals_i</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">attenuation</span> <span class="o">=</span> <span class="n">attenuation</span>
+            
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">spectrogram_spec_vals</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">spec_vals_i</span>
+                
+            <span class="c1">#load and save spectrograms</span>
+            <span class="n">spectrogram_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">,</span> <span class="n">file_name</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;i4&#39;</span><span class="p">)</span>
+            <span class="n">spectrograms</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">x_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_len</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">spec_vals_i</span><span class="p">)))</span>
+            
+            <span class="k">for</span> <span class="n">y</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">spectrogram_i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_len</span><span class="p">)):</span>
+
+                <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">pt_spectrum</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_len</span><span class="p">)):</span>
+                    <span class="n">spectrograms</span><span class="p">[</span><span class="n">file_name</span><span class="p">][</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">pt_spectrum</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">descriptors</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">spectrograms</span> <span class="o">=</span> <span class="n">spectrograms</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spectrogram_spec_vals</span> <span class="o">=</span> <span class="n">spectrogram_spec_vals</span></div>
+
+<div class="viewcode-block" id="PiFMTranslator.read_imgs"><a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.html#SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.read_imgs">[docs]</a>    <span class="k">def</span> <span class="nf">read_imgs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;reads images and saves to dictionary&quot;&quot;&quot;</span>
+        <span class="n">imgs</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="k">for</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">descriptors</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_desc</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+            <span class="n">img_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">,</span> <span class="n">file_name</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;i4&#39;</span><span class="p">)</span>
+            <span class="n">imgs</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">x_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_len</span><span class="p">))</span>
+        
+            <span class="k">for</span> <span class="n">y</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">img_i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_len</span><span class="p">)):</span>
+            
+                <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">pixel</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_len</span><span class="p">)):</span>
+                    <span class="n">imgs</span><span class="p">[</span><span class="n">file_name</span><span class="p">][</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">pixel</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">descriptors</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">imgs</span> <span class="o">=</span> <span class="n">imgs</span></div>
+
+<div class="viewcode-block" id="PiFMTranslator.read_spectra"><a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.html#SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.read_spectra">[docs]</a>    <span class="k">def</span> <span class="nf">read_spectra</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;reads all point spectra and saves to dictionary&quot;&quot;&quot;</span>
+        <span class="n">spectra</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">spectra_spec_vals</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">spectra_x_y_dim_name</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="k">for</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">descriptors</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectrum_desc</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">spectrum_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">,</span> <span class="n">file_name</span><span class="p">),</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">spectra_spec_vals</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">spectrum_f</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="n">spectra</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">spectrum_f</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+        
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">,</span> <span class="n">file_name</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">spectra_x_y_dim_name</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span>  <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">descriptors</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pspectrum_desc</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">spectrum_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">,</span> <span class="n">file_name</span><span class="p">),</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">spectra_spec_vals</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">spectrum_f</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="n">spectra</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">spectrum_f</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+        
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">,</span> <span class="n">file_name</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">spectra_x_y_dim_name</span><span class="p">[</span><span class="n">file_name</span><span class="p">]</span>  <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">spectra</span> <span class="o">=</span> <span class="n">spectra</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spectra_spec_vals</span> <span class="o">=</span> <span class="n">spectra_spec_vals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spectra_x_y_dim_name</span> <span class="o">=</span> <span class="n">spectra_x_y_dim_name</span></div>
+
+    <span class="k">def</span> <span class="nf">make_datasets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="n">datasets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_dimensions</span><span class="p">()</span>
+ 
+        <span class="c1"># Spectrograms</span>
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spectrogram_desc</span><span class="p">):</span>
+           
+           <span class="k">for</span> <span class="n">spectrogram_f</span><span class="p">,</span> <span class="n">descriptors</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectrogram_desc</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+               <span class="c1"># channel_i = create_indexed_group(self.h5_meas_grp, &#39;Channel_&#39;)</span>
+               <span class="n">spec_vals_i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectrogram_spec_vals</span><span class="p">[</span><span class="n">spectrogram_f</span><span class="p">]</span>
+               
+               <span class="n">spectrogram_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectrograms</span><span class="p">[</span><span class="n">spectrogram_f</span><span class="p">]</span>
+               <span class="n">dset</span> <span class="o">=</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">spectrogram_data</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">descriptors</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+               <span class="n">dset</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">&#39;Spectrogram&#39;</span>
+               <span class="n">dset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim0</span><span class="p">)</span>
+               <span class="n">dset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim0</span><span class="p">)</span>
+
+               <span class="c1"># spectrogram_spec_dims = Dimension(&#39;Wavelength&#39;, descriptors[8], spec_vals_i)</span>
+               <span class="n">spectrogram_dims</span> <span class="o">=</span> <span class="n">Dimension</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="n">spec_vals_i</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Spectrogram&#39;</span><span class="p">,</span> 
+                                            <span class="n">units</span><span class="o">=</span><span class="n">descriptors</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">quantity</span><span class="o">=</span><span class="s1">&#39;Wavelength&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;spectral&#39;</span> <span class="p">)</span>
+               <span class="n">dset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">spectrogram_dims</span><span class="p">)</span>
+               <span class="n">dset</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Caption&#39;</span><span class="p">:</span> <span class="n">descriptors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                <span class="s1">&#39;Bytes_Per_Pixel&#39;</span><span class="p">:</span> <span class="n">descriptors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                <span class="s1">&#39;Scale&#39;</span><span class="p">:</span> <span class="n">descriptors</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                                <span class="s1">&#39;Physical_Units&#39;</span><span class="p">:</span> <span class="n">descriptors</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+                                <span class="s1">&#39;Offset&#39;</span><span class="p">:</span> <span class="n">descriptors</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+                                <span class="s1">&#39;Datatype&#39;</span><span class="p">:</span> <span class="n">descriptors</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+                                <span class="s1">&#39;Bytes_Per_Reading&#39;</span><span class="p">:</span> <span class="n">descriptors</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span>
+                                <span class="s1">&#39;Wavelength_File&#39;</span><span class="p">:</span> <span class="n">descriptors</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span>
+                                <span class="s1">&#39;Wavelength_Units&#39;</span><span class="p">:</span> <span class="n">descriptors</span><span class="p">[</span><span class="mi">8</span><span class="p">]}</span>
+               
+               <span class="n">datasets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dset</span><span class="p">)</span>
+               
+        <span class="c1"># Images</span>
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">img_desc</span><span class="p">):</span>
+            
+            <span class="k">for</span> <span class="n">img_f</span><span class="p">,</span> <span class="n">descriptors</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_desc</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                
+                <span class="n">img_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imgs</span><span class="p">[</span><span class="n">img_f</span><span class="p">]</span>
+                <span class="n">dset</span> <span class="o">=</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">descriptors</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">dset</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">&#39;Image&#39;</span>
+                <span class="n">dset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim0</span><span class="p">)</span>
+                <span class="n">dset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim1</span><span class="p">)</span>   
+                <span class="n">dset</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">descriptors</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="n">dset</span><span class="o">.</span><span class="n">quantity</span> <span class="o">=</span> <span class="n">descriptors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">dset</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span>  <span class="p">{</span><span class="s1">&#39;Caption&#39;</span><span class="p">:</span> <span class="n">descriptors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                  <span class="s1">&#39;Scale&#39;</span><span class="p">:</span> <span class="n">descriptors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                  <span class="s1">&#39;Physical_Units&#39;</span><span class="p">:</span> <span class="n">descriptors</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                                  <span class="s1">&#39;Offset&#39;</span><span class="p">:</span> <span class="n">descriptors</span><span class="p">[</span><span class="mi">3</span><span class="p">]}</span>
+
+                <span class="n">datasets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dset</span><span class="p">)</span>
+                
+        <span class="c1"># Spectra</span>
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spectrum_desc</span><span class="p">):</span>
+            
+            <span class="k">for</span> <span class="n">spec_f</span><span class="p">,</span> <span class="n">descriptors</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectrum_desc</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                
+                <span class="c1">#create new measurement group for each spectrum</span>
+                <span class="n">x_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectra_x_y_dim_name</span><span class="p">[</span><span class="n">spec_f</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">x_unit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectra_x_y_dim_name</span><span class="p">[</span><span class="n">spec_f</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">y_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectra_x_y_dim_name</span><span class="p">[</span><span class="n">spec_f</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">y_unit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectra_x_y_dim_name</span><span class="p">[</span><span class="n">spec_f</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">dset</span> <span class="o">=</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">[</span><span class="n">spec_f</span><span class="p">],</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Raw_Spectrum&#39;</span><span class="p">)</span>
+
+                <span class="n">dset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Dimension</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">descriptors</span><span class="p">[</span><span class="mi">1</span><span class="p">])]),</span> 
+                                                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span><span class="n">units</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params_dictionary</span><span class="p">[</span><span class="s1">&#39;XPhysUnit&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\xb5</span><span class="s1">&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">),</span>
+                                                <span class="n">quantity</span> <span class="o">=</span> <span class="s1">&#39;X_position&#39;</span><span class="p">))</span>
+                
+                <span class="n">dset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">Dimension</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">descriptors</span><span class="p">[</span><span class="mi">2</span><span class="p">])]),</span> 
+                                                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span><span class="n">units</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params_dictionary</span><span class="p">[</span><span class="s1">&#39;YPhysUnit&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\xb5</span><span class="s1">&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">),</span>
+                                                <span class="n">quantity</span> <span class="o">=</span> <span class="s1">&#39;Y_position&#39;</span><span class="p">))</span>
+                <span class="n">dset</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">&#39;Spectrum&#39;</span>
+                <span class="n">dset</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">y_unit</span>
+                <span class="n">dset</span><span class="o">.</span><span class="n">quantity</span> <span class="o">=</span> <span class="n">y_name</span>
+                <span class="n">spectra_dims</span> <span class="o">=</span> <span class="n">Dimension</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">spectra_spec_vals</span><span class="p">[</span><span class="n">spec_f</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Wavelength&#39;</span><span class="p">,</span> 
+                                        <span class="n">units</span><span class="o">=</span><span class="n">x_unit</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="n">x_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;spectral&#39;</span> <span class="p">)</span>
+                <span class="n">dset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">spectra_dims</span><span class="p">)</span>
+                <span class="n">dset</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;XLoc&#39;</span><span class="p">:</span> <span class="n">descriptors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;YLoc&#39;</span><span class="p">:</span> <span class="n">descriptors</span><span class="p">[</span><span class="mi">2</span><span class="p">]}</span>
+
+                <span class="n">datasets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dset</span><span class="p">)</span>
+        
+        <span class="c1"># Power Spectra</span>
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pspectrum_desc</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">spec_f</span><span class="p">,</span> <span class="n">descriptors</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pspectrum_desc</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+                <span class="c1">#create new measurement group for each spectrum</span>
+                <span class="n">x_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectra_x_y_dim_name</span><span class="p">[</span><span class="n">spec_f</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">x_unit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectra_x_y_dim_name</span><span class="p">[</span><span class="n">spec_f</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">y_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectra_x_y_dim_name</span><span class="p">[</span><span class="n">spec_f</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">y_unit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectra_x_y_dim_name</span><span class="p">[</span><span class="n">spec_f</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">dset</span> <span class="o">=</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">[</span><span class="n">spec_f</span><span class="p">],</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Power_Spectrum&#39;</span><span class="p">)</span>
+
+                <span class="n">dset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Dimension</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]),</span> 
+                                                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span><span class="n">units</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params_dictionary</span><span class="p">[</span><span class="s1">&#39;XPhysUnit&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\xb5</span><span class="s1">&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">),</span>
+                                                <span class="n">quantity</span> <span class="o">=</span> <span class="s1">&#39;X_position&#39;</span><span class="p">))</span>
+                
+                <span class="n">dset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">Dimension</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]),</span> 
+                                                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span><span class="n">units</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params_dictionary</span><span class="p">[</span><span class="s1">&#39;YPhysUnit&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\xb5</span><span class="s1">&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">),</span>
+                                                <span class="n">quantity</span> <span class="o">=</span> <span class="s1">&#39;Y_position&#39;</span><span class="p">))</span>
+                <span class="n">dset</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">&#39;Spectrum&#39;</span>
+                <span class="n">dset</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">y_unit</span>
+                <span class="n">dset</span><span class="o">.</span><span class="n">quantity</span> <span class="o">=</span> <span class="n">y_name</span>
+                <span class="n">spectra_dims</span> <span class="o">=</span> <span class="n">Dimension</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">spectra_spec_vals</span><span class="p">[</span><span class="n">spec_f</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Wavelength&#39;</span><span class="p">,</span> 
+                                        <span class="n">units</span><span class="o">=</span><span class="n">x_unit</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="n">x_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;spectral&#39;</span> <span class="p">)</span>
+                <span class="n">dset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">spectra_dims</span><span class="p">)</span>
+                <span class="n">dset</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;XLoc&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;YLoc&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+                <span class="n">datasets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dset</span><span class="p">)</span>                
+
+        <span class="k">return</span> <span class="n">datasets</span>
+
+    <span class="k">def</span> <span class="nf">make_dimensions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">x_range</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params_dictionary</span><span class="p">[</span><span class="s1">&#39;XScanRange&#39;</span><span class="p">])</span>
+        <span class="n">y_range</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params_dictionary</span><span class="p">[</span><span class="s1">&#39;YScanRange&#39;</span><span class="p">])</span>
+        <span class="n">x_center</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params_dictionary</span><span class="p">[</span><span class="s1">&#39;xCenter&#39;</span><span class="p">])</span>
+        <span class="n">y_center</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params_dictionary</span><span class="p">[</span><span class="s1">&#39;yCenter&#39;</span><span class="p">])</span>
+
+        <span class="n">x_start</span> <span class="o">=</span> <span class="n">x_center</span><span class="o">-</span><span class="p">(</span><span class="n">x_range</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span> <span class="n">x_end</span> <span class="o">=</span> <span class="n">x_center</span><span class="o">+</span><span class="p">(</span><span class="n">x_range</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">y_start</span> <span class="o">=</span> <span class="n">y_center</span><span class="o">-</span><span class="p">(</span><span class="n">y_range</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span> <span class="n">y_end</span> <span class="o">=</span> <span class="n">y_center</span><span class="o">+</span><span class="p">(</span><span class="n">y_range</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">dx</span> <span class="o">=</span> <span class="n">x_range</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">x_len</span>
+        <span class="n">dy</span> <span class="o">=</span> <span class="n">y_range</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">y_len</span>
+        
+        <span class="c1">#assumes y scan direction:down; scan angle: 0 deg</span>
+        <span class="n">y_linspace</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">y_start</span><span class="p">,</span> <span class="n">y_end</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">dy</span><span class="p">)</span>
+        <span class="n">x_linspace</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_start</span><span class="p">,</span> <span class="n">x_end</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
+        
+        <span class="n">qtyx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_dictionary</span><span class="p">[</span><span class="s1">&#39;XPhysUnit&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\xb5</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">)</span>
+        <span class="n">qtyy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_dictionary</span><span class="p">[</span><span class="s1">&#39;YPhysUnit&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\xb5</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">dim0</span> <span class="o">=</span> <span class="n">Dimension</span><span class="p">(</span><span class="n">x_linspace</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="n">qtyx</span><span class="p">,</span> 
+                              <span class="n">dimension_type</span> <span class="o">=</span> <span class="s1">&#39;spatial&#39;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s1">&#39;Length&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dim1</span> <span class="o">=</span> <span class="n">Dimension</span><span class="p">(</span><span class="n">y_linspace</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="n">qtyy</span><span class="p">,</span> 
+                              <span class="n">dimension_type</span> <span class="o">=</span> <span class="s1">&#39;spatial&#39;</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s1">&#39;Length&#39;</span><span class="p">)</span>
+        
+        <span class="c1"># self.pos_ind, self.pos_val, self.pos_dims = pos_ind, pos_val, pos_dims</span>
+        
+        <span class="k">return</span> 
+        
+    <span class="c1"># HDF5 creation        </span>
+<div class="viewcode-block" id="PiFMTranslator.create_hdf5_file"><a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.html#SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.create_hdf5_file">[docs]</a>    <span class="k">def</span> <span class="nf">create_hdf5_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">append_path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Sets up the HDF5 file for writing </span>
+<span class="sd">        </span>
+<span class="sd">        append_path : string (Optional)</span>
+<span class="sd">            h5_file to add these data to, must be a path to the h5_file on disk</span>
+<span class="sd">        overwrite : bool (optional, default=False)</span>
+<span class="sd">            If True, will overwrite an existing .h5 file of the same name        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">append_path</span><span class="p">:</span>
+            <span class="n">h5_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">basename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;.h5&#39;</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">h5_path</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">FileExistsError</span><span class="p">(</span><span class="s1">&#39;This file already exists). Set attribute overwrite to True&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Overwriting file&#39;</span><span class="p">,</span> <span class="n">h5_path</span><span class="p">)</span>
+                    <span class="c1">#os.remove(h5_path)</span>
+                    
+            <span class="bp">self</span><span class="o">.</span><span class="n">h5_f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">h5_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">append_path</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;File does not exist. Check pathname.&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">h5_f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">append_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r+&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">h5_img_grp</span> <span class="o">=</span> <span class="n">create_indexed_group</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">h5_f</span><span class="p">,</span> <span class="s2">&quot;Images&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h5_spectra_grp</span> <span class="o">=</span> <span class="n">create_indexed_group</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">h5_f</span><span class="p">,</span> <span class="s2">&quot;Spectra&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h5_spectrogram_grp</span> <span class="o">=</span> <span class="n">create_indexed_group</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">h5_f</span><span class="p">,</span> <span class="s2">&quot;Spectrogram&quot;</span><span class="p">)</span>
+        
+        <span class="n">write_simple_attrs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">h5_img_grp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_dictionary</span><span class="p">)</span>
+        <span class="n">write_simple_attrs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">h5_spectra_grp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_dictionary</span><span class="p">)</span>
+        <span class="n">write_simple_attrs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">h5_spectrogram_grp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_dictionary</span><span class="p">)</span>
+        
+        <span class="k">return</span></div>
+    
+<div class="viewcode-block" id="PiFMTranslator.write_datasets_hdf5"><a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.html#SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator.write_datasets_hdf5">[docs]</a>    <span class="k">def</span> <span class="nf">write_datasets_hdf5</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Writes the datasets as pyNSID datasets to the HDF5 file&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">dset</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span><span class="p">:</span>
+            
+            <span class="k">if</span> <span class="s1">&#39;IMAGE&#39;</span> <span class="ow">in</span> <span class="n">dset</span><span class="o">.</span><span class="n">data_type</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        
+                <span class="n">write_nsid_dataset</span><span class="p">(</span><span class="n">dset</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h5_img_grp</span><span class="p">)</span>
+        
+            <span class="k">elif</span> <span class="s1">&#39;SPECTRUM&#39;</span> <span class="ow">in</span> <span class="n">dset</span><span class="o">.</span><span class="n">data_type</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        
+                <span class="n">write_nsid_dataset</span><span class="p">(</span><span class="n">dset</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h5_spectra_grp</span><span class="p">)</span> 
+                
+            <span class="k">else</span><span class="p">:</span>
+                
+                <span class="n">write_nsid_dataset</span><span class="p">(</span><span class="n">dset</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h5_spectrogram_grp</span><span class="p">)</span> 
+    
+        <span class="bp">self</span><span class="o">.</span><span class="n">h5_f</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>    
+    
+        <span class="k">return</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Pycroscopy contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

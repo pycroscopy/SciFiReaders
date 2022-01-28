@@ -1,0 +1,32 @@
+SciFiReaders.readers.microscopy.em.tem.emd\_reader.EMDReader
+============================================================
+
+.. currentmodule:: SciFiReaders.readers.microscopy.em.tem.emd_reader
+
+.. autoclass:: EMDReader
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~EMDReader.can_read
+      ~EMDReader.close
+      ~EMDReader.get_data
+      ~EMDReader.get_eds
+      ~EMDReader.get_eds_spectrum
+      ~EMDReader.get_image
+      ~EMDReader.get_metadata
+      ~EMDReader.read
+   
+   
+
+   
+   
+   

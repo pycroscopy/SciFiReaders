@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SciFiReaders.readers.spectroscopy.SpeReader &mdash; SciFiReaders 0.0.4 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../../../../about.html" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> SciFiReaders
+          </a>
+              <div class="version">
+                0.0.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">SciFiReaders</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../about.html">SciFiReaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../available_readers.html">Available Readers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contact.html">Contact us</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/00_developing_a_reader/index.html">Creating a Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/01_using_readers/index.html">Using Readers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">SciFiReaders</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>SciFiReaders.readers.spectroscopy.SpeReader</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for SciFiReaders.readers.spectroscopy.SpeReader</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">SpeReader is designed to read a single Raman spectra from a Princeton Instruments CCD camera.</span>
+<span class="sd">The reader takes in the Princeton Instruments .SPE file and produces a sidpy dataset.</span>
+
+<span class="sd">Created on Fri May 14 2020</span>
+
+<span class="sd">@author: Sumner Harris</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">sidpy</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">Dimension</span><span class="p">,</span> <span class="n">Reader</span>
+
+<div class="viewcode-block" id="RamanSpeReader"><a class="viewcode-back" href="../../../../_autosummary/SciFiReaders.readers.spectroscopy.SpeReader.RamanSpeReader.html#SciFiReaders.readers.spectroscopy.SpeReader.RamanSpeReader">[docs]</a><span class="k">class</span> <span class="nc">RamanSpeReader</span><span class="p">(</span><span class="n">Reader</span><span class="p">):</span>
+    
+<div class="viewcode-block" id="RamanSpeReader.read"><a class="viewcode-back" href="../../../../_autosummary/SciFiReaders.readers.spectroscopy.SpeReader.RamanSpeReader.html#SciFiReaders.readers.spectroscopy.SpeReader.RamanSpeReader.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads a single Raman spectra from a Princeton Instruments CCD camera.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        data_set: sidpy.Dataset object</span>
+<span class="sd">            wraps all the raw data and metadata from the input file into a Dataset object</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># open the .SPE file</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_input_file_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+            <span class="c1"># Create an empty dictionary for the metadata</span>
+            <span class="n">metadata_dictionary</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="c1"># Search through the file for the needed metadata</span>
+            <span class="n">metadata_dictionary</span><span class="p">[</span><span class="s1">&#39;date_acquired&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;date=&quot;(.*?)&quot;&#39;</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;ANSI&#39;</span><span class="p">)</span>  
+            <span class="n">metadata_dictionary</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;width=&quot;(.*?)&quot;&#39;</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">metadata_dictionary</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;height=&quot;(.*?)&quot;&#39;</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">metadata_dictionary</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metadata_dictionary</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">metadata_dictionary</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span>
+            <span class="n">metadata_dictionary</span><span class="p">[</span><span class="s1">&#39;exposure_time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;&lt;ExposureTime type=&quot;Double&quot;&gt;(.*?)&lt;/ExposureTime&gt;&#39;</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">metadata_dictionary</span><span class="p">[</span><span class="s1">&#39;excitation_wavelength&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;laserLine=&quot;(.*?)&quot;&#39;</span><span class="p">,</span><span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">metadata_dictionary</span><span class="p">[</span><span class="s1">&#39;center_wavelength&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;&lt;CenterWavelength type=&quot;Double&quot;&gt;(.*?)&lt;/CenterWavelength&gt;&#39;</span><span class="p">,</span><span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">metadata_dictionary</span><span class="p">[</span><span class="s1">&#39;orientation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;orientation=&quot;(.*?)&quot;&#39;</span><span class="p">,</span><span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;ANSI&#39;</span><span class="p">)</span>
+
+            <span class="c1"># Get the wavelength and intensity</span>
+            <span class="n">wavelength_string</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;&lt;Wavelength xml:space=&quot;preserve&quot;&gt;(.*?)&lt;/Wavelength&gt;&#39;</span><span class="p">,</span><span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+            <span class="n">wavelength</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">wavelength_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+            <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">4100</span><span class="p">)</span>
+            <span class="n">intensity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span><span class="n">count</span><span class="o">=</span><span class="n">metadata_dictionary</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">])</span>
+
+            <span class="n">raman_shift_wavenumbers</span> <span class="o">=</span> <span class="mf">1e7</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">metadata_dictionary</span><span class="p">[</span><span class="s1">&#39;excitation_wavelength&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">wavelength</span><span class="p">)</span>
+
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            
+        <span class="c1"># create the sidpy dataset</span>
+        <span class="n">data_set</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">intensity</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Raman Spectra&#39;</span><span class="p">)</span>
+
+        <span class="n">data_set</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">&#39;spectrum&#39;</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="s1">&#39;counts&#39;</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">quantity</span> <span class="o">=</span> <span class="s1">&#39;Intensity&#39;</span>
+
+        <span class="c1"># set dimensions</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Dimension</span><span class="p">(</span><span class="n">raman_shift_wavenumbers</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Raman Shift&#39;</span><span class="p">,</span>
+                                                 <span class="n">units</span> <span class="o">=</span> <span class="s1">&#39;cm-1&#39;</span><span class="p">,</span>
+                                                 <span class="n">quantity</span><span class="o">=</span><span class="s1">&#39;Raman shift&#39;</span><span class="p">,</span>
+                                                 <span class="n">dimension_type</span><span class="o">=</span><span class="s1">&#39;spectral&#39;</span><span class="p">))</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">Dimension</span><span class="p">(</span><span class="n">intensity</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Intensity&#39;</span><span class="p">,</span>
+                                                 <span class="n">units</span> <span class="o">=</span> <span class="s1">&#39;counts&#39;</span><span class="p">,</span>
+                                                 <span class="n">quantity</span><span class="o">=</span><span class="s1">&#39;intensity&#39;</span><span class="p">,</span>
+                                                 <span class="n">dimension_type</span><span class="o">=</span><span class="s1">&#39;spectral&#39;</span><span class="p">))</span>        
+
+        <span class="n">data_set</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata_dictionary</span>
+
+        <span class="k">return</span> <span class="n">data_set</span></div>
+    
+<div class="viewcode-block" id="RamanSpeReader.can_read"><a class="viewcode-back" href="../../../../_autosummary/SciFiReaders.readers.spectroscopy.SpeReader.RamanSpeReader.html#SciFiReaders.readers.spectroscopy.SpeReader.RamanSpeReader.can_read">[docs]</a>    <span class="k">def</span> <span class="nf">can_read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether or not the provided file has .spe extension</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">RamanSpeReader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">can_read</span><span class="p">(</span><span class="n">extension</span><span class="o">=</span><span class="s1">&#39;spe&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Pycroscopy contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

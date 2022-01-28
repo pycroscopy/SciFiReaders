@@ -1,0 +1,37 @@
+SciFiReaders.readers.microscopy.spm.afm.pifm.PiFMTranslator
+===========================================================
+
+.. currentmodule:: SciFiReaders.readers.microscopy.spm.afm.pifm
+
+.. autoclass:: PiFMTranslator
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~PiFMTranslator.can_read
+      ~PiFMTranslator.create_h5
+      ~PiFMTranslator.create_hdf5_file
+      ~PiFMTranslator.get_path
+      ~PiFMTranslator.make_datasets
+      ~PiFMTranslator.make_dimensions
+      ~PiFMTranslator.read
+      ~PiFMTranslator.read_anfatec_params
+      ~PiFMTranslator.read_file_desc
+      ~PiFMTranslator.read_imgs
+      ~PiFMTranslator.read_spectra
+      ~PiFMTranslator.read_spectrograms
+      ~PiFMTranslator.write_datasets_hdf5
+   
+   
+
+   
+   
+   

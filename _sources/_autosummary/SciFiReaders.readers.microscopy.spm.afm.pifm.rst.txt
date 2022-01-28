@@ -1,0 +1,32 @@
+SciFiReaders.readers.microscopy.spm.afm.pifm
+============================================
+
+.. automodule:: SciFiReaders.readers.microscopy.spm.afm.pifm
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      PiFMTranslator
+   
+   
+
+   
+   
+   
+
+
+
