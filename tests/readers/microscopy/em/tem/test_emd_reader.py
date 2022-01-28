@@ -29,7 +29,7 @@ class TestEMDReader(unittest.TestCase):
         emd_reader.close()
 
     def test_read_spectrum(self):
-        file_name = wget.download(data_path + 'fei_emd_spectrum.emd')
+        file_name = wget.download(data_path + 'EMDReader_Spectrum_FEI.emd')
         emd_reader = EMDReader(file_name)
         datasets = emd_reader.read()
         emd_reader.close()
