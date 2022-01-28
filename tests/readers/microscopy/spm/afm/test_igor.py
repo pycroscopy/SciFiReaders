@@ -8,7 +8,7 @@ import os
 sys.path.append("../../../../../SciFiReaders/")
 import SciFiReaders as sr
 
-root_path = "https://github.com/pycroscopy/SciFiDatasets/blob/main/data"
+root_path = "https://github.com/pycroscopy/SciFiDatasets/blob/reorg/data/microscopy/spm/afm/"
 
 
 class TestIgorIBW(unittest.TestCase):
@@ -20,7 +20,7 @@ class TestIgorIBW(unittest.TestCase):
 
         file_path = 'force_ibw.ibw'
         # Download the required files
-        wget.download(root_path + "/Line0010Point0025.ibw?raw=true", out=file_path)
+        wget.download(root_path + "/IgorIBWReader_ForceCurve.ibw?raw=true", out=file_path)
 
         data_translator = sr.IgorIBWReader(file_path)
         datasets = data_translator.read(verbose=False)
@@ -680,7 +680,7 @@ class TestIgorIBW(unittest.TestCase):
         #Test if the IGOR Image IBW file can be read in correctly
 
         file_path = 'image_ibw.ibw'
-        wget.download(root_path + "/BTFO_DSO_Thick0000.ibw?raw=true", out=file_path)
+        wget.download(root_path + "/IgorIBWReader_ImageStack_BTFO_DSO.ibw?raw=true", out=file_path)
 
         data_translator = sr.IgorIBWReader(file_path)
         datasets = data_translator.read(verbose=True)

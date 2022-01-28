@@ -16,13 +16,13 @@ import sidpy
 sys.path.insert(0, "../../../../../SciFiReaders/")
 from SciFiReaders import EMDReader
 
-data_path = 'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data'
+data_path = 'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/reorg/data/microscopy/em/tem/'
 
 
 class TestEMDReader(unittest.TestCase):
 
     def test_data_available(self):
-        file_name = wget.download(data_path + '/fei_emd_spectrum.emd')
+        file_name = wget.download(data_path + '/EMDReader_Spectrum_FEI.emd')
         emd_reader = EMDReader(file_name)
 
         self.assertIsInstance(emd_reader, sidpy.Reader)
@@ -284,7 +284,7 @@ class TestEMDReader(unittest.TestCase):
         os.remove(file_name)
 
     def test_read_image(self):
-        file_name  = wget.download(data_path + '/fei_emd_image.emd')
+        file_name  = wget.download(data_path + '/EMDReader_Image_FEI.emd')
         emd_reader = EMDReader(file_name)
         datasets = emd_reader.read()
         emd_reader.close()
@@ -307,7 +307,7 @@ class TestEMDReader(unittest.TestCase):
         os.remove(file_name)
 
     def test_read_spectrum_image(self):
-        file_name  = wget.download(data_path + '/fei_emd_si.emd')
+        file_name  = wget.download(data_path + '/EMDReader_SpectrumImage_Si.emd')
         emd_reader = EMDReader(file_name)
         datasets = emd_reader.read()
         emd_reader.close()

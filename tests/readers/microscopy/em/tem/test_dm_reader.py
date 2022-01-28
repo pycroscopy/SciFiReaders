@@ -14,14 +14,14 @@ from pywget import wget
 sys.path.append("../../../../../SciFiReaders/")
 import SciFiReaders
 
-data_path = 'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data'
+data_path = 'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/reorg/data/microscopy/em/tem/'
 
 
 class TestDMReader(unittest.TestCase):
 
     def test_load_dm3_file(self):
         # Test if the test dm3 file can be read in correctly
-        file_name  = wget.download(data_path + '/EELS_STO.dm3')
+        file_name = wget.download(data_path + '/DMReader_EELS_STO.dm3')
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
         self.assertEqual(datasets.title[:8], 'EELS_STO')
@@ -30,7 +30,7 @@ class TestDMReader(unittest.TestCase):
         os.remove(file_name)
 
     def test_load_dm4_file(self):
-        file_name = wget.download(data_path + '/EELS_STO.dm4')
+        file_name = wget.download(data_path + '/DMReader_EELS_STO.dm4')
         reader = SciFiReaders.DMReader(file_name, verbose=True)
         datasets = reader.read()
         self.assertEqual(datasets.title[:8], 'EELS_STO')
@@ -45,14 +45,14 @@ class TestDMReader(unittest.TestCase):
 
     def test_load_wrong_file(self):
         # Test behaviour of wrong data file
-        file_name = wget.download(data_path + '/STO_Image_Stack_(HAADF).h5')
+        file_name = wget.download(data_path + '/NionReader_Image_STO_HAADF.ndata')
         with self.assertRaises(TypeError):
             reader = SciFiReaders.DMReader(file_name)
         os.remove(file_name)
 
     def test_load_dm3_spectrum_image(self):
         # Test if the test dm3 file can be read in correctly
-        file_name = wget.download(data_path + '/SI-EELS_Spectrum_Image.dm3')
+        file_name = wget.download(data_path + '/DMReader_SpectrumImage_SI-EELS.dm3')
 
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
@@ -64,7 +64,7 @@ class TestDMReader(unittest.TestCase):
 
     def test_load_dm3_image(self):
         # Test if the test dm3 file can be read in correctly
-        file_name = wget.download(data_path + '/SI-Survey_Image.dm3')
+        file_name = wget.download(data_path + '/DMReader_Image_SI-Survey.dm3')
 
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
