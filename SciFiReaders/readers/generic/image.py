@@ -139,11 +139,11 @@ class ImageReader(Reader):
         data_set.quantity = 'Intensity'
 
         data_set.set_dimension(0,
-                               Dimension('y', np.arange(usize), units='a. u.',
+                               Dimension(np.arange(usize), 'y', units='a. u.',
                                          quantity='Length',
                                          dimension_type='spatial'))
         data_set.set_dimension(1,
-                               Dimension('x', np.arange(vsize), units='a. u.',
+                               Dimension(np.arange(vsize), 'x', units='a. u.',
                                          quantity='Length',
                                          dimension_type='spatial'))
 
