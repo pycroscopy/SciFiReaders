@@ -15,7 +15,7 @@ sys.path.append("../../../../../SciFiReaders/")
 import SciFiReaders
 
 data_path = 'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/microscopy/em/tem/'
-
+import numpy as np
 
 class TestDMReader(unittest.TestCase):
 
@@ -26,6 +26,11 @@ class TestDMReader(unittest.TestCase):
         datasets = reader.read()
         self.assertEqual(datasets.title, 'DMReader_EELS_STO')
         self.assertEqual(datasets.source, 'SciFiReaders.DMReader')
+        self.assertEqual(datasets[200], 135727.0)
+        self.assertEqual(datasets.energy_loss[200], 400.0)
+        self.assertEqual(datasets.original_metadata['DM']['dm_version'], 3)
+        self.assertEqual(datasets.original_metadata['ImageList']['1']['ImageTags']
+                         ['EELS']['Acquisition']['Exposure (s)'], 2.0)
         self.assertEqual(datasets.data_type.name, 'SPECTRUM')
         os.remove(file_name)
 
@@ -35,6 +40,11 @@ class TestDMReader(unittest.TestCase):
         datasets = reader.read()
         self.assertEqual(datasets.title, 'DMReader_EELS_STO')
         self.assertEqual(datasets.source, 'SciFiReaders.DMReader')
+        self.assertEqual(datasets[200], 135727.0)
+        self.assertEqual(datasets.energy_loss[200], 400.0)
+        self.assertEqual(datasets.original_metadata['DM']['dm_version'], 4)
+        self.assertEqual(datasets.original_metadata['ImageList']['1']['ImageTags']
+                         ['EELS']['Acquisition']['Exposure (s)'], 2.0)
         self.assertEqual(datasets.data_type.name, 'SPECTRUM')
         os.remove(file_name)
 
@@ -60,6 +70,12 @@ class TestDMReader(unittest.TestCase):
         self.assertEqual(datasets.source, 'SciFiReaders.DMReader')
         self.assertEqual(datasets.data_type.name, 'SPECTRAL_IMAGE')
         self.assertEqual(datasets.shape, (6, 49, 1024))
+        self.assertEqual(datasets[0, 3, 200], 2304.0)
+        self.assertEqual(datasets.energy_loss[200], 450.0)
+        self.assertEqual(datasets.original_metadata['DM']['dm_version'], 3)
+        self.assertEqual(datasets.original_metadata['ImageList']['1']['ImageTags']
+                         ['EELS']['Acquisition']['Exposure (s)'], 0.2)
+
         os.remove(file_name)
 
     def test_load_dm3_image(self):
@@ -72,4 +88,8 @@ class TestDMReader(unittest.TestCase):
         self.assertEqual(datasets.source, 'SciFiReaders.DMReader')
         self.assertEqual(datasets.data_type.name, 'IMAGE')
         self.assertEqual(datasets.shape, (512, 512))
+
+        self.assertEqual(float(datasets[3, 200]), 2940122.0)
+        self.assertEqual(datasets.original_metadata['DM']['dm_version'], 3)
+        self.assertEqual(datasets.original_metadata['ImageList']['1']['ImageTags']['DigiScan']['Flyback'], 500.0)
         os.remove(file_name)
