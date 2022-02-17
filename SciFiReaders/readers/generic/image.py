@@ -1,19 +1,20 @@
+# lines (164 sloc)  7.4 KB
+
 """
 :class:`~ScopeReaders.generic.image.ImageTranslator` class that extracts the
 data from typical image files into :class:`~sidpy.Dataset` objects
-
 Created on Feb 9, 2016
-
-@author: Suhas Somnath, Chris Smith
+@author: Suhas Somnath, Chris Smith, Mani Valleti
 """
 
 from __future__ import division, print_function, absolute_import, unicode_literals
 
 import os
 import sys
+
 import numpy as np
-from PIL import Image
-from sidpy.base.num_utils import contains_integers
+import PIL
+import tifffile
 from sidpy import Dataset, Dimension, Reader
 
 if sys.version_info.major == 3:
@@ -25,31 +26,33 @@ else:
 
 class ImageReader(Reader):
     """
-    Translates data from an image file to an HDF5 file
+    Translates data from an image file to a sidpy dataset
     """
 
-    def __init__(self, *args, **kwargs):
-        super(ImageReader, self).__init__(*args, **kwargs)
+    def __init__(self, file_path, *args, **kwargs):
+        super().__init__(file_path, *args, **kwargs)
+        image_path = self._parse_file_path(self._input_file_path)
+        ext = os.path.splitext(image_path)[-1]
+        if ext not in ['jpg', 'jpeg', 'png', 'bmp', '.tif', '.tiff']:
+            raise NotImplementedError(
+                'The provided file type {} is not supported by the reader as of now \n'.format(ext)
+                + 'Please provide one of "jpg", "jpeg", "png", "bmp", ".tif", ".tiff" file types')
 
     @staticmethod
     def _parse_file_path(image_path):
         """
         Returns a list of all files in the directory given by path
-
         Parameters
         ---------------
         image_path : str
             absolute path to the image file
-
         Returns
         ----------
         image_path : str
             Absolute file path to the image
-        h5_path : str
-            absolute path to the desired output HDF5 file.
         """
         if not isinstance(image_path, (str, unicode)):
-            raise TypeError("'image_path' argument for ImageTranslator should be a str or unicode")
+            raise TypeError("'image_path' argument for ImageReader should be a str or unicode")
         if not os.path.exists(os.path.abspath(image_path)):
             raise FileNotFoundError('Specified image does not exist.')
         else:
@@ -57,95 +60,39 @@ class ImageReader(Reader):
 
         return image_path
 
-    def read(self, bin_factor=None, interp_func=Image.BICUBIC,
-             normalize=False, **image_args):
+    def read(self, **image_args):
         """
-        Translates the image in the provided file into a USID HDF5 file
-
+        Translates the image in the provided file into a sidpy Dataset
         Parameters
         ----------------
-        bin_factor : uint or array-like of uint, optional
-            Down-sampling factor for each dimension.  Default is None.
-            If specifying different binning for each dimension, please specify as (height binning, width binning)
-        interp_func : int, optional. Default = :attr:`PIL.Image.BICUBIC`
-            How the image will be interpolated to provide the down-sampled or binned image.
-            For more information see instructions for the `resample` argument for :meth:`PIL.Image.resize`
-        normalize : boolean, optional. Default = False
-            Should the raw image be normalized between the values of 0 and 1
         image_args : dict
             Arguments to be passed to read_image.  Arguments depend on the type of image.
-
         Returns
         ----------
-
+        sidpy Dataset
         """
+
         image_path = self._parse_file_path(self._input_file_path)
 
-        image = read_image(image_path, **image_args)
-        image_parms = dict()
-        usize, vsize = image.shape[:2]
+        img_data, dimensions, metadata, original_metadata = read_image(image_path, **image_args)
 
-        '''
-        Check if a bin_factor is given.  Set up binning objects if it is.
-        '''
-        if bin_factor is not None:
-            if isinstance(bin_factor, (list, tuple)):
-                if not contains_integers(bin_factor, min_val=1):
-                    raise TypeError('bin_factor should contain positive whole integers')
-                if len(bin_factor) == 2:
-                    bin_factor = tuple(bin_factor)
-                else:
-                    raise ValueError('Input parameter `bin_factor` must be a length 2 array-like or an integer.\n' +
-                                     '{} was given.'.format(bin_factor))
-
-            elif isinstance(bin_factor, int):
-                bin_factor = (bin_factor, bin_factor)
-            else:
-                raise TypeError('bin_factor should either be an integer or an iterable of positive integers')
-
-            if np.min(bin_factor) < 0:
-                raise ValueError('bin_factor must consist of positive factors')
-
-            if interp_func not in [Image.NEAREST, Image.BILINEAR, Image.BICUBIC, Image.LANCZOS]:
-                raise ValueError("'interp_func' argument for ImageTranslator.translate must be one of "
-                                 "PIL.Image.NEAREST, PIL.Image.BILINEAR, PIL.Image.BICUBIC, PIL.Image.LANCZOS")
-
-            image_parms.update({'image_binning_size': bin_factor, 'image_PIL_resample_mode': interp_func})
-            usize = int(usize / bin_factor[0])
-            vsize = int(vsize / bin_factor[1])
-
-            # Unfortunately, we need to make a round-trip through PIL for the interpolation. Not possible with numpy
-            img_obj = Image.fromarray(image)
-            img_obj = img_obj.resize((vsize, usize), resample=interp_func)
-            image = np.asarray(img_obj)
+        # Assuming that we have already dealt with classifying the shape
+        # We are only as good as the tifffile package here
 
         # Working around occasional "cannot modify read-only array" error
-        image = image.copy()
+        image = img_data.copy()
 
-        '''
-        Normalize Raw Image
-        '''
-        if normalize:
-            image -= np.min(image)
-            image = image / np.float32(np.max(image))
-
-        image_parms.update({'normalized': normalize,
-                            'image_min': np.min(image), 'image_max': np.max(image)})
-
-        data_set = Dataset.from_array(image, name='random')
+        data_set = Dataset.from_array(image, title='Image')
 
         data_set.data_type = 'image'
+        # Can we somehow get the units and/or the quantity from the metadata??
         data_set.units = 'a. u.'
         data_set.quantity = 'Intensity'
+        data_set.metadata = metadata.copy()
+        data_set.original_metadata = original_metadata.copy()
 
-        data_set.set_dimension(0,
-                               Dimension(np.arange(usize), 'y', units='a. u.',
-                                         quantity='Length',
-                                         dimension_type='spatial'))
-        data_set.set_dimension(1,
-                               Dimension(np.arange(vsize), 'x', units='a. u.',
-                                         quantity='Length',
-                                         dimension_type='spatial'))
+        for i, dim in enumerate(dimensions):
+            data_set.set_dimension(i, dim.copy())
 
         return data_set
 
@@ -160,42 +107,131 @@ class ImageReader(Reader):
         return super(ImageReader, self).can_read(extension=exts)
 
 
-def read_image(image_path, as_grayscale=True, as_numpy_array=True, *args, **kwargs):
+def read_image(image_path, *args, **kwargs):
     """
-    Read the image file at `image_path` into a numpy array either via numpy (.txt) or via pillow (.jpg, .tif, etc.)
+    Read the image file at `image_path` into a numpy array either via numpy (.txt)
+    or via tiffifle(.tif) or via pillow (.jpg, etc.)
 
     Parameters
     ----------
     image_path : str
         Path to the image file
-    as_grayscale : bool, optional. Default = True
-        Whether or not to read the image as a grayscale image
-    as_numpy_array : bool, optional. Default = True
-        If set to True, the image is read into a numpy array. If not, it is returned as a pillow Image
 
     Returns
     -------
-    image : :class:`numpy.ndarray` or :class:`PIL.Image.Image`
-        if `as_numpy_array` is set to True - Array containing the image from the file `image_path`.
-        If `as_numpy_array` is set to False - PIL.Image object containing the image within the file - `image_path`.
+    image : :class:`numpy.ndarray`
+        Array containing the image from the file `image_path`.
     """
-    ext = os.path.splitext(image_path)[-1]
-    if ext in ['.txt', '.csv']:
-        if ext == '.csv' and 'delimiter' not in kwargs.keys():
-            kwargs['delimiter'] = ','
-        img_data = np.loadtxt(image_path, *args, **kwargs)
-        if as_numpy_array:
-            return img_data
-        else:
-            img_obj = Image.fromarray(img_data)
-            img_obj = img_obj.convert(mode="L")
-            return img_obj
-    else:
-        img_obj = Image.open(image_path)
-        if as_grayscale:
-            img_obj = img_obj.convert(mode="L", **kwargs)
 
-        if as_numpy_array:
-            # Open the image as a numpy array
-            return np.asarray(img_obj)
-        return img_obj
+    # As of now we are not trying to read any metadata from these image formats.
+    # We will cross that bridge when someone raises an issue
+    ext = os.path.splitext(image_path)[-1]
+    original_metadata, metadata, dimensions = {}, {}, []
+    if ext in ['jpg', 'jpeg', 'png', 'bmp']:
+        img_data = np.asarray(PIL.Image.open(image_path))
+        # Colored images, color channel last
+        # Here we assume that the file path provided has a single image and not a stack
+        # For stacks we turn our attention to tiff
+        if len(img_data.shape) == 3:
+            dimensions.append(Dimension(np.arange(img_data.shape[0]), 'y',
+                                        units='generic', quantity='Length',
+                                        dimension_type='spatial'))
+
+            dimensions.append(Dimension(np.arange(img_data.shape[1]), 'x',
+                                        units='generic', quantity='Length',
+                                        dimension_type='spatial'))
+
+            dimensions.append(Dimension(np.arange(img_data.shape[2]), 's',
+                                        units='generic', quantity='SamplesPerPixel',
+                                        dimension_type='frame'))
+        # Grayscale single images
+        if len(img_data.shape) == 2:
+            dimensions.append(Dimension(np.arange(img_data.shape[0]), 'y',
+                                        units='generic', quantity='Length',
+                                        dimension_type='spatial'))
+
+            dimensions.append(Dimension(np.arange(img_data.shape[1]), 'x',
+                                        units='generic', quantity='Length',
+                                        dimension_type='spatial'))
+
+        return img_data, dimensions, metadata, original_metadata
+
+    elif ext in ['.tif', '.tiff']:
+        tif = tifffile.TiffFile(image_path)
+        img_data = tif.asarray()
+
+        # Only single series is supported for now, and for definition of a series refer the tifffile package
+        img_shape, img_axes = tif.series[0].shape, tif.series[0].axes
+
+        # Dealing with metadata that's common to the whole image, we will place this in original_metadata
+        # First let's filter out all the attributes that end with metadata
+        metadata_names = [a for a in dir(tif) if (not a.startswith('__') or not a.startswith('_'))
+                          and a.endswith('_metadata')]
+        for name in metadata_names:
+            if getattr(tif, name) is not None:
+                original_metadata[name] = getattr(tif, name)
+
+        # Now metadata corresponding to individual frames. This is placed in metadata
+        for page in tif.pages:
+            for tag in page.tags:
+                metadata[tag.name] = tag.value
+
+        # Dealing with axes and dimensions
+        # We will use the following dictionary to map tifffile axes to sidpy dimensions
+        axes_dict = {'X': ['x', 'Length', 'spatial'],
+                     'Y': ['y', 'Width', 'spatial'],
+                     'Z': ['z', 'Depth', 'spatial'],
+                     'S': ['s', 'SamplesPerPixel', 'frame'],
+                     'T': ['t', 'Time', 'time'],
+                     'C': ['c', 'Channel', 'frame'],
+                     'Q': ['q', 'other', 'UNKNOWN']
+                     }
+
+        for i in range(len(img_shape)):
+            if img_axes[i] == 'X' or img_axes[i] == 'Y':
+                # We are here to handle X and Y dimensions
+                # Here it is assumed that all the channels/time frames/depth frames have the same resolution unit
+
+                res_name = 'XResolution' if img_axes[i] == 'X' else 'YResolution'
+                for page in tif.pages:
+                    if res_name in page.tags and 'ResolutionUnit' in page.tags:
+                        if page.tags['ResolutionUnit'].value.value == 1:
+                            # No unit provided
+                            if isinstance(page.tags[res_name].value, tuple):
+                                if page.tags[res_name].value == (1, 1):
+                                    res, unit = 1, 'generic'
+                                else:
+                                    'It is assumed that the resolutions is given in pixels per inch'
+                                    res, unit = page.tags[res_name].value[0], 'inches'
+                            else:
+                                if page.tags[res_name].value == 1:
+                                    res, unit = 1, 'generic'
+                                else:
+                                    unit, res = 'inches', page.tags[res_name].value
+
+                        elif page.tags['ResolutionUnit'].value.value == 2:
+                            unit = 'inches'
+                            if isinstance(page.tags[res_name].value, tuple):
+                                res = page.tags[res_name].value[0]
+                            else:
+                                # At this point it is assumed that resolution is not a tuple but just and int/float
+                                res = page.tags[res_name].value
+
+                        elif page.tags['ResolutionUnit'].value.value == 3:
+                            unit = 'cms'
+                            if isinstance(page.tags[res_name].value, tuple):
+                                res = page.tags[res_name].value[1]
+                            else:
+                                # At this point it is assumed that resolution is not a tuple but just and int/float
+                                res = page.tags[res_name].value
+                        break
+                dimensions.append(Dimension(np.arange(img_shape[i]) * (1. / res), axes_dict[img_axes[i]][0],
+                                            quantity=axes_dict[img_axes[i]][1], units=unit,
+                                            dimension_type=axes_dict[img_axes[i]][2]))
+
+            else:
+                dimensions.append(Dimension(np.arange(img_shape[i]), axes_dict[img_axes[i]][0],
+                                            quantity=axes_dict[img_axes[i]][1],
+                                            dimension_type=axes_dict[img_axes[i]][2]))
+
+        return img_data, dimensions, metadata, original_metadata
