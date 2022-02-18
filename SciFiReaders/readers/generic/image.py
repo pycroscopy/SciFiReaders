@@ -14,8 +14,15 @@ import sys
 
 import numpy as np
 import PIL
-import tifffile
 from sidpy import Dataset, Dimension, Reader
+
+try:
+    import tifffile as tff
+except ModuleNotFoundError:
+    tff = None
+
+
+
 
 if sys.version_info.major == 3:
     unicode = str
@@ -157,8 +164,11 @@ def read_image(image_path, *args, **kwargs):
         return img_data, dimensions, metadata, original_metadata
 
     elif ext in ['.tif', '.tiff']:
-        tif = tifffile.TiffFile(image_path)
-        img_data = tif.asarray()
+        if tff is None:
+            raise ModuleNotFoundError("tifffile is not installed")
+        else:
+            tif = tff.TiffFile(image_path)
+            img_data = tif.asarray()
 
         # Only single series is supported for now, and for definition of a series refer the tifffile package
         img_shape, img_axes = tif.series[0].shape, tif.series[0].axes

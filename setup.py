@@ -17,7 +17,6 @@ requirements = [  # basic
                 'dask>=2.20.0',
                 'sidpy>=0.0.2',
                 # generic:
-                'pillow>=5.4.0',
                 # Reader specific ones go to extras
                ]
 
@@ -63,7 +62,8 @@ setup(
         'igor': ["igor"],
         "gwyddion": ["gwyfile"],
         'nanonispy': ['nanonispy'],
-        'sid': ['pyUSID', 'pyNSID']
+        'sid': ['pyUSID', 'pyNSID'],
+        'image': ['pillow', 'tifffile']
     },
     # If there are data files included in your packages that need to be
     # installed, specify them here.  If using Python 2.6 or less, then these
