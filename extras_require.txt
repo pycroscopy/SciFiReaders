@@ -4,3 +4,5 @@ nanonispy
 pyUSID
 pyNSID
 gwyfile
+pillow
+tifffile
