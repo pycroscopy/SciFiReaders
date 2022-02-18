@@ -4,10 +4,8 @@
 :class:`~ScopeReaders.generic.image.ImageTranslator` class that extracts the
 data from typical image files into :class:`~sidpy.Dataset` objects
 Created on Feb 9, 2016
-@author: Suhas Somnath, Chris Smith, Mani Valleti
+@author: Mani Valleti
 """
-
-from __future__ import division, print_function, absolute_import, unicode_literals
 
 import os
 import sys
@@ -20,15 +18,6 @@ try:
     import tifffile as tff
 except ModuleNotFoundError:
     tff = None
-
-
-
-
-if sys.version_info.major == 3:
-    unicode = str
-else:
-    FileExistsError = ValueError
-    FileNotFoundError = ValueError
 
 
 class ImageReader(Reader):
@@ -58,8 +47,8 @@ class ImageReader(Reader):
         image_path : str
             Absolute file path to the image
         """
-        if not isinstance(image_path, (str, unicode)):
-            raise TypeError("'image_path' argument for ImageReader should be a str or unicode")
+        if not isinstance(image_path, str):
+            raise TypeError("'image_path' argument for ImageReader should be a str")
         if not os.path.exists(os.path.abspath(image_path)):
             raise FileNotFoundError('Specified image does not exist.')
         else:
@@ -105,7 +94,7 @@ class ImageReader(Reader):
 
     def can_read(self):
         """
-        Tests whether or not the provided file has a .ndata extension
+        Tests whether or not the provided file has the appropriate extensions
         Returns
         -------
 
