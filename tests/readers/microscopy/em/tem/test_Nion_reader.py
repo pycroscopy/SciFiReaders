@@ -27,6 +27,12 @@ class TestNionReader(unittest.TestCase):
         self.assertEqual(datasets.title, '10-Recording of SuperScan (HAADF)')
         self.assertEqual(datasets.source, 'NionReader')
         self.assertEqual(datasets.data_type.name, 'IMAGE_STACK')
+        self.assertEqual(float(datasets[1, 200, 200]), 0.3707197606563568)
+        self.assertEqual(float(datasets[13, 200, 200]), 0.392993688583374)
+        self.assertEqual(float(datasets[17, 200, 200]), 0.4997090995311737)
+        self.assertEqual(datasets.shape, (25, 512, 512))
+        self.assertEqual(datasets.original_metadata['dimensional_calibrations'][1], {'offset': -4.0, 'scale': 0.015625, 'units': 'nm'})
+
         os.remove(file_name)
 
     def test_load_nion_ndata_file(self):
@@ -37,6 +43,15 @@ class TestNionReader(unittest.TestCase):
         self.assertEqual(datasets.title, '19-SuperScan (HAADF) 9')
         self.assertEqual(datasets.source, 'NionReader')
         self.assertEqual(datasets.data_type.name, 'IMAGE')
+
+        self.assertEqual(float(datasets[200, 200]), 0.3762475550174713)
+        self.assertEqual(float(datasets[100, 200]), 0.35726848244667053)
+        self.assertEqual(float(datasets[200, 100]), 0.42469730973243713)
+        self.assertEqual(datasets.shape, (1024, 1024))
+        self.assertEqual(datasets.original_metadata['dimensional_calibrations'][1],
+                         {'offset': -8.0, 'scale': 0.015625, 'units': 'nm'})
+        self.assertEqual(datasets.original_metadata['metadata']['hardware_source']['autostem']['high_tension_v'],
+                         200000.0)
         os.remove(file_name)
 
     def test_load_no_file(self):

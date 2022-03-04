@@ -298,6 +298,9 @@ class TestEMDReader(unittest.TestCase):
 
         self.assertTrue(datasets[0].units == 'counts')
         self.assertTrue(datasets[0].shape == (512, 512))
+        self.assertEqual(float(datasets[0][10,10]), 9190.0)
+        self.assertEqual(float(datasets[0][100, 100]), 9191.0)
+        self.assertEqual(float(datasets[0][300, 300]), 9190.0)
         self.assertTrue(datasets[0].quantity == 'intensity')
         self.assertIsInstance(datasets[0].x, sidpy.Dimension)
         self.assertTrue(original_metadata['Core']['MetadataDefinitionVersion'] == '7.9')
@@ -323,6 +326,12 @@ class TestEMDReader(unittest.TestCase):
         self.assertTrue(datasets[0].units == 'counts')
         self.assertTrue(datasets[0].shape == (5, 16, 16))
         self.assertTrue(datasets[1].shape == (512, 512, 4096))
+        self.assertEqual(float(datasets[0][1,10,10]), 23053.)
+        self.assertEqual(float(datasets[0][3, 10, 10]), 23228.0)
+        self.assertEqual(float(datasets[1][100,100,1000]), 0.0)
+        self.assertEqual(float(datasets[1][50,50,1000]), 0.0)
+
+
         self.assertTrue(datasets[0].quantity == 'intensity')
         self.assertIsInstance(datasets[0].x, sidpy.Dimension)
         self.assertTrue(original_metadata['Core']['MetadataDefinitionVersion'] == '7.9')

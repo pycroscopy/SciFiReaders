@@ -17,6 +17,7 @@ import SciFiReaders
 data_path = 'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/microscopy/em/tem/'
 import numpy as np
 
+
 class TestDMReader(unittest.TestCase):
 
     def test_load_dm3_file(self):
