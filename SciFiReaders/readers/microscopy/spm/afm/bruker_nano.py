@@ -116,7 +116,7 @@ class BrukerAFMReader(Reader):
             zdata = datasets[0][k]
             xdata = datasets[1][k]
             
-            data_set = sid.Dataset.from_array(zdata, title=title)
+            data_set = sid.Dataset.from_array(zdata, name=title)
             data_set.data_type = 'Spectrum'
 
             #Add quantity and units
@@ -163,7 +163,7 @@ class BrukerAFMReader(Reader):
                 title = quantity.split("\"")[1]
                 data = self._read_image_layer(layer_info)
                 num_cols, num_rows = data.shape
-                data_set = sid.Dataset.from_array(data, title=title)
+                data_set = sid.Dataset.from_array(data, name=title)
                 data_set.data_type = 'Image'
 
                 #Add quantity and units
