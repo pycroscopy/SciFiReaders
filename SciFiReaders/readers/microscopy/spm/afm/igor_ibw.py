@@ -135,7 +135,7 @@ class IgorIBWReader(Reader):
                                                         dimension_type='spectral'))
 
                 #append metadata
-                data_set.data_type = 'line_plot'
+                data_set.data_type = 'SPECTRUM'
                 data_set.original_metadata = parm_dict
 
                 #Add dataset to list
