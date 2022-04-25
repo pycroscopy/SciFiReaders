@@ -23,7 +23,7 @@ class TestNanonisDat(unittest.TestCase):
         datasets = data_translator.read(verbose=False)
         os.remove(file_path)
         assert len(datasets)==24, "Length of dataset should be 24 but is instead {}".format(len(datasets))
-        metadata = datasets[0].metadata
+        metadata = datasets[0].original_metadata
         original_metadata ={'Experiment': 'bias spectroscopy',
          'Date': '07.07.2020 15:01:50',
          'User': '',
@@ -102,7 +102,7 @@ class TestNanonisSXM(unittest.TestCase):
             is sidpy.Dataset, received {}".format(type(datasets[ind]))
             assert datasets[ind].shape == (256,256), "Shape of dataset should be (256,256) but instead is {}".format(datasets[ind].shape)
         
-        metadata = datasets[0].metadata
+        metadata = datasets[0].original_metadata
         original_metadata = {'Channel': '14',
         'Name': 'Z',
         'Unit': 'm',
@@ -202,6 +202,59 @@ class TestNanonisSXM(unittest.TestCase):
         'Frequency_Shift (Hz)']
 
         for ind in range(20):
+            data_descriptor = datasets[ind].data_descriptor
+            assert data_descriptor == data_descriptors[ind], "Expected data descriptor {} \
+            but received {}".format(data_descriptors[ind], data_descriptor)
+
+        for key in original_metadata:
+            if type(original_metadata[key]) == np.ndarray:
+                assert original_metadata[key].all() == metadata[key].all(), "Metadata incorrect for key {}, should be {} " \
+                    "but was read as {}".format(key, original_metadata[key], metadata[key])
+            else:
+                assert original_metadata[key] == metadata[key], "Metadata incorrect for key {}, should be {} " \
+                    "but was read as {}".format(key, original_metadata[key], metadata[key])
+
+
+class TestNanonis3ds(unittest.TestCase):
+
+    def test_load_nanonis_3ds(self):
+        file_path = 'Nanonis3ds.3ds'
+        wget.download(root_path + "NanonisReader_STS_grid_lockin.3ds?raw=true", out=file_path)
+
+        reader = sr.Nanonis3dsReader(file_path)
+        datasets = reader.read()
+        os.remove(file_path)
+        assert len(datasets)==4, "Length of dataset should be 4 but is instead {}".format(len(datasets))
+        for ind in range(4):
+            assert type(datasets[ind]) == sidpy.sid.dataset.Dataset, "Type of dataset expected \
+            is sidpy.Dataset, received {}".format(type(datasets[ind]))
+            assert datasets[ind].shape == (30,30,200), "Shape of dataset should be (30,30,200) but instead is {}".format(datasets[ind].shape)
+        
+        metadata = datasets[0].original_metadata
+        original_metadata = {'Name': 'Current',
+        'Direction': 'forward',
+        'Unit': 'A',
+        'dim_px': [30, 30],
+        'pos_xy': [8.451877e-08, 6.329924e-07],
+        'size_xy': [5e-09, 5e-09],
+        'angle': 45.0,
+        'sweep_signal': 'Bias (V)',
+        'num_parameters': 10,
+        'experiment_size': 3200,
+        'num_sweep_signal': 200,
+        'num_channels': 4,
+        'measure_delay': 0.0,
+        'experiment_name': 'Experiment',
+        'start_time': 0.0,
+        'end_time': 1000.0,
+        'user': '',
+        'comment': 'Default values for delay before measuring (s), Start time and End time fields were used! Beware!',
+        'Date': '04.06.2016 20:13:23',
+        'Sweep Start': -0.2199999988079071,
+        'Sweep End': 0.2199999988079071}
+
+        data_descriptors = ['Current (A)', 'LockinX (V)', 'LockinY (V)','Bias_m (V)']
+        for ind in range(len(data_descriptors)):
             data_descriptor = datasets[ind].data_descriptor
             assert data_descriptor == data_descriptors[ind], "Expected data descriptor {} \
             but received {}".format(data_descriptors[ind], data_descriptor)

@@ -87,7 +87,7 @@ class NanonisDatReader(Reader):
                                                     dimension_type=sid.DimensionType.SPECTRAL))
 
             # append metadata
-            data_set.metadata = parm_dict
+            data_set.original_metadata = parm_dict
             datasets.append(data_set)
 
         # Return the sidy dataset

@@ -100,7 +100,7 @@ class AscReader(Reader):
                                                 dimension_type=sid.DimensionType.SPECTRAL))
 
         # append metadata
-        data_set.metadata = parm_dict
+        data_set.original_metadata = parm_dict
 
         # Return the sidy dataset
         return data_set
