@@ -120,7 +120,13 @@ class Nanonis3dsReader(Reader):
         """
         
         reader = nap.read.Grid
-        nanonis_data = reader(self._input_file_path)
+        override_header = {
+            'Delay before measuring (s)': 0.0,
+            'Start time': 0.0,
+            'End time': 1000.0,
+            'Comment': 'Default values for delay before measuring (s), Start time and End time fields were used! Beware!'
+        }
+        nanonis_data = reader(self._input_file_path, header_override=override_header)
 
         header_dict = nanonis_data.header
         signal_dict = nanonis_data.signals
