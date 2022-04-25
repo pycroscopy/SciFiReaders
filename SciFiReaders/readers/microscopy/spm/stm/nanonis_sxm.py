@@ -118,7 +118,7 @@ class NanonisSXMReader(Reader):
             data_mat = self.data_dict[dataset_name]
             
             #Make a sidpy dataset
-            data_set = sid.Dataset.from_array(data_mat, title = dataset_name)
+            data_set = sid.Dataset.from_array(data_mat, name = dataset_name)
 
             #Set the data type
             data_set.data_type = sid.DataType.IMAGE
