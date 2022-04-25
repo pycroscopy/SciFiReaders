@@ -218,7 +218,7 @@ class TestNanonisSXM(unittest.TestCase):
 class TestNanonis3ds(unittest.TestCase):
 
     def test_load_nanonis_3ds(self):
-        file_path = 'NanonisSXM.sxm'
+        file_path = 'Nanonis3ds.3ds'
         wget.download(root_path + "NanonisReader_STS_grid_lockin.3ds?raw=true", out=file_path)
 
         reader = sr.Nanonis3dsReader(file_path)
