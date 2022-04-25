@@ -3,12 +3,18 @@
 import numpy as np  # For array operations
 import sidpy as sid
 from sidpy.sid import Reader
-import gwyfile
 from os import path
 import sys
 
 if sys.version_info.major == 3:
     unicode = str
+
+try:
+    import gwyfile
+except ModuleNotFoundError:
+    gwyfile = None
+    print('You attempted to load a Gwyddion file, but this requires gwyfile.\n \
+    Please Load it with pip install gwyfile')
 
 class GwyddionReader(Reader):
     """
