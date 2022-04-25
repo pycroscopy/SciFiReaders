@@ -11,6 +11,8 @@ from sidpy.sid import Reader, Dimension, DimensionType
 try:
     import nanonispy as nap
 except ModuleNotFoundError:
+    print('You attempted to load a Nanonis file, but this requires Nanonispy.\n \
+    Please Load it with pip install nanonispy')
     nap = None
 
 
