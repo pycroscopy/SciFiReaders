@@ -23,7 +23,7 @@ class TestNanonisDat(unittest.TestCase):
         datasets = data_translator.read(verbose=False)
         os.remove(file_path)
         assert len(datasets)==24, "Length of dataset should be 24 but is instead {}".format(len(datasets))
-        metadata = datasets[0].metadata
+        metadata = datasets[0].original_metadata
         original_metadata ={'Experiment': 'bias spectroscopy',
          'Date': '07.07.2020 15:01:50',
          'User': '',
@@ -102,7 +102,7 @@ class TestNanonisSXM(unittest.TestCase):
             is sidpy.Dataset, received {}".format(type(datasets[ind]))
             assert datasets[ind].shape == (256,256), "Shape of dataset should be (256,256) but instead is {}".format(datasets[ind].shape)
         
-        metadata = datasets[0].metadata
+        metadata = datasets[0].original_metadata
         original_metadata = {'Channel': '14',
         'Name': 'Z',
         'Unit': 'm',
@@ -250,8 +250,8 @@ class TestNanonis3ds(unittest.TestCase):
         'user': '',
         'comment': 'Default values for delay before measuring (s), Start time and End time fields were used! Beware!',
         'Date': '04.06.2016 20:13:23',
-        'Sweep Start': -0.22,
-        'Sweep End': 0.22}
+        'Sweep Start': -0.2199999988079071,
+        'Sweep End': 0.2199999988079071}
 
         data_descriptors = ['Current (A)', 'LockinX (V)', 'LockinY (V)','Bias_m (V)']
         for ind in range(len(data_descriptors)):
