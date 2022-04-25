@@ -170,7 +170,7 @@ class Nanonis3dsReader(Reader):
             
             chan_metadata = self.parm_dict['channel_parms'][dataset_name]
             
-            data_set.metadata =  merge_dict(chan_metadata,orig_metadata)
+            data_set.original_metadata =  merge_dict(chan_metadata,orig_metadata)
             dataset_list.append(data_set)
         
         return dataset_list
