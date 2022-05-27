@@ -28,11 +28,12 @@ class ImageReader(Reader):
     def __init__(self, file_path, *args, **kwargs):
         super().__init__(file_path, *args, **kwargs)
         image_path = self._parse_file_path(self._input_file_path)
-        ext = os.path.splitext(image_path)[-1]
-        if ext not in ['jpg', 'jpeg', 'png', 'bmp', '.tif', '.tiff']:
+        ext = os.path.splitext(image_path)[-1].lower()
+        targs = ['jpg', 'jpeg', 'png', 'bmp', 'tif', 'tiff']
+        if ext not in targs:
             raise NotImplementedError(
-                'The provided file type {} is not supported by the reader as of now \n'.format(ext)
-                + 'Please provide one of "jpg", "jpeg", "png", "bmp", ".tif", ".tiff" file types')
+                'The provided file type {} is not supported by the reader as of now.\n'.format(ext)
+                + 'Please provide files with one of the following extensions: "{}"'.format('", "'.join(targs)))
 
     @staticmethod
     def _parse_file_path(image_path):
@@ -91,16 +92,6 @@ class ImageReader(Reader):
             data_set.set_dimension(i, dim.copy())
 
         return data_set
-
-    def can_read(self):
-        """
-        Tests whether or not the provided file has the appropriate extensions
-        Returns
-        -------
-
-        """
-        exts = ['jpg', 'jpeg', 'png', 'tiff', 'bmp', 'csv', 'txt']
-        return super(ImageReader, self).can_read(extension=exts)
 
 
 def read_image(image_path, *args, **kwargs):
