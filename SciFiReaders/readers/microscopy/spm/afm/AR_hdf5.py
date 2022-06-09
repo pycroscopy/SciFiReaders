@@ -73,14 +73,27 @@ class ARhdf5Reader(Reader):
             raise
 
         # Get info from the origin file like Notes and Segments
-        self.notes = ARh5_file.attrs['Note'].decode('utf-8')
+        try:
+            self.notes = ARh5_file.attrs['Note'].decode('utf-8')
+        except AttributeError:
+            self.notes = ARh5_file.attrs['Note']
+
         self.segments = ARh5_file['ForceMap']['0']['Segments']
         segments_name = list(ARh5_file['ForceMap']['0'].attrs['Segments'])
-        self.segments_name = [name.decode('utf-8') for name in segments_name]
+        try:
+            self.segments_name = [name.decode('utf-8') for name in segments_name]
+        except AttributeError:
+            self.segments_name = [name for name in segments_name]
+
         self.map_size['X'] = ARh5_file['ForceMap']['0']['Segments'].shape[0]
         self.map_size['Y'] = ARh5_file['ForceMap']['0']['Segments'].shape[1]
         channels_name = list(ARh5_file['ForceMap']['0'].attrs['Channels'])
-        self.channels_name = [name.decode('utf-8') for name in channels_name]
+        
+        try:
+            self.channels_name = [name.decode('utf-8') for name in channels_name]
+        except AttributeError:
+            self.channels_name = [name for name in channels_name]
+
         try:
             self.points_per_sec = np.float(self.note_value('ARDoIVPointsPerSec'))
         except NameError:
