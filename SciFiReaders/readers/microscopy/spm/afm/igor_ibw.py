@@ -16,6 +16,8 @@ try:
     from igor import binarywave as bw
 except ModuleNotFoundError:
     bw = None
+    raise ModuleNotFoundError('You attempted to load an Igor file, but this requires igor.\n \
+    Please Load it with pip install igor , restart and retry')
 
 
 class IgorIBWReader(Reader):

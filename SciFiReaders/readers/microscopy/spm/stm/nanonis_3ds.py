@@ -12,8 +12,8 @@ try:
     import nanonispy as nap
 except ModuleNotFoundError:
     nap = None
-    print('You attempted to load a Nanonis file, but this requires Nanonispy.\n \
-    Please Load it with pip install nanonispy')
+    raise ModuleNotFoundError('You attempted to load a Nanonis file, but this requires Nanonispy.\n \
+    Please Load it with pip install nanonispy , restart and retry')
 
 
 class Nanonis3dsReader(Reader):

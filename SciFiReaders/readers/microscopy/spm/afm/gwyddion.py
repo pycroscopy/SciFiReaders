@@ -12,9 +12,8 @@ if sys.version_info.major == 3:
 try:
     import gwyfile
 except ModuleNotFoundError:
-    gwyfile = None
-    print('You attempted to load a Gwyddion file, but this requires gwyfile.\n \
-    Please Load it with pip install gwyfile')
+    raise ModuleNotFoundError('You attempted to load a Gwyddion file, but this requires gwyfile.\n \
+    Please Load it with pip install gwyfile , restart and retry')
 
 class GwyddionReader(Reader):
     """
