@@ -6,7 +6,6 @@ import sidpy
 import pytest
 from pywget import wget
 
-@pytest.mark.filterwarnings('ignore::RuntimeWarning') 
 
 sys.path.append("../../../../../SciFiReaders/")
 import SciFiReaders as sr
