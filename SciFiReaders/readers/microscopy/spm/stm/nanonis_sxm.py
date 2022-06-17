@@ -11,12 +11,15 @@ from sidpy.sid import Reader, Dimension, DimensionType
 try:
     import nanonispy as nap
 except ModuleNotFoundError:
-    print('You attempted to load a Nanonis file, but this requires Nanonispy.\n \
-    Please Load it with pip install nanonispy')
     nap = None
 
-
 class NanonisSXMReader(Reader):
+
+    def __init__(self, file_path, *args, **kwargs):
+        if nap == None:
+            raise ModuleNotFoundError('You attempted to load a Nanonis file, but this requires Nanonispy.\n \
+            Please Load it with pip install nanonispy , restart and retry')
+        super().__init__(file_path, *args, **kwargs)
 
     @staticmethod
     def _parse_sxm_parms(header_dict, signal_dict):
