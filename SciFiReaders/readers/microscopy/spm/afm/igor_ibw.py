@@ -11,20 +11,24 @@ import sys
 import numpy as np  # For array operations
 import sidpy as sid
 from sidpy.sid import Reader
+from warnings import warn
 
 try:
     from igor import binarywave as bw
 except ModuleNotFoundError:
     bw = None
-    raise ModuleNotFoundError('You attempted to load an Igor file, but this requires igor.\n \
-    Please Load it with pip install igor , restart and retry')
-
 
 class IgorIBWReader(Reader):
     """
     Extracts data and metadata from Igor Binary Wave (.ibw) files containing
     images or force curves
     """
+    def __init__(self, file_path, *args, **kwargs):
+        if bw == None:
+            raise ModuleNotFoundError('You attempted to load an Igor file, but this requires igor.\n \
+            Please Load it with pip install igor , restart and retry')
+
+        super().__init__(file_path, *args, **kwargs)
 
     def read(self, verbose=False, parm_encoding='utf-8'):
         """

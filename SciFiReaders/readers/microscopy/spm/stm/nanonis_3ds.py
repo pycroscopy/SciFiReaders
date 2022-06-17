@@ -4,6 +4,7 @@ Created on Fri Nov 5 16:43:00 2021
 
 @author: Rama Vasudevan
 """
+
 import numpy as np  # For array operations
 import sidpy as sid
 from sidpy.sid import Reader, Dimension, DimensionType
@@ -12,11 +13,15 @@ try:
     import nanonispy as nap
 except ModuleNotFoundError:
     nap = None
-    raise ModuleNotFoundError('You attempted to load a Nanonis file, but this requires Nanonispy.\n \
-    Please Load it with pip install nanonispy , restart and retry')
 
 
 class Nanonis3dsReader(Reader):
+
+    def __init__(self, file_path, *args, **kwargs):
+        if nap == None:
+            raise ModuleNotFoundError('You attempted to load a Nanonis file, but this requires Nanonispy.\n \
+            Please Load it with pip install nanonispy , restart and retry')
+        super().__init__(file_path, *args, **kwargs)
 
     @staticmethod
     def _parse_3ds_parms(header_dict, signal_dict):
