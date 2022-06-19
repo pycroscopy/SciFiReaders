@@ -2,7 +2,8 @@
 """
 Created on Mon Sep 13 21:46:14 2021
 
-@author: Raj
+@author: Rajiv Giridharagopal, rgiri@uw.edu. Based on original
+translator in legacy Pycroscopy by Jessica Kong, kongjy@uw.edu
 """
 
 import sidpy as sid
