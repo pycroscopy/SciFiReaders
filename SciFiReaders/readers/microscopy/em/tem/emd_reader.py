@@ -216,7 +216,9 @@ class EMDReader(sidpy.Reader):
 
             data_array = np.empty(self.data_array.shape)
             self.data_array.read_direct(data_array)
-            self.data_array = np.moveaxis(data_array, source=[0, 1, 2], destination=[2, 0, 1])self.datasets.append(sidpy.Dataset.from_array(self.data_array))
+            self.data_array = np.moveaxis(data_array, source=[0, 1, 2], destination=[2, 0, 1])
+            
+            self.datasets.append(sidpy.Dataset.from_array(self.data_array))
             self.datasets[-1].data_type = 'image_stack'
             self.datasets[-1].set_dimension(0, sidpy.Dimension(np.arange(self.data_array.shape[0]),
                                                                name='frame', units='frame',
