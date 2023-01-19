@@ -25,7 +25,7 @@ class TestDMReader(unittest.TestCase):
         file_name = wget.download(data_path + '/DMReader_EELS_STO.dm3')
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
-        dataset = datasets['Channel_000']
+        dataset = datasets[0]
         self.assertEqual(dataset.title, 'DMReader_EELS_STO')
         self.assertEqual(dataset.source, 'SciFiReaders.DMReader')
         self.assertEqual(dataset[200], 135727.0)
@@ -40,8 +40,8 @@ class TestDMReader(unittest.TestCase):
         file_name = wget.download(data_path + '/DMReader_EELS_STO.dm4')
         reader = SciFiReaders.DMReader(file_name, verbose=True)
         datasets = reader.read()
-        dataset = datasets['Channel_000']
-        
+        dataset = datasets[0]
+
         self.assertEqual(dataset.title, 'DMReader_EELS_STO')
         self.assertEqual(dataset.source, 'SciFiReaders.DMReader')
         self.assertEqual(dataset[200], 135727.0)
@@ -70,8 +70,8 @@ class TestDMReader(unittest.TestCase):
 
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
-        dataset = datasets['Channel_000']
-        
+        dataset = datasets[0]
+
         self.assertEqual(dataset.title, 'DMReader_SpectrumImage_SI-EELS')
         self.assertEqual(dataset.source, 'SciFiReaders.DMReader')
         self.assertEqual(dataset.data_type.name, 'SPECTRAL_IMAGE')
@@ -90,7 +90,7 @@ class TestDMReader(unittest.TestCase):
 
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
-        dataset = datasets['Channel_000']
+        dataset = datasets[0]
         
         self.assertEqual(dataset.title, 'DMReader_Image_SI-Survey')
         self.assertEqual(dataset.source, 'SciFiReaders.DMReader')
