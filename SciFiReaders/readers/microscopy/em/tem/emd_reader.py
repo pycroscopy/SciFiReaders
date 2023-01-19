@@ -177,7 +177,7 @@ class EMDReader(sidpy.Reader):
 
         self.number_of_frames = int(np.ceil((self.data_array[:, 0] == 65535).sum() / (size_x * size_y)))
         # print(size_x,size_y,number_of_frames)
-        data = np.zeros((size_x * size_y, spectrum_size))
+        data = np.zeros((size_x * size_y, spectrum_size),dtype=int)
         # progress = tqdm(total=number_of_frames)
         pixel_number = 0
         frame = 0
