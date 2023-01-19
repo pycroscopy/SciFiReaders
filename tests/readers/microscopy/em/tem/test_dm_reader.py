@@ -26,7 +26,7 @@ class TestDMReader(unittest.TestCase):
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
         dataset = datasets['Channel_000']
-        self.assertEqual(a.title, 'DMReader_EELS_STO')
+        self.assertEqual(dataset.title, 'DMReader_EELS_STO')
         self.assertEqual(dataset.source, 'SciFiReaders.DMReader')
         self.assertEqual(dataset[200], 135727.0)
         self.assertEqual(dataset.energy_loss[200], 400.0)
