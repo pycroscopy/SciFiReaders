@@ -31,7 +31,7 @@ class TestDMReader(unittest.TestCase):
         self.assertEqual(dataset[200], 135727.0)
         self.assertEqual(dataset.energy_loss[200], 400.0)
         self.assertEqual(dataset.original_metadata['DM']['dm_version'], 3)
-        self.assertEqual(dataset.original_metadata['ImageList']['1']['ImageTags']
+        self.assertEqual(dataset.original_metadata['ImageTags']
                          ['EELS']['Acquisition']['Exposure (s)'], 2.0)
         self.assertEqual(dataset.data_type.name, 'SPECTRUM')
         os.remove(file_name)
@@ -47,7 +47,7 @@ class TestDMReader(unittest.TestCase):
         self.assertEqual(dataset[200], 135727.0)
         self.assertEqual(dataset.energy_loss[200], 400.0)
         self.assertEqual(dataset.original_metadata['DM']['dm_version'], 4)
-        self.assertEqual(dataset.original_metadata['ImageList']['1']['ImageTags']
+        self.assertEqual(dataset.original_metadata['ImageTags']
                          ['EELS']['Acquisition']['Exposure (s)'], 2.0)
         self.assertEqual(dataset.data_type.name, 'SPECTRUM')
         os.remove(file_name)
@@ -79,7 +79,7 @@ class TestDMReader(unittest.TestCase):
         self.assertEqual(dataset[0, 3, 200], 2304.0)
         self.assertEqual(dataset.energy_loss[200], 450.0)
         self.assertEqual(dataset.original_metadata['DM']['dm_version'], 3)
-        self.assertEqual(dataset.original_metadata['ImageList']['1']['ImageTags']
+        self.assertEqual(dataset.original_metadata['ImageTags']
                          ['EELS']['Acquisition']['Exposure (s)'], 0.2)
 
         os.remove(file_name)
@@ -91,7 +91,7 @@ class TestDMReader(unittest.TestCase):
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
         dataset = datasets[0]
-        
+
         self.assertEqual(dataset.title, 'DMReader_Image_SI-Survey')
         self.assertEqual(dataset.source, 'SciFiReaders.DMReader')
         self.assertEqual(dataset.data_type.name, 'IMAGE')
@@ -99,5 +99,5 @@ class TestDMReader(unittest.TestCase):
 
         self.assertEqual(float(dataset[3, 200]), 2940122.0)
         self.assertEqual(dataset.original_metadata['DM']['dm_version'], 3)
-        self.assertEqual(dataset.original_metadata['ImageList']['1']['ImageTags']['DigiScan']['Flyback'], 500.0)
+        self.assertEqual(dataset.original_metadata['ImageTags']['DigiScan']['Flyback'], 500.0)
         os.remove(file_name)
