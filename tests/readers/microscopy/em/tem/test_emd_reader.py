@@ -317,7 +317,7 @@ class TestEMDReader(unittest.TestCase):
 
         self.assertIsInstance(datasets[0], sidpy.Dataset)
         self.assertTrue(datasets[0].data_type.name, 'IMAGE_STACK')
-        self.assertTrue(datasets[0].data_type.name, 'SPECTRAL_IMAGE')
+        self.assertTrue(datasets[1].data_type.name, 'SPECTRAL_IMAGE')
         self.assertTrue(datasets[1].ndim == 3)
         self.assertTrue(len(datasets) == 2)
         print(datasets[0].original_metadata)
