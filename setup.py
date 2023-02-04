@@ -15,7 +15,8 @@ requirements = [  # basic
                 'toolz',  # dask installation failing without this
                 'cytoolz',  # dask installation failing without this
                 'dask>=2.20.0',
-                'sidpy>=0.0.2',
+                'sidpy>=0.11.2',
+                'numba',
                 # generic:
                 # Reader specific ones go to extras
                ]

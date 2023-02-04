@@ -309,3 +309,24 @@ class NionReader(sidpy.Reader):
         return self.original_metadata
 
     tags = property(get_tags)
+
+    def extract_crucial_metadata(self, dataset_index):
+        """Read essential parameter from original_metadata originating from a Nion file"""
+        
+        original_metadata = self.datasets[dataset_index].original_metadata
+        if not isinstance(original_metadata, dict):
+            raise TypeError('We need a dictionary to read')
+        if 'metadata' not in original_metadata:
+            return {}
+        if 'hardware_source' not in original_metadata['metadata']:
+            return {}
+        if 'ImageScanned' not in original_metadata['metadata']['hardware_source']:
+            return {}
+
+        exp_dictionary = original_metadata['metadata']['hardware_source']['ImageScanned']
+        experiment = exp_dictionary
+        # print(exp_dictionary)
+        if 'autostem' in exp_dictionary:
+            pass
+        
+        self.datasets[dataset_index].metadata['experiment'] = experiment
