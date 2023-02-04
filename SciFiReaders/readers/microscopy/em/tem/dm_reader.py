@@ -206,13 +206,17 @@ class DMReader(sidpy.Reader):
                         dataset.set_dimension(2, old_dataset.dim_1)
                         dataset.data_type = sidpy.DataType.SPECTRAL_IMAGE  # 'linescan'
 
+
                     dataset.quantity = 'intensity'
                     dataset.units = 'counts'
                     # dataset.title = basename
                     dataset.modality = 'generic'
                     dataset.source = 'SciFiReaders.DMReader'
                     dataset.original_metadata['DM']['full_file_name'] = self.__filename
+                    
                     self.datasets.append(dataset)
+                    self.extract_crucial_metadata(-1)
+
         del self.__stored_tags['ImageList'] 
         main_dataset_number = 0
         for index, dataset in enumerate(self.datasets):
@@ -494,6 +498,62 @@ class DMReader(sidpy.Reader):
         # delete byte data in dictionary
         ImageDict['ImageData']['Data'] = 'read'
         return raw_data
+
+    def extract_crucial_metadata(self, dataset_index):
+        original_metadata = self.datasets[dataset_index].original_metadata
+        """Read essential parameter from original_metadata originating from a dm3 file"""
+        if not isinstance(original_metadata, dict):
+            raise TypeError('We need a dictionary to read')
+        if 'DM' not in original_metadata:
+            return {}
+        if 'ImageTags' not in original_metadata:
+            return {}
+        exp_dictionary = original_metadata['ImageTags']
+        experiment = {}
+        if 'EELS' in exp_dictionary:
+            if 'Acquisition' in exp_dictionary['EELS']:
+                for key, item in exp_dictionary['EELS']['Acquisition'].items():
+                    if 'Exposure' in key:
+                        _, units = key.split('(')
+                        if units[:-1] == 's':
+                            experiment['single_exposure_time'] = item
+                    if 'Integration' in key:
+                        _, units = key.split('(')
+                        if units[:-1] == 's':
+                            experiment['exposure_time'] = item
+                    if 'frames' in key:
+                        experiment['number_of_frames'] = item
+
+            if 'Experimental Conditions' in exp_dictionary['EELS']:
+                for key, item in exp_dictionary['EELS']['Experimental Conditions'].items():
+                    if 'Convergence' in key:
+                        experiment['convergence_angle'] = item
+                    if 'Collection' in key:
+                        # print(item)
+                        # for val in item.values():
+                        experiment['collection_angle'] = item
+            if 'number_of_frames' not in experiment:
+                experiment['number_of_frames'] = 1
+            if 'exposure_time' not in experiment:
+                if 'single_exposure_time' in experiment:
+                    experiment['exposure_time'] = experiment['number_of_frames'] * experiment['single_exposure_time']
+
+        else:
+            if 'Acquisition' in exp_dictionary:
+                if 'Parameters' in exp_dictionary['Acquisition']:
+                    if 'High Level' in exp_dictionary['Acquisition']['Parameters']:
+                        if 'Exposure (s)' in exp_dictionary['Acquisition']['Parameters']['High Level']:
+                            experiment['exposure_time'] = exp_dictionary['Acquisition']['Parameters']['High Level'][
+                                'Exposure (s)']
+
+        if 'Microscope Info' in exp_dictionary:
+            if 'Microscope' in exp_dictionary['Microscope Info']:
+                experiment['microscope'] = exp_dictionary['Microscope Info']['Microscope']
+            if 'Voltage' in exp_dictionary['Microscope Info']:
+                experiment['acceleration_voltage'] = exp_dictionary['Microscope Info']['Voltage']
+
+        self.datasets[dataset_index].metadata['experiment']  = experiment
+
 
 
 class DM3Reader(DMReader):
