@@ -8,6 +8,10 @@ SciFiReaders
 .. image:: https://img.shields.io/pypi/v/SciFiReaders.svg
     :target: https://pypi.org/project/SciFiReaders/
     :alt: PyPI
+    
+.. image:: https://img.shields.io/conda/vn/conda-forge/SciFiReaders.svg
+    :target: https://github.com/conda-forge/SciFiReaders-feedstock
+    :alt: conda-forge
 
 .. image:: https://img.shields.io/pypi/l/SciFiReaders.svg
     :target: https://pypi.org/project/SciFiReaders/

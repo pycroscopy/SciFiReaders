@@ -1,5 +1,6 @@
 
 
+from modulefinder import Module
 import numpy as np  # For array operations
 import sidpy as sid
 from sidpy.sid import Reader
@@ -13,14 +14,17 @@ try:
     import gwyfile
 except ModuleNotFoundError:
     gwyfile = None
-    print('You attempted to load a Gwyddion file, but this requires gwyfile.\n \
-    Please Load it with pip install gwyfile')
 
 class GwyddionReader(Reader):
     """
     Extracts data and metadata from Igor Binary Wave (.ibw) files containing
     images or force curves
     """
+    def __init__(self, file_path, *args, **kwargs):
+        if gwyfile == None:
+            raise ModuleNotFoundError('You attempted to load a Gwyddion file, but this requires gwyfile.\n \
+    Please Load it with pip install gwyfile , restart and retry')
+        super().__init__(file_path, *args, **kwargs)
 
     def read(self, verbose=False, parm_encoding='utf-8'):
         """

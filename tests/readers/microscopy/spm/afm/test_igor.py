@@ -1,6 +1,6 @@
 import unittest
 import sys
-
+import pytest
 import sidpy
 from pywget import wget
 import os
@@ -10,6 +10,7 @@ import SciFiReaders as sr
 
 root_path = "https://github.com/pycroscopy/SciFiDatasets/blob/main/data/microscopy/spm/afm/"
 
+igor = pytest.importorskip("igor", reason="igor not installed")
 
 class TestIgorIBW(unittest.TestCase):
     # Tests the nanonis_dat reader

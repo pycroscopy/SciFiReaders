@@ -3,13 +3,16 @@ import sys
 import os
 import numpy as np
 import sidpy
+import pytest
 from pywget import wget
+
 
 sys.path.append("../../../../../SciFiReaders/")
 import SciFiReaders as sr
 
 root_path = "https://github.com/pycroscopy/SciFiDatasets/blob/main/data/microscopy/spm/stm/"
 
+nanonispy = pytest.importorskip("nanonispy", reason="nanonispy not installed")
 
 class TestNanonisDat(unittest.TestCase):
     # Tests the nanonis_dat reader
