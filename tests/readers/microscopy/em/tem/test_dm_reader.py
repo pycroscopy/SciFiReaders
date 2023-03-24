@@ -25,28 +25,31 @@ class TestDMReader(unittest.TestCase):
         file_name = wget.download(data_path + '/DMReader_EELS_STO.dm3')
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
-        self.assertEqual(datasets.title, 'DMReader_EELS_STO')
-        self.assertEqual(datasets.source, 'SciFiReaders.DMReader')
-        self.assertEqual(datasets[200], 135727.0)
-        self.assertEqual(datasets.energy_loss[200], 400.0)
-        self.assertEqual(datasets.original_metadata['DM']['dm_version'], 3)
-        self.assertEqual(datasets.original_metadata['ImageList']['1']['ImageTags']
+        dataset = datasets[0]
+        self.assertEqual(dataset.title, '01-EELS Acquire_STO')
+        self.assertEqual(dataset.source, 'SciFiReaders.DMReader')
+        self.assertEqual(dataset[200], 135727.0)
+        self.assertEqual(dataset.energy_loss[200], 400.0)
+        self.assertEqual(dataset.original_metadata['DM']['dm_version'], 3)
+        self.assertEqual(dataset.original_metadata['ImageTags']
                          ['EELS']['Acquisition']['Exposure (s)'], 2.0)
-        self.assertEqual(datasets.data_type.name, 'SPECTRUM')
+        self.assertEqual(dataset.data_type.name, 'SPECTRUM')
         os.remove(file_name)
 
     def test_load_dm4_file(self):
         file_name = wget.download(data_path + '/DMReader_EELS_STO.dm4')
         reader = SciFiReaders.DMReader(file_name, verbose=True)
         datasets = reader.read()
-        self.assertEqual(datasets.title, 'DMReader_EELS_STO')
-        self.assertEqual(datasets.source, 'SciFiReaders.DMReader')
-        self.assertEqual(datasets[200], 135727.0)
-        self.assertEqual(datasets.energy_loss[200], 400.0)
-        self.assertEqual(datasets.original_metadata['DM']['dm_version'], 4)
-        self.assertEqual(datasets.original_metadata['ImageList']['1']['ImageTags']
+        dataset = datasets[0]
+
+        self.assertEqual(dataset.title, 'EELS_STO')
+        self.assertEqual(dataset.source, 'SciFiReaders.DMReader')
+        self.assertEqual(dataset[200], 135727.0)
+        self.assertEqual(dataset.energy_loss[200], 400.0)
+        self.assertEqual(dataset.original_metadata['DM']['dm_version'], 4)
+        self.assertEqual(dataset.original_metadata['ImageTags']
                          ['EELS']['Acquisition']['Exposure (s)'], 2.0)
-        self.assertEqual(datasets.data_type.name, 'SPECTRUM')
+        self.assertEqual(dataset.data_type.name, 'SPECTRUM')
         os.remove(file_name)
 
     def test_load_no_file(self):
@@ -67,14 +70,16 @@ class TestDMReader(unittest.TestCase):
 
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
-        self.assertEqual(datasets.title, 'DMReader_SpectrumImage_SI-EELS')
-        self.assertEqual(datasets.source, 'SciFiReaders.DMReader')
-        self.assertEqual(datasets.data_type.name, 'SPECTRAL_IMAGE')
-        self.assertEqual(datasets.shape, (6, 49, 1024))
-        self.assertEqual(datasets[0, 3, 200], 2304.0)
-        self.assertEqual(datasets.energy_loss[200], 450.0)
-        self.assertEqual(datasets.original_metadata['DM']['dm_version'], 3)
-        self.assertEqual(datasets.original_metadata['ImageList']['1']['ImageTags']
+        dataset = datasets[0]
+
+        self.assertEqual(dataset.title, '06-EELS Spectrum Image')
+        self.assertEqual(dataset.source, 'SciFiReaders.DMReader')
+        self.assertEqual(dataset.data_type.name, 'SPECTRAL_IMAGE')
+        self.assertEqual(dataset.shape, (6, 49, 1024))
+        self.assertEqual(dataset[0, 3, 200], 2304.0)
+        self.assertEqual(dataset.energy_loss[200], 450.0)
+        self.assertEqual(dataset.original_metadata['DM']['dm_version'], 3)
+        self.assertEqual(dataset.original_metadata['ImageTags']
                          ['EELS']['Acquisition']['Exposure (s)'], 0.2)
 
         os.remove(file_name)
@@ -85,12 +90,14 @@ class TestDMReader(unittest.TestCase):
 
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
-        self.assertEqual(datasets.title, 'DMReader_Image_SI-Survey')
-        self.assertEqual(datasets.source, 'SciFiReaders.DMReader')
-        self.assertEqual(datasets.data_type.name, 'IMAGE')
-        self.assertEqual(datasets.shape, (512, 512))
+        dataset = datasets[0]
 
-        self.assertEqual(float(datasets[3, 200]), 2940122.0)
-        self.assertEqual(datasets.original_metadata['DM']['dm_version'], 3)
-        self.assertEqual(datasets.original_metadata['ImageList']['1']['ImageTags']['DigiScan']['Flyback'], 500.0)
+        self.assertEqual(dataset.title, '06-SI Survey Image')
+        self.assertEqual(dataset.source, 'SciFiReaders.DMReader')
+        self.assertEqual(dataset.data_type.name, 'IMAGE')
+        self.assertEqual(dataset.shape, (512, 512))
+
+        self.assertEqual(float(dataset[3, 200]), 2940122.0)
+        self.assertEqual(dataset.original_metadata['DM']['dm_version'], 3)
+        self.assertEqual(dataset.original_metadata['ImageTags']['DigiScan']['Flyback'], 500.0)
         os.remove(file_name)

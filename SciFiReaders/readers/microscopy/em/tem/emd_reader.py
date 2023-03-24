@@ -14,8 +14,14 @@ import json
 import h5py
 import sys
 import numpy as np
-
+import dask.array as da
+from numba import njit
 import sidpy
+try:
+    from tqdm.auto import tqdm
+    tqdm_available = True
+except ImportError:
+    tqdm_available = False
 
 __all__ = ["EMDReader", "version"]
 
@@ -51,6 +57,8 @@ class EMDReader(sidpy.Reader):
         self.datasets = []
         self.data_array = None
         self.metadata = None
+        self.label_dict = {}
+            
         self.number_of_frames = 1
 
     def can_read(self):
@@ -85,18 +93,32 @@ class EMDReader(sidpy.Reader):
 
         if 'Data' not in self._h5_file:
             raise TypeError('Velox EMD File is empty')
+    
+        number_of_datasets=0
+        use_tqdm = False
         for key in self._h5_file['Data']:
+            if key == 'SpectrumStream':
+                number_of_datasets += len(self._h5_file['Data']['SpectrumStream'].keys())
+        if number_of_datasets > 1:
+            progress_bar = tqdm(total=number_of_datasets) # Initialise
+            use_tqdm = tqdm_available
+        for key in self._h5_file['Data']:
+            self.image_key = 'None'
+            self._parse_image_display()
             if key == 'Image':
-                for image_key in self._h5_file['Data']['Image']:
-                    self.get_data('Data/Image/' + image_key)
+                for self.image_key in self._h5_file['Data']['Image']:
+                    self.get_data('Data/Image/' + self.image_key)
                     self.get_image()
-                    self.get_metadata(-1)
+                    self.extract_crucial_metadata(-1)
             elif key == 'SpectrumStream':
                 for stream_key in self._h5_file['Data']['SpectrumStream']:
                     self.get_data('Data/SpectrumStream/' + stream_key)
                     self.get_eds(eds_stream)
-                    self.get_metadata(-1)
-
+                    self.extract_crucial_metadata(-1)
+                    if use_tqdm:
+                        progress_bar.update(1)
+        if use_tqdm:
+            progress_bar.close()
         self.close()
         return self.datasets
 
@@ -106,19 +128,39 @@ class EMDReader(sidpy.Reader):
         metadata_string = metadata_array.tobytes().decode("utf-8")
         self.metadata = dict(json.loads(metadata_string.rstrip('\x00')))
         if 'AcquisitionSettings' in self._h5_file[image_key]:
-            self.metadata['AcquisitionSettings'] = json.loads(self._h5_file[image_key]['AcquisitionSettings'][0])
+            self.metadata['AcquisitionSettings'] = json.loads(self._h5_file[image_key]['AcquisitionSettings'][0])        
+
+    def _parse_image_display(self):
+        ### Read image label according to hyperspy EMDReader
+        image_display_group = self._h5_file.get('Presentation/Displays/ImageDisplay')
+        if image_display_group is not None:
+            for key in image_display_group.keys():
+                v = json.loads(
+                    image_display_group[key][0].decode('utf-8'))
+                data_key = v['dataPath'].split('/')[-1]  # key in data group
+                self.label_dict[data_key] = v['display']['label']
 
     def get_eds(self, eds_stream=False):
         if 'AcquisitionSettings' not in self.metadata:
             eds_stream = True
         if eds_stream:
-            self.datasets.append(sidpy.Dataset.from_array(self.data_array))
+            self.datasets.append(sidpy.Dataset.from_array(self.data_array),)
         else:
             data_array = self.get_eds_spectrum()
             if data_array.shape[0] == 1 and data_array.shape[1] == 1:
                 data_array = np.array(data_array).flatten()
-            self.datasets.append(sidpy.Dataset.from_array(data_array))
+                chunks = 1
+            else:
+                chunks= [32, 32, data_array.shape[2]]
+                if data_array.shape[0]> chunks[0]:
+                    chunks[0] = data_array.shape[0]
+                if data_array.shape[1]> chunks[1]:
+                    chunks[1] = data_array.shape[1]
+                
+            self.datasets.append(sidpy.Dataset.from_array(data_array,  chunks=chunks))
         # print(self.datasets[-1])
+
+        self.data_array=np.zeros([1,1])
 
         self.datasets[-1].original_metadata = self.metadata
 
@@ -164,10 +206,10 @@ class EMDReader(sidpy.Reader):
                                                                    name='y', units='nm',
                                                                    quantity='distance',
                                                                    dimension_type='spatial'))
-
+    
     def get_eds_spectrum(self):
         acquisition = self.metadata['AcquisitionSettings']
-        print(acquisition)
+        # print(acquisition)
         size_x = 1
         size_y = 1
         if 'RasterScanDefinition' in acquisition:
@@ -177,20 +219,11 @@ class EMDReader(sidpy.Reader):
 
         self.number_of_frames = int(np.ceil((self.data_array[:, 0] == 65535).sum() / (size_x * size_y)))
         # print(size_x,size_y,number_of_frames)
-        data = np.zeros((size_x * size_y, spectrum_size))
+        data_array = np.zeros((size_x * size_y, spectrum_size),dtype=np.ushort)
         # progress = tqdm(total=number_of_frames)
-        pixel_number = 0
-        frame = 0
-        for value in self.data_array[:, 0]:
-            if value == 65535:
-                pixel_number += 1
-                if pixel_number >= size_x * size_y:
-                    pixel_number = 0
-                    frame += 1
-                    # print(frame)
-                    # progress.update(1)
-            else:
-                data[pixel_number, value] += 1
+        
+        data, frame = get_stream(data_array, size_x*size_y, self.data_array[:, 0])
+        
         self.number_of_frames = frame
         return np.reshape(data, (size_x, size_y, spectrum_size))
 
@@ -211,7 +244,14 @@ class EMDReader(sidpy.Reader):
                                                                quantity='distance',
                                                                dimension_type='spatial'))
         else:
-            self.data_array = np.moveaxis(self.data_array, source=[0, 1, 2], destination=[1, 2, 0])
+            # There is a problem with random access of data due to chunking in hdf5 files
+            # Speed-up copied from hyperspy.ioplugins.EMDReader.FEIEMDReader
+
+            data_array = np.empty(self.data_array.shape)
+            self.data_array.read_direct(data_array)
+            self.data_array = np.rollaxis(data_array, axis=2)
+            # np.moveaxis(data_array, source=[0, 1, 2], destination=[2, 0, 1])
+            
             self.datasets.append(sidpy.Dataset.from_array(self.data_array))
             self.datasets[-1].data_type = 'image_stack'
             self.datasets[-1].set_dimension(0, sidpy.Dimension(np.arange(self.data_array.shape[0]),
@@ -230,8 +270,10 @@ class EMDReader(sidpy.Reader):
 
         self.datasets[-1].units = 'counts'
         self.datasets[-1].quantity = 'intensity'
+        if self.image_key in self.label_dict:
+            self.datasets[-1].title = self.label_dict[self.image_key]
 
-    def get_metadata(self, index):
+    def extract_crucial_metadata(self, index):
         metadata = self.datasets[index].original_metadata
         experiment = {'detector': metadata['BinaryResult']['Detector'],
                       'acceleration_voltage': float(metadata['Optics']['AccelerationVoltage']),
@@ -253,6 +295,26 @@ class EMDReader(sidpy.Reader):
                                         "beta": float(metadata['Stage']['BetaTilt'])}}
 
         self.datasets[index].metadata['experiment'] = experiment
+        if self.datasets[index].title == 'generic':
+            self.datasets[index].title = experiment['detector']
 
     def close(self):
         self._h5_file.close()
+
+@njit(cache=True)
+def get_stream(data, size, data_stream):
+    #for value in self.data_array[:, 0]:
+    #from tqdm.auto import trange, tqdm
+    pixel_number = 0
+    frame = 0
+    for value in data_stream:
+        if value == 65535:
+            pixel_number += 1
+            if pixel_number >= size:
+                pixel_number = 0
+                frame += 1
+                # print(frame)
+                # progress.update(1)
+        else:
+            data[pixel_number, value] += 1
+    return data, frame

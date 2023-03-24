@@ -139,8 +139,8 @@ class DMReader(sidpy.Reader):
         # initialize variables ##
         self.verbose = verbose
         self.__filename = file_path
-        self.__chosen_image = -1
-
+        self.datasets = []
+        
         # - open file for reading
         try:
             self.__dm_file = open(self.__filename, 'rb')
@@ -173,7 +173,8 @@ class DMReader(sidpy.Reader):
         t1 = time.time()
         self.__dm_file.seek(self.dm_header_size)
 
-        self.__stored_tags = {'DM': {'dm_version': self.dm_version, 'file_size': self.file_size}}
+        self.__stored_tags = {'DM': {'dm_version': self.dm_version, 'file_size': self.file_size},
+                              'original_filename': self.filename}
 
         self.__read_tag_group(self.__stored_tags)
 
@@ -183,38 +184,65 @@ class DMReader(sidpy.Reader):
         if self.verbose:
             t2 = time.time()
             print("| parse DM3 file: %.3g s" % (t2 - t1))
+        if '1' in self.__stored_tags['ImageList']:
+            start=1
+        for image_number in self.__stored_tags['ImageList'].keys():
+            if int(image_number) >= start:
+                dataset = self.get_dataset(self.__stored_tags['ImageList'][image_number])
+                if isinstance(dataset, sidpy.Dataset):
+                    dataset.original_metadata['DM'] = self.__stored_tags['DM']
+                    # convert linescan to spectral image
+                    if self.spectral_dim and dataset.ndim == 2:
+                        old_dataset = dataset.copy()
+                        meta = dataset.original_metadata.copy()
+                        basename = dataset.name
+                        data = np.array(dataset).reshape(dataset.shape[0], 1, dataset.shape[1])
+                        dataset = sidpy.Dataset.from_array(data, name=basename)
+                        dataset.original_metadata = meta
+                        dataset.set_dimension(0, old_dataset.dim_0)
 
+                        dataset.set_dimension(1, sidpy.Dimension([1], name='y', units='pixels',
+                                                                quantity='distance', dimension_type='spatial'))
+                        dataset.set_dimension(2, old_dataset.dim_1)
+                        dataset.data_type = sidpy.DataType.SPECTRAL_IMAGE  # 'linescan'
+
+
+                    dataset.quantity = 'intensity'
+                    dataset.units = 'counts'
+                    # dataset.title = basename
+                    dataset.modality = 'generic'
+                    dataset.source = 'SciFiReaders.DMReader'
+                    dataset.original_metadata['DM']['full_file_name'] = self.__filename
+                    
+                    self.datasets.append(dataset)
+                    self.extract_crucial_metadata(-1)
+
+        del self.__stored_tags['ImageList'] 
+        main_dataset_number = 0
+        for index, dataset in enumerate(self.datasets):
+            if 'urvey' in dataset.title:
+                main_dataset_number = index
+        self.datasets[main_dataset_number].original_metadata.update(self.__stored_tags)
+        self.close()
+        return self.datasets
+
+    def get_dataset(self, imageDict)->sidpy.Dataset:
+        """
+        Reads dictionary of imageList into sidpy.Dataset 
+        """
+        
+        dataset = None
         path, file_name = os.path.split(self.__filename)
         basename, extension = os.path.splitext(file_name)
-        dataset = sidpy.Dataset.from_array(self.data_cube, name=basename)
-        self.__stored_tags['DM']['chosen_image'] = self.__chosen_image
-        dataset.original_metadata = self.get_tags()
-
-        self.set_dimensions(dataset)
-        self.set_data_type(dataset)
-        # convert linescan to spectral image
-        if self.spectral_dim and dataset.ndim == 2:
-            old_dataset = dataset.copy()
-            meta = dataset.original_metadata.copy()
-            basename = dataset.name
-            data = np.array(dataset).reshape(dataset.shape[0], 1, dataset.shape[1])
-            dataset = sidpy.Dataset.from_array(data, name=basename)
-            dataset.original_metadata = meta
-            dataset.set_dimension(0, old_dataset.dim_0)
-
-            dataset.set_dimension(1, sidpy.Dimension([1], name='y', units='pixels',
-                                                     quantity='distance', dimension_type='spatial'))
-            dataset.set_dimension(2, old_dataset.dim_1)
-            dataset.data_type = sidpy.DataType.SPECTRAL_IMAGE  # 'linescan'
-
-        dataset.quantity = 'intensity'
-        dataset.units = 'counts'
-        dataset.title = basename
-        dataset.modality = 'generic'
-        dataset.source = 'SciFiReaders.DMReader'
-        dataset.original_metadata['DM']['full_file_name'] = self.__filename
-
-        self.close()
+        if 'ImageData' in imageDict:
+            if 'Data' in imageDict['ImageData']:  
+                
+                dataset = sidpy.Dataset.from_array(self.get_raw(imageDict), name=basename)
+                dataset.title=imageDict['Name']
+                dataset.original_metadata=imageDict.copy()
+                self.set_dimensions(dataset)
+                self.set_data_type(dataset)
+                
         return dataset
 
     def set_data_type(self, dataset):
@@ -225,8 +253,8 @@ class DMReader(sidpy.Reader):
         self.spectral_dim = spectral_dim
 
         dataset.data_type = 'unknown'
-        if 'ImageTags' in dataset.original_metadata['ImageList'][str(self.__chosen_image)]:
-            image_tags = dataset.original_metadata['ImageList'][str(self.__chosen_image)]['ImageTags']
+        if 'ImageTags' in dataset.original_metadata:
+            image_tags = dataset.original_metadata['ImageTags']
             if 'SI' in image_tags:
                 if len(dataset.shape) == 3:
                     dataset.data_type = sidpy.DataType.SPECTRAL_IMAGE
@@ -258,15 +286,14 @@ class DMReader(sidpy.Reader):
                     dataset.data_type = sidpy.DataType.LINE_PLOT
 
     def set_dimensions(self, dataset):
-        dimensions_dict = dataset.original_metadata['ImageList'][str(self.__chosen_image)]['ImageData']['Calibrations'][
-            'Dimension']
+        dimensions_dict = dataset.original_metadata['ImageData']['Calibrations']['Dimension']
 
         reciprocal_name = 'u'
         spatial_name = 'x'
 
         for dim, dimension_tags in dimensions_dict.items():
             # Fix annoying scale of spectrum_images in Zeiss  and SEM images
-            if dimension_tags['Units'] == 'µm':
+            if dimension_tags['Units'] == 'ï¿½m':
                 dimension_tags['Units'] = 'nm'
                 dimension_tags['Scale'] *= 1000.0
 
@@ -425,7 +452,7 @@ class DMReader(sidpy.Reader):
 
     tags = property(get_tags)
 
-    def get_raw(self):
+    def get_raw(self, ImageDict):
         """Extracts  data as np array"""
 
         # DataTypes for image data <--> PIL decoders
@@ -451,23 +478,11 @@ class DMReader(sidpy.Reader):
             23: (np.float32, {'R': ('<u1', 0), 'G': ('<u1', 1), 'B': ('<u1', 2), 'A': ('<u1', 3)}),
         }
 
-        # find main image
-        for key in self.__stored_tags['ImageList']:
-
-            if key.isdigit():
-                if 'ImageData' in self.__stored_tags['ImageList'][key]:
-                    if 'Data' in self.__stored_tags['ImageList'][key]['ImageData'] \
-                            and 'DataType' in self.__stored_tags['ImageList'][key]['ImageData'] \
-                            and 'Dimensions' in self.__stored_tags['ImageList'][key]['ImageData']:
-                        if int(key) > self.__chosen_image:
-                            self.__chosen_image = int(key)
-        if self.__chosen_image < 0:
-            raise IOError('Did not find data in file')
-
+        
         # get relevant Tags
-        byte_data = self.__stored_tags['ImageList'][str(self.__chosen_image)]['ImageData']['Data']
-        data_type = self.__stored_tags['ImageList'][str(self.__chosen_image)]['ImageData']['DataType']
-        dimensions = self.__stored_tags['ImageList'][str(self.__chosen_image)]['ImageData']['Dimensions']
+        byte_data = ImageDict['ImageData']['Data']
+        data_type = ImageDict['ImageData']['DataType']
+        dimensions = ImageDict['ImageData']['Dimensions']
 
         # get shape from Dimensions
         shape = []
@@ -481,10 +496,64 @@ class DMReader(sidpy.Reader):
         else:
             raw_data = np.frombuffer(byte_data, dtype=dt, count=np.cumprod(shape)[-1]).reshape(shape, order='F')
         # delete byte data in dictionary
-        self.__stored_tags['ImageList'][str(self.__chosen_image)]['ImageData']['Data'] = 'read'
+        ImageDict['ImageData']['Data'] = 'read'
         return raw_data
 
-    data_cube = property(get_raw)
+    def extract_crucial_metadata(self, dataset_index):
+        original_metadata = self.datasets[dataset_index].original_metadata
+        """Read essential parameter from original_metadata originating from a dm3 file"""
+        if not isinstance(original_metadata, dict):
+            raise TypeError('We need a dictionary to read')
+        if 'DM' not in original_metadata:
+            return {}
+        if 'ImageTags' not in original_metadata:
+            return {}
+        exp_dictionary = original_metadata['ImageTags']
+        experiment = {}
+        if 'EELS' in exp_dictionary:
+            if 'Acquisition' in exp_dictionary['EELS']:
+                for key, item in exp_dictionary['EELS']['Acquisition'].items():
+                    if 'Exposure' in key:
+                        _, units = key.split('(')
+                        if units[:-1] == 's':
+                            experiment['single_exposure_time'] = item
+                    if 'Integration' in key:
+                        _, units = key.split('(')
+                        if units[:-1] == 's':
+                            experiment['exposure_time'] = item
+                    if 'frames' in key:
+                        experiment['number_of_frames'] = item
+
+            if 'Experimental Conditions' in exp_dictionary['EELS']:
+                for key, item in exp_dictionary['EELS']['Experimental Conditions'].items():
+                    if 'Convergence' in key:
+                        experiment['convergence_angle'] = item
+                    if 'Collection' in key:
+                        # print(item)
+                        # for val in item.values():
+                        experiment['collection_angle'] = item
+            if 'number_of_frames' not in experiment:
+                experiment['number_of_frames'] = 1
+            if 'exposure_time' not in experiment:
+                if 'single_exposure_time' in experiment:
+                    experiment['exposure_time'] = experiment['number_of_frames'] * experiment['single_exposure_time']
+
+        else:
+            if 'Acquisition' in exp_dictionary:
+                if 'Parameters' in exp_dictionary['Acquisition']:
+                    if 'High Level' in exp_dictionary['Acquisition']['Parameters']:
+                        if 'Exposure (s)' in exp_dictionary['Acquisition']['Parameters']['High Level']:
+                            experiment['exposure_time'] = exp_dictionary['Acquisition']['Parameters']['High Level'][
+                                'Exposure (s)']
+
+        if 'Microscope Info' in exp_dictionary:
+            if 'Microscope' in exp_dictionary['Microscope Info']:
+                experiment['microscope'] = exp_dictionary['Microscope Info']['Microscope']
+            if 'Voltage' in exp_dictionary['Microscope Info']:
+                experiment['acceleration_voltage'] = exp_dictionary['Microscope Info']['Voltage']
+
+        self.datasets[dataset_index].metadata['experiment']  = experiment
+
 
 
 class DM3Reader(DMReader):
