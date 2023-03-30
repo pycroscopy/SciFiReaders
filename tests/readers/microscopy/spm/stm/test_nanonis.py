@@ -93,10 +93,10 @@ class TestNanonisDat(unittest.TestCase):
 class TestNanonisSXM(unittest.TestCase):
 
     def test_load_nanonis_sxm(self):
-        file_path = 'NanonisSXM.sxm'
+        file_path = 'NanonisFile.sxm'
         import pywget
         #pywget.download(root_path + "NanonisReader_COOx_sample2286.sxm?raw=true", out=file_path)
-        pywget.download(r'https://www.dropbox.com/s/ozsdm1q83ik8gt8/NanonisReader_COOx_sample2286.sxm?dl=1')
+        pywget.download(r'https://www.dropbox.com/s/ozsdm1q83ik8gt8/NanonisReader_COOx_sample2286.sxm?dl=1', out=file_path)
         reader = sr.NanonisSXMReader(file_path)
 
         datasets = reader.read()
