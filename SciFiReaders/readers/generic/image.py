@@ -29,7 +29,7 @@ class ImageReader(Reader):
         super().__init__(file_path, *args, **kwargs)
         image_path = self._parse_file_path(self._input_file_path)
         ext = os.path.splitext(image_path)[-1]
-        if ext not in ['jpg', 'jpeg', 'png', 'bmp', '.tif', '.tiff']:
+        if ext not in ['.jpg', '.jpeg', '.png', '.bmp', '.tif', '.tiff']:
             raise NotImplementedError(
                 'The provided file type {} is not supported by the reader as of now \n'.format(ext)
                 + 'Please provide one of "jpg", "jpeg", "png", "bmp", ".tif", ".tiff" file types')
