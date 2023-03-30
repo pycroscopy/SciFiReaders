@@ -13,6 +13,9 @@ if sys.version_info.major == 3:
 try:
     import gwyfile
 except ModuleNotFoundError:
+    print("You don't have gwyfile installed. \
+    If you wish to open .gwy files, you will need to \
+     install it (pip install gwyfile) before attempting.")
     gwyfile = None
 
 class GwyddionReader(Reader):

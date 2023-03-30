@@ -29,7 +29,7 @@ class ImageReader(Reader):
         super().__init__(file_path, *args, **kwargs)
         image_path = self._parse_file_path(self._input_file_path)
         ext = os.path.splitext(image_path)[-1]
-        if ext not in ['jpg', 'jpeg', 'png', 'bmp', '.tif', '.tiff']:
+        if ext not in ['.jpg', '.jpeg', '.png', '.bmp', '.tif', '.tiff']:
             raise NotImplementedError(
                 'The provided file type {} is not supported by the reader as of now \n'.format(ext)
                 + 'Please provide one of "jpg", "jpeg", "png", "bmp", ".tif", ".tiff" file types')
@@ -123,7 +123,7 @@ def read_image(image_path, *args, **kwargs):
     # We will cross that bridge when someone raises an issue
     ext = os.path.splitext(image_path)[-1]
     original_metadata, metadata, dimensions = {}, {}, []
-    if ext in ['jpg', 'jpeg', 'png', 'bmp']:
+    if ext in ['.jpg', '.jpeg', '.png', '.bmp']:
         img_data = np.asarray(PIL.Image.open(image_path))
         # Colored images, color channel last
         # Here we assume that the file path provided has a single image and not a stack
