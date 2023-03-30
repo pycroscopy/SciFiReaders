@@ -123,7 +123,7 @@ def read_image(image_path, *args, **kwargs):
     # We will cross that bridge when someone raises an issue
     ext = os.path.splitext(image_path)[-1]
     original_metadata, metadata, dimensions = {}, {}, []
-    if ext in ['jpg', 'jpeg', 'png', 'bmp']:
+    if ext in ['.jpg', '.jpeg', '.png', '.bmp']:
         img_data = np.asarray(PIL.Image.open(image_path))
         # Colored images, color channel last
         # Here we assume that the file path provided has a single image and not a stack
