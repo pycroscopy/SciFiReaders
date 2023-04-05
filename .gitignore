@@ -110,3 +110,4 @@ ENV/
 test_scripts/
 
 \.pytest_cache/
+/SciFiReaders/readers/microscopy/spm/afm/mdt_reader/LN_VTE_PP.mdt
