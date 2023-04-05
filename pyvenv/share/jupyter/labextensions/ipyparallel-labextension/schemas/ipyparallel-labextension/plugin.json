@@ -1,0 +1,8 @@
+{
+  "jupyter.lab.setting-icon-class": "ipp-Logo",
+  "jupyter.lab.setting-icon-label": "IPython Parallel",
+  "title": "IPython Parallel",
+  "description": "Settings for the IPython Parallel plugin.",
+  "properties": {},
+  "type": "object"
+}
