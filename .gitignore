@@ -111,3 +111,5 @@ test_scripts/
 
 \.pytest_cache/
 /SciFiReaders/readers/microscopy/spm/afm/mdt_reader/nt_mdt.svg
+/SciFiReaders/readers/microscopy/spm/afm/mdt_reader/MDTdeclaration.py
+/SciFiReaders/readers/microscopy/spm/afm/mdt_reader/MDTfile.py
