@@ -1,7 +1,5 @@
-
-
 import numpy as np
-import sidpy
+import sidpy as sid
 from sidpy.sid import Reader
 import io
 from struct import *
@@ -90,7 +88,16 @@ class MDTReader(Reader):
         super().__init__(file_path, *args, **kwargs)
 
     def read(self, verbose=False):
+        '''
+        Reads the file given in file_path into a list of sidpy dataset
+
+        Returns
+        -------
+        sidpy.Dataset : List of sidpy.Dataset objects.
+            Multi-channel inputs are separated into individual dataset objects
+        '''
         self._file = MDTBufferedReaderDecorator(open(self._input_file_path, mode='rb'))
+
         #read header of the file
         self._read_header()
 
@@ -98,7 +105,7 @@ class MDTReader(Reader):
             print(f'File size: {self._file_size}')
             print(f'Number of frames: {self.nb_frame}')
             print()
-
+        dataset_list = []
         #iterator for the frames inside the file
         for i in range(self.nb_frame):
             self._frame = Frame(decorator = self._file)
@@ -107,6 +114,8 @@ class MDTReader(Reader):
             if self._frame.type == 106:
                 self._frame._read_mda_frame()
 
+            dataset_list.append(self._frame.data)
+
             if verbose:
                 print(f'Frame #{i}: type - {self._frame.type}, '
                       f'size - {self._frame.size}, '
@@ -114,24 +123,17 @@ class MDTReader(Reader):
                 print(f'version - {self._frame.version}, '
                       f'time - {self._frame.date}, '
                       f'var_size - {self._frame.var_size}, '
-                      f'uuid - {self._frame.uuid}')
-                print(f'title - {self._frame.title}, '
-                      f'dimensions - {self._frame.n_dimensions}, \n'
-                      f'measurands - {self._frame.n_measurands}, '
-                      )
-                print()
-                print(f'dimensions - {self._frame.dimensions[0]}, '
+                      f'uuid - {self._frame.uuid}\n'
+                      f'title - {self._frame.title}, '
+                      f'n_dimensions - {self._frame.n_dimensions}, '
+                      f'n_measurands - {self._frame.n_measurands},\n'
+                      f'dimensions - {self._frame.dimensions[0]},\n'
                       f'measurands - {self._frame.measurands[0]}'
-                      )
-                print('''\n\n''')
-
-
-
-
-
-
+                      f'\n\n')
 
         self._file.close()
+
+        return dataset_list
 
     def _read_header(self):
         '''
@@ -155,8 +157,6 @@ class MDTReader(Reader):
         #  19 bytes reserved (??)
         self._file.shift_position(19)
 
-
-
     def can_read(self):
         """
         Tests whether or not the provided file has a .ibw extension
@@ -169,10 +169,20 @@ class MDTReader(Reader):
 
 class Frame:
     '''
-    Class for 2D frames
+    Class for MDA frames
     '''
     def __init__(self, decorator=None):
         self._file = decorator
+        self.MDT_data_types = {-1: self._file.read_int8,
+                               1: self._file.read_uint8,
+                               -2: self._file.read_int16,
+                               2: self._file.read_uint16,
+                               -4: self._file.read_int32,
+                               4: self._file.read_uint32,
+                               -8: self._file.read_int64,
+                               8: self._file.read_uint64,
+                               -5892: self._file.read_float32,
+                               -13320: self._file.read_float64}
         self._read_frame_header()
         #TODO how to extract one frame without iteration?
 
@@ -266,6 +276,9 @@ class Frame:
             for _ in range(self.n_measurands):
                 self.measurands.append(self._read_mda_calibrations())
 
+        if self.n_dimensions == 2 and self.n_measurands == 1:
+            self.data = self._extract_2d_frame()
+
         self._file.seek(self.start_pos + self.size)
 
     def _read_mda_calibrations(self):
@@ -297,6 +310,7 @@ class Frame:
         calibrations['min_index'] = self._file.read_uint64()
         calibrations['max_index'] = self._file.read_uint64()
         calibrations['data_type'] = self._file.read_int32() #signed integer
+        calibrations['length'] = calibrations['max_index'] - calibrations['min_index'] + 1
 
 
         _len_author = self._file.read_uint32()
@@ -315,6 +329,56 @@ class Frame:
 
         self._file.seek(_current_pos + _len_tot)
         return calibrations
+
+    def _extract_2d_frame(self):
+        '''
+        Extract data from 2d scan
+
+        Returns
+        -------
+        sidpy.Dataset : 2d dataset object with AFM image data
+        '''
+        x = self.dimensions[1]
+        y = self.dimensions[0]
+        z = self.measurands[0]
+
+        total_len = x['length'] * y['length']
+
+        xreal = x['scale'] * (x['length'] - 1)
+        yreal = y['scale'] * (y['length'] - 1)
+
+
+        read_data = self.MDT_data_types[z['data_type']]
+
+        data = np.zeros(total_len)
+
+        #read data
+        for i in range(len(data)):
+            data[i] = z['bias'] + z['scale'] * read_data()
+
+        data = np.reshape(data, (x['length'],y['length']))
+
+        # Convert it to sidpy dataset object
+        data_set = sid.Dataset.from_array(data)
+        data_set.title = self.title
+        data_set.data_type = 'Image'
+
+        # Add quantity and units
+        data_set.units = z['unit']
+        data_set.quantity = self.title.split(':')[-1]
+
+        # Add dimension info
+        data_set.set_dimension(0, sid.Dimension(np.linspace(0, xreal, x['length']),
+                                                name='x',
+                                                units=x['unit'], quantity='x',
+                                                dimension_type='spatial'))
+        data_set.set_dimension(1, sid.Dimension(np.linspace(0, yreal, y['length']),
+                                                name='y',
+                                                units=y['unit'], quantity='y',
+                                                dimension_type='spatial'))
+        return data_set
+
+
 
 
 
