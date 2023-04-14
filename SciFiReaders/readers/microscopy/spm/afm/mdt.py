@@ -63,9 +63,6 @@ class MDTBufferedReaderDecorator(object):
         """
         return int(unpack('<B', self._file.read(1))[0])
 
-    def read_double(self):
-        return float(unpack('<d', self._file.read(8))[0])
-
     def read_float32(self):
         """Read a signed float coded on 4 byte (a float)"""
         return float(unpack('<f', self._file.read(4))[0])
@@ -73,6 +70,11 @@ class MDTBufferedReaderDecorator(object):
     def read_float64(self):
         """Read a signed float coded on 8 byte (au double float)"""
         return float(unpack('<d', self._file.read(8))[0])
+
+    def extract_string(self, string_len):
+        string_bytes = self._file.read(string_len)
+        # in don't really know why but decode('utf-8) does't work for '°'
+        return "".join(map(chr, string_bytes))
 
     def __getattr__(self, attr):
         return getattr(self._file, attr)
@@ -114,13 +116,17 @@ class MDTReader(Reader):
                       f'var_size - {self._frame.var_size}, '
                       f'uuid - {self._frame.uuid}')
                 print(f'title - {self._frame.title}, '
-                      f'dimensions - {self._frame.n_dimensions}, '
+                      f'dimensions - {self._frame.n_dimensions}, \n'
                       f'measurands - {self._frame.n_measurands}, '
                       )
+                print()
+                print(f'dimensions - {self._frame.dimensions[0]}, '
+                      f'measurands - {self._frame.measurands[0]}'
+                      )
+                print('''\n\n''')
 
 
 
-            #self._file.shift_position(self._frame.size - 8 - 12 - 2 - 24)
 
 
 
@@ -241,13 +247,75 @@ class Frame:
 
 
         _struct_len = self._file.read_uint32()
+        _current_pos = self._file.tell()
         _array_size = self._file.read_uint64()
         _cell_size = self._file.read_uint32()
 
         self.n_dimensions = self._file.read_uint32()
         self.n_measurands = self._file.read_uint32()
 
+        self._file.seek(_struct_len + _current_pos)
+
+        if self.n_dimensions > 0:
+            self.dimensions = []
+            for _ in range(self.n_dimensions):
+                self.dimensions.append(self._read_mda_calibrations())
+
+        if self.n_measurands > 0:
+            self.measurands = []
+            for _ in range(self.n_measurands):
+                self.measurands.append(self._read_mda_calibrations())
+
         self._file.seek(self.start_pos + self.size)
+
+    def _read_mda_calibrations(self):
+        '''
+        Read parameters and calibrations for mda frame
+
+        Returns
+        -------
+        dict : dict with parameters
+        '''
+        _current_pos = self._file.tell()
+        calibrations = {}
+
+        #parameters length for further parsings
+        _len_tot     = self._file.read_uint32()
+        _len_struct  = self._file.read_uint32()
+
+        _pos_after_struct = self._file.tell() + _len_struct
+
+        _len_name    = self._file.read_uint32()
+        _len_comment = self._file.read_uint32()
+        _len_unit    = self._file.read_uint32()
+
+        calibrations['si_unit'] = self._file.read_uint64()
+        calibrations['accuracy'] = self._file.read_float64()
+        self._file.shift_position(8)
+        calibrations['bias'] = self._file.read_float64()
+        calibrations['scale'] = self._file.read_float64()
+        calibrations['min_index'] = self._file.read_uint64()
+        calibrations['max_index'] = self._file.read_uint64()
+        calibrations['data_type'] = self._file.read_int32() #signed integer
+
+
+        _len_author = self._file.read_uint32()
+
+        #?
+        self._file.seek(_pos_after_struct)
+
+        if _len_name > 0:
+            calibrations['name'] = self._file.extract_string(_len_name)
+        if _len_comment > 0:
+            calibrations['comment'] = self._file.extract_string(_len_comment)
+        if _len_unit > 0:
+            calibrations['unit'] = self._file.extract_string(_len_unit)
+        if _len_author > 0:
+            calibrations['author'] = self._file.extract_string(_len_author)
+
+        self._file.seek(_current_pos + _len_tot)
+        return calibrations
+
 
 
 
