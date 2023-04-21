@@ -58,105 +58,70 @@ class IgorMatrixReader(Reader):
         ibw_obj = bw.load(file_path)
         ibw_wave = ibw_obj.get('wave')
         parm_dict = self._read_parms(ibw_wave, parm_encoding)
-        chan_labels, chan_units = self._get_chan_labels(ibw_wave, parm_encoding)
         self.parm_dict =  parm_dict
 
-        if verbose:
-            print('Channels and units found:')
-            print(chan_labels)
-            print(chan_units)
-            print('Parameters dictionary:')
-            print(parm_dict)
+        data_mat = ibw_obj['wave']['wData']
+        if self.parm_dict['datatype']=='image':
+            data_mat = np.rot90(data_mat,3)
+            xvec = np.linspace(0, self.parm_dict['image_width'], data_mat.shape[1])
+            yvec = np.linspace(0, self.parm_dict['image_height'], data_mat.shape[0] )
+            
+            #make the sidpy dataset
+            data_set = sid.Dataset.from_array(data_mat, name= parm_dict['channel_name'])
+            data_set.data_type = 'Image'
 
-        # Get the data to figure out if this is an image or a force curve
-        images = ibw_wave.get('wData')
+            #Add quantity and units
+            data_set.units = self.parm_dict['channel_unit']
+            data_set.quantity =  self.parm_dict['parm_list'][0]
 
-        datasets = [] #list of sidpy datasets
+            #Add dimension info
+            data_set.set_dimension(0, sid.Dimension(yvec,
+                                                    name = 'x',
+                                                    units=self.parm_dict['image_units'], quantity = 'x',
+                                                    dimension_type='spatial'))
+            data_set.set_dimension(1, sid.Dimension(xvec,
+                                                    name = 'y',
+                                                    units=self.parm_dict['image_units'], quantity='y',
+                                                    dimension_type='spatial'))
 
-        if images.shape[-1] != len(chan_labels):
-            chan_labels = chan_labels[1:]  # for layer 0 null set errors in older AR software
-            chan_units = chan_units[1:]
+            # append metadata
+            data_set.original_metadata = self.parm_dict
+        elif self.parm_dict['datatype']=='Volume CITS':
+            #build spectroscopy wave
+            bias_start = float(self.parm_dict['parm_list'][self.parm_dict['spec_curve_idx']].split('start =')[1].split(',')[0])
+            bias_end = float(self.parm_dict['parm_list'][self.parm_dict['spec_curve_idx']].split('end =')[1].split(',')[0])
+            bias_wave = np.linspace(bias_start, bias_end, self.parm_dict['spec_points_per_curve'])
+            xvec = np.linspace(0, self.parm_dict['image_width'], data_mat.shape[0])
+            yvec = np.linspace(0, self.parm_dict['image_height'], data_mat.shape[1])
+            
+            #make it sidpy
+            data_set = sid.Dataset.from_array(data_mat, name= parm_dict['channel_name'])
+            data_set.data_type = sid.DataType.SPECTRAL_IMAGE
 
-        if images.ndim == 3:  # Image stack
-            if verbose:
-                print('Found image stack of size {}'.format(images.shape))
+            #Add quantity and units
+            data_set.units = parm_dict['channel_unit']
+            data_set.quantity =  parm_dict['parm_list'][0]
+            
+            #Add dimension info
+            data_set.set_dimension(0, sid.Dimension(xvec,
+                                                    name = 'x',
+                                                    units=parm_dict['image_units'], quantity = 'x',
+                                                    dimension_type='spatial'))
+            data_set.set_dimension(1, sid.Dimension(yvec,
+                                                    name = 'y',
+                                                    units=parm_dict['image_units'], quantity='y',
+                                                    dimension_type='spatial'))
+            
+            data_set.set_dimension(2, sid.Dimension(bias_wave,
+                                                    name = 'Bias',
+                                                    units='V', quantity='V',
+                                                    dimension_type='spectral'))
 
-            num_rows = parm_dict['ScanLines']
-            num_cols = parm_dict['ScanPoints']
-
-            for channel in range(images.shape[-1]):
-                #Convert it to sidpy dataset object
-                data_set = sid.Dataset.from_array(images[:,:,channel], name=chan_labels[channel])
-                data_set.data_type = 'Image'
-
-                #Add quantity and units
-                data_set.units = chan_units[channel]
-                data_set.quantity = chan_labels[channel]
-
-                #Add dimension info
-                data_set.set_dimension(0, sid.Dimension(np.linspace(0, parm_dict['FastScanSize'], num_cols),
-                                                        name = 'x',
-                                                        units=chan_units[channel], quantity = 'x',
-                                                        dimension_type='spatial'))
-                data_set.set_dimension(1, sid.Dimension(np.linspace(0, parm_dict['SlowScanSize'], num_rows),
-                                                        name = 'y',
-                                                        units=chan_units[channel], quantity='y',
-                                                        dimension_type='spatial'))
-
-                # append metadata
-                data_set.original_metadata = parm_dict
-                data_set.data_type = 'image'
-
-                #Finally, append it
-                datasets.append(data_set)
-
-        else:  # single force curve
-            if verbose:
-                print('Found force curve of size {}'.format(images.shape))
-
-            images = np.atleast_3d(images)  # now [Z, chan, 1]
-
-            # Find the channel that corresponds to either Z sensor or Raw:
-            try:
-                chan_ind = chan_labels.index('ZSnsr')
-                spec_data = images[:,chan_ind].squeeze()
-            except ValueError:
-                try:
-                    chan_ind = chan_labels.index('Raw')
-                    spec_data = images[:,chan_ind,0].squeeze()
-                except ValueError:
-                    # We don't expect to come here. If we do, spectroscopic values remains as is
-                    spec_data = np.arange(images.shape[2])
-
-            #Go through the channels
-            for channel in range(images.shape[-2]):
-
-                # The data generated above varies linearly. Override.
-                # For now, we'll shove the Z sensor data into the spectroscopic values.
-
-                #convert to sidpy dataset
-                data_set = sid.Dataset.from_array((images[:,channel,0]), name=chan_labels[channel])
-
-                if verbose:
-                    print('Channel {} and spec_data is {}'.format(channel, spec_data))
-
-                #Set units, quantity
-                data_set.units = chan_units[channel]
-                data_set.quantity = chan_labels[channel]
-
-                data_set.set_dimension(0, sid.Dimension(spec_data, name = chan_labels[channel],
-                                                        units=chan_units[channel], quantity=chan_labels[channel],
-                                                        dimension_type='spectral'))
-
-                #append metadata
-                data_set.data_type = 'SPECTRUM'
-                data_set.original_metadata = parm_dict
-
-                #Add dataset to list
-                datasets.append(data_set)
+            # append metadata
+            data_set.original_metadata = parm_dict
 
         # Return the dataset
-        return datasets
+        return data_set
 
     @staticmethod
     def _read_parms(ibw_wave, codec='utf-8'):
@@ -208,28 +173,37 @@ class IgorMatrixReader(Reader):
                 parm_dict[key] = other_parms[key]
             except KeyError:
                 pass
-
-        sub_grid_idx = [ind for ind in range(len(parm_list)) if 'Scan Sub-Grid' in parm_list[ind]][0]
         wh_idx =  [ind for ind in range(len(parm_list)) if 'Width' in parm_list[ind]][0]
-        spec_lines_idx = [ind for ind in range(len(parm_list)) if 'Spectroscopy points' in parm_list[ind]][0]
         lines_img_idx = [ind for ind in range(len(parm_list)) if 'lines per image' in parm_list[ind]][0]
         channel_idx = [ind for ind in range(len(parm_list)) if 'Channel name' in parm_list[ind]][0]
-        spec_curve_idx = [ind for ind in range(len(parm_list)) if 'axis start' in parm_list[ind]][0]
+        spec_lines_idx = [ind for ind in range(len(parm_list)) if 'Spectroscopy points' in parm_list[ind]][0]
 
-        import re
-        parm_dict['scan_subgrid_x'] = int(re.findall(r'\d+',parm_list[sub_grid_idx].split('=')[1])[0])
-        parm_dict['scan_subgrid_y'] = int(re.findall(r'\d+',parm_list[sub_grid_idx].split('=')[2])[0])
         parm_dict['image_width'] = float(parm_list[wh_idx].split('=')[2][:-3])
         parm_dict['image_height'] = float(parm_list[wh_idx].split('=')[-1][:-3])
         parm_dict['image_units'] = parm_list[wh_idx].split('=')[-1][-3:][1]
         parm_dict['channel_name'] = parm_list[channel_idx].split(':')[1][:-3]
         parm_dict['channel_unit'] = parm_list[channel_idx].split(':')[1][-3:][1]
-        parm_dict['spec_points_per_line'] =  int(re.findall(r'\d+', parm_list[spec_lines_idx].split('=')[1])[0])
-        parm_dict['spec_lines_per_plane'] = int(re.findall(r'\d+', parm_list[spec_lines_idx].split('=')[-1])[0])
-        parm_dict['spec_points_per_curve'] = int(parm_list[spec_curve_idx].split('curve =')[1].split(',')[0])
-        parm_dict['lines_img_idx'] = parm_list[lines_img_idx]
+
+        if 'Volume CITS' in parm_dict:
+            print('this is CITS') 
+            sub_grid_idx = [ind for ind in range(len(parm_list)) if 'Scan Sub-Grid' in parm_list[ind]][0]
+            spec_curve_idx = [ind for ind in range(len(parm_list)) if 'axis start' in parm_list[ind]][0]
+            parm_dict['spec_curve_idx'] = spec_curve_idx
+            parm_dict['scan_subgrid_x'] = int(re.findall(r'\d+',parm_list[sub_grid_idx].split('=')[1])[0])
+            parm_dict['scan_subgrid_y'] = int(re.findall(r'\d+',parm_list[sub_grid_idx].split('=')[2])[0])
+            parm_dict['spec_points_per_line'] =  int(re.findall(r'\d+', parm_list[spec_lines_idx].split('=')[1])[0])
+            parm_dict['spec_lines_per_plane'] = int(re.findall(r'\d+', parm_list[spec_lines_idx].split('=')[-1])[0])
+            parm_dict['spec_points_per_curve'] = int(parm_list[spec_curve_idx].split('curve =')[1].split(',')[0])
+            parm_dict['lines_img_idx'] = parm_list[lines_img_idx]
+            parm_dict['datatype'] = 'Volume CITS'    
             
-        
+        elif 'Image data' in parm_dict:
+            print('this is an image')
+            parm_dict['lines_img_idx'] = parm_list[lines_img_idx]
+            parm_dict['datatype'] = 'image'    
+        parm_dict['parm_list'] = parm_list
+        parm_dict['other_parms'] = other_parms
+
         return parm_dict
 
     @staticmethod
