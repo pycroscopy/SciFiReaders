@@ -109,10 +109,12 @@ class MDTReader(Reader):
         #iterator for the frames inside the file
         for i in range(self.nb_frame):
             self._frame = Frame(decorator = self._file)
-
+            print(self._frame.type)
             # 2d scan
             if self._frame.type == 106:
                 self._frame._read_mda_frame()
+            if self._frame.type == 3:
+                self._frame._read_text()
 
             dataset_list.append(self._frame.data)
 
@@ -356,7 +358,7 @@ class Frame:
         for i in range(len(data)):
             data[i] = z['bias'] + z['scale'] * read_data()
 
-        data = np.reshape(data, (x['length'],y['length']))
+        data = np.rot90(np.reshape(data, (x['length'],y['length'])), k=3)
 
         # Convert it to sidpy dataset object
         data_set = sid.Dataset.from_array(data)
@@ -368,15 +370,19 @@ class Frame:
         data_set.quantity = self.title.split(':')[-1]
 
         # Add dimension info
-        data_set.set_dimension(0, sid.Dimension(np.linspace(0, xreal, x['length']),
-                                                name='x',
-                                                units=x['unit'], quantity='x',
-                                                dimension_type='spatial'))
-        data_set.set_dimension(1, sid.Dimension(np.linspace(0, yreal, y['length']),
+        data_set.set_dimension(1, sid.Dimension(np.linspace(0, xreal, x['length']),
                                                 name='y',
-                                                units=y['unit'], quantity='y',
+                                                units=x['unit'], quantity='y',
+                                                dimension_type='spatial'))
+        data_set.set_dimension(0, sid.Dimension(np.linspace(0, yreal, y['length']),
+                                                name='x',
+                                                units=y['unit'], quantity='x',
                                                 dimension_type='spatial'))
         return data_set
+
+    def _read_text(self):
+        #TODO
+        self.data = None
 
 
 
