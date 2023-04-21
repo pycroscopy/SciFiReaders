@@ -176,8 +176,7 @@ class IgorMatrixReader(Reader):
         wh_idx =  [ind for ind in range(len(parm_list)) if 'Width' in parm_list[ind]][0]
         lines_img_idx = [ind for ind in range(len(parm_list)) if 'lines per image' in parm_list[ind]][0]
         channel_idx = [ind for ind in range(len(parm_list)) if 'Channel name' in parm_list[ind]][0]
-        spec_lines_idx = [ind for ind in range(len(parm_list)) if 'Spectroscopy points' in parm_list[ind]][0]
-
+        
         parm_dict['image_width'] = float(parm_list[wh_idx].split('=')[2][:-3])
         parm_dict['image_height'] = float(parm_list[wh_idx].split('=')[-1][:-3])
         parm_dict['image_units'] = parm_list[wh_idx].split('=')[-1][-3:][1]
@@ -186,6 +185,7 @@ class IgorMatrixReader(Reader):
 
         if 'Volume CITS' in parm_dict:
             print('this is CITS') 
+            spec_lines_idx = [ind for ind in range(len(parm_list)) if 'Spectroscopy points' in parm_list[ind]][0]
             sub_grid_idx = [ind for ind in range(len(parm_list)) if 'Scan Sub-Grid' in parm_list[ind]][0]
             spec_curve_idx = [ind for ind in range(len(parm_list)) if 'axis start' in parm_list[ind]][0]
             parm_dict['spec_curve_idx'] = spec_curve_idx
