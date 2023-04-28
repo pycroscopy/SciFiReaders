@@ -1,0 +1,3 @@
+#!/Users/borisslautin/Documents/GitHub/SciFiReaders/pyvenv/bin/python
+from numba.pycc import main
+main()
