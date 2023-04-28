@@ -4,6 +4,8 @@ import pytest
 import sidpy
 from pywget import wget
 import os
+import pickle
+import numpy as np
 
 sys.path.append("../../../../../SciFiReaders/")
 import SciFiReaders as sr
@@ -14,7 +16,96 @@ igor = pytest.importorskip("igor", reason="igor not installed")
 
 class TestIgorIBW(unittest.TestCase):
     # Tests the nanonis_dat reader
+    def test_igor_matrix_file_cits(self):
+        #Test the CITS file reads correctly
+        file_cits = '20230110-152047_ScV6Sn6-2023-01-10-STM_NANOPROBE_AtomManipulation--37_1-Aux2(V) 3_Forward_Down_Trace.ibw?raw=true'
+        file_path = os.path.join(root_path, file_cits)
+        file_out = 'cits_file.ibw'
+        wget.download(file_path, out=file_out)
+        reader = sr.IgorMatrixReader(file_out)
+        dataset = reader.read()
 
+        #a lot of asserts here
+        assert dataset.data_type == sidpy.DataType.SPECTRAL_IMAGE, \
+        "Expected data type {}, received {}".format(sidpy.DataType.SPECTRAL_IMAGE,dataset.data_type )
+
+        assert dataset.ndim==3, "Dataset dimension should be 3, received {} instead".format(dataset.ndim)
+        true_dd = 'Aux2(V) 3 37-1 Forward Down Trace (V)'
+        assert dataset.data_descriptor==true_dd, "Data descriptor was expected to be {} but received {}".format(true_dd, dataset.data_descriptor)
+        dimension_sizes = [64,8,256]
+        dimension_types = [sidpy.DimensionType.SPATIAL,sidpy.DimensionType.SPATIAL,
+                           sidpy.DimensionType.SPECTRAL]
+        for dim in dataset._axes:
+            dimension = dataset._axes[dim]
+            assert dimension.size == dimension_sizes[dim]
+            assert dimension.dimension_type == dimension_types[dim]
+
+        #Load the metadata
+        file_metadata = 'orig_dict.p?raw=true'
+        file_path = os.path.join(root_path, file_metadata)
+        metadata_out = 'cits_metadata.p'
+        wget.download(file_path, out=metadata_out)
+        true_metadata = pickle.load(open(metadata_out, 'rb'))
+        received_metadata = dataset.original_metadata
+        for key in true_metadata: 
+            if type(true_metadata[key])==np.ndarray:
+                assert true_metadata[key].all()==received_metadata[key].all(), \
+                "Was expecting {} for key {} but received {}".format(true_metadata[key],
+                                            key,received_metadata[key] )
+            elif type(true_metadata[key]) != dict:
+                assert true_metadata[key]==received_metadata[key], \
+                "Was expecting {} for key {} but received {}".format(true_metadata[key],
+                                            key,received_metadata[key] )
+
+        os.remove(file_out)
+        os.remove(metadata_out)
+        return
+    
+    def test_igor_matrix_file_image(self):
+        #Test the image file reads correctly
+        file_cits = '20230110-152047_ScV6Sn6-2023-01-10-STM_NANOPROBE_AtomManipulation--37_1-I 3_Backward_Down.ibw?raw=true'
+        file_path = os.path.join(root_path, file_cits)
+        file_out = 'img_file.ibw'
+        wget.download(file_path, out=file_out)
+        reader = sr.IgorMatrixReader(file_out)
+        dataset = reader.read()
+
+        #a lot of asserts here
+        assert dataset.data_type == sidpy.DataType.IMAGE, \
+        "Expected data type {}, received {}".format(sidpy.DataType.IMAGE,dataset.data_type )
+
+        assert dataset.ndim==2, "Dataset dimension should be 3, received {} instead".format(dataset.ndim)
+        true_dd = 'I 3 37-1 Backward Down (A)'
+        assert dataset.data_descriptor==true_dd, "Data descriptor was expected to be {} \
+        but received {}".format(true_dd, dataset.data_descriptor)
+        dimension_sizes = [58,256]
+        dimension_types = [sidpy.DimensionType.SPATIAL,sidpy.DimensionType.SPATIAL]
+        for dim in dataset._axes:
+            dimension = dataset._axes[dim]
+            assert dimension.size == dimension_sizes[dim]
+            assert dimension.dimension_type == dimension_types[dim]
+
+        #Load the metadata
+        file_metadata = 'image_dict.p?raw=true'
+        file_path = os.path.join(root_path, file_metadata)
+        img_metadata_out = 'img_metadata.p'
+        wget.download(file_path, out=img_metadata_out)
+        true_metadata = pickle.load(open(img_metadata_out, 'rb'))
+        received_metadata = dataset.original_metadata
+        for key in true_metadata: 
+            if type(true_metadata[key])==np.ndarray:
+                assert true_metadata[key].all()==received_metadata[key].all(), \
+                "Was expecting {} for key {} but received {}".format(true_metadata[key],
+                                            key,received_metadata[key] )
+            elif type(true_metadata[key]) != dict:
+                assert true_metadata[key]==received_metadata[key], \
+                "Was expecting {} for key {} but received {}".format(true_metadata[key],
+                                            key,received_metadata[key] )
+
+        os.remove(file_out)
+        os.remove(img_metadata_out)
+
+    
     def test_load_test_ibw_force_file(self):
 
         # Test if the test dat file can be read in correctly
