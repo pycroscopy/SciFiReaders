@@ -12,7 +12,7 @@ import SciFiReaders as sr
 
 root_path = "https://github.com/pycroscopy/SciFiDatasets/blob/main/data/microscopy/spm/afm/"
 
-igor = pytest.importorskip("igor", reason="igor not installed")
+igor2 = pytest.importorskip("igor2", reason="igor2 not installed")
 
 class TestIgorIBW(unittest.TestCase):
     # Tests the nanonis_dat reader
