@@ -61,7 +61,7 @@ setup(
     # https://setuptools.readthedocs.io/en/latest/setuptools.html#declaring-dependencies
     extras_require={
         'hyperspy':  ["hyperspy"],
-        'igor': ["igor"],
+        'igor2': ["igor2"],
         "gwyddion": ["gwyfile"],
         'nanonispy': ['nanonispy'],
         'sid': ['pyUSID', 'pyNSID'],

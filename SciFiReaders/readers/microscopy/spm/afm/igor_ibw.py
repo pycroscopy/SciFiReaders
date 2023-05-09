@@ -15,11 +15,11 @@ import re
 from warnings import warn
 
 try:
-    from igor import binarywave as bw
+    from igor2 import binarywave as bw
 except ModuleNotFoundError:
-    print("You don't have igor installed. \
+    print("You don't have igor2 installed. \
     If you wish to open igor files, you will need to install it \
-    (pip install igor) before attempting.")
+    (pip install igor2) before attempting.")
     bw = None
 
 class IgorMatrixReader(Reader):
@@ -30,8 +30,8 @@ class IgorMatrixReader(Reader):
     """
     def __init__(self, file_path, *args, **kwargs):
         if bw == None:
-            raise ModuleNotFoundError('You attempted to load an Igor file, but this requires igor.\n \
-            Please Load it with pip install igor , restart and retry')
+            raise ModuleNotFoundError('You attempted to load an Igor file, but this requires igor2.\n \
+            Please Load it with pip install igor2 , restart and retry')
 
         super().__init__(file_path, *args, **kwargs)
 
@@ -261,8 +261,8 @@ class IgorIBWReader(Reader):
     """
     def __init__(self, file_path, *args, **kwargs):
         if bw == None:
-            raise ModuleNotFoundError('You attempted to load an Igor file, but this requires igor.\n \
-            Please Load it with pip install igor , restart and retry')
+            raise ModuleNotFoundError('You attempted to load an Igor file, but this requires igor2.\n \
+            Please Load it with pip install igor2 , restart and retry')
 
         super().__init__(file_path, *args, **kwargs)
 

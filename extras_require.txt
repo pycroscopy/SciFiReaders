@@ -1,5 +1,5 @@
 hyperspy
-igor
+igor2
 nanonispy
 pyUSID
 pyNSID
