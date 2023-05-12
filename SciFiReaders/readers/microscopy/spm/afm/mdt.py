@@ -1,10 +1,13 @@
+
+#The following code have been particularly copied from the https://github.com/symartin/PyMDT
+
 import numpy as np
 import sidpy as sid
 from sidpy.sid import Reader
 import io
 from struct import *
+import xml.etree.ElementTree as ET
 
-#decarator has been copied from the https://github.com/symartin/PyMDT
 class MDTBufferedReaderDecorator(object):
     """
         a decorator class that facilitate the sequential reading of a file.
@@ -109,12 +112,19 @@ class MDTReader(Reader):
         #iterator for the frames inside the file
         for i in range(self.nb_frame):
             self._frame = Frame(decorator = self._file)
-            print(self._frame.type)
+
             # 2d scan
             if self._frame.type == 106:
                 self._frame._read_mda_frame()
+            #text
             if self._frame.type == 3:
-                self._frame._read_text()
+                self._frame._read_text()#TODO
+            #scanned (map of curves and smth like that)
+            if self._frame.type == 0:
+                self._frame._read_maps()#TODO
+            #curves new
+            if self._frame.type == 190:
+                self._frame._read_curves_new()  # TODO
 
             dataset_list.append(self._frame.data)
 
@@ -122,16 +132,17 @@ class MDTReader(Reader):
                 print(f'Frame #{i}: type - {self._frame.type}, '
                       f'size - {self._frame.size}, '
                       f'start_position - {self._frame.start_pos},')
-                print(f'version - {self._frame.version}, '
-                      f'time - {self._frame.date}, '
-                      f'var_size - {self._frame.var_size}, '
-                      f'uuid - {self._frame.uuid}\n'
-                      f'title - {self._frame.title}, '
-                      f'n_dimensions - {self._frame.n_dimensions}, '
-                      f'n_measurands - {self._frame.n_measurands},\n'
-                      f'dimensions - {self._frame.dimensions[0]},\n'
-                      f'measurands - {self._frame.measurands[0]}'
-                      f'\n\n')
+                if self._frame.type == 106:
+                    print(f'version - {self._frame.version}, '
+                          f'time - {self._frame.date}, '
+                          f'var_size - {self._frame.var_size}, '
+                          f'uuid - {self._frame.uuid}\n'
+                          f'title - {self._frame.title}, '
+                          f'n_dimensions - {self._frame.n_dimensions}, '
+                          f'n_measurands - {self._frame.n_measurands},\n'
+                          f'dimensions - {self._frame.dimensions[0]},\n'
+                          f'measurands - {self._frame.measurands[0]}')
+                print(f'\n\n')
 
         self._file.close()
 
@@ -283,6 +294,99 @@ class Frame:
 
         self._file.seek(self.start_pos + self.size)
 
+    def _read_text(self):
+        #TODO
+        self.data = None
+        self._file.seek(self.start_pos + self.size)
+
+    def _read_maps(self):
+        """
+        read scanned data (maps of curves)
+        """
+        self._file.seek(self.start_pos + 22)
+
+        self.data = None
+        self._file.seek(self.start_pos + self.size)
+
+    def _read_curves_new(self):
+        """
+        new curves
+        """
+        self._file.seek(self.start_pos + 22)
+
+        _block_count = self._file.read_uint32()
+
+        _block_headers = []
+        _full_len = 0
+        for i in range(_block_count):
+            _name_len = self._file.read_uint32()
+            _len      = self._file.read_uint32()
+            _full_len += _len
+            _block_headers.append((_name_len, _len, _full_len))
+
+        _block_names = []
+        for i in range(_block_count):
+            _name = self._file.read(_block_headers[i][0]).decode('utf-8')
+            _block_names.append(_name)
+        print(_block_names)
+
+        #points indices
+        ind_points = np.array([i for i, name in enumerate(_block_names) if name[:5] == "point"])
+
+        _current_pos = self._file.tell()
+
+        _point_data = []
+        #extract y data for all points
+        for i in ind_points:
+            if i > 0:
+                self._file.shift_position(_block_headers[i-1][2])
+            _header = _block_headers[i]
+            _ind_data = []
+            #read number of data files corresponding to this point
+            for _ in range(_header[1]//4):
+                _ind_data.append(self._file.read_uint32())
+
+            #searching indexes of data frame
+            _ind_data_files = []
+            for ind in _ind_data:
+                _ind_data_files.append(_block_names.index(f'data{ind}.dat'))
+
+            _data = []
+            for indd in _ind_data_files:
+                # return to the start position of the block
+                self._file.seek(_current_pos)
+                if indd > 0:
+                    self._file.shift_position(_block_headers[indd-1][2])
+                _header_data = _block_headers[indd]
+                _dat_el = np.array([])
+                for _ in range(_header_data[1]//8):
+                    _dat_el = np.append(_dat_el, self._file.read_float64())
+                _data.append(_dat_el)
+
+            _point_data.append(np.array(_data))
+            self._file.seek(_current_pos)
+
+
+
+
+
+        self._file.seek(_current_pos)
+        for i in range(_block_count):
+            if _block_names[i] == 'data5.dat':
+                self._file.shift_position(_block_headers[i][1])
+            elif _block_names[i][:4] == 'data':
+                self._file.shift_position(_block_headers[i][1])
+            elif _block_names[i] == 'index.xml':
+                self._file.shift_position(_block_headers[i][1])
+            else:
+                self._file.shift_position(_block_headers[i][1])
+
+
+
+        self.data = np.array(_point_data)
+        self._file.seek(self.start_pos + self.size)
+
+
     def _read_mda_calibrations(self):
         '''
         Read parameters and calibrations for mda frame
@@ -380,9 +484,9 @@ class Frame:
                                                 dimension_type='spatial'))
         return data_set
 
-    def _read_text(self):
-        #TODO
-        self.data = None
+
+
+
 
 
 
