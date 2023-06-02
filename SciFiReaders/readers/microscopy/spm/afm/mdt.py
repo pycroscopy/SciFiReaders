@@ -313,9 +313,10 @@ class Frame:
         new curves
         """
         self._file.seek(self.start_pos + 22)
-
+        #read numer of blocks with data
         _block_count = self._file.read_uint32()
 
+        #read blocks headers: (name length, length, length from starting point)
         _block_headers = []
         _full_len = 0
         for i in range(_block_count):
@@ -324,20 +325,29 @@ class Frame:
             _full_len += _len
             _block_headers.append((_name_len, _len, _full_len))
 
+        #read block names
         _block_names = []
         for i in range(_block_count):
             _name = self._file.read(_block_headers[i][0]).decode('utf-8')
             _block_names.append(_name)
-        print(_block_names)
 
-        #points indices
+        #indexes of points blocks
         ind_points = np.array([i for i, name in enumerate(_block_names) if name[:5] == "point"])
 
         _current_pos = self._file.tell()
 
-        _point_data = []
-        #extract y data for all points
-        for i in ind_points:
+        #calibration for points, calibration for data in each curve in points, and calibrations for x axis
+        self.calibr_p, self.calibr_d, self.calibr_ax = self._read_curves_new_calibrations(_block_names, _block_headers)
+
+        #finding  positions: xreal, yreal
+        self.x_real, self.y_real = self._read_curves_new_xreal_yreal()
+        #finding cycles and directions
+        self.cycles, self.directions = self._read_curves_new_cycles_direction()
+
+        self.point_data_indexes = {} #to find points indexes corresponding data indexes
+        _point_data = {} #dict for spectroscopic data
+        #extract z data for all points
+        for num,i in enumerate(ind_points):
             if i > 0:
                 self._file.shift_position(_block_headers[i-1][2])
             _header = _block_headers[i]
@@ -346,13 +356,12 @@ class Frame:
             for _ in range(_header[1]//4):
                 _ind_data.append(self._file.read_uint32())
 
-            #searching indexes of data frame
-            _ind_data_files = []
-            for ind in _ind_data:
-                _ind_data_files.append(_block_names.index(f'data{ind}.dat'))
+            self.point_data_indexes[int(_block_names[i][5:-4])] = _ind_data #save curve indexes for each point
+            _ind_for_sort = []#searching corresponded calibrations
 
-            _data = []
-            for indd in _ind_data_files:
+            for ind in _ind_data:
+                indd = _block_names.index(f'data{ind}.dat') #real index or the data block
+
                 # return to the start position of the block
                 self._file.seek(_current_pos)
                 if indd > 0:
@@ -361,31 +370,166 @@ class Frame:
                 _dat_el = np.array([])
                 for _ in range(_header_data[1]//8):
                     _dat_el = np.append(_dat_el, self._file.read_float64())
-                _data.append(_dat_el)
+                #reverse backward pass
+                if self.calibr_d[ind][1] == 1:
+                    _dat_el = np.flip(_dat_el)
+                _point_data[ind] = _dat_el
+                _ind_for_sort.append(self.calibr_d[ind][0]+self.calibr_d[ind][1]/2)
 
-            _point_data.append(np.array(_data))
             self._file.seek(_current_pos)
 
+        #here we already have
+        #self.point_data_indexes - indexes of the curves in the each point
+        #self.x_real, self.y_real - all all real coordinates of the points
+        #self.cycles, self.directions - lists with the numbers of cycles and directions (0 - forward, 1 - backward)
+
+        self.data = []#list of sidpy arrays
+        #organise the extracted data into the sidpy array
+        for kk in self.calibr_ax.keys():
+            _dim_data = self.calibr_ax[kk]
+            _main_dimension = np.linspace(_dim_data[1], _dim_data[0], _dim_data[2]) #main spectral dimension
+            #create zeros np.array and fill it by the  data
+            _array = np.zeros([len(self.x_real),
+                               len(self.y_real),
+                               len(self.cycles),
+                               len(self.directions),
+                               len(_main_dimension),])
+            for point_number in self.point_data_indexes.keys():
+                for curve_number in self.point_data_indexes[point_number]:
+                    _real_x =self.calibr_p[point_number][0]
+                    _ind_x = np.where(self.x_real == _real_x)[0][0]
+                    _real_y = self.calibr_p[point_number][1]
+                    _ind_y = np.where(self.y_real == _real_y)[0][0]
+                    _cycle = self.calibr_d[curve_number][0]
+                    _direction = self.calibr_d[curve_number][1]
+
+                    _array[_ind_x, _ind_y, _cycle, _direction] = _point_data[point_number]
+
+            #create sidpy array
+            _data_set = sid.Dataset.from_array(_array, name='MDA curves')
+
+            _data_set.set_dimension(0, sid.Dimension(self.x_real,
+                                                     name='x',
+                                                     units=self.calibr_p[0][-1],
+                                                     quantity='Length',
+                                                     dimension_type='spatial'))
+
+            _data_set.set_dimension(1, sid.Dimension(self.y_real,
+                                                     name='y',
+                                                     units=self.calibr_p[0][-1],
+                                                     quantity='Length',
+                                                     dimension_type='spatial'))
+
+            _data_set.set_dimension(2, sid.Dimension(self.cycles,
+                                                     name='cycle',
+                                                     quantity='Cycle',
+                                                     dimension_type='spectral'))
+
+            _data_set.set_dimension(3, sid.Dimension(self.directions,
+                                                     name='pass',
+                                                     quantity='Pass',
+                                                     dimension_type='spectral'))
+
+            _data_set.set_dimension(4, sid.Dimension(_main_dimension,
+                                                     name=_dim_data[3],
+                                                     units=_dim_data[4],
+                                                     quantity=_dim_data[3],
+                                                     dimension_type='spectral'))
+
+            _data_set.data_type = 'spectral_image'
+            _data_set.units = self.calibr_d[0][-1]
+            _data_set.quantity = self.calibr_d[0][-2]
+
+            self.data.append(_data_set)
 
 
-
-
-        self._file.seek(_current_pos)
-        for i in range(_block_count):
-            if _block_names[i] == 'data5.dat':
-                self._file.shift_position(_block_headers[i][1])
-            elif _block_names[i][:4] == 'data':
-                self._file.shift_position(_block_headers[i][1])
-            elif _block_names[i] == 'index.xml':
-                self._file.shift_position(_block_headers[i][1])
-            else:
-                self._file.shift_position(_block_headers[i][1])
-
-
-
-        self.data = np.array(_point_data)
         self._file.seek(self.start_pos + self.size)
 
+    def _read_curves_new_calibrations(self, _block_names, _block_headers):
+        '''
+        Read calibrations from the index.xml blocks
+
+        Returns
+        -------
+        dict
+            Calibrations for each point position: real_x, real_y, xy_unit
+        dict
+            Calibrations for curves (y axis): pass, direction, signal_name, signal_unit
+        dict
+            Calibrations for curves (x axis): start_value, stop_value, count, x_axis_name, x_axis_units
+        '''
+        _current_pos = self._file.tell() #just to be sure
+
+        calibr_points = {} #Point tag in index.xml block
+        calibr_data   = {} #Meas tag in index.xml block
+        calibr_axis   = {} #Axis tag in index.xml block
+        calibr_name   = {} #Name tag in index.xml block
+
+        #find index.xml block position
+        ind = _block_names.index('index.xml')
+        self._file.shift_position(_block_headers[ind - 1][2])
+
+        #string with xml data
+        xmml = self._file.read(_block_headers[ind][1]).decode('utf-8')
+        #parsing of xml string
+        root = ET.fromstring(xmml)[0]
+
+        #read general data about axis dimensions
+        for child in root:
+            if child.tag == 'Name':
+                calibr_name[child.attrib['index']] = (child.attrib['name'], child.attrib['unit'])
+
+        #read points, data and axis calirations
+        for child in root:
+            if child.tag == 'Axis':
+                calibr_axis[int(child.attrib['index'])] = (float(child.attrib['start']),
+                                                           float(child.attrib['stop']),
+                                                           int(child.attrib['count']),
+                                                           calibr_name[child.attrib['name']][0],
+                                                           calibr_name[child.attrib['name']][1])
+
+            if child.tag == 'Point':
+                calibr_points[int(child.attrib['index'])] = (float(child.attrib['x']),
+                                                             float(child.attrib['y']),
+                                                             child.attrib['unit'])
+
+            if child.tag == 'Meas':
+                calibr_data[int(child.attrib['index'])] = (int(child.attrib['pass']),
+                                                            int(child.attrib['inverse0']),
+                                                            calibr_name[child.attrib['name']][0],
+                                                            calibr_name[child.attrib['name']][1])
+
+        self._file.seek(_current_pos)
+
+        return calibr_points, calibr_data, calibr_axis
+
+    def _read_curves_new_xreal_yreal(self):
+        '''Create array from real coordinated of points in curves_new'''
+        xreal = []
+        yreal = []
+        for key in self.calibr_p.keys():
+            x = self.calibr_p[key][0]
+            y = self.calibr_p[key][1]
+            xreal.append(x)
+            yreal.append(y)
+
+        xreal = np.array(sorted(set(xreal)))
+        yreal = np.array(sorted(set(yreal)))
+        return xreal, yreal
+
+    def _read_curves_new_cycles_direction(self):
+        '''Create array with cycles numbers and directions'''
+        cycles = []
+        directions = []
+        for key in self.calibr_p.keys():
+            _c = self.calibr_d[key][0]
+            _d = self.calibr_d[key][1]
+            cycles.append(_c)
+            directions.append(_d)
+
+        cycles = np.array(sorted(set(cycles)))
+        directions = np.array(sorted(set(directions)))
+        return cycles, directions
 
     def _read_mda_calibrations(self):
         '''
