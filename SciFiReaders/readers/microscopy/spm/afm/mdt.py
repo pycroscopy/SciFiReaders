@@ -172,7 +172,7 @@ class MDTReader(Reader):
 
     def can_read(self):
         """
-        Tests whether or not the provided file has a .ibw extension
+        Tests whether or not the provided file has a .mdt extension
         Returns
         -------
 
@@ -310,7 +310,13 @@ class Frame:
 
     def _read_curves_new(self):
         """
-        new curves
+        '''
+        Extract data from spectroscopy map
+
+        Returns
+        -------
+        list:  list with sidpy.Dataset objects
+        '''
         """
         self._file.seek(self.start_pos + 22)
         #read numer of blocks with data
@@ -383,7 +389,8 @@ class Frame:
         #self.x_real, self.y_real - all all real coordinates of the points
         #self.cycles, self.directions - lists with the numbers of cycles and directions (0 - forward, 1 - backward)
 
-        self.data = []#list of sidpy arrays
+        # list of sidpy arrays
+        self.data = []
         #organise the extracted data into the sidpy array
         for kk in self.calibr_ax.keys():
             _dim_data = self.calibr_ax[kk]
