@@ -132,12 +132,14 @@ class MDTReader(Reader):
                 print(f'Frame #{i}: type - {self._frame.type}, '
                       f'size - {self._frame.size}, '
                       f'start_position - {self._frame.start_pos},')
-                if self._frame.type == 106:
+                if (self._frame.type == 106) or (self._frame.type == 190):
                     print(f'version - {self._frame.version}, '
                           f'time - {self._frame.date}, '
                           f'var_size - {self._frame.var_size}, '
-                          f'uuid - {self._frame.uuid}\n'
-                          f'title - {self._frame.title}, '
+                          f'uuid - {self._frame.uuid}\n')
+
+                if   self._frame.type == 106:
+                    print(f'title - {self._frame.title}, '
                           f'n_dimensions - {self._frame.n_dimensions}, '
                           f'n_measurands - {self._frame.n_measurands},\n'
                           f'dimensions - {self._frame.dimensions[0]},\n'
@@ -377,10 +379,9 @@ class Frame:
                 for _ in range(_header_data[1]//8):
                     _dat_el = np.append(_dat_el, self._file.read_float64())
                 #reverse backward pass
-                if self.calibr_d[ind][1] == 1:
-                    _dat_el = np.flip(_dat_el)
+                # if self.calibr_d[ind][1] == 0: #TODO which one we should reverse?
+                #     _dat_el = np.flip(_dat_el)
                 _point_data[ind] = _dat_el
-                _ind_for_sort.append(self.calibr_d[ind][0]+self.calibr_d[ind][1]/2)
 
             self._file.seek(_current_pos)
 
@@ -391,10 +392,12 @@ class Frame:
 
         # list of sidpy arrays
         self.data = []
+        coordinate = np.array(list(self.calibr_p.values()))[:,:-1].astype('float')#all coordinates of spectral data (real_x, real_y, cycle, direction)
         #organise the extracted data into the sidpy array
         for kk in self.calibr_ax.keys():
             _dim_data = self.calibr_ax[kk]
-            _main_dimension = np.linspace(_dim_data[1], _dim_data[0], _dim_data[2]) #main spectral dimension
+            _main_dimension = np.linspace(_dim_data[0], _dim_data[1], _dim_data[2]) #main spectral dimension
+
             #create zeros np.array and fill it by the  data
             _array = np.zeros([len(self.x_real),
                                len(self.y_real),
@@ -410,7 +413,12 @@ class Frame:
                     _cycle = self.calibr_d[curve_number][0]
                     _direction = self.calibr_d[curve_number][1]
 
-                    _array[_ind_x, _ind_y, _cycle, _direction] = _point_data[point_number]
+                    _array[_ind_x, _ind_y, _cycle, _direction] = _point_data[curve_number]
+
+            # change array in case of case of backward direction
+            if len(self.directions) > 1:
+                _main_dimension = np.append(_main_dimension, np.flip(_main_dimension))
+                _array = np.append(_array[:, :, :, 0], _array[:, :, :, 1], axis=3)
 
             #create sidpy array
             _data_set = sid.Dataset.from_array(_array, name='MDA curves')
@@ -432,12 +440,7 @@ class Frame:
                                                      quantity='Cycle',
                                                      dimension_type='spectral'))
 
-            _data_set.set_dimension(3, sid.Dimension(self.directions,
-                                                     name='pass',
-                                                     quantity='Pass',
-                                                     dimension_type='spectral'))
-
-            _data_set.set_dimension(4, sid.Dimension(_main_dimension,
+            _data_set.set_dimension(3, sid.Dimension(_main_dimension,
                                                      name=_dim_data[3],
                                                      units=_dim_data[4],
                                                      quantity=_dim_data[3],
@@ -478,9 +481,15 @@ class Frame:
 
         #string with xml data
         xmml = self._file.read(_block_headers[ind][1]).decode('utf-8')
+
+
         #parsing of xml string
         root = ET.fromstring(xmml)[0]
 
+        self.uuid = root.attrib['UUID'][1:-1]
+        self.version = root.attrib['version']
+
+        self.xml_metadata = root
         #read general data about axis dimensions
         for child in root:
             if child.tag == 'Name':
