@@ -44,7 +44,7 @@ setup(
     keywords=['imaging', 'spectra', 'multidimensional', 'scientific'],
     packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*",
                                     "tests"]),
-                                    dependency_links = ['https://github.com/ramav87/nanonispy//tarball/master#egg=1.1.1']
+    dependency_links = ['https://github.com/ramav87/nanonispy/tarball/master#egg=1.1.1'],
     url='https://pycroscopy.github.io/SciFiReaders/about.html',
     license='MIT',
     author='Pycroscopy contributors',
@@ -52,7 +52,7 @@ setup(
     install_requires=requirements,
     setup_requires=['pytest-runner'],
     tests_require=['pytest', 'pywget', 'hyperspy'],
-    platforms=['Linux', 'Mac OSX', 'Windows 10/8.1/8/7'],
+    platforms=['Linux', 'Mac OSX', 'Windows 11/10/8.1/8/7'],
     # package_data={'sample':['dataset_1.dat']}
     test_suite='pytest',
     # dependency='',
