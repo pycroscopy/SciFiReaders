@@ -76,7 +76,7 @@ class TestDMReader(unittest.TestCase):
         self.assertEqual(dataset.source, 'SciFiReaders.DMReader')
         self.assertEqual(dataset.data_type.name, 'SPECTRAL_IMAGE')
         self.assertEqual(dataset.shape, (6, 49, 1024))
-        # self.assertEqual(float(dataset[0, 3, 200]), 2304.0)
+        self.assertEqual(dataset[0, 3, 200].compute(), 2304.0)
         self.assertEqual(dataset.energy_loss[200], 450.0)
         self.assertEqual(dataset.original_metadata['DM']['dm_version'], 3)
         self.assertEqual(dataset.original_metadata['ImageTags']
@@ -97,7 +97,7 @@ class TestDMReader(unittest.TestCase):
         self.assertEqual(dataset.data_type.name, 'IMAGE')
         self.assertEqual(dataset.shape, (512, 512))
 
-        # self.assertEqual(float(dataset[3, 200]), 2940122.0)
+        self.assertEqual(dataset[3, 200].compute(), 2940122.0)
         self.assertEqual(dataset.original_metadata['DM']['dm_version'], 3)
         self.assertEqual(dataset.original_metadata['ImageTags']['DigiScan']['Flyback'], 500.0)
         os.remove(file_name)

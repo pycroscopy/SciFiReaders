@@ -37,7 +37,7 @@ class TestEMDReader(unittest.TestCase):
         self.assertIsInstance(datasets[0], sidpy.Dataset)
         self.assertTrue(datasets[0].ndim == 1)
         self.assertTrue(len(datasets) == 1)
-        print(datasets[0].original_metadata)
+        # print(datasets[0].original_metadata)
 
         self.assertTrue(datasets[0].units == 'counts')
         self.assertTrue(datasets[0].quantity == 'intensity')
@@ -284,7 +284,7 @@ class TestEMDReader(unittest.TestCase):
         self.assertTrue(datasets[0].data_type.name, 'IMAGE')
         self.assertTrue(datasets[0].ndim == 2)
         self.assertTrue(len(datasets) == 1)
-        print(datasets[0].original_metadata)
+        # print(datasets[0].original_metadata)
         original_metadata = datasets[0].original_metadata
 
         self.assertTrue(datasets[0].units == 'counts')
@@ -311,7 +311,7 @@ class TestEMDReader(unittest.TestCase):
         self.assertTrue(datasets[1].data_type.name, 'SPECTRAL_IMAGE')
         self.assertTrue(datasets[1].ndim == 3)
         self.assertTrue(len(datasets) == 2)
-        print(datasets[0].original_metadata)
+        # print(datasets[0].original_metadata)
         original_metadata = datasets[0].original_metadata
 
         self.assertTrue(datasets[0].units == 'counts')
