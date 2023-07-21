@@ -28,7 +28,7 @@ class TestDMReader(unittest.TestCase):
         dataset = datasets[0]
         self.assertEqual(dataset.title, '01-EELS Acquire_STO')
         self.assertEqual(dataset.source, 'SciFiReaders.DMReader')
-        self.assertEqual(dataset[200], 135727.0)
+        self.assertEqual(float(dataset[200]), 135727.0)
         self.assertEqual(dataset.energy_loss[200], 400.0)
         self.assertEqual(dataset.original_metadata['DM']['dm_version'], 3)
         self.assertEqual(dataset.original_metadata['ImageTags']
@@ -44,7 +44,7 @@ class TestDMReader(unittest.TestCase):
 
         self.assertEqual(dataset.title, 'EELS_STO')
         self.assertEqual(dataset.source, 'SciFiReaders.DMReader')
-        self.assertEqual(dataset[200], 135727.0)
+        self.assertEqual(float(dataset[200]), 135727.0)
         self.assertEqual(dataset.energy_loss[200], 400.0)
         self.assertEqual(dataset.original_metadata['DM']['dm_version'], 4)
         self.assertEqual(dataset.original_metadata['ImageTags']
@@ -76,7 +76,7 @@ class TestDMReader(unittest.TestCase):
         self.assertEqual(dataset.source, 'SciFiReaders.DMReader')
         self.assertEqual(dataset.data_type.name, 'SPECTRAL_IMAGE')
         self.assertEqual(dataset.shape, (6, 49, 1024))
-        self.assertEqual(dataset[0, 3, 200], 2304.0)
+        self.assertEqual(float(dataset[0, 3, 200]), 2304.0)
         self.assertEqual(dataset.energy_loss[200], 450.0)
         self.assertEqual(dataset.original_metadata['DM']['dm_version'], 3)
         self.assertEqual(dataset.original_metadata['ImageTags']
