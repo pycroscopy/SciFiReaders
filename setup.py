@@ -44,6 +44,7 @@ setup(
     keywords=['imaging', 'spectra', 'multidimensional', 'scientific'],
     packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*",
                                     "tests"]),
+                                    dependency_links = ['https://github.com/ramav87/nanonispy//tarball/master#egg=1.1.1']
     url='https://pycroscopy.github.io/SciFiReaders/about.html',
     license='MIT',
     author='Pycroscopy contributors',
@@ -62,7 +63,7 @@ setup(
         'hyperspy':  ["hyperspy"],
         'igor2': ["igor2"],
         "gwyddion": ["gwyfile"],
-        'nanonispy': ['nanonispy'],
+        'nanonispy': ['nanonispy>=1.1.1'],
         'sid': ['pyUSID', 'pyNSID'],
         'image': ['pillow', 'tifffile']
     },
