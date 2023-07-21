@@ -28,7 +28,7 @@ class TestDMReader(unittest.TestCase):
         dataset = datasets[0]
         self.assertEqual(dataset.title, '01-EELS Acquire_STO')
         self.assertEqual(dataset.source, 'SciFiReaders.DMReader')
-        self.assertEqual(dataset[200].compute()), 135727.0)
+        self.assertEqual(dataset[200].compute(), 135727.0)
         self.assertEqual(dataset.energy_loss[200], 400.0)
         self.assertEqual(dataset.original_metadata['DM']['dm_version'], 3)
         self.assertEqual(dataset.original_metadata['ImageTags']
