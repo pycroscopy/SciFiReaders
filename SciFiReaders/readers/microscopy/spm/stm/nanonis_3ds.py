@@ -8,19 +8,11 @@ Created on Fri Nov 5 16:43:00 2021
 import numpy as np  # For array operations
 import sidpy as sid
 from sidpy.sid import Reader, Dimension, DimensionType
-
-try:
-    import nanonispy as nap
-except ModuleNotFoundError:
-    nap = None
-
-
+from .nanonis_base import Grid
 class Nanonis3dsReader(Reader):
 
     def __init__(self, file_path, *args, **kwargs):
-        if nap == None:
-            raise ModuleNotFoundError('You attempted to load a Nanonis file, but this requires Nanonispy.\n \
-            Please Load it with pip install nanonispy , restart and retry')
+
         super().__init__(file_path, *args, **kwargs)
 
     @staticmethod
@@ -124,7 +116,7 @@ class Nanonis3dsReader(Reader):
         list of sidpy.Dataset objects containing the spectroscopy data
         """
         
-        reader = nap.read.Grid
+        reader = Grid
         override_header = {
             'Delay before measuring (s)': 0.0,
             'Start time': 0.0,
@@ -194,7 +186,5 @@ class Nanonis3dsReader(Reader):
         Returns
         -------
         """
-    
-        if nap is None:
-            return False
-        return super(Nanonis3dsReader, self).can_read(extension='3ds')
+
+        return 

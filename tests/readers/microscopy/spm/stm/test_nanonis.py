@@ -12,8 +12,6 @@ import SciFiReaders as sr
 
 root_path = "https://github.com/pycroscopy/SciFiDatasets/blob/main/data/microscopy/spm/stm/"
 
-nanonispy = pytest.importorskip("nanonispy", reason="nanonispy not installed")
-
 class TestNanonisDat(unittest.TestCase):
     # Tests the nanonis_dat reader
 
@@ -134,7 +132,7 @@ class TestNanonisSXM(unittest.TestCase):
         'P-gain': ('5.167E-9 m/V',),
         'I-gain': ('3.059E-5 m/V/s',),
         'T-const': ('1.689E-4 s',)},
-        'comment': 'New sample from Kevin CoOx nanosheets',
+        'comment': 'New sample from Kevin CoOx nanosheets\n',
         'nanonismain>session path': 'C:\\Users\\Administrator\\Documents\\Users\\Kevin Pachuta\\063020',
         'nanonismain>sw version': 'Generic 4',
         'nanonismain>ui release': '8181',
