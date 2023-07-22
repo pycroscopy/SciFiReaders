@@ -1,6 +1,5 @@
 hyperspy
 igor2
-nanonispy
 pyUSID
 pyNSID
 gwyfile
