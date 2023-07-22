@@ -1,7 +1,7 @@
-hyperspy
-igor2
-pyUSID
-pyNSID
-gwyfile
-pillow
-tifffile
+hyperspy --no-deps
+igor2 --no-deps
+pyUSID --no-deps
+pyNSID --no-deps
+gwyfile --no-deps
+pillow --no-deps
+tifffile --no-deps
