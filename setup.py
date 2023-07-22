@@ -62,7 +62,6 @@ setup(
         'hyperspy':  ["hyperspy"],
         'igor2': ["igor2"],
         "gwyddion": ["gwyfile"],
-        'nanonispy': ['nanonispy'],
         'sid': ['pyUSID', 'pyNSID'],
         'image': ['pillow', 'tifffile']
     },
