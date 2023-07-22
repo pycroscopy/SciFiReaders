@@ -34,7 +34,7 @@ jobs:
         sudo apt-get update -qq
         python -m pip install --upgrade pip
         python -m pip install flake8
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        if [ -f requirements.txt ]; then pip install -r requirements.txt --no-deps; fi
         
     - name: install package
       run: |
