@@ -11,12 +11,12 @@ with open(os.path.join(here, 'SciFiReaders/__version__.py')) as f:
 
 # TODO: Move requirements to requirements.txt
 requirements = [  # basic
-                'numpy>=1.10',
+                'numpy==1.24.4',
                 'toolz',  # dask installation failing without this
                 'cytoolz',  # dask installation failing without this
                 'dask>=2.20.0',
                 'sidpy>=0.11.2',
-                'numba',
+                'numba==0.57.1',
                 'ipython>=7.1.0'
                 # generic:
                 # Reader specific ones go to extras
@@ -62,7 +62,6 @@ setup(
         'hyperspy':  ["hyperspy"],
         'igor2': ["igor2"],
         "gwyddion": ["gwyfile"],
-        'nanonispy': ['nanonispy'],
         'sid': ['pyUSID', 'pyNSID'],
         'image': ['pillow', 'tifffile']
     },
