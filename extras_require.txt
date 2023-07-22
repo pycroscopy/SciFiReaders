@@ -1,7 +1,9 @@
-hyperspy --no-deps
-igor2 --no-deps
-pyUSID --no-deps
-pyNSID --no-deps
-gwyfile --no-deps
-pillow --no-deps
-tifffile --no-deps
+hyperspy
+igor2
+pyUSID
+pyNSID
+gwyfile
+pillow
+tifffile
+numpy==1.24.4
+numba==0.57.1
