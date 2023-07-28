@@ -116,3 +116,4 @@ test_scripts/
 tests/readers/microscopy/em/tem/DMReader_EELS_STO.dm3
 tests/readers/microscopy/em/tem/DMReader_EELS_STO.dm4
 tests/readers/microscopy/em/tem/EMDReader_Spectrum_FEI.emd
+server_user_id.txt
