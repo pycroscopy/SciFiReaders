@@ -318,7 +318,7 @@ class DMReader(sidpy.Reader):
                                                                 dimension_type=sidpy.DimensionType.RECIPROCAL))
                 reciprocal_name = chr(ord(reciprocal_name) + 1)
             elif 'm' in units:
-                units = 'counts'
+                # units = 'counts'
                 dataset.set_dimension(int(dim), sidpy.Dimension(values, name=spatial_name, units=units,
                                                                 quantity='distance',
                                                                 dimension_type=sidpy.DimensionType.SPATIAL))
