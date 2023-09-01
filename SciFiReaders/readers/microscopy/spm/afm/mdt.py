@@ -10,7 +10,7 @@ import xml.etree.ElementTree as ET
 
 class MDTBufferedReaderDecorator(object):
     """
-        a decorator class that facilitate the sequential reading of a file.
+        A decorator class that facilitate the sequential reading of a file.
 
         The class will redirect al the standard file methods and add some methods to read and integer and float number
         encoded on 8, 16, 32 or 64 bits
@@ -74,7 +74,7 @@ class MDTBufferedReaderDecorator(object):
 
     def extract_string(self, string_len):
         string_bytes = self._file.read(string_len)
-        # in don't really know why but decode('utf-8) does't work for '°'
+        # i don't really know why but decode('utf-8) does't work for '°'
         return "".join(map(chr, string_bytes))
 
     def __getattr__(self, attr):
@@ -124,7 +124,7 @@ class MDTReader(Reader):
                 self._frame._read_maps()#TODO
             #curves new
             if self._frame.type == 190:
-                self._frame._read_curves_new()  # TODO
+                self._frame._read_point_cloud()
 
             dataset_list.append(self._frame.data)
 
@@ -199,6 +199,10 @@ class Frame:
                                -5892: self._file.read_float32,
                                -13320: self._file.read_float64}
         self._read_frame_header()
+        self.metadata = {'date': self.date,
+                         'version': self.version,}
+
+
         #TODO how to extract one frame without iteration?
 
     def _read_frame_header(self):
@@ -233,8 +237,13 @@ class Frame:
         _total_length = self._file.read_uint32()
         #uuid of frame
         self.uuid = ''
+        uuid = []
         for _ in range(16):
-            self.uuid = self.uuid + str(self._file.read_uint8())
+            ch = self._file.read_uchar()
+            uuid.append(ch)
+        hex_uuid = [hex(n).removeprefix('0x') for n in uuid]
+        self.uuid = ''.join(hex_uuid)
+        self.metadata['uuid'] = self.uuid
 
         #uuid is written 2 times
         self._file.shift_position(16)
@@ -257,7 +266,10 @@ class Frame:
         if _name_size !=0:
             self.title = self._file.read(_name_size).decode('utf-8')
         if _xml_size != 0:
-            self.xml_metadata = self._file.read(_xml_size).decode('utf-16')
+            xml_metadata = self._file.read(_xml_size).decode('utf-16')
+            #original metadata
+            element = ET.fromstring(xml_metadata)
+            original_metadata = self.xml_to_dict(element)
 
         #don't understand self.info, self.spec, self.source_info
         if _info_size != 0:
@@ -294,6 +306,9 @@ class Frame:
         if self.n_dimensions == 2 and self.n_measurands == 1:
             self.data = self._extract_2d_frame()
 
+        self.data.metadata = self.metadata
+        self.data.original_metadata = original_metadata
+
         self._file.seek(self.start_pos + self.size)
 
     def _read_text(self):
@@ -310,16 +325,19 @@ class Frame:
         self.data = None
         self._file.seek(self.start_pos + self.size)
 
-    def _read_curves_new(self):
+    def _read_point_cloud(self):
         """
         '''
         Extract data from spectroscopy map
 
         Returns
         -------
-        list:  list with sidpy.Dataset objects
+        list:  sidpy.Dataset objects
         '''
         """
+        # parm_dict = {'date': self.date,
+        #              } #dictionary for metadata
+
         self._file.seek(self.start_pos + 22)
         #read numer of blocks with data
         _block_count = self._file.read_uint32()
@@ -391,66 +409,60 @@ class Frame:
         #self.cycles, self.directions - lists with the numbers of cycles and directions (0 - forward, 1 - backward)
 
         # list of sidpy arrays
-        self.data = []
+
         coordinate = np.array(list(self.calibr_p.values()))[:,:-1].astype('float')#all coordinates of spectral data (real_x, real_y, cycle, direction)
+
+        #add points coordinates to the metadata
+        self.metadata['coordinates'] = coordinate
+
         #organise the extracted data into the sidpy array
         for kk in self.calibr_ax.keys():
             _dim_data = self.calibr_ax[kk]
             _main_dimension = np.linspace(_dim_data[0], _dim_data[1], _dim_data[2]) #main spectral dimension
 
             #create zeros np.array and fill it by the  data
-            _array = np.zeros([len(self.x_real),
-                               len(self.y_real),
+            _array = np.zeros([len(self.point_data_indexes.keys()),
                                len(self.cycles),
                                len(self.directions),
                                len(_main_dimension),])
             for point_number in self.point_data_indexes.keys():
+
                 for curve_number in self.point_data_indexes[point_number]:
-                    _real_x =self.calibr_p[point_number][0]
-                    _ind_x = np.where(self.x_real == _real_x)[0][0]
-                    _real_y = self.calibr_p[point_number][1]
-                    _ind_y = np.where(self.y_real == _real_y)[0][0]
                     _cycle = self.calibr_d[curve_number][0]
                     _direction = self.calibr_d[curve_number][1]
 
-                    _array[_ind_x, _ind_y, _cycle, _direction] = _point_data[curve_number]
+                    _array[point_number, _cycle, _direction] = _point_data[curve_number]
 
             # change array in case of case of backward direction
             if len(self.directions) > 1:
                 _main_dimension = np.append(_main_dimension, np.flip(_main_dimension))
-                _array = np.append(_array[:, :, :, 0], _array[:, :, :, 1], axis=3)
+                _array = np.append(_array[:, :, 0], _array[:, :, 1], axis=2)
 
             #create sidpy array
             _data_set = sid.Dataset.from_array(_array, name='MDA curves')
+            _data_set.data_type = 'point_cloud'
 
-            _data_set.set_dimension(0, sid.Dimension(self.x_real,
-                                                     name='x',
-                                                     units=self.calibr_p[0][-1],
-                                                     quantity='Length',
-                                                     dimension_type='spatial'))
+            _data_set.set_dimension(0, sid.Dimension(list(self.point_data_indexes.keys()),
+                                                     name='point number',
+                                                     quantity='Point number',
+                                                     dimension_type='point_number'))
 
-            _data_set.set_dimension(1, sid.Dimension(self.y_real,
-                                                     name='y',
-                                                     units=self.calibr_p[0][-1],
-                                                     quantity='Length',
-                                                     dimension_type='spatial'))
-
-            _data_set.set_dimension(2, sid.Dimension(self.cycles,
+            _data_set.set_dimension(1, sid.Dimension(self.cycles,
                                                      name='cycle',
                                                      quantity='Cycle',
-                                                     dimension_type='spectral'))
+                                                     dimension_type='channel'))
 
-            _data_set.set_dimension(3, sid.Dimension(_main_dimension,
+            _data_set.set_dimension(2, sid.Dimension(_main_dimension,
                                                      name=_dim_data[3],
                                                      units=_dim_data[4],
                                                      quantity=_dim_data[3],
                                                      dimension_type='spectral'))
 
-            _data_set.data_type = 'spectral_image'
+            #_data_set.data_type = 'spectral_image'
             _data_set.units = self.calibr_d[0][-1]
             _data_set.quantity = self.calibr_d[0][-2]
-
-            self.data.append(_data_set)
+            _data_set.metadata = self.metadata
+            self.data = _data_set
 
 
         self._file.seek(self.start_pos + self.size)
@@ -481,6 +493,7 @@ class Frame:
 
         #string with xml data
         xmml = self._file.read(_block_headers[ind][1]).decode('utf-8')
+        # self.xml = xmml
 
 
         #parsing of xml string
@@ -489,7 +502,7 @@ class Frame:
         self.uuid = root.attrib['UUID'][1:-1]
         self.version = root.attrib['version']
 
-        self.xml_metadata = root
+        #self.xml_metadata = root
         #read general data about axis dimensions
         for child in root:
             if child.tag == 'Name':
@@ -643,6 +656,22 @@ class Frame:
                                                 units=y['unit'], quantity='x',
                                                 dimension_type='spatial'))
         return data_set
+
+
+    def xml_to_dict(self, element):
+        result = {}
+        if element.text:
+            result[element.tag] = element.text
+        for child in element:
+            child_data = self.xml_to_dict(child)
+            if child.tag in result:
+                if isinstance(result[child.tag], list):
+                    result[child.tag].append(child_data)
+                else:
+                    result[child.tag] = [result[child.tag], child_data]
+            else:
+                result[child.tag] = child_data
+        return result
 
 
 
