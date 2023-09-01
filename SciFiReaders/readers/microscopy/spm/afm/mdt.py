@@ -305,6 +305,7 @@ class Frame:
 
         if self.n_dimensions == 2 and self.n_measurands == 1:
             self.data = self._extract_2d_frame()
+            self.data.type = '2D IMAGE'
 
         self.data.metadata = self.metadata
         self.data.original_metadata = original_metadata
@@ -364,6 +365,7 @@ class Frame:
 
         #calibration for points, calibration for data in each curve in points, and calibrations for x axis
         self.calibr_p, self.calibr_d, self.calibr_ax = self._read_curves_new_calibrations(_block_names, _block_headers)
+        self.metadata['uuid'] = self.uuid
 
         #finding  positions: xreal, yreal
         self.x_real, self.y_real = self._read_curves_new_xreal_yreal()
@@ -443,9 +445,9 @@ class Frame:
             _data_set.data_type = 'point_cloud'
 
             _data_set.set_dimension(0, sid.Dimension(list(self.point_data_indexes.keys()),
-                                                     name='point number',
+                                                     name='point_number',
                                                      quantity='Point number',
-                                                     dimension_type='point_number'))
+                                                     dimension_type='point_cloud'))
 
             _data_set.set_dimension(1, sid.Dimension(self.cycles,
                                                      name='cycle',
