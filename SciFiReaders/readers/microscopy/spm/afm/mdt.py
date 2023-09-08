@@ -116,35 +116,28 @@ class MDTReader(Reader):
             # 2d scan
             if self._frame.type == 106:
                 self._frame._read_mda_frame()
-            #text
-            if self._frame.type == 3:
-                self._frame._read_text()#TODO
-            #scanned (map of curves and smth like that)
-            if self._frame.type == 0:
-                self._frame._read_maps()#TODO
-            #curves new
-            if self._frame.type == 190:
+            #curves_new: point cloud, spectra
+            elif self._frame.type == 190:
                 self._frame._read_point_cloud()
+            #text
+            else:
+                #self._frame.type == 3:
+                self._frame._read_text()#TODO
+
+            #curves new
+
 
             dataset_list.append(self._frame.data)
 
             if verbose:
-                print(f'Frame #{i}: type - {self._frame.type}, '
-                      f'size - {self._frame.size}, '
+                print(f'Frame #{i}: type - {self._frame.type}',
                       f'start_position - {self._frame.start_pos},')
                 if (self._frame.type == 106) or (self._frame.type == 190):
-                    print(f'version - {self._frame.version}, '
+                    print(f'title - {self._frame.title}',
+                          f'version - {self._frame.version}, '
                           f'time - {self._frame.date}, '
-                          f'var_size - {self._frame.var_size}, '
-                          f'uuid - {self._frame.uuid}\n')
-
-                if   self._frame.type == 106:
-                    print(f'title - {self._frame.title}, '
-                          f'n_dimensions - {self._frame.n_dimensions}, '
-                          f'n_measurands - {self._frame.n_measurands},\n'
-                          f'dimensions - {self._frame.dimensions[0]},\n'
-                          f'measurands - {self._frame.measurands[0]}')
-                print(f'\n\n')
+                          f'uuid - {self._frame.uuid}')
+                print('\n')
 
         self._file.close()
 
@@ -171,15 +164,6 @@ class MDTReader(Reader):
 
         #  19 bytes reserved (??)
         self._file.shift_position(19)
-
-    def can_read(self):
-        """
-        Tests whether or not the provided file has a .mdt extension
-        Returns
-        -------
-
-        """
-        return super(MDTReader, self).can_read(extension='mdt')
 
 
 class Frame:
@@ -235,14 +219,12 @@ class Frame:
 
         _head_size = self._file.read_uint32()
         _total_length = self._file.read_uint32()
-        #uuid of frame
-        self.uuid = ''
-        uuid = []
+
+        #read_uuid
+        _bin_uuid = []
         for _ in range(16):
-            ch = self._file.read_uchar()
-            uuid.append(ch)
-        hex_uuid = [hex(n).removeprefix('0x') for n in uuid]
-        self.uuid = ''.join(hex_uuid)
+            _bin_uuid.append( self._file.read_char())
+        self.uuid = self.restore_guid(_bin_uuid)
         self.metadata['uuid'] = self.uuid
 
         #uuid is written 2 times
@@ -305,10 +287,11 @@ class Frame:
 
         if self.n_dimensions == 2 and self.n_measurands == 1:
             self.data = self._extract_2d_frame()
-            self.data.type = '2D IMAGE'
+            #self.data.type = '2D IMAGE'
 
         self.data.metadata = self.metadata
         self.data.original_metadata = original_metadata
+        self.data.title = self.title
 
         self._file.seek(self.start_pos + self.size)
 
@@ -464,6 +447,8 @@ class Frame:
             _data_set.units = self.calibr_d[0][-1]
             _data_set.quantity = self.calibr_d[0][-2]
             _data_set.metadata = self.metadata
+            _data_set.original_metadata = self.original_metadata
+            _data_set.title = self.title
             self.data = _data_set
 
 
@@ -489,6 +474,14 @@ class Frame:
         calibr_axis   = {} #Axis tag in index.xml block
         calibr_name   = {} #Name tag in index.xml block
 
+        #read_uuid
+        _bin_uuid = []
+        for _ in range(16):
+            _bin_uuid.append( self._file.read_char())
+        self.uuid = self.restore_guid(_bin_uuid)
+        self._file.seek(_current_pos)
+        #--------
+
         #find index.xml block position
         ind = _block_names.index('index.xml')
         self._file.shift_position(_block_headers[ind - 1][2])
@@ -498,18 +491,14 @@ class Frame:
         # self.xml = xmml
 
 
-        #parsing of xml string
+
+        #parsing of index.xml string
         root = ET.fromstring(xmml)[0]
-
-        self.uuid = root.attrib['UUID'][1:-1]
         self.version = root.attrib['version']
-
-        #self.xml_metadata = root
         #read general data about axis dimensions
         for child in root:
             if child.tag == 'Name':
                 calibr_name[child.attrib['index']] = (child.attrib['name'], child.attrib['unit'])
-
         #read points, data and axis calirations
         for child in root:
             if child.tag == 'Axis':
@@ -518,12 +507,10 @@ class Frame:
                                                            int(child.attrib['count']),
                                                            calibr_name[child.attrib['name']][0],
                                                            calibr_name[child.attrib['name']][1])
-
             if child.tag == 'Point':
                 calibr_points[int(child.attrib['index'])] = (float(child.attrib['x']),
                                                              float(child.attrib['y']),
                                                              child.attrib['unit'])
-
             if child.tag == 'Meas':
                 calibr_data[int(child.attrib['index'])] = (int(child.attrib['pass']),
                                                             int(child.attrib['inverse0']),
@@ -531,6 +518,18 @@ class Frame:
                                                             calibr_name[child.attrib['name']][1])
 
         self._file.seek(_current_pos)
+
+        #Extraction of metadata from the last block.
+        #Actually, number of metadata blocks == number of points, but looks like they are absolutely identical
+        self._file.shift_position(_block_headers[-2][2])
+        xml_metadata = self._file.read(_block_headers[-1][1]).decode('utf-16')
+        element = ET.fromstring(xml_metadata)
+        self.original_metadata = self.xml_to_dict(element)
+        self.title = self.original_metadata['Parameters']['Name']['Name']
+        #original metadata
+
+        self._file.seek(_current_pos)
+
 
         return calibr_points, calibr_data, calibr_axis
 
@@ -659,7 +658,7 @@ class Frame:
                                                 dimension_type='spatial'))
         return data_set
 
-
+    #helper methods
     def xml_to_dict(self, element):
         result = {}
         if element.text:
@@ -674,6 +673,23 @@ class Frame:
             else:
                 result[child.tag] = child_data
         return result
+
+    @staticmethod
+    def restore_guid(b_list):
+        '''
+        Restoring GUID of frame from binary list
+        '''
+        hex_list = [x.hex() for x in b_list]
+        ind = [0, 4, 6, 8, 10, 16]
+        hex_list_cor = []
+        for i in range(len(ind) - 1):
+            part = hex_list[ind[i]:ind[i + 1]]
+            if ind[i + 1] < 10:
+                part.reverse()
+            str_part = ''.join(part)
+            hex_list_cor.append(str_part)
+
+        return '-'.join(hex_list_cor).upper()
 
 
 
