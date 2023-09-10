@@ -214,7 +214,7 @@ class DMReader(sidpy.Reader):
                     dataset.source = 'SciFiReaders.DMReader'
                     dataset.original_metadata['DM']['full_file_name'] = self.__filename
                     
-                    key = f'Channel_{image_number:03}'
+                    key = f'Channel_{int(image_number):03d}'
                     self.datasets[key] = dataset
                     self.extract_crucial_metadata(key)
 
