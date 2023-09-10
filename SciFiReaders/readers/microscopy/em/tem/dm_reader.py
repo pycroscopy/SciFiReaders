@@ -223,7 +223,8 @@ class DMReader(sidpy.Reader):
         for index, dataset in self.datasets.items():
             if 'urvey' in dataset.title:
                 main_dataset_number = index
-        self.datasets[main_dataset_number].original_metadata.update(self.__stored_tags)
+        main_dataset_key = list(self.datasets.keys())[0]
+        self.datasets[main_dataset_key].original_metadata.update(self.__stored_tags)
         self.close()
         return self.datasets
 
