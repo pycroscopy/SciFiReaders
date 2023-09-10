@@ -219,6 +219,8 @@ class EMDReader(sidpy.Reader):
             if 'ScanArea' in scan:
                 size_x *= (float(scan['ScanArea']['right']) - float(scan['ScanArea']['left']))
                 size_y *= (float(scan['ScanArea']['bottom']) - float(scan['ScanArea']['top']))
+                size_x = int(size_x)
+                size_y = int(size_y)
         elif 'RasterScanDefinition' in acquisition:
             size_x = int(acquisition['RasterScanDefinition']['Width'])
             size_y = int(acquisition['RasterScanDefinition']['Height'])
