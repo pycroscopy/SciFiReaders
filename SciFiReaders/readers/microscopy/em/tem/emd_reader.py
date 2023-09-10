@@ -214,9 +214,9 @@ class EMDReader(sidpy.Reader):
         size_y = 1
         if 'Scan' in self.metadata:
             scan = self.metadata['Scan']
-            size_x = float(scan['ScanSize']['width'])
-            size_y = float(scan['ScanSize']['height'])
             if 'ScanArea' in scan:
+                size_x = float(scan['ScanSize']['width'])
+                size_y = float(scan['ScanSize']['height'])
                 size_x *= (float(scan['ScanArea']['right']) - float(scan['ScanArea']['left']))
                 size_y *= (float(scan['ScanArea']['bottom']) - float(scan['ScanArea']['top']))
                 size_x = int(size_x)
