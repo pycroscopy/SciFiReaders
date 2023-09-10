@@ -221,9 +221,9 @@ class EMDReader(sidpy.Reader):
                 size_y *= (float(scan['ScanArea']['bottom']) - float(scan['ScanArea']['top']))
                 size_x = int(size_x)
                 size_y = int(size_y)
-        elif 'RasterScanDefinition' in acquisition:
-            size_x = int(acquisition['RasterScanDefinition']['Width'])
-            size_y = int(acquisition['RasterScanDefinition']['Height'])
+            elif 'RasterScanDefinition' in acquisition:
+                size_x = int(acquisition['RasterScanDefinition']['Width'])
+                size_y = int(acquisition['RasterScanDefinition']['Height'])
         spectrum_size = int(acquisition['bincount'])
 
         self.number_of_frames = int(np.ceil((self.data_array[:, 0] == 65535).sum() / (size_x * size_y)))
