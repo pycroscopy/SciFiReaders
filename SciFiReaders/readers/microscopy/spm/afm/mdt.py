@@ -2,6 +2,7 @@
 #The following code have been particularly copied from the https://github.com/symartin/PyMDT
 
 import numpy as np
+import sidpy
 import sidpy as sid
 from sidpy.sid import Reader
 import io
@@ -124,10 +125,19 @@ class MDTReader(Reader):
                 #self._frame.type == 3:
                 self._frame._read_text()#TODO
 
-            #curves new
-
-
             dataset_list.append(self._frame.data)
+
+            #might be rewrite to create dict() initially - without list()
+            dataset_dict = {}
+            for index, dataset in enumerate(dataset_list):
+                if type(dataset) == sidpy.Dataset:
+                    title = dataset.title
+                elif type(dataset) == dict:
+                    title = 'Spectral_data'
+                else:
+                    title = 'Unknown'
+
+                dataset_dict[f'{index:03}_{title}'] = dataset
 
             if verbose:
                 print(f'Frame #{i}: type - {self._frame.type}',
@@ -141,7 +151,7 @@ class MDTReader(Reader):
 
         self._file.close()
 
-        return dataset_list
+        return dataset_dict
 
     def _read_header(self):
         '''
@@ -347,13 +357,14 @@ class Frame:
         _current_pos = self._file.tell()
 
         #calibration for points, calibration for data in each curve in points, and calibrations for x axis
-        self.calibr_p, self.calibr_d, self.calibr_ax = self._read_curves_new_calibrations(_block_names, _block_headers)
+        self.calibr_p, self.calibr_d, self.calibr_ax, self.calibr_m = self._read_curves_new_calibrations(_block_names, _block_headers)
         self.metadata['uuid'] = self.uuid
 
         #finding  positions: xreal, yreal
         self.x_real, self.y_real = self._read_curves_new_xreal_yreal()
-        #finding cycles and directions
-        self.cycles, self.directions = self._read_curves_new_cycles_direction()
+        #extract passes, directions, axes
+        self.passes, self.inverse, self.axes, self.meas = self._read_curves_new_array_params()
+
 
         self.point_data_indexes = {} #to find points indexes corresponding data indexes
         _point_data = {} #dict for spectroscopic data
@@ -391,65 +402,98 @@ class Frame:
         #here we already have
         #self.point_data_indexes - indexes of the curves in the each point
         #self.x_real, self.y_real - all all real coordinates of the points
-        #self.cycles, self.directions - lists with the numbers of cycles and directions (0 - forward, 1 - backward)
+        #self.passes, self.inverse - lists with the numbers of cycles and directions (0 - forward, 1 - backward, 2 - ?undetermined)
 
-        # list of sidpy arrays
-
-        coordinate = np.array(list(self.calibr_p.values()))[:,:-1].astype('float')#all coordinates of spectral data (real_x, real_y, cycle, direction)
+        # all coordinates of spectral data (real_x, real_y, cycle, direction)
+        coordinate = np.array(list(self.calibr_p.values()))[:,:-1].astype('float')
 
         #add points coordinates to the metadata
         self.metadata['coordinates'] = coordinate
 
-        #organise the extracted data into the sidpy array
-        for kk in self.calibr_ax.keys():
-            _dim_data = self.calibr_ax[kk]
-            _main_dimension = np.linspace(_dim_data[0], _dim_data[1], _dim_data[2]) #main spectral dimension
+        _arrays = {}
+        _key_dict = {} #to store correspondence between _key and axes
+        #create dictionary with zeros sidpy arrays for each map
+        for aa, _x_key in enumerate(self.calibr_ax):
+            _x_dim = self.calibr_ax[_x_key]
+            _key_dict[_x_key] = {}
+            for mm,_y_key in enumerate(self.calibr_m):
+                _y_dim = self.calibr_m[_y_key]
+                _n = aa * len(self.calibr_m) + mm
+                _key = f'{_n:03}_{_y_dim[0]}({_x_dim[3]})'
+                _key_dict[_x_key][_y_key] = _key
+                _arrays[_key] = np.zeros([len(self.point_data_indexes.keys()),
+                                          len(self.passes),
+                                          len(self.inverse),
+                                          _x_dim[2],])
 
-            #create zeros np.array and fill it by the  data
-            _array = np.zeros([len(self.point_data_indexes.keys()),
-                               len(self.cycles),
-                               len(self.directions),
-                               len(_main_dimension),])
-            for point_number in self.point_data_indexes.keys():
+        #fill the arrays
+        for point_number in self.point_data_indexes.keys():
+            for curve_number in self.point_data_indexes[point_number]:
+                _pass      = self.calibr_d[curve_number][0]
+                _direction = self.calibr_d[curve_number][1]
+                _direction = 0 if _direction == 2 else _direction
+                #restore key of array
+                _axis = self.calibr_d[curve_number][2]
+                _meas = self.calibr_d[curve_number][3]
+                _key = _key_dict[_axis][_meas]
+                _arrays[_key][point_number, _pass, _direction] = _point_data[curve_number]
 
-                for curve_number in self.point_data_indexes[point_number]:
-                    _cycle = self.calibr_d[curve_number][0]
-                    _direction = self.calibr_d[curve_number][1]
+        self.arrays = _arrays
 
-                    _array[point_number, _cycle, _direction] = _point_data[curve_number]
+        for _axis in _key_dict:
+            for _meas in _key_dict[_axis]:
+                _key = _key_dict[_axis][_meas]
+                _x_axis, _y_axis = self.calibr_ax[_axis], self.calibr_m[_meas]
+                _x_data = np.linspace(_x_axis[0], _x_axis[1], _x_axis[2])
+                #joint "direction dimension" and squeeze array
+                if len(self.inverse) == 2:
+                    _x_data = np.append(_x_data, np.flip(_x_data))
+                    _arrays[_key] = np.append(_arrays[_key][:, :, 0], _arrays[_key][:, :, 1], axis=2)
+                _arrays[_key] = np.squeeze(_arrays[_key])
 
-            # change array in case of case of backward direction
-            if len(self.directions) > 1:
-                _main_dimension = np.append(_main_dimension, np.flip(_main_dimension))
-                _array = np.append(_array[:, :, 0], _array[:, :, 1], axis=2)
+                #build sidpy array
+                _data_set = sid.Dataset.from_array(_arrays[_key], name=_key)
 
-            #create sidpy array
-            _data_set = sid.Dataset.from_array(_array, name='MDA curves')
-            _data_set.data_type = 'point_cloud'
+                if len(self.point_data_indexes) == 1:
+                    _data_set.data_type = 'spectrum'
+                else:
+                    _data_set.data_type = 'point_cloud'
 
-            _data_set.set_dimension(0, sid.Dimension(list(self.point_data_indexes.keys()),
-                                                     name='point_number',
-                                                     quantity='Point number',
-                                                     dimension_type='point_cloud'))
+                dn = 0 #dimention number
+                # 1) point cloud dimention
+                point_list = list(self.point_data_indexes)
+                if len(point_list) > 1:
+                    _data_set.set_dimension(dn, sid.Dimension(list(self.point_data_indexes),
+                                                              name='point_number',
+                                                              quantity='Point number',
+                                                              dimension_type='point_cloud'))
+                    dn +=1
 
-            _data_set.set_dimension(1, sid.Dimension(self.cycles,
-                                                     name='cycle',
-                                                     quantity='Cycle',
-                                                     dimension_type='channel'))
+                if len(self.passes) > 1:
+                    _data_set.set_dimension(dn, sid.Dimension(self.passes,
+                                                              name='pass',
+                                                              quantity='Pass',
+                                                              dimension_type='channel'))
+                    dn += 1
 
-            _data_set.set_dimension(2, sid.Dimension(_main_dimension,
-                                                     name=_dim_data[3],
-                                                     units=_dim_data[4],
-                                                     quantity=_dim_data[3],
-                                                     dimension_type='spectral'))
+                _data_set.set_dimension(dn, sid.Dimension(_x_data,
+                                                          name=_x_axis[-2],
+                                                          units=_x_axis[-1],
+                                                          quantity=_x_axis[-2],
+                                                          dimension_type='spectral'))
+                _data_set.units = _y_axis[1]
+                _data_set.quantity = _y_axis[0]
+                _data_set.metadata = self.metadata
+                _data_set.original_metadata = self.original_metadata
+                _data_set.title = _key
 
-            #_data_set.data_type = 'spectral_image'
-            _data_set.units = self.calibr_d[0][-1]
-            _data_set.quantity = self.calibr_d[0][-2]
-            _data_set.metadata = self.metadata
-            _data_set.original_metadata = self.original_metadata
-            _data_set.title = self.title
-            self.data = _data_set
+                _arrays[_key] = _data_set
+        if len(_arrays) == 1:
+            self.data = list(_arrays.values())[0]
+            self.data.title = self.title
+        else:
+            self.data = _arrays
+        #self.data.title = self.title
 
 
         self._file.seek(self.start_pos + self.size)
@@ -473,6 +517,7 @@ class Frame:
         calibr_data   = {} #Meas tag in index.xml block
         calibr_axis   = {} #Axis tag in index.xml block
         calibr_name   = {} #Name tag in index.xml block
+        calibr_meas   = {} #part of calibr_name  representing Y axes
 
         #read_uuid
         _bin_uuid = []
@@ -488,7 +533,7 @@ class Frame:
 
         #string with xml data
         xmml = self._file.read(_block_headers[ind][1]).decode('utf-8')
-        # self.xml = xmml
+        self.xml = xmml
 
 
 
@@ -498,7 +543,8 @@ class Frame:
         #read general data about axis dimensions
         for child in root:
             if child.tag == 'Name':
-                calibr_name[child.attrib['index']] = (child.attrib['name'], child.attrib['unit'])
+                calibr_name[child.attrib['index']] = (child.attrib['name'],
+                                                      child.attrib['unit'],)
         #read points, data and axis calirations
         for child in root:
             if child.tag == 'Axis':
@@ -514,8 +560,13 @@ class Frame:
             if child.tag == 'Meas':
                 calibr_data[int(child.attrib['index'])] = (int(child.attrib['pass']),
                                                             int(child.attrib['inverse0']),
+                                                            int(child.attrib['axis0']),
+                                                            int(child.attrib['name']),
                                                             calibr_name[child.attrib['name']][0],
-                                                            calibr_name[child.attrib['name']][1])
+                                                            calibr_name[child.attrib['name']][1],
+                                                            )
+                if int(child.attrib['name']) not in calibr_meas:
+                    calibr_meas[int(child.attrib['name'])] = calibr_name[child.attrib['name']]
 
         self._file.seek(_current_pos)
 
@@ -529,9 +580,7 @@ class Frame:
         #original metadata
 
         self._file.seek(_current_pos)
-
-
-        return calibr_points, calibr_data, calibr_axis
+        return calibr_points, calibr_data, calibr_axis, calibr_meas
 
     def _read_curves_new_xreal_yreal(self):
         '''Create array from real coordinated of points in curves_new'''
@@ -547,19 +596,26 @@ class Frame:
         yreal = np.array(sorted(set(yreal)))
         return xreal, yreal
 
-    def _read_curves_new_cycles_direction(self):
+    def _read_curves_new_array_params(self):
         '''Create array with cycles numbers and directions'''
         cycles = []
-        directions = []
-        for key in self.calibr_p.keys():
-            _c = self.calibr_d[key][0]
-            _d = self.calibr_d[key][1]
+        passes = []
+        meas = []
+        axes = []
+
+        for dat in self.calibr_d.values():
+            _c, _d, _a, _m  = dat[:-2]
             cycles.append(_c)
-            directions.append(_d)
+            passes.append(_d)
+            axes.append(_a)
+            meas.append(_m)
 
         cycles = np.array(sorted(set(cycles)))
-        directions = np.array(sorted(set(directions)))
-        return cycles, directions
+        passes = np.array(sorted(set(passes)))
+        meas = np.array(list(range(len(set(meas)))))  # meas was string list
+        axes = np.array(sorted(set(axes)))
+
+        return cycles, passes, axes, meas
 
     def _read_mda_calibrations(self):
         '''
@@ -690,6 +746,7 @@ class Frame:
             hex_list_cor.append(str_part)
 
         return '-'.join(hex_list_cor).upper()
+
 
 
 
