@@ -139,7 +139,7 @@ class DMReader(sidpy.Reader):
         # initialize variables ##
         self.verbose = verbose
         self.__filename = file_path
-        self.datasets = []
+        self.datasets = {}
         
         # - open file for reading
         try:
@@ -214,15 +214,17 @@ class DMReader(sidpy.Reader):
                     dataset.source = 'SciFiReaders.DMReader'
                     dataset.original_metadata['DM']['full_file_name'] = self.__filename
                     
-                    self.datasets.append(dataset)
-                    self.extract_crucial_metadata(-1)
+                    key = f'Channel_{int(image_number):03d}'
+                    self.datasets[key] = dataset
+                    self.extract_crucial_metadata(key)
 
         del self.__stored_tags['ImageList'] 
         main_dataset_number = 0
-        for index, dataset in enumerate(self.datasets):
+        for index, dataset in self.datasets.items():
             if 'urvey' in dataset.title:
                 main_dataset_number = index
-        self.datasets[main_dataset_number].original_metadata.update(self.__stored_tags)
+        main_dataset_key = list(self.datasets.keys())[0]
+        self.datasets[main_dataset_key].original_metadata.update(self.__stored_tags)
         self.close()
         return self.datasets
 
@@ -318,7 +320,6 @@ class DMReader(sidpy.Reader):
                                                                 dimension_type=sidpy.DimensionType.RECIPROCAL))
                 reciprocal_name = chr(ord(reciprocal_name) + 1)
             elif 'm' in units:
-                units = 'counts'
                 dataset.set_dimension(int(dim), sidpy.Dimension(values, name=spatial_name, units=units,
                                                                 quantity='distance',
                                                                 dimension_type=sidpy.DimensionType.SPATIAL))
@@ -332,8 +333,8 @@ class DMReader(sidpy.Reader):
 
         # For ill defined DM data
         if dataset.data_type.name == 'IMAGE':
-            dataset.x.dimension_type = 'SPATiAL'
-            dataset.y.dimension_type = 'SPATiAL'
+            dataset.x.dimension_type = 'SPATIAL'
+            dataset.y.dimension_type = 'SPATIAL'
 
     # utility functions
 
@@ -499,8 +500,8 @@ class DMReader(sidpy.Reader):
         ImageDict['ImageData']['Data'] = 'read'
         return raw_data
 
-    def extract_crucial_metadata(self, dataset_index):
-        original_metadata = self.datasets[dataset_index].original_metadata
+    def extract_crucial_metadata(self, dataset_key):
+        original_metadata = self.datasets[dataset_key].original_metadata
         """Read essential parameter from original_metadata originating from a dm3 file"""
         if not isinstance(original_metadata, dict):
             raise TypeError('We need a dictionary to read')
@@ -552,7 +553,7 @@ class DMReader(sidpy.Reader):
             if 'Voltage' in exp_dictionary['Microscope Info']:
                 experiment['acceleration_voltage'] = exp_dictionary['Microscope Info']['Voltage']
 
-        self.datasets[dataset_index].metadata['experiment']  = experiment
+        self.datasets[dataset_key].metadata['experiment']  = experiment
 
 
 

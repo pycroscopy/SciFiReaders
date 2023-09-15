@@ -7,18 +7,10 @@ Created on Fri Nov 5 16:43:00 2021
 import numpy as np  # For array operations
 import sidpy as sid
 from sidpy.sid import Reader, Dimension, DimensionType
-
-try:
-    import nanonispy as nap
-except ModuleNotFoundError:
-    nap = None
-
+from .nanonis_base import Scan
 class NanonisSXMReader(Reader):
 
     def __init__(self, file_path, *args, **kwargs):
-        if nap == None:
-            raise ModuleNotFoundError('You attempted to load a Nanonis file, but this requires Nanonispy.\n \
-            Please Load it with pip install nanonispy , restart and retry')
         super().__init__(file_path, *args, **kwargs)
 
     @staticmethod
@@ -98,7 +90,7 @@ class NanonisSXMReader(Reader):
         dataset_list: (list) of sidpy.Dataset objects
         """
        
-        reader = nap.read.Scan
+        reader = Scan
        
         nanonis_data = reader(self._input_file_path)
 
@@ -157,7 +149,5 @@ class NanonisSXMReader(Reader):
         Returns
         -------
         """
-        # TODO: Add dat eventually
-        if nap is None:
-            return False
-        return super(NanonisSXMReader, self).can_read(extension='sxm')
+       
+        return 
