@@ -125,6 +125,7 @@ class MDTReader(Reader):
                 #self._frame.type == 3:
                 self._frame._read_text()#TODO
 
+
             dataset_list.append(self._frame.data)
 
             #might be rewrite to create dict() initially - without list()
