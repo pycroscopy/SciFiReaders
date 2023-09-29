@@ -15,6 +15,7 @@ import sidpy
 
 sys.path.insert(0, "../../../../../SciFiReaders/")
 from SciFiReaders import EMDReader
+print(SciFiReaders.__version__)
 
 data_path = 'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/microscopy/em/tem/'
 

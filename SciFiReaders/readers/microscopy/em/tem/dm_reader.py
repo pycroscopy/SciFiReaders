@@ -187,6 +187,7 @@ class DMReader(sidpy.Reader):
         if '1' in self.__stored_tags['ImageList']:
             start=1
         for image_number in self.__stored_tags['ImageList'].keys():
+            print(image_number, start)
             if int(image_number) >= start:
                 dataset = self.get_dataset(self.__stored_tags['ImageList'][image_number])
                 if isinstance(dataset, sidpy.Dataset):
@@ -214,16 +215,18 @@ class DMReader(sidpy.Reader):
                     dataset.source = 'SciFiReaders.DMReader'
                     dataset.original_metadata['DM']['full_file_name'] = self.__filename
                     
-                    key = f'Channel_{image_number:03}'
+                    key = f"Channel_{int(image_number)-start:03d}"
                     self.datasets[key] = dataset
                     self.extract_crucial_metadata(key)
 
         del self.__stored_tags['ImageList'] 
-        main_dataset_number = 0
-        for index, dataset in self.datasets.items():
+        main_dataset_key = list(self.datasets.keys())[0]
+        for key, dataset in self.datasets.items():
+            print(key, dataset)
             if 'urvey' in dataset.title:
-                main_dataset_number = index
-        self.datasets[main_dataset_number].original_metadata.update(self.__stored_tags)
+                main_dataset_key = key
+        print(main_dataset_key)
+        self.datasets[main_dataset_key].original_metadata.update(self.__stored_tags)
         self.close()
         return self.datasets
 
