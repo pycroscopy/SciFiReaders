@@ -103,4 +103,4 @@ class TestDMReader(unittest.TestCase):
         self.assertEqual(dataset.original_metadata['DM']['dm_version'], 3)
         self.assertEqual(dataset.original_metadata['ImageTags']['DigiScan']['Flyback'], 500.0)
         os.remove(file_name)
-        """
+        
