@@ -11,12 +11,13 @@ import sys
 import os
 from pywget import wget
 
-sys.path.append("../../../../../SciFiReaders/")
+sys.path.insert(0,"../../../../../../SciFiReaders/")
 import SciFiReaders
 
 data_path = 'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/microscopy/em/tem/'
 import numpy as np
 
+print(SciFiReaders.__version__)
 
 class TestDMReader(unittest.TestCase):
 
@@ -25,7 +26,7 @@ class TestDMReader(unittest.TestCase):
         file_name = wget.download(data_path + '/DMReader_EELS_STO.dm3')
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
-        """
+        print(datasets)
         dataset = datasets['Channel_000']
         self.assertEqual(dataset.title, '01-EELS Acquire_STO')
         self.assertEqual(dataset.source, 'SciFiReaders.DMReader')
@@ -102,4 +103,4 @@ class TestDMReader(unittest.TestCase):
         self.assertEqual(dataset.original_metadata['DM']['dm_version'], 3)
         self.assertEqual(dataset.original_metadata['ImageTags']['DigiScan']['Flyback'], 500.0)
         os.remove(file_name)
-        """
+        
