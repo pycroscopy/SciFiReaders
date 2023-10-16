@@ -249,6 +249,19 @@ class EMDReader(sidpy.Reader):
                                                                name='y', units='nm',
                                                                quantity='distance',
                                                                dimension_type='spatial'))
+            
+            # for diffraction patterns
+            # if you have an image stack of diffraction patterns, may not work?
+            if '1/' in self.metadata['BinaryResult']['PixelUnitX']:
+                self.datasets[-1].set_dimension(0, sidpy.Dimension(np.arange(self.data_array.shape[0]) / scale_x,
+                                                                   name='u', units='1/nm',
+                                                                   quantity='reciprocal distance',
+                                                                   dimension_type='reciprocal'))
+                self.datasets[-1].set_dimension(1, sidpy.Dimension(np.arange(self.data_array.shape[1]) / scale_y,
+                                                                   name='v', units='1/nm',
+                                                                   quantity='reciprocal distance',
+                                                                   dimension_type='reciprocal'))
+
         else:
             # There is a problem with random access of data due to chunking in hdf5 files
             # Speed-up copied from hyperspy.ioplugins.EMDReader.FEIEMDReader
