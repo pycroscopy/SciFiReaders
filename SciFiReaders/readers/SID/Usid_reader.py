@@ -10,6 +10,7 @@ import h5py
 import warnings
 import sidpy
 from sidpy.sid import Reader
+import numpy as np
 
 try:
     import pyUSID as usid
@@ -134,7 +135,6 @@ class Usid_reader(Reader):
         
         pos_dim, spec_dim = 0, 0
         dims, dim_labels, dim_types, dim_quantities, dim_units, dim_values = [], [], [], [], [], []
-          
         for dim, dim_label in enumerate(main_dataset.n_dim_labels):
             dims.append(dim)
             dim_labels.append(dim_label)
@@ -152,7 +152,7 @@ class Usid_reader(Reader):
                 
             else:
                 dim_types.append('spectral')
-                dim_values.append(main_dataset.get_spec_values(dim_label))
+                dim_values.append(main_dataset.get_spec_values(dim_label))# error here
                 descriptor = main_dataset.spec_dim_descriptors[spec_dim].split('(')
                 if descriptor[1][0] != ')':
                     dim_quantities.append(descriptor[0][:-1])
@@ -173,7 +173,6 @@ class Usid_reader(Reader):
         """
         Gets the descriptors (quatity and units) of the output quantity
         of a non compund main dataset
-        
         Parameters
         ----------
         main_dataset: USID main dataset
@@ -238,7 +237,6 @@ class Usid_reader(Reader):
         
         
     
-    
     def read(self, dataset_path = None):
         """
         Parameters
@@ -254,9 +252,23 @@ class Usid_reader(Reader):
         """
         self._dataset_path = dataset_path
         self._get_maindatasets()
+        
+        def read_not_in_ndim():
+            h5_file = self._file
+            h5_main = usid.hdf_utils.find_dataset(h5_file, 'Raw_Data')[0]
+            data_array = np.array(h5_main)# (3600, 216576)
+            position_index = np.array(h5_main.h5_pos_inds)# (3600, 2)
+            position_values = np.array(h5_main.h5_pos_vals)# (3600, 2)
+            spectroscopic_index = np.array(h5_main.h5_spec_inds)# (216576, 2)
+            spectroscopic_values = np.array(h5_main.h5_spec_vals)# (216576, 2)
+
+            metadata_dict = {"pos_index": position_index, "pos_values": position_values, 
+                            "spec_index": spectroscopic_index, "spec_values": spectroscopic_values}
+            sid_data = sidpy.Dataset.from_array(data_array)
+            sid_data.metadata = metadata_dict
+            return sid_data
 
         sid_datasets = []
-        
         for j,main_dataset in enumerate(self._main_datasets):
             # Check if the main dataset is compound
             if main_dataset.dtype.names is not None:
@@ -283,7 +295,11 @@ class Usid_reader(Reader):
             #For a non-compound dataset
             else:
                 #Get descriptors of the main dataset
-                dims, dim_labels, dim_types, dim_quantities, dim_units, dim_values = Usid_reader._get_dimension_descriptors(main_dataset, verbose = self.verbose)
+                try :
+                    dims, dim_labels, dim_types, dim_quantities, dim_units, dim_values = Usid_reader._get_dimension_descriptors(main_dataset, verbose = self.verbose)
+                except ValueError:
+                    return read_not_in_ndim()
+                    
                 sid_dataset = sidpy.Dataset.from_array(main_dataset.get_n_dim_form())
                 #Get descriptors (units) of each of the output quantity
                 sid_dataset.quantity, sid_dataset.units = Usid_reader._get_main_data_descriptors(main_dataset)
