@@ -17,7 +17,8 @@ requirements = [  # basic
                 'dask>=2.20.0',
                 'sidpy>=0.11.2',
                 'numba==0.57.1',
-                'ipython>=7.1.0'
+                'ipython>=7.1.0',
+                'pyUSID',
                 # generic:
                 # Reader specific ones go to extras
                ]
@@ -51,7 +52,7 @@ setup(
     install_requires=requirements,
     setup_requires=['pytest-runner'],
     tests_require=['pytest', 'pywget', 'hyperspy', 'pyUSID'],
-    platforms=['Linux', 'Mac OSX', 'Windows 10/8.1/8/7'],
+    platforms=['Linux', 'Mac OSX', 'Windows 11/10/8.1/8/7'],
     # package_data={'sample':['dataset_1.dat']}
     test_suite='pytest',
     # dependency='',
