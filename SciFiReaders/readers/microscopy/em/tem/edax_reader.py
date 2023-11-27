@@ -20,7 +20,7 @@ import os
 
 import sidpy
 
-__all__ = ["EdaxReader", "version"]
+__all__ = ["EDAXReader", "version"]
 
 version = '0.1beta'
 
