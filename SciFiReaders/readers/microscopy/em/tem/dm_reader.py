@@ -186,6 +186,7 @@ class DMReader(sidpy.Reader):
             print("| parse DM3 file: %.3g s" % (t2 - t1))
         if '1' in self.__stored_tags['ImageList']:
             start=1
+        channel_number = 0
         for image_number in self.__stored_tags['ImageList'].keys():
             print(image_number, start)
             if int(image_number) >= start:
@@ -215,7 +216,8 @@ class DMReader(sidpy.Reader):
                     dataset.source = 'SciFiReaders.DMReader'
                     dataset.original_metadata['DM']['full_file_name'] = self.__filename
                     
-                    key = f"Channel_{int(image_number)-start:03d}"
+                    key = f"Channel_{int(channel_number):03d}"
+                    channel_number += 1
                     self.datasets[key] = dataset
                     self.extract_crucial_metadata(key)
 
