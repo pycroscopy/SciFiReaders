@@ -1,5 +1,5 @@
 hyperspy
-igor2
+igor2==0.53.0
 pyUSID
 pyNSID
 gwyfile
