@@ -5,5 +5,5 @@ pyNSID
 gwyfile
 pillow
 tifffile
-numpy>=1.24
-numba>=0.58
+numpy>=1.24.4
+numba>=0.58.0

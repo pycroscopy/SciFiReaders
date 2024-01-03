@@ -11,12 +11,12 @@ with open(os.path.join(here, 'SciFiReaders/__version__.py')) as f:
 
 # TODO: Move requirements to requirements.txt
 requirements = [  # basic
-                'numpy>=1.24',
+                'numpy>=1.24.4',
                 'toolz',  # dask installation failing without this
                 'cytoolz',  # dask installation failing without this
                 'dask>=2.20.0',
                 'sidpy>=0.11.2',
-                'numba>=0.58',
+                'numba>=0.58.0',  # Now supports numpy >= 1.22, including 1.25
                 'ipython>=7.1.0',
                 'pyUSID',
                 # generic:
