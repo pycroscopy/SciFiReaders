@@ -92,12 +92,22 @@ def parse_zip(fp):
 
 
 class NionReader(sidpy.Reader):
+    """
+    Reader for Nion ndata and h5 files
+
+    Parameter:
+    ---------
+    file_path: str
+        filepath to Nion file.
+
+    Return:
+    ------
+    datasets: dict
+        dictionary of sidpy datasets
+    """
 
     def __init__(self, file_path, verbose=False):
-        """
-        file_path: filepath to dm3 file.
-        """
-
+        
         super().__init__(file_path)
 
         # initialize variables ##
@@ -222,7 +232,7 @@ class NionReader(sidpy.Reader):
         dataset.modality = 'STEM data'
         dataset.h5_dataset = None
 
-        return dataset
+        return {'Channel_000': dataset}
 
     def set_data_type(self, dataset):
 

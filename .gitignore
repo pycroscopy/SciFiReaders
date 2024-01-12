@@ -113,3 +113,4 @@ test_scripts/
 /SciFiReaders/readers/microscopy/spm/afm/mdt_reader/nt_mdt.svg
 /SciFiReaders/readers/microscopy/spm/afm/mdt_reader/MDTdeclaration.py
 /SciFiReaders/readers/microscopy/spm/afm/mdt_reader/MDTfile.py
+.pyTEMlib.files.pkl

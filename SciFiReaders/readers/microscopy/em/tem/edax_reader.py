@@ -135,6 +135,22 @@ def read_image(base_group, dataset_item):
     return dataset
            
 class EDAXReader(sidpy.Reader):
+    """
+    Creates an instance of EDAXReader which can read one or more HDF5
+    datasets formatted in the EDAX format
+
+    We can read Images, and SpectrumStreams (SpectrumImages and Spectra).
+    Please note that all original metadata are retained in each sidpy dataset.
+
+    Parameters
+    ----------
+    file_path : str
+        Path to a EDAX file
+    Return
+    ------
+    datasets: dict
+        dictionary of sidpy.Datasets
+    """
 
     def __init__(self, file_path, verbose=False):
         """
