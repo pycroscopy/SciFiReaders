@@ -114,3 +114,4 @@ test_scripts/
 /SciFiReaders/readers/microscopy/spm/afm/mdt_reader/MDTdeclaration.py
 /SciFiReaders/readers/microscopy/spm/afm/mdt_reader/MDTfile.py
 .pyTEMlib.files.pkl
+tests/readers/microscopy/em/tem/EMDReader_Spectrum_FEI.emd

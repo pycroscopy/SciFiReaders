@@ -100,13 +100,13 @@ class EMDReader(sidpy.Reader):
         if 'Data' not in self._h5_file:
             raise TypeError('Velox EMD File is empty')
     
-        number_of_datasets=0
+        number_of_datasets = 0
         use_tqdm = False
         for key in self._h5_file['Data']:
             if key == 'SpectrumStream':
                 number_of_datasets += len(self._h5_file['Data']['SpectrumStream'].keys())
         if number_of_datasets > 1:
-            progress_bar = tqdm(total=number_of_datasets) # Initialise
+            progress_bar = tqdm(total=number_of_datasets)  # Initialise
             use_tqdm = tqdm_available
         for key in self._h5_file['Data']:
             self.image_key = 'None'
@@ -157,7 +157,7 @@ class EMDReader(sidpy.Reader):
         else:
             data_array = self.get_eds_spectrum()
             if data_array.shape[0] == 1 and data_array.shape[1] == 1:
-                data_array = np.array(data_array).flatten()
+                data_array = np.squeeze(data_array)
                 chunks = 1
             else:
                 chunks= [32, 32, data_array.shape[2]]
@@ -166,7 +166,7 @@ class EMDReader(sidpy.Reader):
                 if data_array.shape[1]> chunks[1]:
                     chunks[1] = data_array.shape[1]
                 
-            self.datasets[key] = sidpy.Dataset.from_array(self.data_array, chunks=chunks)
+            self.datasets[key] = sidpy.Dataset.from_array(data_array, chunks=chunks)
             
        
         self.data_array=np.zeros([1,1])

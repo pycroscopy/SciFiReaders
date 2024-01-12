@@ -39,7 +39,7 @@ class TestEMDReader(unittest.TestCase):
         os.remove(file_name)
 
         self.assertIsInstance(dataset, sidpy.Dataset)
-        self.assertTrue(datasets.ndim == 1)
+        self.assertTrue(dataset.ndim == 1)
         self.assertTrue(len(datasets) == 1)
         print(datasets['Channel_000'].original_metadata)
 
@@ -311,20 +311,20 @@ class TestEMDReader(unittest.TestCase):
         file_name  = wget.download(data_path + '/EMDReader_SpectrumImage_Si.emd')
         emd_reader = SciFiReaders.EMDReader(file_name)
         datasets = emd_reader.read()
-        dataset = datasets['Channel_000']
+        dataset = datasets['Channel_001']
         emd_reader.close()
         os.remove(file_name)
 
         self.assertIsInstance(dataset, sidpy.Dataset)
         self.assertTrue(dataset.data_type.name, 'IMAGE_STACK')
-        self.assertTrue(datasets[1].data_type.name, 'SPECTRAL_IMAGE')
-        self.assertTrue(datasets[1].ndim == 3)
+        self.assertTrue(dataset.data_type.name, 'SPECTRAL_IMAGE')
+        self.assertTrue(dataset.ndim == 3)
         self.assertTrue(len(datasets) == 2)
         print(dataset.original_metadata)
         original_metadata = dataset.original_metadata
 
         self.assertTrue(dataset.units == 'counts')
-        self.assertTrue(dataset.shape == (5, 16, 16))
+        self.assertTrue(datasets['Channel_000'].shape == (5, 16, 16))
         """self.assertTrue(datasets[1].shape == (512, 512, 4096))
         self.assertEqual(float(dataset[1,10,10]), 23053.)
         self.assertEqual(float(dataset[3, 10, 10]), 23228.0)

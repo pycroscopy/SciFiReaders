@@ -11,10 +11,12 @@ import sys
 import os
 from pywget import wget
 
-sys.path.append("../../../../../SciFiReaders/")
-import SciFiReaders
 
-data_path = 'https://raw.githubusercontent.com/pycroscopy/SciFidataset/main/data/microscopy/em/tem/'
+sys.path.insert(0, "../../../../../SciFiReaders/")
+import SciFiReaders
+print(SciFiReaders.__version__)
+
+data_path = 'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/microscopy/em/tem/'
 
 
 class TestNionReader(unittest.TestCase):
@@ -24,7 +26,7 @@ class TestNionReader(unittest.TestCase):
         file_name = wget.download(data_path + '/NionReader_ImageStack_STO_HAADF.h5')
         reader = SciFiReaders.NionReader(file_name)
         datasets = reader.read()
-        dataset  = datasets['Channel_000']
+        dataset = datasets['Channel_000']
         self.assertEqual(dataset.title, '10-Recording of SuperScan (HAADF)')
         self.assertEqual(dataset.source, 'NionReader')
         self.assertEqual(dataset.data_type.name, 'IMAGE_STACK')
@@ -32,7 +34,8 @@ class TestNionReader(unittest.TestCase):
         self.assertEqual(float(dataset[13, 200, 200]), 0.392993688583374)
         self.assertEqual(float(dataset[17, 200, 200]), 0.4997090995311737)
         self.assertEqual(dataset.shape, (25, 512, 512))
-        self.assertEqual(dataset.original_metadata['dimensional_calibrations'][1], {'offset': -4.0, 'scale': 0.015625, 'units': 'nm'})
+        self.assertEqual(dataset.original_metadata['dimensional_calibrations'][1],
+                         {'offset': -4.0, 'scale': 0.015625, 'units': 'nm'})
 
         os.remove(file_name)
 
@@ -41,7 +44,7 @@ class TestNionReader(unittest.TestCase):
         file_name = wget.download(data_path + '/NionReader_Image_STO_HAADF.ndata')
         reader = SciFiReaders.NionReader(file_name)
         datasets = reader.read()
-        dataset  = datasets['Channel_000']
+        dataset = datasets['Channel_000']
         self.assertEqual(dataset.title, '19-SuperScan (HAADF) 9')
         self.assertEqual(dataset.source, 'NionReader')
         self.assertEqual(dataset.data_type.name, 'IMAGE')
@@ -68,6 +71,6 @@ class TestNionReader(unittest.TestCase):
         file_name = wget.download(data_path + '/DMReader_Image_SI-Survey.dm3')
         reader = SciFiReaders.NionReader(file_name)
         datasets = reader.read()
-        dataset  = datasets['Channel_000']
+        dataset = datasets['Channel_000']
         self.assertEqual(dataset.data_type.name, 'UNKNOWN')
         os.remove(file_name)
