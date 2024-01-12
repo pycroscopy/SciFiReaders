@@ -16,7 +16,8 @@ requirements = [  # basic
                 'cytoolz',  # dask installation failing without this
                 'dask>=2.20.0',
                 'sidpy>=0.11.2',
-                'numba>=0.59.0rc1',
+                'numba==0.58; python_version < "3.11"',
+                'numba>=0.59.0rc1; python_version >= "3.11"',
                 'ipython>=7.1.0',
                 'pyUSID',
                 # generic:
