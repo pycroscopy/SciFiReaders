@@ -53,10 +53,10 @@ setuptools.setup(
     author_email='pycroscopy@gmail.com',
     install_requires=requirements,
     setup_requires=['pytest-runner'],
-    tests_require=['pytest', 'pywget', 'hyperspy', 'pyUSID'],
+    tests_require=['unitest', 'pytest', 'pywget', 'hyperspy', 'pyUSID', 'gwyfile'],
     platforms=['Linux', 'Mac OSX', 'Windows 11/10/8.1/8/7'],
     # package_data={'sample':['dataset_1.dat']}
-    test_suite='pytest',
+    test_suite='unittest',
     # dependency='',
     # dependency_links=[''],
     include_package_data=True,
