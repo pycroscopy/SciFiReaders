@@ -1,6 +1,6 @@
 from codecs import open
 import os
-from setuptools import setup, find_packages
+import setuptools
 
 here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, 'README.rst')) as f:
@@ -11,19 +11,20 @@ with open(os.path.join(here, 'SciFiReaders/__version__.py')) as f:
 
 # TODO: Move requirements to requirements.txt
 requirements = [  # basic
-                'numpy==1.24.4',
+                'numpy',
                 'toolz',  # dask installation failing without this
                 'cytoolz',  # dask installation failing without this
                 'dask>=2.20.0',
                 'sidpy>=0.11.2',
-                'numba==0.57.1',
+                'numba==0.58; python_version < "3.11"',
+                'numba>=0.59.0rc1; python_version >= "3.11"',
                 'ipython>=7.1.0',
                 'pyUSID',
                 # generic:
                 # Reader specific ones go to extras
                ]
 
-setup(
+setuptools.setup(
     name='SciFiReaders',
     version=__version__,
     description='Tools for extracting data and metadata from scientific data '
@@ -40,21 +41,22 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: Implementation :: CPython',
         'Topic :: Scientific/Engineering :: Information Analysis'],
     keywords=['imaging', 'spectra', 'multidimensional', 'scientific'],
-    packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*",
-                                    "tests"]),
+    packages=setuptools.find_packages(exclude=["*.tests", "*.tests.*", "tests.*",
+                                               "tests"]),
     url='https://pycroscopy.github.io/SciFiReaders/about.html',
     license='MIT',
     author='Pycroscopy contributors',
     author_email='pycroscopy@gmail.com',
     install_requires=requirements,
     setup_requires=['pytest-runner'],
-    tests_require=['pytest', 'pywget', 'hyperspy', 'pyUSID'],
+    tests_require=['unitest', 'pytest', 'pywget', 'hyperspy', 'pyUSID', 'gwyfile'],
     platforms=['Linux', 'Mac OSX', 'Windows 11/10/8.1/8/7'],
     # package_data={'sample':['dataset_1.dat']}
-    test_suite='pytest',
+    test_suite='unittest',
     # dependency='',
     # dependency_links=[''],
     include_package_data=True,
@@ -66,25 +68,4 @@ setup(
         'sid': ['pyUSID', 'pyNSID'],
         'image': ['pillow', 'tifffile']
     },
-    # If there are data files included in your packages that need to be
-    # installed, specify them here.  If using Python 2.6 or less, then these
-    # have to be included in MANIFEST.in as well.
-    # package_data={
-    #     'sample': ['package_data.dat'],
-    # },
-
-    # Although 'package_data' is the preferred approach, in some case you may
-    # need to place data files outside of your packages. See:
-    # http://docs.python.org/3.4/distutils/setupscript.html#installing-additional-files # noqa
-    # In this case, 'data_file' will be installed into '<sys.prefix>/my_data'
-    # data_files=[('my_data', ['data/data_file'])],
-
-    # To provide executable scripts, use entry points in preference to the
-    # "scripts" keyword. Entry points provide cross-platform support and allow
-    # pip to create the appropriate form of executable for the target platform.
-    # entry_points={
-    #     'console_scripts': [
-    #         'sample=sample:main',
-    #     ],
-    # },
 )
