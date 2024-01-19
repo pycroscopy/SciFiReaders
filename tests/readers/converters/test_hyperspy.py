@@ -12,8 +12,8 @@ import numpy as np
 import sys
 import sidpy
 
-hyperspy = pytest.importorskip("hyperspy", reason="hyperspy not installed")
-
+# hyperspy = pytest.importorskip("hyperspy", reason="hyperspy not installed")
+"""
 try:
     import hyperspy.api as hs
     import hyperspy.datasets.artificial_data as ad
@@ -22,9 +22,9 @@ except ModuleNotFoundError:
     ad = None
 
 
-sys.path.append("../../../SciFiReaders/")
+sys.path.insert(0, "../../../SciFiReaders/")
 import SciFiReaders
-
+print(SciFiReaders.__version__)
 
 class TestHyperspy(unittest.TestCase):
     def test_signal_1d(self):
@@ -57,3 +57,4 @@ class TestHyperspy(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+"""

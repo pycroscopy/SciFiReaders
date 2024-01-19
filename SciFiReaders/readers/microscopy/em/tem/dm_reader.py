@@ -126,13 +126,21 @@ def read_string(dm_file, length=1):
 
 class DMReader(sidpy.Reader):
     """
-    file_path: filepath to dm3 or dm4 file.
+    Reader of Digital Micrograph image and spectroscopy data
 
-    warn('This Reader will eventually be moved to the ScopeReaders package'
-         '. Be prepared to change your import statements',
-         FutureWarning)
+    This reader reads (attribute read) all the different data in the file and returns it as a dictionary 
+    of sidpy.Datasets
+
+    Parameter:
+    ---------
+    file_path: str
+        filepath to dm3 or dm4 file.
+
+    Return:
+    ------
+    datasets: dict
+        dictionary of sidpy datasets
     """
-
     def __init__(self, file_path, verbose=False):
         super().__init__(file_path)
 
@@ -227,7 +235,8 @@ class DMReader(sidpy.Reader):
             print(key, dataset)
             if 'urvey' in dataset.title:
                 main_dataset_key = key
-        print(main_dataset_key)
+        if self.verbose:
+            print(main_dataset_key)
         self.datasets[main_dataset_key].original_metadata.update(self.__stored_tags)
         self.close()
         return self.datasets

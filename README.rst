@@ -26,6 +26,6 @@ SciFiReaders
     :alt: Coverage
 
 Tools for extracting data and metadata from scientific data files.
-Extracted information are returned as `sidpy.Dataset <https://pycroscopy.github.io/sidpy/_autosummary/sidpy.sid.dataset.Dataset.html#sidpy.sid.dataset.Dataset>`_ objects.
+Extracted information are returned as a dictionary of `sidpy.Dataset <https://pycroscopy.github.io/sidpy/_autosummary/sidpy.sid.dataset.Dataset.html#sidpy.sid.dataset.Dataset>`_ objects.
 
 Please see `SciFiReaders documentation website <https://pycroscopy.github.io/SciFiReaders/index.html>`_ for more information.

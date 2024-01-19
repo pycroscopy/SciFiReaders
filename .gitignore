@@ -113,3 +113,8 @@ test_scripts/
 /SciFiReaders/readers/microscopy/spm/afm/mdt_reader/nt_mdt.svg
 /SciFiReaders/readers/microscopy/spm/afm/mdt_reader/MDTdeclaration.py
 /SciFiReaders/readers/microscopy/spm/afm/mdt_reader/MDTfile.py
+.pyTEMlib.files.pkl
+tests/readers/microscopy/em/tem/EMDReader_Spectrum_FEI.emd
+tests/readers/converters/server_user_id.txt
+tests/readers/microscopy/em/tem/DMReader_Image_SI-Survey.dm3
+tests/readers/microscopy/em/tem/server_user_id.txt
