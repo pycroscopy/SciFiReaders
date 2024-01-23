@@ -251,7 +251,6 @@ class EMDReader(sidpy.Reader):
                                                                dimension_type='spatial'))
             
             # for diffraction patterns
-            # if you have an image stack of diffraction patterns, may not work?
             if '1/' in self.metadata['BinaryResult']['PixelUnitX']:
                 self.datasets[-1].set_dimension(0, sidpy.Dimension(np.arange(self.data_array.shape[0]) * (scale_x / 1e18),
                                                                    name='u', units='1/nm',
