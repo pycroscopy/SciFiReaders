@@ -87,10 +87,12 @@ class AxzReader(Reader):
         data_set.set_dimension(0, sid.Dimension(np.linspace(0, sizeX , resX), 'x'))
         data_set.x.dimension_type = 'spatial'
         data_set.x.quantity = 'distance'
+        data_set.x.units = 'um'
 
         data_set.set_dimension(1, sid.Dimension(np.linspace(0, sizeY , resY), 'y'))
         data_set.y.dimension_type = 'spatial'
         data_set.y.quantity = 'distance'
+        data_set.y.units = 'um'
 
         data_set.metadata = self._image_metadata(obj)
 
