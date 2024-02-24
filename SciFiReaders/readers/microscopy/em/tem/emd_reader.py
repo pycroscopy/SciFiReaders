@@ -120,7 +120,7 @@ class EMDReader(sidpy.Reader):
                     self.get_image()
                     self.extract_crucial_metadata(self.key)
             elif key == 'SpectrumStream':
-                if not no_eds:
+                if not self.no_eds:
                     for stream_key in self._h5_file['Data']['SpectrumStream']:
                         self.get_data('Data/SpectrumStream/' + stream_key)
                         self.get_eds(eds_stream)
