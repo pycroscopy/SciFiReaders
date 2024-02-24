@@ -52,7 +52,7 @@ class EMDReader(sidpy.Reader):
     datasets: dict
         dictionary of sidpy.Datasets
     """
-    def __init__(self, file_path):
+    def __init__(self, file_path, sum_frames=False, no_eds=False):
         super(EMDReader, self).__init__(file_path)
 
         # Let h5py raise an OS error if a non-HDF5 file was provided
@@ -64,8 +64,11 @@ class EMDReader(sidpy.Reader):
         self.data_array = None
         self.metadata = None
         self.label_dict = {}
+        self.no_eds = no_eds
+        self.sum_frames = sum_frames
             
         self.number_of_frames = 1
+
 
     def can_read(self):
         """
@@ -249,28 +252,52 @@ class EMDReader(sidpy.Reader):
         key = f"Channel_{int(self.channel_number):03d}"
         self.key = key
         self.channel_number += 1
+        
+        if self.metadata['BinaryResult']['PixelUnitX'] == '1/m':
+            units = '1/nm'
+            quantity = 'reciprocal distance'
+            dimension_type='reciprocal'
+            to_nm = 1e-9
+        else:
+            units = 'nm'
+            quantity = 'distance'
+            dimension_type='spatial'
+            to_nm = 1e9
 
-        scale_x = float(self.metadata['BinaryResult']['PixelSize']['width']) * 1e9
-        scale_y = float(self.metadata['BinaryResult']['PixelSize']['height']) * 1e9
+        scale_x = float(self.metadata['BinaryResult']['PixelSize']['width']) * to_nm
+        scale_y = float(self.metadata['BinaryResult']['PixelSize']['height']) * to_nm
+        offset_x = float(self.metadata['BinaryResult']['Offset']['x']) * to_nm
+        offset_y = float(self.metadata['BinaryResult']['Offset']['y'])  * to_nm
+        
+        if self.sum_frames:
+            data_array = np.zeros([self.data_array.shape[0], self.data_array.shape[1], 1])
+            for i in range(self.data_array.shape[2]):
+                data_array[:, :, 0] += self.data_array[:, :, i]
+            self.data_array = data_array
 
         if self.data_array.shape[2] == 1:
             self.datasets[key] = sidpy.Dataset.from_array(self.data_array[:, :, 0])
             self.datasets[key].data_type = 'image'
-            self.datasets[key].set_dimension(0, sidpy.Dimension(np.arange(self.data_array.shape[0]) * scale_x,
-                                                               name='x', units='nm',
-                                                               quantity='distance',
-                                                               dimension_type='spatial'))
-            self.datasets[key].set_dimension(1, sidpy.Dimension(np.arange(self.data_array.shape[1]) * scale_y,
-                                                               name='y', units='nm',
-                                                               quantity='distance',
+            self.datasets[key].set_dimension(0, sidpy.Dimension(np.arange(self.data_array.shape[0]) * scale_x + offset_x,
+                                                               name='x', units=units,
+                                                               quantity=quantity,
+                                                               dimension_type=dimension_type))
+            self.datasets[key].set_dimension(1, sidpy.Dimension(np.arange(self.data_array.shape[1]) * scale_y + offset_y,
+                                                               name='y', units=units,
+                                                               quantity=quantity,
                                                                dimension_type='spatial'))
         else:
             # There is a problem with random access of data due to chunking in hdf5 files
             # Speed-up copied from hyperspy.ioplugins.EMDReader.FEIEMDReader
-
-            data_array = np.empty(self.data_array.shape)
-            self.data_array.read_direct(data_array)
-            self.data_array = np.rollaxis(data_array, axis=2)
+            if self.sum_frames:
+                data_array = np.zeros(self.data_array.shape[0:2])
+                self.data_array.read_direct(data_array)
+                self.data_array = np.rollaxis(data_array, axis=2)
+                self.data_array = self.data_array.sum(axis=2)
+            else:
+                data_array = np.empty(self.data_array.shape)
+                self.data_array.read_direct(data_array)
+                self.data_array = np.rollaxis(data_array, axis=2)
             # np.moveaxis(data_array, source=[0, 1, 2], destination=[2, 0, 1])
             
             self.datasets[key] = sidpy.Dataset.from_array(self.data_array)
@@ -279,13 +306,13 @@ class EMDReader(sidpy.Reader):
                                                                name='frame', units='frame',
                                                                quantity='time',
                                                                dimension_type='temporal'))
-            self.datasets[key].set_dimension(1, sidpy.Dimension(np.arange(self.data_array.shape[1]) * scale_x,
-                                                               name='x', units='nm',
-                                                               quantity='distance',
-                                                               dimension_type='spatial'))
-            self.datasets[key].set_dimension(2, sidpy.Dimension(np.arange(self.data_array.shape[2]) * scale_y,
-                                                               name='y', units='nm',
-                                                               quantity='distance',
+            self.datasets[key].set_dimension(1, sidpy.Dimension(np.arange(self.data_array.shape[0]) * scale_x + offset_x,
+                                                               name='x', units=units,
+                                                               quantity=quantity,
+                                                               dimension_type=dimension_type))
+            self.datasets[key].set_dimension(2, sidpy.Dimension(np.arange(self.data_array.shape[1]) * scale_y + offset_y,
+                                                               name='y', units=units,
+                                                               quantity=quantity,
                                                                dimension_type='spatial'))
         self.datasets[key].original_metadata = self.metadata
 
@@ -293,6 +320,7 @@ class EMDReader(sidpy.Reader):
         self.datasets[key].quantity = 'intensity'
         if self.image_key in self.label_dict:
             self.datasets[key].title = self.label_dict[self.image_key]
+        self.data_array=np.zeros([1,1])
 
     def extract_crucial_metadata(self, key):
         metadata = self.datasets[key].original_metadata
