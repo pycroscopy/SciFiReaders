@@ -120,12 +120,13 @@ class EMDReader(sidpy.Reader):
                     self.get_image()
                     self.extract_crucial_metadata(self.key)
             elif key == 'SpectrumStream':
-                for stream_key in self._h5_file['Data']['SpectrumStream']:
-                    self.get_data('Data/SpectrumStream/' + stream_key)
-                    self.get_eds(eds_stream)
-                    self.extract_crucial_metadata(self.key)
-                    if use_tqdm:
-                        progress_bar.update(1)
+                if not no_eds:
+                    for stream_key in self._h5_file['Data']['SpectrumStream']:
+                        self.get_data('Data/SpectrumStream/' + stream_key)
+                        self.get_eds(eds_stream)
+                        self.extract_crucial_metadata(self.key)
+                        if use_tqdm:
+                            progress_bar.update(1)
         if use_tqdm:
             progress_bar.close()
         self.close()
@@ -170,12 +171,9 @@ class EMDReader(sidpy.Reader):
                     chunks[1] = data_array.shape[1]
                 
             self.datasets[key] = sidpy.Dataset.from_array(data_array, chunks=chunks)
-            
        
         self.data_array=np.zeros([1,1])
-
         self.datasets[key].original_metadata = self.metadata
-
         detectors = self.datasets[key].original_metadata['Detectors']
         if eds_stream:
             pass
@@ -289,16 +287,11 @@ class EMDReader(sidpy.Reader):
         else:
             # There is a problem with random access of data due to chunking in hdf5 files
             # Speed-up copied from hyperspy.ioplugins.EMDReader.FEIEMDReader
-            if self.sum_frames:
-                data_array = np.zeros(self.data_array.shape[0:2])
-                self.data_array.read_direct(data_array)
-                self.data_array = np.rollaxis(data_array, axis=2)
-                self.data_array = self.data_array.sum(axis=2)
-            else:
-                data_array = np.empty(self.data_array.shape)
-                self.data_array.read_direct(data_array)
-                self.data_array = np.rollaxis(data_array, axis=2)
-            # np.moveaxis(data_array, source=[0, 1, 2], destination=[2, 0, 1])
+    
+            data_array = np.empty(self.data_array.shape)
+            self.data_array.read_direct(data_array)
+            self.data_array = np.rollaxis(data_array, axis=2)
+        # np.moveaxis(data_array, source=[0, 1, 2], destination=[2, 0, 1])
             
             self.datasets[key] = sidpy.Dataset.from_array(self.data_array)
             self.datasets[key].data_type = 'image_stack'
@@ -306,11 +299,11 @@ class EMDReader(sidpy.Reader):
                                                                name='frame', units='frame',
                                                                quantity='time',
                                                                dimension_type='temporal'))
-            self.datasets[key].set_dimension(1, sidpy.Dimension(np.arange(self.data_array.shape[0]) * scale_x + offset_x,
+            self.datasets[key].set_dimension(1, sidpy.Dimension(np.arange(self.data_array.shape[1]) * scale_x + offset_x,
                                                                name='x', units=units,
                                                                quantity=quantity,
                                                                dimension_type=dimension_type))
-            self.datasets[key].set_dimension(2, sidpy.Dimension(np.arange(self.data_array.shape[1]) * scale_y + offset_y,
+            self.datasets[key].set_dimension(2, sidpy.Dimension(np.arange(self.data_array.shape[2]) * scale_y + offset_y,
                                                                name='y', units=units,
                                                                quantity=quantity,
                                                                dimension_type='spatial'))
