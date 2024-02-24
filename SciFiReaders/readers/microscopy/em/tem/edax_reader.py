@@ -50,6 +50,7 @@ def reader(h5_file):
     datasets = {}
     # read spectum  images first
     for dataset_item in all_datasets_list:
+        print(dataset_item)
         if 'Live Map' in dataset_item:
             if 'SPD' in dataset_item:
                 dataset = read_spectrum_image(base_group, dataset_item)
