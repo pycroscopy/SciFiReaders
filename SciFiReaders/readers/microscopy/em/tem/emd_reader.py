@@ -308,6 +308,9 @@ class EMDReader(sidpy.Reader):
                                                                dimension_type='spatial'))
         self.datasets[key].original_metadata = self.metadata
 
+        if not True:
+            print('nothing')
+
         self.datasets[key].units = 'counts'
         self.datasets[key].quantity = 'intensity'
         if self.image_key in self.label_dict:
