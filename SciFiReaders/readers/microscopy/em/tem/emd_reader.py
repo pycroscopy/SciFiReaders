@@ -299,14 +299,13 @@ class EMDReader(sidpy.Reader):
         else:
             # There is a problem with random access of data due to chunking in hdf5 files
             # Speed-up copied from hyperspy.ioplugins.EMDReader.FEIEMDReader
-    
             data_array = np.empty(self.data_array.shape)
             self.data_array.read_direct(data_array)
             self.data_array = np.rollaxis(data_array, axis=2)
-            # np.moveaxis(data_array, source=[0, 1, 2], destination=[2, 0, 1])
             
             self.datasets[key] = sidpy.Dataset.from_array(self.data_array)
             self.datasets[key].data_type = 'image_stack'
+
             self.datasets[key].set_dimension(0, sidpy.Dimension(np.arange(self.data_array.shape[0]),
                                                                name='frame', units='frame',
                                                                quantity='time',
