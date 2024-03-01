@@ -90,6 +90,21 @@ class NSIDReader(sidpy.Reader):
             return read_h5py_dataset(h5_object)
         else:
             return self.read_all(parent=h5_object)
+        
+        #TODO: We need to add the ability to read functions in any sidpy datasets.
+        # We will assume that fitting functions are contained within a dictionary of the same name. 
+        #They will have been saved with dill and encoded. To decode them, use:
+
+        '''
+        fit_fn_packed = fit_data.metadata['fitting_functions']
+        loaded_dict = {}
+        fit_fns = []
+        for key in fit_fn_packed.keys():
+            encoded_value = fit_fn_packed['my_function']
+            serialized_value = base64.b64decode(encoded_value)
+            loaded_dict[key] = dill.loads(serialized_value)
+            fit_fns.append(loaded_dict[key]) #retrieve the function
+        '''
 
     def __validate_obj_in_same_file(self, h5_object):
         """
