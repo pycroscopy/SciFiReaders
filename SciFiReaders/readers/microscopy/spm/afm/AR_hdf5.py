@@ -95,9 +95,9 @@ class ARhdf5Reader(Reader):
             self.channels_name = [name for name in channels_name]
 
         try:
-            self.points_per_sec = np.float(self.note_value('ARDoIVPointsPerSec'))
+            self.points_per_sec = float(self.note_value('ARDoIVPointsPerSec'))
         except NameError:
-            self.points_per_sec = np.float(self.note_value('NumPtsPerSec'))
+            self.points_per_sec = float(self.note_value('NumPtsPerSec'))
 
         if self.verbose:
             print('Map size [X, Y]: ', self.map_size)
@@ -116,11 +116,11 @@ class ARhdf5Reader(Reader):
         points_trimmed = np.array(self.segments[:, :, extension_idx]) - short_ext
 
         # Open the output hdf5 file
-        x_dim = np.linspace(0, np.float(self.note_value('FastScanSize')),
+        x_dim = np.linspace(0, float(self.note_value('FastScanSize')),
                             self.map_size['X'])
-        y_dim = np.linspace(0, np.float(self.note_value('FastScanSize')),
+        y_dim = np.linspace(0, float(self.note_value('FastScanSize')),
                             self.map_size['Y'])
-        z_dim = np.arange(tot_length) / np.float(self.points_per_sec)
+        z_dim = np.arange(tot_length) / float(self.points_per_sec)
 
         datasets = [] #list of sidpy datasets
 
