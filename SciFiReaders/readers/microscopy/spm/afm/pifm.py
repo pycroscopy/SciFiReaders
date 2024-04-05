@@ -17,13 +17,14 @@ import h5py
 from pyNSID.io.hdf_io import write_nsid_dataset
 from pyNSID.io.hdf_io import create_indexed_group, write_simple_attrs
 
+
 class PiFMTranslator(Reader):
     """
     Class that writes images, spectrograms, point spectra and associated ancillary data sets to h5 file in pyUSID data
     structure.
     """
 
-    def read(self ):
+    def read(self):
         """
         Parameters
         ----------
@@ -101,13 +102,13 @@ class PiFMTranslator(Reader):
         spectrum_desc = {}
         pspectrum_desc = {}
         
-        with open(self.path,'r', encoding="ISO-8859-1") as f:
+        with open(self.path, 'r', encoding="ISO-8859-1") as f:
 
             lines = f.readlines()
             for index, line in enumerate(lines):
 
                 sline = [val.strip() for val in line.split(':')]
-                #if true, then file describes image.
+                # if true, then file describes image.
 
                 if sline[0].startswith('FileDescBegin'):
                     no_descriptors = 5

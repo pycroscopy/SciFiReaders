@@ -11,13 +11,14 @@ with open(os.path.join(here, 'SciFiReaders/__version__.py')) as f:
 
 # TODO: Move requirements to requirements.txt
 requirements = [  # basic
+                'setuptools==58.2.0',
                 'numpy',
                 'toolz',  # dask installation failing without this
                 'cytoolz',  # dask installation failing without this
                 'dask>=2.20.0',
                 'sidpy>=0.11.2',
-                'numba==0.58; python_version < "3.11"',
-                'numba>=0.59.0rc1; python_version >= "3.11"',
+                'numba==0.58; python_version < "3.10"',
+                'numba>=0.59.0rc1; python_version >= "3.10"',
                 'ipython>=7.1.0',
                 'pyUSID',
                 # generic:
@@ -53,10 +54,10 @@ setuptools.setup(
     author_email='pycroscopy@gmail.com',
     install_requires=requirements,
     setup_requires=['pytest-runner'],
-    tests_require=['unitest', 'pytest', 'pywget', 'hyperspy', 'pyUSID', 'gwyfile'],
+    tests_require=['pytest', 'pywget', 'hyperspy', 'pyUSID', 'gwyfile'],
     platforms=['Linux', 'Mac OSX', 'Windows 11/10/8.1/8/7'],
     # package_data={'sample':['dataset_1.dat']}
-    test_suite='unittest',
+    test_suite='pytest',
     # dependency='',
     # dependency_links=[''],
     include_package_data=True,
