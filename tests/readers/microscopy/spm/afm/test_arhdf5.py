@@ -9,7 +9,7 @@ try:
 except ImportError:
     import pip
     pip.main(['install', 'gdown'])
-i
+
 @pytest.fixture
 def arhdf5_file():
     file_path = 'PTO_SS_00.h5'
