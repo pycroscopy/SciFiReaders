@@ -21,6 +21,7 @@ requirements = [  # basic
                 'numba>=0.59.0rc1; python_version >= "3.10"',
                 'ipython>=7.1.0',
                 'pyUSID',
+                'gdown',
                 # generic:
                 # Reader specific ones go to extras
                ]
@@ -54,7 +55,7 @@ setuptools.setup(
     author_email='pycroscopy@gmail.com',
     install_requires=requirements,
     setup_requires=['pytest-runner'],
-    tests_require=['pytest', 'pywget', 'hyperspy', 'pyUSID', 'gwyfile'],
+    tests_require=['pytest', 'pywget', 'hyperspy', 'pyUSID', 'gwyfile', 'gdown'],
     platforms=['Linux', 'Mac OSX', 'Windows 11/10/8.1/8/7'],
     # package_data={'sample':['dataset_1.dat']}
     test_suite='pytest',
