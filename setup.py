@@ -21,6 +21,7 @@ requirements = [  # basic
                 'numba>=0.59.0rc1; python_version >= "3.10"',
                 'ipython>=7.1.0',
                 'pyUSID',
+                'gdown',
                 # generic:
                 # Reader specific ones go to extras
                ]
