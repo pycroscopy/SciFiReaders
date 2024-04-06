@@ -5,11 +5,11 @@ from pywget import wget
 import os
 import gdown
 try:
-    import gwyfile
+    import gdown
 except ImportError:
     import pip
     pip.main(['install', 'gdown'])
-
+i
 @pytest.fixture
 def arhdf5_file():
     file_path = 'PTO_SS_00.h5'
