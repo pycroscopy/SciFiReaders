@@ -125,17 +125,32 @@ class GwyddionReader(Reader):
         data_set.data_type = 'Image'
 
         #Add quantity and units
-        data_set.units = metadata['ZUnits']
+        
+        try:
+            data_set.units = metadata['ZUnits']
+        except Exception as e:
+            # If an error occurs, fall back to using "a.u"
+            data_set.units = "a.u"
         data_set.quantity = metadata['Title']
-       
+
         #Add dimension info
         data_set.set_dimension(0, sid.Dimension(np.linspace(0, metadata['XReal'], num_cols),
                                                 name = 'x',
-                                                units=metadata['XYUnits'], quantity = 'x',
+                                                try:
+                                                    units = metadata['XYUnits'],
+                                                except Exception as e:
+                                                    # If an error occurs, fall back to using "a.u"
+                                                    units= "a.u",  
+                                                quantity = 'x',
                                                 dimension_type='spatial'))
         data_set.set_dimension(1, sid.Dimension(np.linspace(0, metadata['YReal'], num_rows),
                                                 name = 'y',
-                                                units=metadata['XYUnits'], quantity = 'y',
+                                                try:
+                                                    units = metadata['XYUnits'], 
+                                                except Exception as e:
+                                                    # If an error occurs, fall back to using "a.u"
+                                                    units= "a.u",
+                                                quantity = 'y',
                                                 dimension_type='spatial'))
 
         # append metadata
