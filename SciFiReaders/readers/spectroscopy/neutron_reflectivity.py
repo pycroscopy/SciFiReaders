@@ -52,7 +52,8 @@ class NeutronReflectivity(Reader):
         metadata_dict['raw_data'] = data
         data_set.original_metadata = metadata_dict
 
-
+        return data_set
+    
     def _read_data(self):
         
         with open(self.file_path, 'r') as f:
