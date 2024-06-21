@@ -25,18 +25,18 @@ class NeutronReflectivity(Reader):
         """
         self.file_path = self._input_file_path
         metadata, headings, data = self._read_data()
-
+        self.headings = headings
         # create the sidpy dataset
         data_set = Dataset.from_array(data[:,1], name='Neutron Reflectivity')
 
         data_set.data_type = 'spectrum'
-        data_set.units = headings[1][1]
-        data_set.quantity = headings[1][0]
+        data_set.units = str(headings[1][1])
+        data_set.quantity = str(headings[1][0])
 
         # set dimensions
-        data_set.set_dimension(0, Dimension(data[:,0], name=headings[0][0],
-                                                    units = headings[0][1],
-                                                    quantity=headings[0][0],
+        data_set.set_dimension(0, Dimension(data[:,0], name=str(headings[0][0]),
+                                                    units = str(headings[0][1]),
+                                                    quantity=str(headings[0][0]),
                                                     dimension_type='spectral'))
         
         metadata['column_headings'] = headings
