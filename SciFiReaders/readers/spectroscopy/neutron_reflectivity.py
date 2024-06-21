@@ -25,7 +25,7 @@ class NeutronReflectivity(Reader):
         """
         self.file_path = self._input_file_path
         metadata, headings, data = self._read_data()
-        self.headings = headings
+      
         # create the sidpy dataset
         data_set = Dataset.from_array(data[:,1], name='Neutron Reflectivity')
 
@@ -38,11 +38,19 @@ class NeutronReflectivity(Reader):
                                                     units = str(headings[0][1]),
                                                     quantity=str(headings[0][0]),
                                                     dimension_type='spectral'))
-        
-        metadata['column_headings'] = headings
-        metadata['raw_data'] = data
-        
-        data_set.metadata = metadata
+
+        #get the metadata right
+        metadata_dict = {}
+       
+        for line in metadata:
+            output = line.split(':')
+            if len(output)>1:
+                metadata_dict[output[0]] = output[1]
+                
+        metadata_dict['header'] = metadata
+        metadata_dict['column_headings'] = headings
+        metadata_dict['raw_data'] = data
+        data_set.original_metadata = metadata_dict
 
 
     def _read_data(self):
