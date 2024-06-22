@@ -1,6 +1,5 @@
 import unittest
 import sys
-import sidpy
 from pywget import wget
 import os
 sys.path.append("../../../../SciFiReaders/")
@@ -14,7 +13,7 @@ class TestBruker(unittest.TestCase):
         # Test if the force curve file can be successfully read
         file_path = 'nr_file.txt'
         wget.download(neutrons_file_path, out=file_path)
-        reader = sidpy.NeutronReflectivity(file_path)
+        reader = sr.NeutronReflectivity(file_path)
         data_set = reader.read()
 
         assert data_set.shape == (242,), "Shape of dataset should be 242 but is instead {}".format(data_set.shape)
