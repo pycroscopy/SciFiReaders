@@ -757,15 +757,15 @@ class TestIgorIBW(unittest.TestCase):
                         "but was read as {}".format(key, original_metadata[key], metadata[key])
 
         #for ind in range(len(datasets)):
-        for ind in datasets:
-            assert type(datasets[ind])== sidpy.sid.dataset.Dataset, "Dataset No. {} not read in as sidpy dataset" \
-                    "but was instead read in as {}".format(ind, type(datasets[ind]))
+        for ind, key in enumerate(datasets):
+            assert type(datasets[key])== sidpy.sid.dataset.Dataset, "Dataset No. {} not read in as sidpy dataset" \
+                    "but was instead read in as {}".format(ind, type(datasets[key]))
 
-            assert datasets[ind].shape[0]==1261, "Dataset[{}] is of size 1261 but was read in as {}".format(ind, datasets[ind].shape[0])
-            assert type(datasets[ind]._axes[0]) == sidpy.sid.dimension.Dimension, "Dataset should have dimension type " \
-                                           "of sidpy Dimension, but is instead {}".format(type(datasets[ind]._axes))
-            assert datasets[ind].data_descriptor == data_descriptors[int(ind[-1])], "Dataset {} " \
-            "should have descriptor {} but instead has descriptor {}".format(ind, data_descriptors[int(ind[-1])], datasets[ind].data_descriptor)
+            assert datasets[key].shape[0]==1261, "Dataset[{}] is of size 1261 but was read in as {}".format(ind, datasets[key].shape[0])
+            assert type(datasets[key]._axes[0]) == sidpy.sid.dimension.Dimension, "Dataset should have dimension type " \
+                                           "of sidpy Dimension, but is instead {}".format(type(datasets[key]._axes))
+            assert datasets[key].data_descriptor == data_descriptors[ind], "Dataset {} " \
+            "should have descriptor {} but instead has descriptor {}".format(ind, data_descriptors[ind], datasets[key].data_descriptor)
 
         os.remove(file_path)
 
@@ -1429,18 +1429,18 @@ class TestIgorIBW(unittest.TestCase):
 
             
         #for ind in range(len(datasets)):
-        for ind in datasets:
-            assert type(datasets[ind])== sidpy.sid.dataset.Dataset, "Dataset No. {} not read in as sidpy dataset" \
-                    "but was instead read in as {}".format(ind, type(datasets[ind]))
+        for ind,key in enumerate(datasets):
+            assert type(datasets[key])== sidpy.sid.dataset.Dataset, "Dataset No. {} not read in as sidpy dataset" \
+                    "but was instead read in as {}".format(ind, type(datasets[key]))
 
-            assert datasets[ind].labels == data_labels[ind], "Dataset {} label should be a {} but " \
-                                                      "is instead {}".format(ind,data_labels[ind], datasets[ind].labels)
+            assert datasets[key].labels == data_labels[ind], "Dataset {} label should be a {} but " \
+                                                      "is instead {}".format(ind,data_labels[ind], datasets[key].labels)
 
-            assert datasets[ind].shape==(256, 256), "Dataset[{}] is of size (256,256) but was read in as {}".format(ind, datasets[ind].shape)
-            assert type(datasets[ind]._axes[0]) == sidpy.sid.dimension.Dimension, "Dataset should have dimension type " \
-                                           "of sidpy Dimension, but is instead {}".format(type(datasets[ind]._axes))
+            assert datasets[key].shape==(256, 256), "Dataset[{}] is of size (256,256) but was read in as {}".format(ind, datasets[key].shape)
+            assert type(datasets[key]._axes[0]) == sidpy.sid.dimension.Dimension, "Dataset should have dimension type " \
+                                           "of sidpy Dimension, but is instead {}".format(type(datasets[key]._axes))
 
-            assert datasets[ind].data_descriptor == data_descriptors[int(ind[-1])], "Dataset {} " \
-            "should have descriptor {} but instead has descriptor {}".format(ind, data_descriptors[int(ind[-1])], datasets[ind].data_descriptor)
+            assert datasets[key].data_descriptor == data_descriptors[ind], "Dataset {} " \
+            "should have descriptor {} but instead has descriptor {}".format(ind, data_descriptors[ind], datasets[key].data_descriptor)
         
         os.remove(file_path)
