@@ -764,8 +764,8 @@ class TestIgorIBW(unittest.TestCase):
             assert datasets[ind].shape[0]==1261, "Dataset[{}] is of size 1261 but was read in as {}".format(ind, datasets[ind].shape[0])
             assert type(datasets[ind]._axes[0]) == sidpy.sid.dimension.Dimension, "Dataset should have dimension type " \
                                            "of sidpy Dimension, but is instead {}".format(type(datasets[ind]._axes))
-            assert datasets[ind].data_descriptor == data_descriptors[ind], "Dataset {} " \
-            "should have descriptor {} but instead has descriptor {}".format(ind, data_descriptors[ind], datasets[ind].data_descriptor)
+            assert datasets[ind].data_descriptor == data_descriptors[int(ind[-1])], "Dataset {} " \
+            "should have descriptor {} but instead has descriptor {}".format(ind, data_descriptors[int(ind[-1])], datasets[ind].data_descriptor)
 
         os.remove(file_path)
 
@@ -1440,7 +1440,7 @@ class TestIgorIBW(unittest.TestCase):
             assert type(datasets[ind]._axes[0]) == sidpy.sid.dimension.Dimension, "Dataset should have dimension type " \
                                            "of sidpy Dimension, but is instead {}".format(type(datasets[ind]._axes))
 
-            assert datasets[ind].data_descriptor == data_descriptors[ind], "Dataset {} " \
-            "should have descriptor {} but instead has descriptor {}".format(ind, data_descriptors[ind], datasets[ind].data_descriptor)
+            assert datasets[ind].data_descriptor == data_descriptors[int(ind[-1])], "Dataset {} " \
+            "should have descriptor {} but instead has descriptor {}".format(ind, data_descriptors[int(ind[-1])], datasets[ind].data_descriptor)
         
         os.remove(file_path)
