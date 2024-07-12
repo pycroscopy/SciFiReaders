@@ -79,7 +79,7 @@ class TestIgorIBW(unittest.TestCase):
         assert dataset.data_descriptor==true_dd, "Data descriptor was expected to be {} \
         but received {}".format(true_dd, dataset.data_descriptor)
         dimension_sizes = [58,256]
-        dimension_types = [sidpy.DimensionType.SPATIAL,sidpy.DimensionType.SPATIAL]
+        dimension_types = [sidpy.DimensionType.SPATIAL, sidpy.DimensionType.SPATIAL]
         for dim in dataset._axes:
             dimension = dataset._axes[dim]
             assert dimension.size == dimension_sizes[dim]
@@ -117,7 +117,7 @@ class TestIgorIBW(unittest.TestCase):
         data_translator = sr.IgorIBWReader(file_path)
         datasets = data_translator.read(verbose=False)
         assert len(datasets)==3, "Length of dataset should be 3 but is instead {}".format(len(datasets))
-        metadata = datasets[0].original_metadata
+        metadata = datasets['Channel_000'].original_metadata
         data_descriptors = ['Raw (m)', 'Defl (m)', 'ZSnsr (m)']
 
         original_metadata ={'MostPosZVoltage': 150,
@@ -756,7 +756,8 @@ class TestIgorIBW(unittest.TestCase):
                 assert original_metadata[key] == metadata[key], "Metadata incorrect for key {}, should be {} " \
                         "but was read as {}".format(key, original_metadata[key], metadata[key])
 
-        for ind in range(len(datasets)):
+        #for ind in range(len(datasets)):
+        for ind in datasets:
             assert type(datasets[ind])== sidpy.sid.dataset.Dataset, "Dataset No. {} not read in as sidpy dataset" \
                     "but was instead read in as {}".format(ind, type(datasets[ind]))
 
@@ -1412,7 +1413,7 @@ class TestIgorIBW(unittest.TestCase):
         'modDate': 3692884718,
         'bname': b'BTFO_DSO_Thick0000'}
 
-        metadata = datasets[0].original_metadata
+        metadata = datasets['Channel_000'].original_metadata
 
         data_labels = [['x (m)', 'y (m)'],
                         ['x (m)', 'y (m)'],
@@ -1427,7 +1428,8 @@ class TestIgorIBW(unittest.TestCase):
                         "but was read as {}".format(key, original_metadata[key], metadata[key])
 
             
-        for ind in range(len(datasets)):
+        #for ind in range(len(datasets)):
+        for ind in datasets:
             assert type(datasets[ind])== sidpy.sid.dataset.Dataset, "Dataset No. {} not read in as sidpy dataset" \
                     "but was instead read in as {}".format(ind, type(datasets[ind]))
 
