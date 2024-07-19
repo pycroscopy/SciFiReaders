@@ -26,7 +26,7 @@ class TestNSIDReader(unittest.TestCase):
         
         assert len(data[0].original_metadata.keys())==285, "Expected 285 keys but received {} for data[0]"
         assert len(data[1].original_metadata.keys())==285, "Expected 285 keys but received {} for data[1]"
-        assert len(data[0].original_metadata.keys())==0, "Expected 0 keys but received {} for data[2]"
+        assert len(data[2].original_metadata.keys())==0, "Expected 0 keys but received {} for data[2]"
 
 
             
