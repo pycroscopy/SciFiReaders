@@ -302,12 +302,13 @@ class IgorIBWReader(Reader):
         # Get the data to figure out if this is an image or a force curve
         images = ibw_wave.get('wData')
 
-        datasets = [] #list of sidpy datasets
+        datasets = {}#[] #list of sidpy datasets
 
         if images.shape[-1] != len(chan_labels):
             chan_labels = chan_labels[1:]  # for layer 0 null set errors in older AR software
             chan_units = chan_units[1:]
 
+        channel_number = 0
         if images.ndim == 3:  # Image stack
             if verbose:
                 print('Found image stack of size {}'.format(images.shape))
@@ -339,7 +340,10 @@ class IgorIBWReader(Reader):
                 data_set.data_type = 'image'
 
                 #Finally, append it
-                datasets.append(data_set)
+                #datasets.append(data_set)
+                key_channel = f"Channel_{int(channel_number):03d}"
+                datasets[key_channel] = data_set
+                channel_number += 1
 
         else:  # single force curve
             if verbose:
@@ -384,7 +388,10 @@ class IgorIBWReader(Reader):
                 data_set.original_metadata = parm_dict
 
                 #Add dataset to list
-                datasets.append(data_set)
+                #datasets.append(data_set)
+                key_channel = f"Channel_{int(channel_number):03d}"
+                datasets[key_channel] = data_set
+                channel_number += 1
 
         # Return the dataset
         return datasets

@@ -132,24 +132,22 @@ class GwyddionReader(Reader):
             # If an error occurs, fall back to using "a.u"
             data_set.units = "a.u"
         data_set.quantity = metadata['Title']
+        
+        try:
+            units = metadata['XYUnits'],
+        except Exception as e:
+            # If an error occurs, fall back to using "a.u"
+            units= "a.u"
 
         #Add dimension info
         data_set.set_dimension(0, sid.Dimension(np.linspace(0, metadata['XReal'], num_cols),
                                                 name = 'x',
-                                                try:
-                                                    units = metadata['XYUnits'],
-                                                except Exception as e:
-                                                    # If an error occurs, fall back to using "a.u"
-                                                    units= "a.u",  
+                                                units= units,
                                                 quantity = 'x',
                                                 dimension_type='spatial'))
         data_set.set_dimension(1, sid.Dimension(np.linspace(0, metadata['YReal'], num_rows),
                                                 name = 'y',
-                                                try:
-                                                    units = metadata['XYUnits'], 
-                                                except Exception as e:
-                                                    # If an error occurs, fall back to using "a.u"
-                                                    units= "a.u",
+                                                units = units,
                                                 quantity = 'y',
                                                 dimension_type='spatial'))
 
