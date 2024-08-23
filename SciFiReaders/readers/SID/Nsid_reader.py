@@ -171,5 +171,5 @@ class NSIDReader(sidpy.Reader):
             list_of_datasets[keys[i]] = read_h5py_dataset(dset)
         return list_of_datasets
 
-def close(self):
-    self._h5_file.close()
+    def close(self):
+        self._h5_file.close()
