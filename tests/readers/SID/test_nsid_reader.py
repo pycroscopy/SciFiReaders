@@ -17,16 +17,18 @@ class TestNSIDReader(unittest.TestCase):
         data = reader.read()
         assert len(data)==3, "Data should have been length 3 but was instead {}".format(len(data))
         #Check to see if these are sidpy datasets
-        for ind in range(3):
-            assert type(data[ind])==sidpy.sid.dataset.Dataset, "Expected sidpy dataset but received {}".format(type(data[ind]))
+        for key in data:
+            assert type(data[key])==sidpy.sid.dataset.Dataset, "Expected sidpy dataset but received {}".format(type(data[ind]))
+
+        data_keys = list(data.keys())
+
+        assert data[data_keys[0]].shape==(3, 128, 128, 1)
+        assert data[data_keys[1]].shape == (128, 128, 61)
+        assert data[data_keys[2]].shape == (128,128,5)
         
-        assert data[0].shape==(3, 128, 128, 1)
-        assert data[1].shape == (128, 128, 61)
-        assert data[2].shape == (128,128,5)
-        
-        assert len(data[0].original_metadata.keys())==285, "Expected 285 keys but received {} for data[0]"
-        assert len(data[1].original_metadata.keys())==285, "Expected 285 keys but received {} for data[1]"
-        assert len(data[2].original_metadata.keys())==0, "Expected 0 keys but received {} for data[2]"
+        assert len(data[data_keys[0]].original_metadata.keys())==285, "Expected 285 keys but received {} for data[0]"
+        assert len(data[data_keys[1]].original_metadata.keys())==285, "Expected 285 keys but received {} for data[1]"
+        assert len(data[data_keys[2]].original_metadata.keys())==0, "Expected 0 keys but received {} for data[2]"
 
 
             
