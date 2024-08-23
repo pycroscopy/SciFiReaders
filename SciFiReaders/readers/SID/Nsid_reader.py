@@ -155,6 +155,7 @@ class NSIDReader(sidpy.Reader):
 
         if recursive:
             list_of_main = self._main_dsets
+            keys = ['Channel_{0:3}'.format(i) for i in range(len(list_of_main))]
         else:
             list_of_main = []
             keys = []
