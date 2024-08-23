@@ -157,15 +157,17 @@ class NSIDReader(sidpy.Reader):
             list_of_main = self._main_dsets
         else:
             list_of_main = []
+            keys = []
             for key in h5_group:
                 if isinstance(h5_group[key], h5py.Dataset):
                     if check_if_main(h5_group[key]):
                         list_of_main.append(h5_group[key])
+                        keys.append(key)
 
         # Go through each of the identified
-        list_of_datasets = []
-        for dset in list_of_main:
-            list_of_datasets.append(read_h5py_dataset(dset))
+        list_of_datasets = {}
+        for i,dset in enumerate(list_of_main):
+            list_of_datasets[keys[i]] = read_h5py_dataset(dset)
         return list_of_datasets
 
 def close(self):
