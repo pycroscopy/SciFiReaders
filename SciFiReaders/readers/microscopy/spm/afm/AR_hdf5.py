@@ -47,8 +47,6 @@ class ARhdf5Reader(Reader):
         ----------
         verbose : Boolean (Optional)
             Whether or not to show  print statements for debugging
-        debug : Boolean (Optional)
-            Whether or not to print log statements
         Returns
         -------
         sidpy.Dataset : List of sidpy.Dataset objects.
@@ -310,7 +308,7 @@ class ARhdf5Reader(Reader):
             # This should be the laser virtual deflection
             default_unit = 'm'
         else:
-            if self.debug:
+            if self.verbose:
                 print('Unknown unit for channel: {}'.format(chan_name))
                 print('Unit set to "unknown"')
             default_unit = 'unknown'
