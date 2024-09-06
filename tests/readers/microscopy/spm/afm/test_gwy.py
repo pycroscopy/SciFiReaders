@@ -20,7 +20,7 @@ def gwy_file():
 def test_load_test_gwy_file(gwy_file):
     data_translator = sr.GwyddionReader(gwy_file)
     datasets = data_translator.read(verbose=False)
-    assert len(datasets) == 4, f"Length of dataset should be 2 but is instead {len(datasets)}"
+    assert len(datasets) == 4, f"Length of dataset should be 4 but is instead {len(datasets)}"
     channel_names = ['HeightRetrace', 'AmplitudeRetrace', 'DeflectionRetrace', 'PhaseRetrace']
     channel_units = ['m', 'm', 'm', 'deg']
     channel_labels = [['x (m)', 'y (m)'], ['x (m)', 'y (m)'], ['x (m)', 'y (m)'], ['x (m)', 'y (m)']]
