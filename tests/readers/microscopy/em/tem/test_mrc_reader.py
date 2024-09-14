@@ -5,9 +5,7 @@
 import unittest
 import sys
 
-sys.path.insert(0, '/Users/austin/Documents/GitHub/SciFiReaders/')
 import SciFiReaders 
-print(SciFiReaders.__version__)
 
 
 class TestMRCReader(unittest.TestCase):
