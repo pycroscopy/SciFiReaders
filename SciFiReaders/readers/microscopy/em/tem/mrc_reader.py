@@ -29,6 +29,7 @@ version = '0.1beta'
 class MRCReader(sidpy.Reader):
 
     def __init__(self, file_path):
+        super(MRCReader, self).__init__(file_path)
         self.file_path = file_path
         self.metadata = None
         self.data = None
@@ -58,7 +59,14 @@ class MRCReader(sidpy.Reader):
         x_shape = int(np.abs(sizes[0] - sizes[1]))
         y_shape = int(np.abs(sizes[2] - sizes[3]))
         reshape_target = (x_shape, y_shape, mrc_data.shape[-2], mrc_data.shape[-1])
-        self.data = np.reshape(mrc_data, reshape_target)
+
+        try:
+            self.data = np.reshape(mrc_data, reshape_target)
+        except ValueError:
+            print(f'Error reshaping data: {mrc_data.shape} to {reshape_target}')
+            print(f'the scan must have been stopped early, on the microscope - this creates issues still')
+            print(f'sorry, we do not support reading point cloud versions of this data yet')
+
 
         # These 'pixel sizes' are usually in the order of 10^8
         # This the ceta pixel size, not the scan step size.
