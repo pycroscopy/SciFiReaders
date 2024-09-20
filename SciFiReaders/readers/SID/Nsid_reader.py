@@ -76,7 +76,7 @@ class NSIDReader(sidpy.Reader):
 
         Returns
         -------
-        sidpy.Dataset or list of sidpy.Dataset objects
+        dictionary of sidpy.Dataset objects
             Datasets present in the provided file
         """
         if h5_object is None:
@@ -141,7 +141,7 @@ class NSIDReader(sidpy.Reader):
 
         Returns
         -------
-        sidpy.Dataset or list of sidpy.Dataset objects
+        dictionary of sidpy.Dataset objects
             Datasets present in the provided file
         """
 
@@ -166,10 +166,10 @@ class NSIDReader(sidpy.Reader):
                         keys.append(key)
 
         # Go through each of the identified
-        list_of_datasets = {}
+        dictionary_of_datasets = {}
         for i,dset in enumerate(list_of_main):
-            list_of_datasets[keys[i]] = read_h5py_dataset(dset)
-        return list_of_datasets
+            dictionary_of_datasets[keys[i]] = read_h5py_dataset(dset)
+        return dictionary_of_datasets
 
     def close(self):
         self._h5_file.close()
