@@ -22,7 +22,7 @@ requirements = [  # basic
                 'ipython>=7.1.0',
                 'pyUSID',
                 'gdown',
-                'mrcfile'
+                'mrcfile',
                 # generic:
                 # Reader specific ones go to extras
                ]
