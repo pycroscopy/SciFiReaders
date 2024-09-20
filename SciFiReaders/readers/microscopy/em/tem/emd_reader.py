@@ -53,7 +53,7 @@ class EMDReader(sidpy.Reader):
         dictionary of sidpy.Datasets
     """
     def __init__(self, file_path, sum_frames=False, no_eds=False):
-        super(EMDReader, self).__init__(file_path)
+        super(self).__init__(file_path)
 
         # Let h5py raise an OS error if a non-HDF5 file was provided
         self._h5_file = h5py.File(file_path, mode='r+')
@@ -231,14 +231,15 @@ class EMDReader(sidpy.Reader):
                 size_x = int(float(scan['ScanSize']['width']) * float(scan['ScanArea']['right'])-float(scan['ScanSize']['width']) * float(scan['ScanArea']['left']))
                 size_y = int(float(scan['ScanSize']['height']) * float(scan['ScanArea']['bottom'])-float(scan['ScanSize']['height']) * float(scan['ScanArea']['top']))
             
-        if 'RasterScanDefinition' in acquisition:
+        elif 'RasterScanDefinition' in acquisition:
             size_x = int(acquisition['RasterScanDefinition']['Width'])
             size_y = int(acquisition['RasterScanDefinition']['Height'])
         spectrum_size = int(acquisition['bincount'])
 
         self.number_of_frames = int(np.ceil((self.data_array[:, 0] == 65535).sum() / (size_x * size_y)))
         # print(size_x,size_y,number_of_frames)
-        data_array = np.zeros((size_x * size_y, spectrum_size),dtype=np.ushort)
+        
+        data_array = da.zeros((size_x * size_y, spectrum_size),dtype=np.ushort)
         # progress = tqdm(total=number_of_frames)
         
         data, frame = get_stream(data_array, size_x*size_y, self.data_array[:, 0])
@@ -357,8 +358,6 @@ def get_stream(data, size, data_stream):
             if pixel_number >= size:
                 pixel_number = 0
                 frame += 1
-                # print(frame)
-                # progress.update(1)
         else:
             data[pixel_number, value] += 1
     return data, frame
