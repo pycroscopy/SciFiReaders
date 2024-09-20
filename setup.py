@@ -11,7 +11,7 @@ with open(os.path.join(here, 'SciFiReaders/__version__.py')) as f:
 
 # TODO: Move requirements to requirements.txt
 requirements = [  # basic
-                'setuptools==58.2.0',
+                'setuptools',
                 'numpy',
                 'toolz',  # dask installation failing without this
                 'cytoolz',  # dask installation failing without this
@@ -55,7 +55,7 @@ setuptools.setup(
     author_email='pycroscopy@gmail.com',
     install_requires=requirements,
     setup_requires=['pytest-runner'],
-    tests_require=['pytest', 'pywget', 'hyperspy', 'pyUSID', 'gwyfile'],
+    tests_require=['pytest', 'pywget', 'hyperspy', 'pyUSID', 'gwyfile', 'gdown'],
     platforms=['Linux', 'Mac OSX', 'Windows 11/10/8.1/8/7'],
     # package_data={'sample':['dataset_1.dat']}
     test_suite='pytest',

@@ -253,11 +253,13 @@ class EMDReader(sidpy.Reader):
         self.channel_number += 1
         
         if self.metadata['BinaryResult']['PixelUnitX'] == '1/m':
+            names = ['u', 'v']
             units = '1/nm'
             quantity = 'reciprocal distance'
             dimension_type='reciprocal'
             to_nm = 1e-9
         else:
+            names = ['x', 'y']
             units = 'nm'
             quantity = 'distance'
             dimension_type='spatial'
@@ -278,13 +280,13 @@ class EMDReader(sidpy.Reader):
             self.datasets[key] = sidpy.Dataset.from_array(self.data_array[:, :, 0])
             self.datasets[key].data_type = 'image'
             self.datasets[key].set_dimension(0, sidpy.Dimension(np.arange(self.data_array.shape[0]) * scale_x + offset_x,
-                                                               name='x', units=units,
+                                                               name=names[0], units=units,
                                                                quantity=quantity,
                                                                dimension_type=dimension_type))
             self.datasets[key].set_dimension(1, sidpy.Dimension(np.arange(self.data_array.shape[1]) * scale_y + offset_y,
-                                                               name='y', units=units,
+                                                               name=names[1], units=units,
                                                                quantity=quantity,
-                                                               dimension_type='spatial'))
+                                                               dimension_type=dimension_type))
         else:
             # There is a problem with random access of data due to chunking in hdf5 files
             # Speed-up copied from hyperspy.ioplugins.EMDReader.FEIEMDReader
@@ -300,13 +302,13 @@ class EMDReader(sidpy.Reader):
                                                                quantity='time',
                                                                dimension_type='temporal'))
             self.datasets[key].set_dimension(1, sidpy.Dimension(np.arange(self.data_array.shape[1]) * scale_x + offset_x,
-                                                               name='x', units=units,
+                                                               name=names[0], units=units,
                                                                quantity=quantity,
                                                                dimension_type=dimension_type))
             self.datasets[key].set_dimension(2, sidpy.Dimension(np.arange(self.data_array.shape[2]) * scale_y + offset_y,
-                                                               name='y', units=units,
+                                                               name=names[1], units=units,
                                                                quantity=quantity,
-                                                               dimension_type='spatial'))
+                                                               dimension_type=dimension_type))
         self.datasets[key].original_metadata = self.metadata
 
         if not True:

@@ -99,21 +99,21 @@ class GwyddionReader(Reader):
         
         # fix known metadata types from .gsf file specs
         # first the mandatory ones...
-        metadata['XRes'] = np.int(metadata['XRes'])
-        metadata['YRes'] = np.int(metadata['YRes'])
+        metadata['XRes'] = int(metadata['XRes'])
+        metadata['YRes'] = int(metadata['YRes'])
         
         # now check for the optional ones
         if 'XReal' in metadata:
-            metadata['XReal'] = np.float(metadata['XReal'])
+            metadata['XReal'] = float(metadata['XReal'])
         
         if 'YReal' in metadata:
-            metadata['YReal'] = np.float(metadata['YReal'])
+            metadata['YReal'] = float(metadata['YReal'])
                     
         if 'XOffset' in metadata:
-            metadata['XOffset'] = np.float(metadata['XOffset'])
+            metadata['XOffset'] = float(metadata['XOffset'])
         
         if 'YOffset' in metadata:
-            metadata['YOffset'] = np.float(metadata['YOffset'])
+            metadata['YOffset'] = float(metadata['YOffset'])
         
         datasets = []
 
@@ -125,17 +125,30 @@ class GwyddionReader(Reader):
         data_set.data_type = 'Image'
 
         #Add quantity and units
-        data_set.units = metadata['ZUnits']
+        
+        try:
+            data_set.units = metadata['ZUnits']
+        except Exception as e:
+            # If an error occurs, fall back to using "a.u"
+            data_set.units = "a.u"
         data_set.quantity = metadata['Title']
-       
+        
+        try:
+            units = metadata['XYUnits'],
+        except Exception as e:
+            # If an error occurs, fall back to using "a.u"
+            units= "a.u"
+
         #Add dimension info
         data_set.set_dimension(0, sid.Dimension(np.linspace(0, metadata['XReal'], num_cols),
                                                 name = 'x',
-                                                units=metadata['XYUnits'], quantity = 'x',
+                                                units= units,
+                                                quantity = 'x',
                                                 dimension_type='spatial'))
         data_set.set_dimension(1, sid.Dimension(np.linspace(0, metadata['YReal'], num_rows),
                                                 name = 'y',
-                                                units=metadata['XYUnits'], quantity = 'y',
+                                                units = units,
+                                                quantity = 'y',
                                                 dimension_type='spatial'))
 
         # append metadata
@@ -197,8 +210,8 @@ class GwyddionReader(Reader):
                                                         obj)
                 elif gwy_key[1] == 'xyz':
                  
-                    channels = self._translate_xyz(gwy_data,
-                                                    obj)
+                    channels = self._translate_xyz(gwy_data,obj)
+         
         return channels
 
 
@@ -208,7 +221,7 @@ class GwyddionReader(Reader):
         Returns
         -------
         """        
-
+    
         if obj.endswith('data'):
             data = gwy_data[obj].data
             title = gwy_data[obj+'/title']
@@ -228,23 +241,48 @@ class GwyddionReader(Reader):
             data_set.data_type = 'Image'
 
             #Add quantity and units
-            data_set.units = gwy_data[obj]['si_unit_z']['unitstr']
+            if 'si_unit_z' in gwy_data[obj].keys(): 
+                data_set.units = gwy_data[obj]['si_unit_z']['unitstr']
+            else:
+                data_set.units = 'a.u.'
+
             data_set.quantity = title 
-        
+
+            if 'si_unit_xy' in gwy_data[obj].keys():
+                x_unit = y_unit = gwy_data[obj]['si_unit_xy']['unitstr']
+            else:
+                x_unit=y_unit='a.u.'
+
             #Add dimension info
-            data_set.set_dimension(0, sid.Dimension(x_vals,
-                                                    name = 'x',
-                                                    units=gwy_data[obj]['si_unit_xy']['unitstr'], quantity = 'x',
-                                                    dimension_type='spatial'))
-            data_set.set_dimension(1, sid.Dimension(y_vals,
-                                                    name = 'y',
-                                                    units=gwy_data[obj]['si_unit_xy']['unitstr'], quantity = 'y',
-                                                    dimension_type='spatial'))
+            dataset_is_transposed = False
+            if data_set.shape[0] != len(x_vals):
+                dataset_is_transposed = True
+
+            if not dataset_is_transposed:
+
+                data_set.set_dimension(0, sid.Dimension(x_vals,
+                                                        name = 'x',
+                                                        units=x_unit, quantity = 'x',
+                                                        dimension_type='spatial'))
+                data_set.set_dimension(1, sid.Dimension(y_vals,
+                                                        name = 'y',
+                                                        units=y_unit, quantity = 'y',
+                                                        dimension_type='spatial'))
+            else:
+                data_set.set_dimension(0, sid.Dimension(y_vals,
+                                                        name = 'y',
+                                                        units=y_unit, quantity = 'y',
+                                                        dimension_type='spatial'))
+                
+                data_set.set_dimension(1, sid.Dimension(x_vals,
+                                                        name = 'x',
+                                                        units=x_unit, quantity = 'x',
+                                                        dimension_type='spatial'))
 
             # append metadata
             data_set.original_metadata = meta_data
             data_set.data_type = 'image'
-
+       
         return data_set
 
 
