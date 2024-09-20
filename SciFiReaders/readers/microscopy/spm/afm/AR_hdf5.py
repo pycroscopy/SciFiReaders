@@ -237,7 +237,7 @@ class ARhdf5Reader(Reader):
         Parameters
         ----------------
         name : String / unicode
-            Name of the parameter to get teh value
+            Name of the parameter to get the value
 
         Returns
         ----------------
@@ -245,7 +245,7 @@ class ARhdf5Reader(Reader):
             Value of the Note entry requested.
         '''
         try:
-            match = re.search(r"^" + name + ":\s+(.+$)", self.notes, re.M)
+            match = re.search(r"^" + name + r":\s+(.+$)", self.notes, re.M)
             if not match:
                 raise Exception
         except:
