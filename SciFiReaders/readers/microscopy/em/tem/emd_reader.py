@@ -53,7 +53,6 @@ class EMDReader(sidpy.Reader):
         dictionary of sidpy.Datasets
     """
     def __init__(self, file_path, sum_frames=False, no_eds=False):
-        super(self).__init__(file_path)
 
         # Let h5py raise an OS error if a non-HDF5 file was provided
         self._h5_file = h5py.File(file_path, mode='r+')
@@ -85,7 +84,6 @@ class EMDReader(sidpy.Reader):
         else:
             return False
 
-    def read(self, eds_stream=False):
         """
         Reads all available datasets in FEI Velox style hdf5 files with .edm
 
@@ -104,6 +102,7 @@ class EMDReader(sidpy.Reader):
             raise TypeError('Velox EMD File is empty')
     
         number_of_datasets = 0
+
         use_tqdm = False
         for key in self._h5_file['Data']:
             if key == 'SpectrumStream':
@@ -164,7 +163,6 @@ class EMDReader(sidpy.Reader):
                 data_array = np.squeeze(data_array)
                 chunks = 1
             else:
-                chunks= [32, 32, data_array.shape[2]]
                 if data_array.shape[0]> chunks[0]:
                     chunks[0] = data_array.shape[0]
                 if data_array.shape[1]> chunks[1]:
@@ -183,9 +181,7 @@ class EMDReader(sidpy.Reader):
             for detector in detectors.values():
                 if self.metadata['BinaryResult']['Detector'] in detector['DetectorName']:
                     if 'OffsetEnergy' in detector:
-                        offset = float(detector['OffsetEnergy'])
                     if 'Dispersion' in detector:
-                        dispersion = float(detector['Dispersion'])
 
             self.datasets[key].units = 'counts'
             self.datasets[key].quantity = 'intensity'
@@ -239,13 +235,12 @@ class EMDReader(sidpy.Reader):
         self.number_of_frames = int(np.ceil((self.data_array[:, 0] == 65535).sum() / (size_x * size_y)))
         # print(size_x,size_y,number_of_frames)
         
-        data_array = da.zeros((size_x * size_y, spectrum_size),dtype=np.ushort)
         # progress = tqdm(total=number_of_frames)
         
-        data, frame = get_stream(data_array, size_x*size_y, self.data_array[:, 0])
+        data, frame = get_stream(data_array, size_x*size_y, self.data_array[:, 0], self.bin)
         
         self.number_of_frames = frame
-        return np.reshape(data, (size_x, size_y, spectrum_size))
+        return np.reshape(data, (size_x, size_y, int(spectrum_size/self.bin)))
 
     def get_image(self):
         key = f"Channel_{int(self.channel_number):03d}"
@@ -349,7 +344,7 @@ class EMDReader(sidpy.Reader):
         self._h5_file.close()
 
 @njit(cache=True)
-def get_stream(data, size, data_stream):
+def get_stream(data, size, data_stream, bin):
     #for value in self.data_array[:, 0]:
     #from tqdm.auto import trange, tqdm
     pixel_number = 0
@@ -361,5 +356,5 @@ def get_stream(data, size, data_stream):
                 pixel_number = 0
                 frame += 1
         else:
-            data[pixel_number, value] += 1
+            data[pixel_number, int(value/bin-0.2)] += 1
     return data, frame
