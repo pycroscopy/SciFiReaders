@@ -40,7 +40,7 @@ class WSxM2DReader(Reader):
             path_ext = path_i.suffix #os.path.splitext(path)[1] #file extension
             if path_ext != '.gsi': #ignore *.gsi files sharing same name
                 # if all_files==True and mute == False:
-                print(channel_number, path_i.name) #os.path.basename(path)) 
+                # print(channel_number, path_i.name) #os.path.basename(path)) 
                 
                 file = open(f'{path_i}','rb')
                 header_dict, pos = WSxMFuncs._wsxm_readheader(file)
@@ -853,37 +853,40 @@ class WSxMFuncs():
         file.close()
         return data_dict, chan_label
 
-datafolder_path = Path('/home/pranav/Work/Codes/SciFiReaders/downloads/wsxm/')
+if __name__ == '__main__':
+    datafolder_path = Path('/home/pranav/Work/Codes/SciFiReaders/downloads/wsxm/')
 
-data_file_path = str(datafolder_path / 'interdigThiols1week_tipDiam3nN_heated_0016.b.dy.top')
-my_reader = WSxM2DReader(data_file_path)
-my_data = my_reader.read()
-print(my_data.keys())
-for chan_i, chandata_i in my_data.items():
-    print(chan_i, chandata_i.quantity, chandata_i.direction)
-    print(chandata_i.metadata['File path'])
-# print(my_data['Channel_000'].metadata)
-my_data['Channel_000'].plot()
-my_data['Channel_005'].plot()
-plt.show()
+    data_file_path = str(datafolder_path / 'WSxM2DReader_jumpingmodeimage_0002_Topography.f.dy.top')
+    my_reader = WSxM2DReader(data_file_path)
+    my_data = my_reader.read()
+    print(my_data.keys())
+    for chan_i, chandata_i in my_data.items():
+        print(chan_i, chandata_i.quantity, chandata_i.direction)
+        print(chandata_i.metadata['File path'])
+    # print(my_data['Channel_000'].metadata)
+    my_data['Channel_000'].plot(scale_bar=True)
+    # my_data['Channel_005'].plot()
+    # plt.show()
 
-# data_file_path = str(datafolder_path / 'calibrate_fdcurve_pllon_oscion_0047_Amplitude.f.curves')
-# my_reader = WSxM1DReader(data_file_path)
-# my_data = my_reader.read()
-# # print(my_data.keys())
-# for chan_i, chandata_i in my_data.items():
-#     print(chan_i, chandata_i.quantity, chandata_i.direction)
-#     print(chandata_i.metadata['File path'])
-# my_data['Channel_005'].plot()
-# plt.show()
+    data_file_path = str(datafolder_path / 'WSxM1DReader_spectrocurve_0001_Normal force.f.curves')
+    # data_file_path = str(datafolder_path / 'calibrate_fdcurve_pllon_oscion_0047_Normal force.f.curves')
+    my_reader = WSxM1DReader(data_file_path)
+    my_data = my_reader.read()
+    # print(my_data.keys())
+    for chan_i, chandata_i in my_data.items():
+        print(chan_i, chandata_i.quantity, chandata_i.direction)
+        print(chandata_i.metadata['File path'])
+    my_data['Channel_000'].plot()
+    # plt.show()
 
-# data_file_path = str(datafolder_path / 'jumpingFVmode_pllon_glassonly_spot2_thiolinterdigielec_0036.fb.ch1.gsi')
-# my_reader = WSxM3DReader(data_file_path)
-# my_data = my_reader.read()
-# # print(my_data.keys())
-# for chan_i, chandata_i in my_data.items():
-#     print(chan_i, chandata_i.quantity, chandata_i.direction)
-#     print(chandata_i.metadata['File path'])
-# my_data['Channel_000'].plot(scale_bar=True)
-# # my_data['Channel_009'].plot(scale_bar=True)
-# plt.show()
+    data_file_path = str(datafolder_path / 'WSxM3DReader_Forcevolume_0003_Normal force.ff.ch1.gsi')
+    my_reader = WSxM3DReader(data_file_path)
+    my_data = my_reader.read()
+    # print(my_data.keys())
+    for chan_i, chandata_i in my_data.items():
+        print(chan_i, chandata_i.quantity, chandata_i.direction)
+        print(chandata_i.metadata['File path'])
+    my_data['Channel_000'].plot(scale_bar=True)
+    # my_data['Channel_009'].plot(scale_bar=True)
+    
+    plt.show()

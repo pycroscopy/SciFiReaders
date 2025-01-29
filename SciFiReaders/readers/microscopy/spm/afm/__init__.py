@@ -3,6 +3,9 @@ from .AR_hdf5  import ARhdf5Reader
 from .bruker_nano import BrukerAFMReader
 from .gwyddion import GwyddionReader
 from .axz import AxzReader
+from .wsxm import WSxM1DReader, WSxM2DReader, WSxM3DReader
 
-__all__ = ['IgorIBWReader', 'ARhdf5Reader', 'BrukerAFMReader', 'GwyddionReader', 'IgorMatrixReader', 'AxzReader']
-all_readers = [IgorIBWReader, ARhdf5Reader, BrukerAFMReader, GwyddionReader, IgorMatrixReader, AxzReader]
+__all__ = ['IgorIBWReader', 'ARhdf5Reader', 'BrukerAFMReader', 'GwyddionReader', 'IgorMatrixReader', 'AxzReader',
+           'WSxM1DReader', 'WSxM2DReader', 'WSxM3DReader']
+all_readers = [IgorIBWReader, ARhdf5Reader, BrukerAFMReader, GwyddionReader, IgorMatrixReader, AxzReader,
+               WSxM1DReader, WSxM2DReader, WSxM3DReader]
