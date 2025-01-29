@@ -10,9 +10,25 @@ from matplotlib import pyplot as plt
 
 # Read two dimensional AFM image data (e.g. Topography, Phase etc.)
 class WSxM2DReader(Reader):
-    """
-    The above definition of the class states that our ExampleReader inherits all the capabilities and
-    behaviors of the Reader class in sidpy and builds on top of it
+   """
+    A reader class for extracting 2 dimensional WSxM data and metadata (e.g. topography, 
+    phase, adhesion etc) and converting them into a dictionary of SID Dataset objects 
+    for all channels and directions of the measurement.
+
+    Parameters
+    ----------
+    file_path : str
+        Path to the input file to be read.
+    *args : tuple, optional
+        Additional arguments to pass to the parent sidpy Reader class.
+    **kwargs : dict, optional
+        Additional keyword arguments to pass to the parent sidpy Reader class.
+
+    Methods
+    -------
+    read()
+        Extracts the data and metadata from the input 2D data file and returns it as
+        a dictionary of sidpy.Dataset objects.
     """
     def __init__(self, file_path, *args, **kwargs):
         super().__init__(file_path, *args, **kwargs)
@@ -20,14 +36,12 @@ class WSxM2DReader(Reader):
 
     def read(self):
         """
-        Extracts the data and metadata out of proprietary formatted files and writes it into a SID formatted HDF5 file
-
-
-        Returns
-        -------
-        data_set: sidpy.Dataset object
-            wraps all the raw data and metadata from the input file into a Dataset object
+        Reads and processes 2D WSxM files.
+        Returns:
+            dict: A dictionary where keys are channel identifiers ("Channel_xxx") and values are 
+                    sidpy.Dataset objects containing the extracted data and metadata.
         """
+
         filepath = Path(self._input_file_path)
         # if all_files == True: #find all channels and directions of this measurement
         filepath_all = WSxMFuncs._wsxm_get_common_files(filepath)
@@ -92,22 +106,36 @@ class WSxM2DReader(Reader):
 
 # Read one dimensional AFM data (e.g. force-distance curves)        
 class WSxM1DReader(Reader):
+   """
+    A reader class for extracting 1 dimensional WSxM data and metadata (e.g. force 
+    spectroscopy, tune etc) and converting them into a dictionary of SID Dataset objects 
+    for all channels and directions of the measurement.
+
+    Parameters
+    ----------
+    file_path : str
+        Path to the input file to be read.
+    *args : tuple, optional
+        Additional arguments to pass to the parent sidpy Reader class.
+    **kwargs : dict, optional
+        Additional keyword arguments to pass to the parent sidpy Reader class.
+
+    Methods
+    -------
+    read()
+        Extracts the data and metadata from the input 1D data file and returns it as
+        a dictionary of sidpy.Dataset objects.
     """
-    The above definition of the class states that our ExampleReader inherits all the capabilities and
-    behaviors of the Reader class in sidpy and builds on top of it
-    """
+    
     def __init__(self, file_path, *args, **kwargs):
         super().__init__(file_path, *args, **kwargs)
 
     def read(self):
         """
-        Extracts the data and metadata out of proprietary formatted files and writes it into a SID formatted HDF5 file
-
-
-        Returns
-        -------
-        data_set: sidpy.Dataset object
-            wraps all the raw data and metadata from the input file into a Dataset object
+        Reads and processes 1D WSxM files.
+        Returns:
+            dict: A dictionary where keys are channel identifiers ("Channel_xxx") and values are 
+                    sidpy.Dataset objects containing the extracted data and metadata.
         """
         filepath = Path(self._input_file_path)
         # if all_files == True: #find all channels and directions of this measurement
@@ -196,23 +224,38 @@ class WSxM1DReader(Reader):
 # Read three dimensional AFM image data (e.g. Force volume, video etc)
 class WSxM3DReader(Reader):
     """
-    The above definition of the class states that our ExampleReader inherits all the capabilities and
-    behaviors of the Reader class in sidpy and builds on top of it
+    A reader class for extracting 3 dimensional WSxM data and metadata (e.g. Force 
+    volume, video etc) and converting them into a dictionary of SID Dataset objects 
+    for all channels and directions of the measurement.
+
+    Parameters
+    ----------
+    file_path : str
+        Path to the input file to be read.
+    *args : tuple, optional
+        Additional arguments to pass to the parent sidpy Reader class.
+    **kwargs : dict, optional
+        Additional keyword arguments to pass to the parent sidpy Reader class.
+
+    Methods
+    -------
+    read()
+        Extracts the data and metadata from the input 3D data file and returns it as
+        a dictionary of sidpy.Dataset objects.
     """
+
     def __init__(self, file_path, *args, **kwargs):
         super().__init__(file_path, *args, **kwargs)
 
 
     def read(self):
         """
-        Extracts the data and metadata out of proprietary formatted files and writes it into a SID formatted HDF5 file
-
-
-        Returns
-        -------
-        data_set: sidpy.Dataset object
-            wraps all the raw data and metadata from the input file into a Dataset object
+        Reads and processes 3D WSxM files.
+        Returns:
+            dict: A dictionary where keys are channel identifiers ("Channel_xxx") and values are 
+                    sidpy.Dataset objects containing the extracted data and metadata.
         """
+
         filepath = Path(self._input_file_path)
         # if all_files == True: #find all channels and directions of this measurement
         filepath_all = WSxMFuncs._wsxm_get_common_files(filepath)
@@ -400,6 +443,18 @@ class WSxM3DReader(Reader):
 
 # collection of general functions used in WSxM readers
 class WSxMFuncs():
+    """
+    A class containing static methods for handling WSxM files, including reading headers,
+    image data, and spectroscopy curves. These methods are used by the WSxM reader classes
+    above but can also be used by itself for reading WSxM files, offering additional input 
+    parameters.
+    Methods
+    -------
+    _wsxm_get_common_files(filepath, ext=None)
+    _wsxm_readheader(file, pos=0, inibyte=100)
+    _wsxm_readimg(file, header_dict, pos)
+    _wsxm_readcurves(filepath)
+    """
     # binary data type definitions used in header file
     DATA_TYPES = {
         'short':(2,'h'),'short-data':(2,'h'), 'unsignedshort':(2,'H'),
@@ -414,8 +469,34 @@ class WSxMFuncs():
     #     'ch14':'Phase (2nd Dynamic)', 'ch15': 'Amplitude', 'ch16': 'Phase',
     #     'adh': 'Adhesion', 'sti': 'Stiffness'
     #                     }
+
+    
     @staticmethod
     def _wsxm_get_common_files(filepath, ext=None):
+        """
+        Retrieve a list of files corresponding to all the channels of the 
+        chosen measurement file (including "Forward" and "Backward" data), if they exist.
+        
+        This function searches for files in the same directory as the provided
+        `filepath` that share a common base name, identified by a 4-digit number
+        in the filename (standard WSxM naming convention). The provided `filepath` 
+        is always included as the first item in the returned list. Optionally, the 
+        search can be filtered by file extension.
+        
+        Args:
+            filepath (Path): The path to the reference file.
+            ext (str, optional): The file extension to filter by (e.g. ".top", ".ch1", ".gsi" etc.). 
+                     If None, all files with the common base name are included.
+        
+        Returns:
+            list[Path]: A list of Path objects representing the files for all channels of the measurement, 
+                with the provided `filepath` as the first item.
+        
+        Note:
+            - If the data files were renamed later, this function may not work as expected. 
+              It is recommended to avoid renaming the part of the file name before the 4-digit number.
+        """
+
         # filepath = 'data/interdigThiols_tipSi3nN_b_0026.fb.ch1.gsi'
         path_dir = filepath.parent #os.path.dirname(filepath)
         filename = filepath.name #os.path.basename(filepath)
@@ -445,6 +526,18 @@ class WSxMFuncs():
     #read WSxM header data
     @staticmethod
     def _wsxm_readheader(file, pos=0, inibyte=100):
+        """
+        Reads the header of a WSxM file and returns it as a dictionary.
+        Parameters:
+        file (file object): The file object to read from.
+        pos (int, optional): The position in the file (in bytes) to start reading from. Defaults to 0.
+        inibyte (int, optional): The initial number of bytes to read to find 'Image header size'. Defaults to 100.
+        Returns:
+            tuple: A tuple containing:
+                - header_dict (dict): A dictionary containing the header information.
+                - pos_new (int): The new position (in bytes) in the file after reading the header.
+        """
+
         header_dict = {}
         title_list = []
         # Find header size
@@ -478,6 +571,23 @@ class WSxMFuncs():
     #read WSxM binary image data
     @staticmethod
     def _wsxm_readimg(file, header_dict, pos):
+        """
+        Reads an image from a WSxM file and returns the image data along with updated position.
+        Parameters:
+        file (file object): The file object to read the image data from.
+        header_dict (dict): Dictionary containing the header information of the WSxM file.
+        pos (int): The current position in the file (in bytes) from where to start reading the image data.
+        Returns:
+            tuple: A tuple containing:
+                - data_dict_chan (dict): A dictionary with the image data and header information.
+                    - 'data' (dict): Contains the image data arrays.
+                        - 'Z' (numpy.ndarray): The 2D image data (image data) calibrated and reshaped.
+                        - 'X' (numpy.ndarray): The 1D X-axis data.
+                        - 'Y' (numpy.ndarray): The 1D Y-axis data.
+                    - 'header' (dict): A copy of the header dictionary.
+                - pos (int): The updated position in the file after reading the image data.
+        """
+
         data_format = header_dict['Image Data Type [General Info]']
         chan_label = header_dict['Acquisition channel [General Info]']
         line_rate = float(header_dict['X-Frequency [Control]'].split(' ')[0])
@@ -544,6 +654,38 @@ class WSxMFuncs():
     #TODO: apply Conversion Factor to final channel value. CHECK THIS EVERYWHERE!
     @staticmethod
     def _wsxm_readcurves(filepath):
+        """
+        Reads WSxM spectroscopy curves (*.curves format) from a given file.
+        Args:
+            filepath (str): The path to the WSxM file to be read.
+        Returns:
+            tuple: A tuple containing:
+            - data_dict (dict): A dictionary containing the parsed data from the file.
+            - y_label (str): The channel name of the Y-axis data.
+        The structure of the returned data_dict is as follows:
+        {
+            'Y axis channel label': {
+            'image': {
+                'data': {
+                'Z': 2D array of embedded topography data,
+                'X': 1D array of X-axis data,
+                'Y': 1D array of Y-axis data
+                },
+                'header': header_dict
+            },
+            'curves': {
+                curve_index: {
+                'header': header_dict,
+                'data': {
+                    'approach': {'x': x_data, 'y': y_data},
+                    'retract': {'x': x_data, 'y': y_data}
+                }
+                }
+            }
+            }
+        }
+        """
+
         # if all_files == True: #find all channels and directions of this measurement
         #     filepath_all = wsxm_get_common_files(filepath)
         # else:
@@ -655,6 +797,31 @@ class WSxMFuncs():
     # read *.cur WSxM file
     @staticmethod
     def _wsxm_readcur(filepath):
+        """
+        Reads WSxM spectroscopy curve (*.cur) files and extracts the data.
+        Args:
+            filepath (str): The path to the .cur file to be read.
+        Returns:
+            tuple: A tuple containing:
+                - data_dict (dict): A dictionary containing the extracted data.
+                - y_label (str): The channel name for the Y-axis data.
+        The structure of the returned data_dict is as follows:
+        {
+            'Y axis channel label': {
+                'curves': {
+                    curve_index: {
+                        'header': header_dict,
+                        'data': {
+                            'approach': {'x': x_data, 'y': y_data},
+                            'retract': {'x': x_data, 'y': y_data}
+                },
+                'image': {}
+            }
+        }
+        Note:
+            - The 'image' key is empty in this case as it does not exist in .cur files.
+        """
+
         # if all_files == True: #find all channels and directions of this measurement
         #     filepath_all = wsxm_get_common_files(filepath)
         # else:
@@ -770,6 +937,33 @@ class WSxMFuncs():
     #read *.stp spectroscopy curves. Use data_dict to update data of both approach and retract into the data dictionary
     @staticmethod
     def _wsxm_readstp(filepath, data_dict={}):
+        """
+        Reads a WSxM .stp spectroscopy file and extracts the data into a dictionary.
+        Args:
+            filepath (str): The path to the .stp file to be read.
+            data_dict (dict, optional): A dictionary to store the extracted data. 
+            Use this to combine "approach" and "retract" curve data spread across different files into the same dictionary passed here.
+            Defaults to an empty dictionary.
+        Returns:
+            tuple: A tuple containing:
+                - data_dict (dict): The dictionary containing the extracted data.
+                - chan_label (str): The label of the spectroscopy channel.
+        The structure of the returned data_dict is as follows:
+        {
+            'Channel label': {
+                'curves': {
+                    curve_index: {
+                        'header': header_dict,
+                        'data': {
+                            'approach': {'x': x_data, 'y': y_data},
+                            'retract': {'x': x_data, 'y': y_data}
+                        }
+                    }
+                }
+            }
+        }
+        """
+
         # if all_files == True: #find all channels and directions of this measurement
         #     filepath_all = wsxm_get_common_files(filepath)
         # else:
