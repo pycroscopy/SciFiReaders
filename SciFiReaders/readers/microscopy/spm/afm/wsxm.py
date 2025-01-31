@@ -266,6 +266,7 @@ class WSxM3DReader(Reader):
 
         # data_dict = {}
         # file_num = 1 #file number
+        # print(filepath_all)
         for path_i in filepath_all:
             path_ext = path_i.suffix #os.path.splitext(path)[1] #file extension
             # if path_ext == '.top': #topgraphy data
@@ -273,10 +274,14 @@ class WSxM3DReader(Reader):
             #TODO: add condition for movie files
             if path_ext == '.gsi': #force volume data from *.gsi files
                 data_dict_chan, chan_label, topo_data = WSxMFuncs._wsxm_readforcevol(path_i)
-            elif path_ext == '.mpp': #movie data files
+                zz_data_type = sid.DataType.SPECTRAL_IMAGE 
+                z_dimension_type = 'spectral'
+            elif path_ext in ['.MOV', '.mpp']: #movie data files
                 data_dict_chan, chan_label = WSxMFuncs._wsxm_readmovie(path_i)
+                zz_data_type = sid.DataType.IMAGE_STACK  
+                z_dimension_type = 'frame'
             else:
-                assert("Invalid file type. Please choose *.gsi or *.mpp file")
+                assert("Invalid file type. Please choose *.gsi/*.MOV/*.mpp file")
                 # if mute==False:
                 #     print(file_num, os.path.basename(path)) 
                 # file_num += 1
@@ -411,15 +416,14 @@ class WSxM3DReader(Reader):
             #Add quantity and units
             data_set.units = data_dict_chan['units']['ZZ']
             data_set.quantity = chan_label
-            data_set.direction = data_dict_chan['header']['Spectroscopy type [General Info]'] #spec_dir #image direction information
-            data_set.data_type = sid.DataType.SPECTRAL_IMAGE#SPECTRAL_IMAGE, IMAGE_STACK             
+            data_set.data_type = zz_data_type #sid.DataType.SPECTRAL_IMAGE#SPECTRAL_IMAGE, IMAGE_STACK             
 
             #Add dimension info
             data_set.set_dimension(0, sid.Dimension(data_dict_chan['data']['Z'],
                                                     name = 'z',
                                                     units=data_dict_chan['units']['Z'], 
                                                     quantity = 'z',
-                                                    dimension_type='spectral'))#'spectral','frame'))
+                                                    dimension_type=z_dimension_type))#'spectral','frame'))
             data_set.set_dimension(1, sid.Dimension(data_dict_chan['data']['X'],
                                                     name = 'x',
                                                     units=data_dict_chan['units']['X'], 
@@ -438,7 +442,12 @@ class WSxM3DReader(Reader):
             # print(header_general.keys())
             data_set.metadata = header_general.copy() #data_dict_chan['header'].copy()
             data_set.metadata['Spectroscopy metadata'] = header_spectroscopy
-            data_set.metadata['Topography'] = topo_data #topography data added to metadata
+            if zz_data_type == sid.DataType.SPECTRAL_IMAGE: 
+                data_set.direction = data_dict_chan['header']['Spectroscopy type [General Info]'] #spec_dir #image direction information
+                data_set.metadata['Topography'] = topo_data #topography data added to metadata
+            elif zz_data_type == sid.DataType.IMAGE_STACK:
+                data_set.direction = 'None'
+
 
             #Finally, append it
             #datasets.append(data_set)
@@ -532,6 +541,7 @@ class WSxMFuncs():
         for path_i in path_dir.iterdir():
             # path_i = os.path.join(path_dir,i)
             path_ext_i = path_i.suffix #os.path.splitext(path_i)[1] #file extension
+            # print(filename_com, path_i.name, path_ext_i)
             if ext != None and path_ext_i != ext: #if ext given, skip files dont match the extension
                 continue
             # if os.path.isfile(path_i) and i.startswith(filename_com):
@@ -1210,29 +1220,32 @@ class WSxMFuncs():
 
         data_format = header_dict['Image Data Type [General Info]']
         chan_label = header_dict['Acquisition channel [General Info]']
-        spec_dir = header_dict['Spectroscopy type [General Info]']
-        x_dir = spec_dir.split(' ')[1]
-        y_dir = header_dict['Y scanning direction [General Info]'] #CHECK Y DIRECTIONS
+        # spec_dir = header_dict['Spectroscopy type [General Info]']
+        # x_dir = spec_dir.split(' ')[1]
+        # y_dir = header_dict['Y scanning direction [General Info]'] #CHECK Y DIRECTIONS
         # z_dir = SPECT_DICT[spec_dir.split(' ')[3]]
-        line_rate = float(header_dict['X-Frequency [Control]'].split(' ')[0])
+        # line_rate = float(header_dict['X-Frequency [Control]'].split(' ')[0])
         x_num = int(header_dict['Number of rows [General Info]'])
         y_num = int(header_dict['Number of columns [General Info]'])
-        chan_num = int(header_dict['Number of points per ramp [General Info]'])
+        chan_num = int(header_dict['Number of Frames [General Info]'])
         x_len = float(header_dict['X Amplitude [Control]'].split(' ')[0])
         y_len = float(header_dict['Y Amplitude [Control]'].split(' ')[0])
         z_len = float(header_dict['Z Amplitude [General Info]'].split(' ')[0])
-        chan_adc2v = float(header_dict['ADC to V conversion factor [General Info]'].split(' ')[0])
-        
-        if chan_label == 'Excitation frequency': # For frequency shift
-            chan_fact = float(header_dict['Conversion factor 0 for input channel [General Info]'].split(' ')[0])
-            chan_offs = float(header_dict['Conversion offset 0 for input channel [General Info]'].split(' ')[0]) #0
-        else:
-            chan_fact = 1
-            chan_offs = 0
+        z_min = float(header_dict['Minimum [Miscellaneous]'])
+        z_max = float(header_dict['Maximum [Miscellaneous]'])
+        # dsp_voltrange = 20 #V THIS MAY CHANGE!
+        # chan_adc2v = float(header_dict['ADC to V conversion factor [General Info]'].split(' ')[0])
 
-        chan_inv = header_dict['Channel is inverted [General Info]']
-        if chan_inv == 'Yes':
-            chan_fact = -chan_fact
+        # if chan_label == 'Excitation frequency': # For frequency shift
+        #     chan_fact = float(header_dict['Conversion factor 0 for input channel [General Info]'].split(' ')[0])
+        #     chan_offs = float(header_dict['Conversion offset 0 for input channel [General Info]'].split(' ')[0]) #0
+        # else:
+        #     chan_fact = 1
+        #     chan_offs = 0
+
+        # chan_inv = header_dict['Channel is inverted [General Info]']
+        # if chan_inv == 'Yes':
+        #     chan_fact = -chan_fact
             # chan_offs = float(header_dict['Conversion offset 0 for input channel [General Info]'].split(' ')[0])
         # chan_offs = float(header_dict['Conversion offset 0 for input channel [General Info]'].split(' ')[0])
                 
@@ -1240,27 +1253,28 @@ class WSxMFuncs():
         y_data = np.linspace(0, y_len, y_num, endpoint=True) #if y_dir == 'Down' else np.linspace(y_len, 0, y_num, endpoint=True)
         # xx_data, yy_data = np.meshgrid(x_data, y_data)
     
-        z_data = np.empty(0)
-        for i in range(chan_num):
-            z_data = np.append(z_data, float(header_dict[f'Image {i:03} [Spectroscopy images ramp value list]'].split(' ')[0]))
+        # z_data = np.empty(0)
+        # for i in range(chan_num):
+        #     z_data = np.append(z_data, float(header_dict[f'Image {i:03} [Spectroscopy images ramp value list]'].split(' ')[0]))
         # if z_dir == 'retract':
-        z_data = np.flip(z_data) #reverse z data order to make zero as point of contact
-        
+        # z_data = np.flip(z_data) #reverse z data order to make zero as point of contact
+        z_data = np.linspace(0, chan_num, chan_num, endpoint=True) #frame number array
+
         #read binary image data
         point_length, type_code  = WSxMFuncs.DATA_TYPES[data_format]
         # with open(filepath, 'rb') as file:
-        file.seek(pos, 0)
+        # file.seek(pos, 0)
         data_len = x_num*y_num*point_length
         # pos += data_len #skip first topo image
         #read first topography data
-        bin_data = file.read(data_len)
-        topo_array = np.array(list(struct.iter_unpack(f'{type_code}', bin_data))).flatten()
-        if z_len == 0: #for zero data
-            topo_calib = 1
-        else:
-            topo_calib = z_len/(topo_array.max()-topo_array.min())
+        # bin_data = file.read(data_len)
+        # topo_array = np.array(list(struct.iter_unpack(f'{type_code}', bin_data))).flatten()
+        # if z_len == 0: #for zero data
+        #     topo_calib = 1
+        # else:
+        #     topo_calib = z_len/(topo_array.max()-topo_array.min())
         #topo data dictionary
-        topo_data = topo_calib*topo_array.reshape(x_num, y_num)
+        # topo_data = topo_calib*topo_array.reshape(x_num, y_num)
         # data_dict_topo = {'data': {'Z': topo_calib*topo_array.reshape(x_num, y_num),
         #                         'X': x_data,
         #                         'Y': y_data
@@ -1277,18 +1291,53 @@ class WSxMFuncs():
         # data_dict[topo_label][spec_dir] = data_dict_topo
         
         # if topo_only == False: #skip channel read if topo_only=True
-        pos += data_len
+        # pos += data_len
+
+        if z_len == 0: #for zero data
+            z_calib = 1
+            # chan_fact = 1
+            # chan_offs = 0
+        else:
+            z_calib = z_len/(z_max-z_min)
+        
+        #the following fixes a bug in the data format for amplitude channel, ensures that data is read in volts, not nanometers (which is fake)
+        if chan_label == 'Amplitude' and header_dict['Z Amplitude [General Info]'].split(' ')[1] != 'V':
+            chan_factor = float(header_dict['Conversion Factor 00 [General Info]'].split(' ')[0])
+            z_calib = z_calib/chan_factor
+
         ch_array = np.empty(0) #initialize channel data array
         for i in range(1, chan_num+1):
             file.seek(pos, 0)
             bin_data = file.read(data_len)
             # print(data.read()[(x_num*y_num*point_length)+header_size:])
             ch_array_temp = np.array(list(struct.iter_unpack(f'{type_code}', bin_data))).flatten()
+            
+            #dac to volt conversion
+            # if chan_label == 'Topography': #ignore for topo
+            #     chan_offs = 0
+            #     if z_len == 0: #for zero data
+            #         z_calib = 1
+            #         # chan_fact = 1
+            #         # chan_offs = 0
+            #     else:
+            #         z_calib = z_len/(ch_array_temp.max()-ch_array_temp.min())
+            #         # chan_fact = 1
+            #         # chan_offs = 0
+            # else: #other channel data stored in volts
+            #     z_calib = dsp_voltrange/(2**16)
+            #     chan_inv = header_dict['Channel is inverted [General Info]']
+            #     if chan_inv == 'Yes':
+            #         z_calib = -z_calib
+            #     chan_offs = 0
+            #     # chan_fact = float(header_dict['Conversion Factor 00 [General Info]'].split(' ')[0])
+            #     if chan_label == 'Excitation frequency': #for freq shift
+            #         z_calib = z_calib * float(header_dict['Conversion Factor 00 [General Info]'].split(' ')[0])
+            #         chan_offs = float(header_dict['Conversion Offset 00 [General Info]'].split(' ')[0]) #CHECK THIS!
             # print(ch_array_temp.min(), ch_array_temp.max())
             # if i == 0:
             #     z_calib = z_len/(ch_array_temp.max()-ch_array_temp.min())
-            # else:
-            ch_array = np.append(ch_array, chan_offs+(ch_array_temp*chan_adc2v*chan_fact))
+            # else:            
+            ch_array = np.append(ch_array, z_calib*ch_array_temp)#.reshape(x_num, y_num))# + chan_offs) #chan_offs+(ch_array_temp*chan_adc2v*chan_fact))
             pos += data_len #next image
             # print(z_calib, chan_adc2v, z_len)
             
@@ -1299,10 +1348,10 @@ class WSxMFuncs():
                                 'Z': z_data
                                 },
                         'header': header_dict,
-                        'units': {'ZZ': header_dict['Conversion factor 0 for input channel [General Info]'].split(' ')[-1],
+                        'units': {'ZZ': header_dict['Z Amplitude [General Info]'].split(' ')[-1],
                                     'X': header_dict['X Amplitude [Control]'].split(' ')[-1],
                                     'Y': header_dict['Y Amplitude [Control]'].split(' ')[-1],
-                                    'Z': header_dict['Z Amplitude [General Info]'].split(' ')[-1]
+                                    'Z': 'frame',
                                     }
                         }
             # if chan_label not in data_dict.keys():
@@ -1337,7 +1386,9 @@ if __name__ == '__main__':
     # my_data['Channel_000'].plot()
     # plt.show()
 
-    data_file_path = str(datafolder_path / 'WSxM3DReader_Forcevolume_0003_Normal force.ff.ch1.gsi')
+    # data_file_path = str(datafolder_path / 'WSxM3DReader_Forcevolume_0003_Normal force.ff.ch1.gsi')
+    data_file_path = str(datafolder_path / 'scan_2lps_P100_I10_512points_0.08ampl_afterreadjust_0016.f.dy.top.MOV')
+    # data_file_path = str(datafolder_path / 'WSxM3DReader_Forcevolume_0003_Normal force.mpp')
     my_reader = WSxM3DReader(data_file_path)
     my_data = my_reader.read()
     # print(my_data.keys())
