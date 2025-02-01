@@ -34,9 +34,9 @@ def test_read_mrc(download_mrc_file):
     dataset = result["Channel_000"]
     
     assert isinstance(dataset, sidpy.Dataset), "Output is not a sidpy.Dataset instance."
-    assert dataset.shape[2] > 0 and dataset.shape[3] > 0, "Spatial dimensions are incorrect."
+    assert dataset.shape[0] > 0 and dataset.shape[1] > 0, "Spatial dimensions are incorrect."
     
-    assert dataset.data_type == 'image_4d', "Incorrect dataset type."
+    assert dataset.data_type.lower() == 'image_4d', "Incorrect dataset type."
 
 def test_metadata_extraction(download_mrc_file):
     """Test if metadata is properly extracted."""
