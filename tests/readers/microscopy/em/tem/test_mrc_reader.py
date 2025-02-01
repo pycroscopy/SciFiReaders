@@ -40,7 +40,7 @@ def test_read_mrc(download_mrc_file):
 
 def test_metadata_extraction(download_mrc_file):
     """Test if metadata is properly extracted."""
-    reader = MRCReader(download_mrc_file)
+    reader = sr.MRCReader(download_mrc_file)
     reader.read()
     
     assert reader.metadata is not None, "Metadata should not be None."
@@ -49,7 +49,7 @@ def test_metadata_extraction(download_mrc_file):
 
 def test_data_shape(download_mrc_file):
     """Ensure the data reshaping works as expected."""
-    reader = MRCReader(download_mrc_file)
+    reader = sr.MRCReader(download_mrc_file)
     reader.read()
 
     assert reader.data is not None, "Data should not be None."
