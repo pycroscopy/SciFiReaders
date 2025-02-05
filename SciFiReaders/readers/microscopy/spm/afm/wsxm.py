@@ -444,7 +444,25 @@ class WSxM3DReader(Reader):
             data_set.metadata['Spectroscopy metadata'] = header_spectroscopy
             if zz_data_type == sid.DataType.SPECTRAL_IMAGE: 
                 data_set.direction = data_dict_chan['header']['Spectroscopy type [General Info]'] #spec_dir #image direction information
-                data_set.metadata['Topography'] = topo_data #topography data added to metadata
+                # data_set.metadata['Topography'] = topo_data #topography data added to metadata
+                data_set_topo = sid.Dataset.from_array(np.flip(topo_data.T), title='Topography')
+                data_set_topo.set_dimension(0, sid.Dimension(data_dict_chan['data']['X'],
+                                                    name = 'x',
+                                                    units=data_dict_chan['units']['X'], 
+                                                    quantity='x',
+                                                    dimension_type='spatial'))
+                data_set_topo.set_dimension(1, sid.Dimension(data_dict_chan['data']['Y'],
+                                                        name = 'y',
+                                                        units=data_dict_chan['units']['Y'], 
+                                                        quantity='y',
+                                                        dimension_type='spatial'))
+                data_set_topo.units = data_dict_chan['units']['Z']
+                data_set_topo.quantity = 'Topography'
+                data_set_topo.direction = data_dict_chan['header']['Spectroscopy type [General Info]'].split(' ')[1] #image direction information
+                data_set_topo.data_type = 'image'
+
+                data_set.metadata['Topography'] = data_set_topo #topography data added to metadata
+                
             elif zz_data_type == sid.DataType.IMAGE_STACK:
                 data_set.direction = 'None'
 
@@ -629,14 +647,16 @@ class WSxMFuncs():
         z_len = float(header_dict['Z Amplitude [General Info]'].split(' ')[0])
         x_dir = header_dict['X scanning direction [General Info]']
         y_dir = header_dict['Y scanning direction [General Info]'] #CHECK Y DIRECTIONS
+        z_min = float(header_dict['Minimum [Miscellaneous]'])
+        z_max = float(header_dict['Maximum [Miscellaneous]'])
         #CHECK THIS FOR SECOND ARRAY! MAY NOT WORK FOR 3D Mode images!
         #THIS DOES NOT WORK. CHECK EVERYWHERE
-        dsp_voltrange = float(header_dict['DSP voltage range [Miscellaneous]'].split(' ')[0])
+        # dsp_voltrange = float(header_dict['DSP voltage range [Miscellaneous]'].split(' ')[0])
         # chan_adc2v = 20/2**16
         # chan_fact = int(header_dict['Conversion Factor 00'].split(' ')[0])
         # chan_offs = 0#int(header_dict['Conversion Offset 00'].split(' ')[0])
-        x_data = np.linspace(x_len, 0, x_num, endpoint=True) #if x_dir == 'Backward' else np.linspace(x_len, 0, x_num, endpoint=True)
-        y_data = np.linspace(0, y_len, y_num, endpoint=True) #if y_dir == 'Down' else np.linspace(y_len, 0, y_num, endpoint=True)
+        x_data = np.linspace(0, x_len, x_num, endpoint=True) #if x_dir == 'Backward' else np.linspace(x_len, 0, x_num, endpoint=True)
+        y_data = np.linspace(y_len, 0, y_num, endpoint=True) #if y_dir == 'Down' else np.linspace(y_len, 0, y_num, endpoint=True)
         # xx_data, yy_data = np.meshgrid(x_data, y_data)
         
         #read binary image data
@@ -647,36 +667,53 @@ class WSxMFuncs():
         bin_data = file.read(data_len)
         # print(data.read()[(x_num*y_num*point_length)+header_size:])
         ch_array = np.array(list(struct.iter_unpack(f'{type_code}', bin_data))).flatten()
+
+        if z_len == 0: #for zero data
+            z_calib = 1
+            # chan_fact = 1
+            # chan_offs = 0
+        else:
+            z_calib = z_len/(z_max-z_min)
+        
+        # z_unit = header_dict['Conversion Factor 00 [General Info]'].split(' ')[-1]
+        z_unit = header_dict['Z Amplitude [General Info]'].split(' ')[-1]
+
+        #the following fixes a bug in the data format for amplitude channel, ensures that data is read in volts, not nanometers (which is fake)
+        if chan_label == 'Amplitude' and header_dict['Z Amplitude [General Info]'].split(' ')[1] != 'V':
+            chan_factor = float(header_dict['Conversion Factor 00 [General Info]'].split(' ')[0])
+            z_calib = z_calib/chan_factor
+            z_unit = 'V'
+
         #dac to volt conversion
-        if chan_label == 'Topography': #ignore for topo
-            chan_offs = 0
-            if z_len == 0: #for zero data
-                z_calib = 1
-                # chan_fact = 1
-                # chan_offs = 0
-            else:
-                z_calib = z_len/(ch_array.max()-ch_array.min())
-                # chan_fact = 1
-                # chan_offs = 0
-        else: #other channel data stored in volts
-            z_calib = dsp_voltrange/(2**16)
-            chan_inv = header_dict['Channel is inverted [General Info]']
-            if chan_inv == 'Yes':
-                z_calib = -z_calib
-            chan_offs = 0
-            # chan_fact = float(header_dict['Conversion Factor 00 [General Info]'].split(' ')[0])
-            if chan_label == 'Excitation frequency': #for freq shift
-                z_calib = z_calib * float(header_dict['Conversion Factor 00 [General Info]'].split(' ')[0])
-                chan_offs = float(header_dict['Conversion Offset 00 [General Info]'].split(' ')[0]) #CHECK THIS!
-        # z_calib2 = z_len/(ch_array.max()-ch_array.min())
-        # print(z_calib, z_calib2, z_calib-z_calib2)
+        # if chan_label == 'Topography': #ignore for topo
+        #     chan_offs = 0
+        #     if z_len == 0: #for zero data
+        #         z_calib = 1
+        #         # chan_fact = 1
+        #         # chan_offs = 0
+        #     else:
+        #         z_calib = z_len/(ch_array.max()-ch_array.min())
+        #         # chan_fact = 1
+        #         # chan_offs = 0
+        # else: #other channel data stored in volts
+        #     z_calib = dsp_voltrange/(2**16)
+        #     chan_inv = header_dict['Channel is inverted [General Info]']
+        #     if chan_inv == 'Yes':
+        #         z_calib = -z_calib
+        #     chan_offs = 0
+        #     # chan_fact = float(header_dict['Conversion Factor 00 [General Info]'].split(' ')[0])
+        #     if chan_label == 'Excitation frequency': #for freq shift
+        #         z_calib = z_calib * float(header_dict['Conversion Factor 00 [General Info]'].split(' ')[0])
+        #         chan_offs = float(header_dict['Conversion Offset 00 [General Info]'].split(' ')[0]) #CHECK THIS!
+        # # z_calib2 = z_len/(ch_array.max()-ch_array.min())
+        # # print(z_calib, z_calib2, z_calib-z_calib2)
         
         #img data dictionary
-        data_dict_chan = {'data': {'Z': z_calib*ch_array.reshape(x_num, y_num) + chan_offs,
+        data_dict_chan = {'data': {'Z': z_calib*ch_array.reshape(x_num, y_num),#+ chan_offs,
                                 'X': x_data,
                                 'Y': y_data},
                         'header': header_dict.copy(),
-                        'units': {'Z': header_dict['Conversion Factor 00 [General Info]'].split(' ')[-1],
+                        'units': {'Z': z_unit,
                                   'X': header_dict['X Amplitude [Control]'].split(' ')[-1],
                                   'Y': header_dict['Y Amplitude [Control]'].split(' ')[-1]
                                   }
@@ -1106,6 +1143,34 @@ class WSxMFuncs():
     
 
     def _wsxm_readforcevol(filepath):
+        """
+        Reads a WSxM .gsi force-volume data and extracts the data into a dictionary.
+        Args:
+            filepath (str): The path to the .stp file to be read.
+        Returns:
+            tuple: A tuple containing:
+                - data_dict_chan (dict): The dictionary containing the extracted data.
+                - chan_label (str): The label of the spectroscopy channel.
+                - topo_data (numpy.ndarray): 2D array containing topography data.
+        The structure of the returned data_dict_chan is as follows:
+        {
+            'header': header_dict,
+            'units': {
+                    'ZZ': data_unit,
+                    'X': x_unit,
+                    'Y': y_unit,
+                    'Z': z_unit,
+                    }
+            'data': {
+                    'ZZ': 3D data,#,
+                    'X': x_data,
+                    'Y': y_data,
+                    'Z': z_data
+                    },
+            
+        }
+        """
+
         file = open(f'{filepath}','rb')
         header_dict, pos = WSxMFuncs._wsxm_readheader(file)
         header_dict['File path'] = filepath #file path included to header
@@ -1124,13 +1189,12 @@ class WSxMFuncs():
         y_len = float(header_dict['Y Amplitude [Control]'].split(' ')[0])
         z_len = float(header_dict['Z Amplitude [General Info]'].split(' ')[0])
         chan_adc2v = float(header_dict['ADC to V conversion factor [General Info]'].split(' ')[0])
-        
-        if chan_label == 'Excitation frequency': # For frequency shift
-            chan_fact = float(header_dict['Conversion factor 0 for input channel [General Info]'].split(' ')[0])
-            chan_offs = float(header_dict['Conversion offset 0 for input channel [General Info]'].split(' ')[0]) #0
-        else:
-            chan_fact = 1
-            chan_offs = 0
+        # if chan_label == 'Excitation frequency': # For frequency shift
+        chan_fact = float(header_dict['Conversion factor 0 for input channel [General Info]'].split(' ')[0])
+        chan_offs = float(header_dict['Conversion offset 0 for input channel [General Info]'].split(' ')[0]) #0
+        # else:
+        # chan_fact = 1
+        # chan_offs = 0
 
         chan_inv = header_dict['Channel is inverted [General Info]']
         if chan_inv == 'Yes':
@@ -1138,8 +1202,8 @@ class WSxMFuncs():
             # chan_offs = float(header_dict['Conversion offset 0 for input channel [General Info]'].split(' ')[0])
         # chan_offs = float(header_dict['Conversion offset 0 for input channel [General Info]'].split(' ')[0])
                 
-        x_data = np.linspace(x_len, 0, x_num, endpoint=True) #if x_dir == 'Backward' else np.linspace(x_len, 0, x_num, endpoint=True)
-        y_data = np.linspace(0, y_len, y_num, endpoint=True) #if y_dir == 'Down' else np.linspace(y_len, 0, y_num, endpoint=True)
+        x_data = np.linspace(0, x_len, x_num, endpoint=True) #if x_dir == 'Backward' else np.linspace(x_len, 0, x_num, endpoint=True)
+        y_data = np.linspace(y_len, 0, y_num, endpoint=True) #if y_dir == 'Down' else np.linspace(y_len, 0, y_num, endpoint=True)
         # xx_data, yy_data = np.meshgrid(x_data, y_data)
     
         z_data = np.empty(0)
@@ -1204,7 +1268,7 @@ class WSxMFuncs():
                         'units': {'ZZ': header_dict['Conversion factor 0 for input channel [General Info]'].split(' ')[-1],
                                     'X': header_dict['X Amplitude [Control]'].split(' ')[-1],
                                     'Y': header_dict['Y Amplitude [Control]'].split(' ')[-1],
-                                    'Z': header_dict['Z Amplitude [General Info]'].split(' ')[-1]
+                                    'Z': header_dict['Z Amplitude [General Info]'].split(' ')[-1],
                                     }
                         }
             # if chan_label not in data_dict.keys():
@@ -1249,8 +1313,8 @@ class WSxMFuncs():
             # chan_offs = float(header_dict['Conversion offset 0 for input channel [General Info]'].split(' ')[0])
         # chan_offs = float(header_dict['Conversion offset 0 for input channel [General Info]'].split(' ')[0])
                 
-        x_data = np.linspace(x_len, 0, x_num, endpoint=True) #if x_dir == 'Backward' else np.linspace(x_len, 0, x_num, endpoint=True)
-        y_data = np.linspace(0, y_len, y_num, endpoint=True) #if y_dir == 'Down' else np.linspace(y_len, 0, y_num, endpoint=True)
+        x_data = np.linspace(0, x_len, x_num, endpoint=True) #if x_dir == 'Backward' else np.linspace(x_len, 0, x_num, endpoint=True)
+        y_data = np.linspace(y_len, 0, y_num, endpoint=True) #if y_dir == 'Down' else np.linspace(y_len, 0, y_num, endpoint=True)
         # xx_data, yy_data = np.meshgrid(x_data, y_data)
     
         # z_data = np.empty(0)
@@ -1300,10 +1364,12 @@ class WSxMFuncs():
         else:
             z_calib = z_len/(z_max-z_min)
         
+        z_unit = header_dict['Z Amplitude [General Info]'].split(' ')[-1]
         #the following fixes a bug in the data format for amplitude channel, ensures that data is read in volts, not nanometers (which is fake)
         if chan_label == 'Amplitude' and header_dict['Z Amplitude [General Info]'].split(' ')[1] != 'V':
             chan_factor = float(header_dict['Conversion Factor 00 [General Info]'].split(' ')[0])
             z_calib = z_calib/chan_factor
+            z_unit = 'V'
 
         ch_array = np.empty(0) #initialize channel data array
         for i in range(1, chan_num+1):
@@ -1348,7 +1414,7 @@ class WSxMFuncs():
                                 'Z': z_data
                                 },
                         'header': header_dict,
-                        'units': {'ZZ': header_dict['Z Amplitude [General Info]'].split(' ')[-1],
+                        'units': {'ZZ': z_unit,
                                     'X': header_dict['X Amplitude [Control]'].split(' ')[-1],
                                     'Y': header_dict['Y Amplitude [Control]'].split(' ')[-1],
                                     'Z': 'frame',
@@ -1364,30 +1430,35 @@ if __name__ == '__main__':
     datafolder_path = Path('/home/pranav/Work/Codes/SciFiReaders/downloads/wsxm/')
 
     # data_file_path = str(datafolder_path / 'WSxM2DReader_jumpingmodeimage_0002_Topography.f.dy.top')
+    # # data_file_path = str(datafolder_path / 'interdigi_thiol_tipSi_b_0005.b.dy.top')
+    # # data_file_path = str(datafolder_path / 'LechugaPuntoCritico_enves(abaxial)_0040.f.dy.top')
     # my_reader = WSxM2DReader(data_file_path)
     # my_data = my_reader.read()
     # print(my_data.keys())
     # for chan_i, chandata_i in my_data.items():
     #     print(chan_i, chandata_i.quantity, chandata_i.direction)
     #     print(chandata_i.metadata['File path'])
+    #     chandata_i.plot()
     # # print(my_data['Channel_000'].metadata)
-    # my_data['Channel_000'].plot()#(scale_bar=True)
-    # my_data['Channel_005'].plot()
+    # # my_data['Channel_000'].plot()#(scale_bar=True)
+    # # my_data['Channel_005'].plot()
     # # plt.show()
 
     # data_file_path = str(datafolder_path / 'WSxM1DReader_spectrocurve_0001_Normal force.f.curves')
-    # data_file_path = str(datafolder_path / 'calibrate_forcedistance_gainin10_0173_Normal force.b.stp')
+    # # data_file_path = str(datafolder_path / 'calibrate_forcedistance_gainin10_0173_Normal force.b.stp')
     # my_reader = WSxM1DReader(data_file_path)
     # my_data = my_reader.read()
     # # print(my_data.keys())
     # for chan_i, chandata_i in my_data.items():
     #     print(chan_i, chandata_i.quantity, chandata_i.direction)
     #     print(chandata_i.metadata['File path'])
-    # my_data['Channel_000'].plot()
+    #     chandata_i.plot()
+    # # my_data['Channel_000'].plot()
     # plt.show()
 
-    # data_file_path = str(datafolder_path / 'WSxM3DReader_Forcevolume_0003_Normal force.ff.ch1.gsi')
-    data_file_path = str(datafolder_path / 'scan_2lps_P100_I10_512points_0.08ampl_afterreadjust_0016.f.dy.top.MOV')
+    data_file_path = str(datafolder_path / 'WSxM3DReader_Forcevolume_0003_Normal force.ff.ch1.gsi')
+    # data_file_path = str(datafolder_path / 'jumpingFVmode_pllon_glassonly_spot2_thiolinterdigielec_0036.ff.ch12.gsi')
+    # data_file_path = str(datafolder_path / 'scan_2lps_P100_I10_512points_0.08ampl_afterreadjust_0016.f.dy.top.MOV')
     # data_file_path = str(datafolder_path / 'WSxM3DReader_Forcevolume_0003_Normal force.mpp')
     my_reader = WSxM3DReader(data_file_path)
     my_data = my_reader.read()
@@ -1395,8 +1466,10 @@ if __name__ == '__main__':
     for chan_i, chandata_i in my_data.items():
         print(chan_i, chandata_i.quantity, chandata_i.direction)
         print(chandata_i.metadata['File path'])
+        # chandata_i.plot()
     # print(help(my_data['Channel_000']))
-    my_data['Channel_000'].plot()#(scale_bar=True)
-    # my_data['Channel_009'].plot(scale_bar=True)
+    # my_data['Channel_000'].plot()#(scale_bar=True)
+    my_data['Channel_000'].plot(scale_bar=True)
+    my_data['Channel_000'].metadata['Topography'].plot()
     
     plt.show()
