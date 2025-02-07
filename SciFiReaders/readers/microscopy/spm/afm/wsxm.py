@@ -62,7 +62,10 @@ class WSxM2DReader(Reader):
                 chan_label = header_dict['Acquisition channel [General Info]']
                 data_dict_chan, pos = WSxMFuncs._wsxm_readimg(file, header_dict, pos)
                 file.close()
-                x_dir = header_dict['X scanning direction [General Info]']
+                if 'X scanning direction [General Info]' in header_dict.keys():
+                    x_dir = header_dict['X scanning direction [General Info]']
+                else:
+                    x_dir = None
                 # if chan_label in data_dict.keys():
                 #     data_dict[chan_label][x_dir] = data_dict_chan
                 # else:
@@ -645,18 +648,24 @@ class WSxMFuncs():
         x_len = float(header_dict['X Amplitude [Control]'].split(' ')[0])
         y_len = float(header_dict['Y Amplitude [Control]'].split(' ')[0])
         z_len = float(header_dict['Z Amplitude [General Info]'].split(' ')[0])
-        x_dir = header_dict['X scanning direction [General Info]']
-        y_dir = header_dict['Y scanning direction [General Info]'] #CHECK Y DIRECTIONS
+        # x_dir = header_dict['X scanning direction [General Info]']
+        # y_dir = header_dict['Y scanning direction [General Info]'] #CHECK Y DIRECTIONS
         z_min = float(header_dict['Minimum [Miscellaneous]'])
         z_max = float(header_dict['Maximum [Miscellaneous]'])
+        if 'X starting offset [General Info]' in header_dict.keys(): #for "3D mode" images
+            x_offset = float(header_dict['X starting offset [General Info]'].split(' ')[0])
+            y_offset = float(header_dict['Y starting offset [General Info]'].split(' ')[0])
+        else:
+            x_offset = 0
+            y_offset = 0
         #CHECK THIS FOR SECOND ARRAY! MAY NOT WORK FOR 3D Mode images!
         #THIS DOES NOT WORK. CHECK EVERYWHERE
         # dsp_voltrange = float(header_dict['DSP voltage range [Miscellaneous]'].split(' ')[0])
         # chan_adc2v = 20/2**16
         # chan_fact = int(header_dict['Conversion Factor 00'].split(' ')[0])
         # chan_offs = 0#int(header_dict['Conversion Offset 00'].split(' ')[0])
-        x_data = np.linspace(0, x_len, x_num, endpoint=True) #if x_dir == 'Backward' else np.linspace(x_len, 0, x_num, endpoint=True)
-        y_data = np.linspace(y_len, 0, y_num, endpoint=True) #if y_dir == 'Down' else np.linspace(y_len, 0, y_num, endpoint=True)
+        x_data = np.linspace(x_offset, x_len+x_offset, x_num, endpoint=True) #if x_dir == 'Backward' else np.linspace(x_len, 0, x_num, endpoint=True)
+        y_data = np.linspace(y_len+y_offset, y_offset, y_num, endpoint=True) #if y_dir == 'Down' else np.linspace(y_len, 0, y_num, endpoint=True)
         # xx_data, yy_data = np.meshgrid(x_data, y_data)
         
         #read binary image data
@@ -683,7 +692,7 @@ class WSxMFuncs():
             chan_factor = float(header_dict['Conversion Factor 00 [General Info]'].split(' ')[0])
             z_calib = z_calib/chan_factor
             z_unit = 'V'
-
+        # chan_offs = float(header_dict['Conversion Offset 00 [General Info]'].split(' ')[0]) #CHECK THIS!
         #dac to volt conversion
         # if chan_label == 'Topography': #ignore for topo
         #     chan_offs = 0
@@ -709,7 +718,7 @@ class WSxMFuncs():
         # # print(z_calib, z_calib2, z_calib-z_calib2)
         
         #img data dictionary
-        data_dict_chan = {'data': {'Z': z_calib*ch_array.reshape(x_num, y_num),#+ chan_offs,
+        data_dict_chan = {'data': {'Z': (z_calib*ch_array.reshape(x_num, y_num)),# + chan_offs,
                                 'X': x_data,
                                 'Y': y_data},
                         'header': header_dict.copy(),
@@ -832,7 +841,8 @@ class WSxMFuncs():
             # data_dict_curv[curv_ind] = {'header': header_dict_top.copy() | header_dict.copy(), 'data': {}} #merge header dictionaries
             for j in range(int(line_num/len(line_order))):
                 k = len(line_order) * j
-                curv_ind_j = curv_ind + round(j/(line_num/len(line_order)), 2) if line_num > 2 else curv_ind
+                # curv_ind_j = curv_ind + round(j/(line_num/len(line_order)), 2) if line_num > 2 else curv_ind
+                curv_ind_j = f'{curv_ind}{chr(ord("a")+j)}' if line_num > 2 else curv_ind
                 data_dict_curv[curv_ind_j] = {'header': header_dict_top.copy() | header_dict.copy(), 
                                               'data': {},
                                               'units': {'x': header_dict['X axis unit [General Info]'],
@@ -850,8 +860,9 @@ class WSxMFuncs():
                 # y_data = ch_array[k+1::line_num*2], ch_array[k+3::line_num*2]
                 for i, curv_dir in enumerate(line_order):
                     # CHECK THIS WITH WSXM
-                    data_dict_curv[curv_ind_j]['data'][curv_dir] = {'x': x_data[k+i].max()-x_data[k+i], #max(x_data[i])-x_data[i], #reverse x data
-                                                                'y': chan_offs+(y_data[k+i]*chan_fact) #chan_offs+(y_data[i]*chan_fact) #converted to proper units
+                    data_dict_curv[curv_ind_j]['data'][curv_dir] = {#'x': x_data[k+i].max()-x_data[k+i], #max(x_data[i])-x_data[i], #reverse x data
+                                                                    'x': x_data[k+i],
+                                                                    'y': chan_offs+(y_data[k+i]*chan_fact) #chan_offs+(y_data[i]*chan_fact) #converted to proper units
                                                             }
                                                     # 'segment':np.append(line_pts * [line_order[0]],line_pts * [line_order[1]])},
                                                     
@@ -939,6 +950,7 @@ class WSxMFuncs():
             #CHECK THIS FOR SECOND ARRAY! MAY NOT WORK FOR 3D Mode!
             # chan_adc2v = 1#20/2**16 #adc to volt converter for 20V DSP, 16 bit resolution
             chan_fact = float(header_dict['Conversion Factor 00 [General Info]'].split(' ')[0])
+            y_unit = header_dict['Conversion Factor 00 [General Info]'].split(' ')[-1]
             chan_inv = header_dict['Channel is inverted [General Info]']
             if chan_inv == 'Yes':
                 chan_fact = -chan_fact
@@ -965,7 +977,8 @@ class WSxMFuncs():
             curv_ind = 1
             curv_num = 1
             chan_fact = 1
-            chan_offs = 0                
+            chan_offs = 0  
+            y_unit = header_dict['Y axis unit [General Info]']            
             aqpt_x, aqpt_y = 0, 0
             time_f = 0
             time_b = 0                
@@ -987,27 +1000,34 @@ class WSxMFuncs():
         if y_label not in data_dict.keys():
             data_dict[y_label] = {'curves':{}, 'image':{}}
         # data_dict[y_label]['curves'][curv_ind] = {'header': header_dict.copy(), 'data': {}}
-        if 'Index of this Curve [Control]' in header_dict.keys(): #TODO: make "reverse data" as a function for transformation! Then eliminate if-else
-            for j in range(int(line_num/len(line_order))):
-                k = 2*len(line_order) * j
-                curv_ind_j = curv_ind + round(j/(line_num/len(line_order)), 2) if line_num > 2 else curv_ind
-                data_dict[y_label]['curves'][curv_ind_j] = {'header': header_dict.copy(), 
-                                                            'data': {},
-                                                            'units': {'x': header_dict['X axis unit [General Info]'],
-                                                                    'y': header_dict['Conversion Factor 00 [General Info]'].split(' ')[-1]
-                                                                    }
-                                                            }
-                for i, curv_dir in enumerate(line_order):
-                    print(i,j,k, k+(2*i), k+(2*i+1))
-                    data_dict[y_label]['curves'][curv_ind_j]['data'][curv_dir] = {'x': data_mat[:,k+(2*i)].max()-data_mat[:,k+(2*i)], #reverse x data
-                                                                                'y': chan_offs+(data_mat[:,k+(2*i+1)]*chan_fact) #converted to units
-                                                                                }
-        else:
-            data_dict[y_label]['curves'][curv_ind] = {'header': header_dict.copy(), 'data': {}}
+        # if 'Index of this Curve [Control]' in header_dict.keys(): #TODO: make "reverse data" as a function for transformation! Then eliminate if-else
+        for j in range(int(line_num/len(line_order))):
+            k = 2*len(line_order) * j
+            # curv_ind_j = curv_ind + round(j/(line_num/len(line_order)), 2) if line_num > 2 else curv_ind
+            curv_ind_j = f'{curv_ind}{chr(ord("a")+j)}' if line_num > 2 else curv_ind
+            data_dict[y_label]['curves'][curv_ind_j] = {'header': header_dict.copy(), 
+                                                        'data': {},
+                                                        'units': {'x': header_dict['X axis unit [General Info]'],
+                                                                'y': y_unit
+                                                                }
+                                                        }
             for i, curv_dir in enumerate(line_order):
-                data_dict[y_label]['curves'][curv_ind]['data'][curv_dir] = {'x': data_mat[:,2*i], #original x data
-                                                                            'y': chan_offs+(data_mat[:,2*i+1]*chan_fact) #converted to units
+                # print(i,j,k, k+(2*i), k+(2*i+1))
+                data_dict[y_label]['curves'][curv_ind_j]['data'][curv_dir] = {#'x': data_mat[:,k+(2*i)].max()-data_mat[:,k+(2*i)], #reverse x data
+                                                                                'x': data_mat[:,k+(2*i)],
+                                                                            'y': chan_offs+(data_mat[:,k+(2*i+1)]*chan_fact) #converted to units
                                                                             }
+        # else:
+        #     data_dict[y_label]['curves'][curv_ind] = {'header': header_dict.copy(), 
+        #                                               'data': {},
+        #                                               'units': {'x': header_dict['X axis unit [General Info]'],
+        #                                                         'y': header_dict['Y axis unit [General Info]']
+        #                                                         }
+        #                                             }
+        #     for i, curv_dir in enumerate(line_order):
+        #         data_dict[y_label]['curves'][curv_ind]['data'][curv_dir] = {'x': data_mat[:,2*i], #original x data
+        #                                                                     'y': chan_offs+(data_mat[:,2*i+1]*chan_fact) #converted to units
+        #                                                                     }
 
         file.close()
         
@@ -1087,6 +1107,12 @@ class WSxMFuncs():
             z_dir = WSxMFuncs.SPECT_DICT[x_dir] #TODO: FIX THIS! NOT CORRECT! ALSO INVERT CONDITION ADD
             
         dsp_voltrange = float(header_dict['DSP voltage range [Miscellaneous]'].split(' ')[0])
+        if 'X starting offset [General Info]' in header_dict.keys(): #for "3D mode" images
+            x_offset = float(header_dict['X starting offset [General Info]'].split(' ')[0])
+            y_offset = float(header_dict['Y starting offset [General Info]'].split(' ')[0])
+        else:
+            x_offset = 0
+            y_offset = 0
 
         header_dict['Spectroscopy channel'] = chan_label #Insert channel name information into dictionary
         # print(z_dir,filename)
@@ -1096,7 +1122,7 @@ class WSxMFuncs():
         # else:
         #     chan_offs = float(header_dict['Conversion Offset 00 [General Info]'].split(' ')[0])
 
-        z_data = np.linspace(0, x_len, y_num, endpoint=True) #CHECK THIS
+        z_data = np.linspace(x_offset, x_offset+x_len, y_num, endpoint=True) #CHECK THIS
         # print(filename,x_dir,y_dir,z_dir)
         #read binary image data
         point_length, type_code  = WSxMFuncs.DATA_TYPES[data_format]
@@ -1133,7 +1159,8 @@ class WSxMFuncs():
                 data_dict[chan_label]['curves'][curv_ind]['data'][z_dir] = {}
             if filepath not in data_dict[chan_label]['curves'][curv_ind]['header']['File path']: #file path included to header
                 data_dict[chan_label]['curves'][curv_ind]['header']['File path'].append(filepath)
-            data_dict[chan_label]['curves'][curv_ind]['data'][z_dir]['x'] = z_data.max()-z_data #reverse x data
+            # data_dict[chan_label]['curves'][curv_ind]['data'][z_dir]['x'] = z_data.max()-z_data #reverse x data
+            data_dict[chan_label]['curves'][curv_ind]['data'][z_dir]['x'] = z_data #reverse x data
             data_dict[chan_label]['curves'][curv_ind]['data'][z_dir]['y'] = (z_calib*ch_mat[:][i]) #chan_offs+(ch_mat[:][i]*chan_fact)
             if x_dir == 'Forward':
                 data_dict[chan_label]['curves'][curv_ind]['data'][z_dir]['y'] = np.flip((z_calib*ch_mat[:][i]))
@@ -1178,10 +1205,10 @@ class WSxMFuncs():
         data_format = header_dict['Image Data Type [General Info]']
         chan_label = header_dict['Acquisition channel [General Info]']
         spec_dir = header_dict['Spectroscopy type [General Info]']
-        x_dir = spec_dir.split(' ')[1]
-        y_dir = header_dict['Y scanning direction [General Info]'] #CHECK Y DIRECTIONS
+        # x_dir = spec_dir.split(' ')[1]
+        # y_dir = header_dict['Y scanning direction [General Info]'] #CHECK Y DIRECTIONS
         # z_dir = SPECT_DICT[spec_dir.split(' ')[3]]
-        line_rate = float(header_dict['X-Frequency [Control]'].split(' ')[0])
+        # line_rate = float(header_dict['X-Frequency [Control]'].split(' ')[0])
         x_num = int(header_dict['Number of rows [General Info]'])
         y_num = int(header_dict['Number of columns [General Info]'])
         chan_num = int(header_dict['Number of points per ramp [General Info]'])
@@ -1429,7 +1456,8 @@ class WSxMFuncs():
 if __name__ == '__main__':
     datafolder_path = Path('/home/pranav/Work/Codes/SciFiReaders/downloads/wsxm/')
 
-    # data_file_path = str(datafolder_path / 'WSxM2DReader_jumpingmodeimage_0002_Topography.f.dy.top')
+    # # data_file_path = str(datafolder_path / 'thiolinterdigi_thiolspot2_tipAC240TS_3dmode_freqsweep_osc0.0005V_gain100_0279.f.dy.ch1')
+    # data_file_path = str(datafolder_path / 'C__WSxM_data_cits_SI1CIT01.stp')
     # # data_file_path = str(datafolder_path / 'interdigi_thiol_tipSi_b_0005.b.dy.top')
     # # data_file_path = str(datafolder_path / 'LechugaPuntoCritico_enves(abaxial)_0040.f.dy.top')
     # my_reader = WSxM2DReader(data_file_path)
@@ -1446,6 +1474,11 @@ if __name__ == '__main__':
 
     # data_file_path = str(datafolder_path / 'WSxM1DReader_spectrocurve_0001_Normal force.f.curves')
     # # data_file_path = str(datafolder_path / 'calibrate_forcedistance_gainin10_0173_Normal force.b.stp')
+    # # data_file_path = str(datafolder_path / 'thiolarea1_AC160TS_gain30_freeamp3.82V_pllon_humid49_0042_Phase.f.curves')
+    # # data_file_path = str(datafolder_path / 'am_AC160TS_gain30_freeamp5.15V_pllon_humid49_0317_Amplitude.f.curves')
+    # # data_file_path = str(datafolder_path / 'tune_xy_far5.cur')
+    # # data_file_path = str(datafolder_path / 'am_AC160TS_gain30_freeamp5.15V_pllon_humid49_0316_Amplitude.fz.cur')
+    # # data_file_path = str(datafolder_path / 'ivcurve.iv.cur')
     # my_reader = WSxM1DReader(data_file_path)
     # my_data = my_reader.read()
     # # print(my_data.keys())
@@ -1454,22 +1487,23 @@ if __name__ == '__main__':
     #     print(chandata_i.metadata['File path'])
     #     chandata_i.plot()
     # # my_data['Channel_000'].plot()
-    # plt.show()
+    # # plt.show()
 
-    data_file_path = str(datafolder_path / 'WSxM3DReader_Forcevolume_0003_Normal force.ff.ch1.gsi')
-    # data_file_path = str(datafolder_path / 'jumpingFVmode_pllon_glassonly_spot2_thiolinterdigielec_0036.ff.ch12.gsi')
-    # data_file_path = str(datafolder_path / 'scan_2lps_P100_I10_512points_0.08ampl_afterreadjust_0016.f.dy.top.MOV')
-    # data_file_path = str(datafolder_path / 'WSxM3DReader_Forcevolume_0003_Normal force.mpp')
-    my_reader = WSxM3DReader(data_file_path)
-    my_data = my_reader.read()
-    # print(my_data.keys())
-    for chan_i, chandata_i in my_data.items():
-        print(chan_i, chandata_i.quantity, chandata_i.direction)
-        print(chandata_i.metadata['File path'])
-        # chandata_i.plot()
-    # print(help(my_data['Channel_000']))
-    # my_data['Channel_000'].plot()#(scale_bar=True)
-    my_data['Channel_000'].plot(scale_bar=True)
-    my_data['Channel_000'].metadata['Topography'].plot()
+    # data_file_path = str(datafolder_path / 'WSxM3DReader_Forcevolume_0003_Normal force.ff.ch1.gsi')
+    # # data_file_path = str(datafolder_path / 'C__WSxM_data_cits_SI1CIT01.gsi')
+    # # data_file_path = str(datafolder_path / 'jumpingFVmode_pllon_glassonly_spot2_thiolinterdigielec_0036.ff.ch12.gsi')
+    # # data_file_path = str(datafolder_path / 'scan_2lps_P100_I10_512points_0.08ampl_afterreadjust_0016.f.dy.top.MOV')
+    # # data_file_path = str(datafolder_path / 'WSxM3DReader_Forcevolume_0003_Normal force.mpp')
+    # my_reader = WSxM3DReader(data_file_path)
+    # my_data = my_reader.read()
+    # # print(my_data.keys())
+    # for chan_i, chandata_i in my_data.items():
+    #     print(chan_i, chandata_i.quantity, chandata_i.direction)
+    #     print(chandata_i.metadata['File path'])
+    #     chandata_i.plot()
+    # # print(help(my_data['Channel_000']))
+    # # my_data['Channel_000'].plot()#(scale_bar=True)
+    # # my_data['Channel_000'].plot(scale_bar=True)
+    # # my_data['Channel_000'].metadata['Topography'].plot()
     
     plt.show()
