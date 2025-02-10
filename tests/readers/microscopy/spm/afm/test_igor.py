@@ -4,17 +4,108 @@ import pytest
 import sidpy
 from pywget import wget
 import os
+import pickle
+import numpy as np
 
 sys.path.append("../../../../../SciFiReaders/")
 import SciFiReaders as sr
 
 root_path = "https://github.com/pycroscopy/SciFiDatasets/blob/main/data/microscopy/spm/afm/"
 
-igor = pytest.importorskip("igor", reason="igor not installed")
+igor2 = pytest.importorskip("igor2", reason="igor2 not installed")
 
 class TestIgorIBW(unittest.TestCase):
     # Tests the nanonis_dat reader
+    def test_igor_matrix_file_cits(self):
+        #Test the CITS file reads correctly
+        file_cits = '20230110-152047_ScV6Sn6-2023-01-10-STM_NANOPROBE_AtomManipulation--37_1-Aux2(V) 3_Forward_Down_Trace.ibw?raw=true'
+        file_path = os.path.join(root_path, file_cits)
+        file_out = 'cits_file.ibw'
+        wget.download(file_path, out=file_out)
+        reader = sr.IgorMatrixReader(file_out)
+        dataset = reader.read()
 
+        #a lot of asserts here
+        assert dataset.data_type == sidpy.DataType.SPECTRAL_IMAGE, \
+        "Expected data type {}, received {}".format(sidpy.DataType.SPECTRAL_IMAGE,dataset.data_type )
+
+        assert dataset.ndim==3, "Dataset dimension should be 3, received {} instead".format(dataset.ndim)
+        true_dd = 'Aux2(V) 3 37-1 Forward Down Trace (V)'
+        assert dataset.data_descriptor==true_dd, "Data descriptor was expected to be {} but received {}".format(true_dd, dataset.data_descriptor)
+        dimension_sizes = [64,8,256]
+        dimension_types = [sidpy.DimensionType.SPATIAL,sidpy.DimensionType.SPATIAL,
+                           sidpy.DimensionType.SPECTRAL]
+        for dim in dataset._axes:
+            dimension = dataset._axes[dim]
+            assert dimension.size == dimension_sizes[dim]
+            assert dimension.dimension_type == dimension_types[dim]
+
+        #Load the metadata
+        file_metadata = 'orig_dict.p?raw=true'
+        file_path = os.path.join(root_path, file_metadata)
+        metadata_out = 'cits_metadata.p'
+        wget.download(file_path, out=metadata_out)
+        true_metadata = pickle.load(open(metadata_out, 'rb'))
+        received_metadata = dataset.original_metadata
+        for key in true_metadata: 
+            if type(true_metadata[key])==np.ndarray:
+                assert true_metadata[key].all()==received_metadata[key].all(), \
+                "Was expecting {} for key {} but received {}".format(true_metadata[key],
+                                            key,received_metadata[key] )
+            elif type(true_metadata[key]) != dict:
+                assert true_metadata[key]==received_metadata[key], \
+                "Was expecting {} for key {} but received {}".format(true_metadata[key],
+                                            key,received_metadata[key] )
+
+        os.remove(file_out)
+        os.remove(metadata_out)
+        return
+    
+    def test_igor_matrix_file_image(self):
+        #Test the image file reads correctly
+        file_cits = '20230110-152047_ScV6Sn6-2023-01-10-STM_NANOPROBE_AtomManipulation--37_1-I 3_Backward_Down.ibw?raw=true'
+        file_path = os.path.join(root_path, file_cits)
+        file_out = 'img_file.ibw'
+        wget.download(file_path, out=file_out)
+        reader = sr.IgorMatrixReader(file_out)
+        dataset = reader.read()
+
+        #a lot of asserts here
+        assert dataset.data_type == sidpy.DataType.IMAGE, \
+        "Expected data type {}, received {}".format(sidpy.DataType.IMAGE,dataset.data_type )
+
+        assert dataset.ndim==2, "Dataset dimension should be 3, received {} instead".format(dataset.ndim)
+        true_dd = 'I 3 37-1 Backward Down (A)'
+        assert dataset.data_descriptor==true_dd, "Data descriptor was expected to be {} \
+        but received {}".format(true_dd, dataset.data_descriptor)
+        dimension_sizes = [58,256]
+        dimension_types = [sidpy.DimensionType.SPATIAL, sidpy.DimensionType.SPATIAL]
+        for dim in dataset._axes:
+            dimension = dataset._axes[dim]
+            assert dimension.size == dimension_sizes[dim]
+            assert dimension.dimension_type == dimension_types[dim]
+
+        #Load the metadata
+        file_metadata = 'image_dict.p?raw=true'
+        file_path = os.path.join(root_path, file_metadata)
+        img_metadata_out = 'img_metadata.p'
+        wget.download(file_path, out=img_metadata_out)
+        true_metadata = pickle.load(open(img_metadata_out, 'rb'))
+        received_metadata = dataset.original_metadata
+        for key in true_metadata: 
+            if type(true_metadata[key])==np.ndarray:
+                assert true_metadata[key].all()==received_metadata[key].all(), \
+                "Was expecting {} for key {} but received {}".format(true_metadata[key],
+                                            key,received_metadata[key] )
+            elif type(true_metadata[key]) != dict:
+                assert true_metadata[key]==received_metadata[key], \
+                "Was expecting {} for key {} but received {}".format(true_metadata[key],
+                                            key,received_metadata[key] )
+
+        os.remove(file_out)
+        os.remove(img_metadata_out)
+
+    
     def test_load_test_ibw_force_file(self):
 
         # Test if the test dat file can be read in correctly
@@ -26,7 +117,7 @@ class TestIgorIBW(unittest.TestCase):
         data_translator = sr.IgorIBWReader(file_path)
         datasets = data_translator.read(verbose=False)
         assert len(datasets)==3, "Length of dataset should be 3 but is instead {}".format(len(datasets))
-        metadata = datasets[0].original_metadata
+        metadata = datasets['Channel_000'].original_metadata
         data_descriptors = ['Raw (m)', 'Defl (m)', 'ZSnsr (m)']
 
         original_metadata ={'MostPosZVoltage': 150,
@@ -665,15 +756,16 @@ class TestIgorIBW(unittest.TestCase):
                 assert original_metadata[key] == metadata[key], "Metadata incorrect for key {}, should be {} " \
                         "but was read as {}".format(key, original_metadata[key], metadata[key])
 
-        for ind in range(len(datasets)):
-            assert type(datasets[ind])== sidpy.sid.dataset.Dataset, "Dataset No. {} not read in as sidpy dataset" \
-                    "but was instead read in as {}".format(ind, type(datasets[ind]))
+        #for ind in range(len(datasets)):
+        for ind, key in enumerate(datasets):
+            assert type(datasets[key])== sidpy.sid.dataset.Dataset, "Dataset No. {} not read in as sidpy dataset" \
+                    "but was instead read in as {}".format(ind, type(datasets[key]))
 
-            assert datasets[ind].shape[0]==1261, "Dataset[{}] is of size 1261 but was read in as {}".format(ind, datasets[ind].shape[0])
-            assert type(datasets[ind]._axes[0]) == sidpy.sid.dimension.Dimension, "Dataset should have dimension type " \
-                                           "of sidpy Dimension, but is instead {}".format(type(datasets[ind]._axes))
-            assert datasets[ind].data_descriptor == data_descriptors[ind], "Dataset {} " \
-            "should have descriptor {} but instead has descriptor {}".format(ind, data_descriptors[ind], datasets[ind].data_descriptor)
+            assert datasets[key].shape[0]==1261, "Dataset[{}] is of size 1261 but was read in as {}".format(ind, datasets[key].shape[0])
+            assert type(datasets[key]._axes[0]) == sidpy.sid.dimension.Dimension, "Dataset should have dimension type " \
+                                           "of sidpy Dimension, but is instead {}".format(type(datasets[key]._axes))
+            assert datasets[key].data_descriptor == data_descriptors[ind], "Dataset {} " \
+            "should have descriptor {} but instead has descriptor {}".format(ind, data_descriptors[ind], datasets[key].data_descriptor)
 
         os.remove(file_path)
 
@@ -1321,7 +1413,7 @@ class TestIgorIBW(unittest.TestCase):
         'modDate': 3692884718,
         'bname': b'BTFO_DSO_Thick0000'}
 
-        metadata = datasets[0].original_metadata
+        metadata = datasets['Channel_000'].original_metadata
 
         data_labels = [['x (m)', 'y (m)'],
                         ['x (m)', 'y (m)'],
@@ -1336,18 +1428,19 @@ class TestIgorIBW(unittest.TestCase):
                         "but was read as {}".format(key, original_metadata[key], metadata[key])
 
             
-        for ind in range(len(datasets)):
-            assert type(datasets[ind])== sidpy.sid.dataset.Dataset, "Dataset No. {} not read in as sidpy dataset" \
-                    "but was instead read in as {}".format(ind, type(datasets[ind]))
+        #for ind in range(len(datasets)):
+        for ind,key in enumerate(datasets):
+            assert type(datasets[key])== sidpy.sid.dataset.Dataset, "Dataset No. {} not read in as sidpy dataset" \
+                    "but was instead read in as {}".format(ind, type(datasets[key]))
 
-            assert datasets[ind].labels == data_labels[ind], "Dataset {} label should be a {} but " \
-                                                      "is instead {}".format(ind,data_labels[ind], datasets[ind].labels)
+            assert datasets[key].labels == data_labels[ind], "Dataset {} label should be a {} but " \
+                                                      "is instead {}".format(ind,data_labels[ind], datasets[key].labels)
 
-            assert datasets[ind].shape==(256, 256), "Dataset[{}] is of size (256,256) but was read in as {}".format(ind, datasets[ind].shape)
-            assert type(datasets[ind]._axes[0]) == sidpy.sid.dimension.Dimension, "Dataset should have dimension type " \
-                                           "of sidpy Dimension, but is instead {}".format(type(datasets[ind]._axes))
+            assert datasets[key].shape==(256, 256), "Dataset[{}] is of size (256,256) but was read in as {}".format(ind, datasets[key].shape)
+            assert type(datasets[key]._axes[0]) == sidpy.sid.dimension.Dimension, "Dataset should have dimension type " \
+                                           "of sidpy Dimension, but is instead {}".format(type(datasets[key]._axes))
 
-            assert datasets[ind].data_descriptor == data_descriptors[ind], "Dataset {} " \
-            "should have descriptor {} but instead has descriptor {}".format(ind, data_descriptors[ind], datasets[ind].data_descriptor)
+            assert datasets[key].data_descriptor == data_descriptors[ind], "Dataset {} " \
+            "should have descriptor {} but instead has descriptor {}".format(ind, data_descriptors[ind], datasets[key].data_descriptor)
         
         os.remove(file_path)

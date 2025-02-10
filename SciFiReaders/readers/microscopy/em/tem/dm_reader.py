@@ -126,20 +126,28 @@ def read_string(dm_file, length=1):
 
 class DMReader(sidpy.Reader):
     """
-    file_path: filepath to dm3 or dm4 file.
+    Reader of Digital Micrograph image and spectroscopy data
 
-    warn('This Reader will eventually be moved to the ScopeReaders package'
-         '. Be prepared to change your import statements',
-         FutureWarning)
+    This reader reads (attribute read) all the different data in the file and returns it as a dictionary 
+    of sidpy.Datasets
+
+    Parameter:
+    ---------
+    file_path: str
+        filepath to dm3 or dm4 file.
+
+    Return:
+    ------
+    datasets: dict
+        dictionary of sidpy datasets
     """
-
     def __init__(self, file_path, verbose=False):
         super().__init__(file_path)
 
         # initialize variables ##
         self.verbose = verbose
         self.__filename = file_path
-        self.datasets = []
+        self.datasets = {}
         
         # - open file for reading
         try:
@@ -186,6 +194,7 @@ class DMReader(sidpy.Reader):
             print("| parse DM3 file: %.3g s" % (t2 - t1))
         if '1' in self.__stored_tags['ImageList']:
             start=1
+        channel_number = 0
         for image_number in self.__stored_tags['ImageList'].keys():
             if int(image_number) >= start:
                 dataset = self.get_dataset(self.__stored_tags['ImageList'][image_number])
@@ -214,15 +223,20 @@ class DMReader(sidpy.Reader):
                     dataset.source = 'SciFiReaders.DMReader'
                     dataset.original_metadata['DM']['full_file_name'] = self.__filename
                     
-                    self.datasets.append(dataset)
-                    self.extract_crucial_metadata(-1)
+                    key = f"Channel_{int(channel_number):03d}"
+                    channel_number += 1
+                    self.datasets[key] = dataset
+                    self.extract_crucial_metadata(key)
 
         del self.__stored_tags['ImageList'] 
-        main_dataset_number = 0
-        for index, dataset in enumerate(self.datasets):
+        main_dataset_key = list(self.datasets.keys())[0]
+
+        for key, dataset in self.datasets.items():
             if 'urvey' in dataset.title:
-                main_dataset_number = index
-        self.datasets[main_dataset_number].original_metadata.update(self.__stored_tags)
+                main_dataset_key = key
+        if self.verbose:
+            print(main_dataset_key)
+        self.datasets[main_dataset_key].original_metadata.update(self.__stored_tags)
         self.close()
         return self.datasets
 
@@ -318,7 +332,6 @@ class DMReader(sidpy.Reader):
                                                                 dimension_type=sidpy.DimensionType.RECIPROCAL))
                 reciprocal_name = chr(ord(reciprocal_name) + 1)
             elif 'm' in units:
-                units = 'counts'
                 dataset.set_dimension(int(dim), sidpy.Dimension(values, name=spatial_name, units=units,
                                                                 quantity='distance',
                                                                 dimension_type=sidpy.DimensionType.SPATIAL))
@@ -332,8 +345,8 @@ class DMReader(sidpy.Reader):
 
         # For ill defined DM data
         if dataset.data_type.name == 'IMAGE':
-            dataset.x.dimension_type = 'SPATiAL'
-            dataset.y.dimension_type = 'SPATiAL'
+            dataset.x.dimension_type = 'SPATIAL'
+            dataset.y.dimension_type = 'SPATIAL'
 
     # utility functions
 
@@ -499,8 +512,8 @@ class DMReader(sidpy.Reader):
         ImageDict['ImageData']['Data'] = 'read'
         return raw_data
 
-    def extract_crucial_metadata(self, dataset_index):
-        original_metadata = self.datasets[dataset_index].original_metadata
+    def extract_crucial_metadata(self, dataset_key):
+        original_metadata = self.datasets[dataset_key].original_metadata
         """Read essential parameter from original_metadata originating from a dm3 file"""
         if not isinstance(original_metadata, dict):
             raise TypeError('We need a dictionary to read')
@@ -552,7 +565,7 @@ class DMReader(sidpy.Reader):
             if 'Voltage' in exp_dictionary['Microscope Info']:
                 experiment['acceleration_voltage'] = exp_dictionary['Microscope Info']['Voltage']
 
-        self.datasets[dataset_index].metadata['experiment']  = experiment
+        self.datasets[dataset_key].metadata['experiment']  = experiment
 
 
 

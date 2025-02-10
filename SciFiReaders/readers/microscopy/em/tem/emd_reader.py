@@ -35,31 +35,40 @@ if sys.version_info.major == 3:
 
 
 class EMDReader(sidpy.Reader):
-    def __init__(self, file_path):
-        """
-        Creates an instance of EMDReader which can read one or more HDF5
-        datasets formatted in the FEI Velox style EDM file
+    
+    """
+    Creates an instance of EMDReader which can read one or more HDF5
+    datasets formatted in the FEI Velox style EDM file
 
-        We can read Images, and SpectrumStreams (SpectrumImages and Spectra).
-        Please note that all original metadata are retained in each sidpy dataset.
+    We can read Images, and SpectrumStreams (SpectrumImages and Spectra).
+    Please note that all original metadata are retained in each sidpy dataset.
 
-        Parameters
-        ----------
-        file_path : str
-            Path to a HDF5 file
-        """
-
-        super(EMDReader, self).__init__(file_path)
+    Parameters
+    ----------
+    file_path : str
+        Path to a HDF5 file
+    Return
+    ------
+    datasets: dict
+        dictionary of sidpy.Datasets
+    """
+    def __init__(self, file_path, sum_frames=False, no_eds=False):
+        super().__init__(file_path)
 
         # Let h5py raise an OS error if a non-HDF5 file was provided
         self._h5_file = h5py.File(file_path, mode='r+')
 
-        self.datasets = []
+        self.datasets = {}
+        self.channel_number = 0
+        self.key = f"Channel_{int(self.channel_number):03d}"
         self.data_array = None
         self.metadata = None
         self.label_dict = {}
+        self.no_eds = no_eds
+        self.sum_frames = sum_frames
             
         self.number_of_frames = 1
+
 
     def can_read(self):
         """
@@ -76,7 +85,7 @@ class EMDReader(sidpy.Reader):
         else:
             return False
 
-    def read(self, eds_stream=False):
+    def read(self, eds_stream=False, bin=2):
         """
         Reads all available datasets in FEI Velox style hdf5 files with .edm
 
@@ -84,6 +93,8 @@ class EMDReader(sidpy.Reader):
         ----------
         eds_stream: boolean
             switch to return spectrum image (default - False) or original spectrum stream (True)
+        bin: int
+            binning factor for EDS spectrum size reduction
 
         Returns
         -------
@@ -94,13 +105,15 @@ class EMDReader(sidpy.Reader):
         if 'Data' not in self._h5_file:
             raise TypeError('Velox EMD File is empty')
     
-        number_of_datasets=0
+        number_of_datasets = 0
+
+        self.bin = bin
         use_tqdm = False
         for key in self._h5_file['Data']:
             if key == 'SpectrumStream':
                 number_of_datasets += len(self._h5_file['Data']['SpectrumStream'].keys())
         if number_of_datasets > 1:
-            progress_bar = tqdm(total=number_of_datasets) # Initialise
+            progress_bar = tqdm(total=number_of_datasets)  # Initialise
             use_tqdm = tqdm_available
         for key in self._h5_file['Data']:
             self.image_key = 'None'
@@ -109,14 +122,15 @@ class EMDReader(sidpy.Reader):
                 for self.image_key in self._h5_file['Data']['Image']:
                     self.get_data('Data/Image/' + self.image_key)
                     self.get_image()
-                    self.extract_crucial_metadata(-1)
+                    self.extract_crucial_metadata(self.key)
             elif key == 'SpectrumStream':
-                for stream_key in self._h5_file['Data']['SpectrumStream']:
-                    self.get_data('Data/SpectrumStream/' + stream_key)
-                    self.get_eds(eds_stream)
-                    self.extract_crucial_metadata(-1)
-                    if use_tqdm:
-                        progress_bar.update(1)
+                if not self.no_eds:
+                    for stream_key in self._h5_file['Data']['SpectrumStream']:
+                        self.get_data('Data/SpectrumStream/' + stream_key)
+                        self.get_eds(eds_stream)
+                        self.extract_crucial_metadata(self.key)
+                        if use_tqdm:
+                            progress_bar.update(1)
         if use_tqdm:
             progress_bar.close()
         self.close()
@@ -143,28 +157,28 @@ class EMDReader(sidpy.Reader):
     def get_eds(self, eds_stream=False):
         if 'AcquisitionSettings' not in self.metadata:
             eds_stream = True
+        key = f"Channel_{int(self.channel_number):03d}"
+        self.key = key
+        self.channel_number += 1
         if eds_stream:
-            self.datasets.append(sidpy.Dataset.from_array(self.data_array),)
+            self.datasets[key] = sidpy.Dataset.from_array(self.data_array)
         else:
             data_array = self.get_eds_spectrum()
             if data_array.shape[0] == 1 and data_array.shape[1] == 1:
-                data_array = np.array(data_array).flatten()
+                data_array = np.squeeze(data_array)
                 chunks = 1
             else:
-                chunks= [32, 32, data_array.shape[2]]
+                chunks= [data_array.shape[1], 32, data_array.shape[2]]
                 if data_array.shape[0]> chunks[0]:
                     chunks[0] = data_array.shape[0]
                 if data_array.shape[1]> chunks[1]:
                     chunks[1] = data_array.shape[1]
                 
-            self.datasets.append(sidpy.Dataset.from_array(data_array,  chunks=chunks))
-        # print(self.datasets[-1])
-
+            self.datasets[key] = sidpy.Dataset.from_array(data_array, chunks=chunks)
+       
         self.data_array=np.zeros([1,1])
-
-        self.datasets[-1].original_metadata = self.metadata
-
-        detectors = self.datasets[-1].original_metadata['Detectors']
+        self.datasets[key].original_metadata = self.metadata
+        detectors = self.datasets[key].original_metadata['Detectors']
         if eds_stream:
             pass
         else:
@@ -173,108 +187,145 @@ class EMDReader(sidpy.Reader):
             for detector in detectors.values():
                 if self.metadata['BinaryResult']['Detector'] in detector['DetectorName']:
                     if 'OffsetEnergy' in detector:
-                        offset = float(detector['OffsetEnergy'])
+                        offset = float(detector['OffsetEnergy'])/self.bin
                     if 'Dispersion' in detector:
-                        dispersion = float(detector['Dispersion'])
+                        dispersion = float(detector['Dispersion'])/self.bin
 
-            self.datasets[-1].units = 'counts'
-            self.datasets[-1].quantity = 'intensity'
-            energy_scale = np.arange(self.datasets[-1].shape[-1]) * dispersion + offset
+            self.datasets[key].units = 'counts'
+            self.datasets[key].quantity = 'intensity'
+            energy_scale = np.arange(self.datasets[key].shape[-1]) * dispersion + offset
 
-            if self.datasets[-1].ndim == 1:
-                self.datasets[-1].data_type = 'spectrum'
+            if self.datasets[key].ndim == 1:
+                self.datasets[key].data_type = 'spectrum'
 
-                self.datasets[-1].set_dimension(0, sidpy.Dimension(energy_scale,
+                self.datasets[key].set_dimension(0, sidpy.Dimension(energy_scale,
                                                                    name='energy_scale', units='eV',
                                                                    quantity='energy',
                                                                    dimension_type='spectral'))
 
             else:
-                self.datasets[-1].data_type = 'spectral_image'
-                self.datasets[-1].set_dimension(2, sidpy.Dimension(energy_scale,
-                                                                   name='energy_scale', units='eV',
-                                                                   quantity='energy',
-                                                                   dimension_type='spectral'))
+                self.datasets[key].data_type = 'spectral_image'
+                print(self.datasets[key].shape)
+                
                 scale_x = float(self.metadata['BinaryResult']['PixelSize']['width']) * 1e9
                 scale_y = float(self.metadata['BinaryResult']['PixelSize']['height']) * 1e9
 
-                self.datasets[-1].set_dimension(0, sidpy.Dimension(np.arange(self.datasets[-1].shape[0]) * scale_x,
+                self.datasets[key].set_dimension(0, sidpy.Dimension(np.arange(self.datasets[key].shape[0]) * scale_x,
                                                                    name='x', units='nm',
                                                                    quantity='distance',
                                                                    dimension_type='spatial'))
-                self.datasets[-1].set_dimension(1, sidpy.Dimension(np.arange(self.datasets[-1].shape[1]) * scale_y,
+                self.datasets[key].set_dimension(1, sidpy.Dimension(np.arange(self.datasets[key].shape[1]) * scale_y,
                                                                    name='y', units='nm',
                                                                    quantity='distance',
                                                                    dimension_type='spatial'))
+                self.datasets[key].set_dimension(2, sidpy.Dimension(energy_scale,
+                                                                   name='energy_scale', units='eV',
+                                                                   quantity='energy',
+                                                                   dimension_type='spectral'))
+                
     
     def get_eds_spectrum(self):
         acquisition = self.metadata['AcquisitionSettings']
-        # print(acquisition)
+        
         size_x = 1
         size_y = 1
-        if 'RasterScanDefinition' in acquisition:
+        if 'Scan' in self.metadata:
+            scan = self.metadata['Scan']
+            if 'ScanArea' in scan:
+                size_x = int(float(scan['ScanSize']['width']) * float(scan['ScanArea']['right'])-float(scan['ScanSize']['width']) * float(scan['ScanArea']['left']))
+                size_y = int(float(scan['ScanSize']['height']) * float(scan['ScanArea']['bottom'])-float(scan['ScanSize']['height']) * float(scan['ScanArea']['top']))
+            
+        elif 'RasterScanDefinition' in acquisition:
             size_x = int(acquisition['RasterScanDefinition']['Width'])
             size_y = int(acquisition['RasterScanDefinition']['Height'])
         spectrum_size = int(acquisition['bincount'])
 
         self.number_of_frames = int(np.ceil((self.data_array[:, 0] == 65535).sum() / (size_x * size_y)))
         # print(size_x,size_y,number_of_frames)
-        data_array = np.zeros((size_x * size_y, spectrum_size),dtype=np.ushort)
+        
+        data_array = np.zeros((size_x * size_y, int(spectrum_size/self.bin)),dtype=np.ushort)
         # progress = tqdm(total=number_of_frames)
         
-        data, frame = get_stream(data_array, size_x*size_y, self.data_array[:, 0])
+        data, frame = get_stream(data_array, size_x*size_y, self.data_array[:, 0], self.bin)
         
         self.number_of_frames = frame
-        return np.reshape(data, (size_x, size_y, spectrum_size))
+        return np.reshape(data, (size_x, size_y, int(spectrum_size/self.bin)))
 
     def get_image(self):
+        key = f"Channel_{int(self.channel_number):03d}"
+        self.key = key
+        self.channel_number += 1
+        
+        if self.metadata['BinaryResult']['PixelUnitX'] == '1/m':
+            names = ['u', 'v']
+            units = '1/nm'
+            quantity = 'reciprocal distance'
+            dimension_type='reciprocal'
+            to_nm = 1e-9
+        else:
+            names = ['x', 'y']
+            units = 'nm'
+            quantity = 'distance'
+            dimension_type='spatial'
+            to_nm = 1e9
 
-        scale_x = float(self.metadata['BinaryResult']['PixelSize']['width']) * 1e9
-        scale_y = float(self.metadata['BinaryResult']['PixelSize']['height']) * 1e9
+        scale_x = float(self.metadata['BinaryResult']['PixelSize']['width']) * to_nm
+        scale_y = float(self.metadata['BinaryResult']['PixelSize']['height']) * to_nm
+        offset_x = float(self.metadata['BinaryResult']['Offset']['x']) * to_nm
+        offset_y = float(self.metadata['BinaryResult']['Offset']['y'])  * to_nm
+        
+        if self.sum_frames:
+            data_array = np.zeros([self.data_array.shape[0], self.data_array.shape[1], 1])
+            for i in range(self.data_array.shape[2]):
+                data_array[:, :, 0] += self.data_array[:, :, i]
+            self.data_array = data_array
 
         if self.data_array.shape[2] == 1:
-            self.datasets.append(sidpy.Dataset.from_array(self.data_array[:, :, 0]))
-            self.datasets[-1].data_type = 'image'
-            self.datasets[-1].set_dimension(0, sidpy.Dimension(np.arange(self.data_array.shape[0]) * scale_x,
-                                                               name='x', units='nm',
-                                                               quantity='distance',
-                                                               dimension_type='spatial'))
-            self.datasets[-1].set_dimension(1, sidpy.Dimension(np.arange(self.data_array.shape[1]) * scale_y,
-                                                               name='y', units='nm',
-                                                               quantity='distance',
-                                                               dimension_type='spatial'))
+            self.datasets[key] = sidpy.Dataset.from_array(self.data_array[:, :, 0])
+            self.datasets[key].data_type = 'image'
+            self.datasets[key].set_dimension(0, sidpy.Dimension(np.arange(self.data_array.shape[0]) * scale_x + offset_x,
+                                                               name=names[0], units=units,
+                                                               quantity=quantity,
+                                                               dimension_type=dimension_type))
+            self.datasets[key].set_dimension(1, sidpy.Dimension(np.arange(self.data_array.shape[1]) * scale_y + offset_y,
+                                                               name=names[1], units=units,
+                                                               quantity=quantity,
+                                                               dimension_type=dimension_type))
         else:
             # There is a problem with random access of data due to chunking in hdf5 files
             # Speed-up copied from hyperspy.ioplugins.EMDReader.FEIEMDReader
-
             data_array = np.empty(self.data_array.shape)
             self.data_array.read_direct(data_array)
             self.data_array = np.rollaxis(data_array, axis=2)
-            # np.moveaxis(data_array, source=[0, 1, 2], destination=[2, 0, 1])
             
-            self.datasets.append(sidpy.Dataset.from_array(self.data_array))
-            self.datasets[-1].data_type = 'image_stack'
-            self.datasets[-1].set_dimension(0, sidpy.Dimension(np.arange(self.data_array.shape[0]),
+            self.datasets[key] = sidpy.Dataset.from_array(self.data_array)
+            self.datasets[key].data_type = 'image_stack'
+
+            self.datasets[key].set_dimension(0, sidpy.Dimension(np.arange(self.data_array.shape[0]),
                                                                name='frame', units='frame',
                                                                quantity='time',
                                                                dimension_type='temporal'))
-            self.datasets[-1].set_dimension(1, sidpy.Dimension(np.arange(self.data_array.shape[1]) * scale_x,
-                                                               name='x', units='nm',
-                                                               quantity='distance',
-                                                               dimension_type='spatial'))
-            self.datasets[-1].set_dimension(2, sidpy.Dimension(np.arange(self.data_array.shape[2]) * scale_y,
-                                                               name='y', units='nm',
-                                                               quantity='distance',
-                                                               dimension_type='spatial'))
-        self.datasets[-1].original_metadata = self.metadata
+            self.datasets[key].set_dimension(1, sidpy.Dimension(np.arange(self.data_array.shape[1]) * scale_x + offset_x,
+                                                               name=names[0], units=units,
+                                                               quantity=quantity,
+                                                               dimension_type=dimension_type))
+            self.datasets[key].set_dimension(2, sidpy.Dimension(np.arange(self.data_array.shape[2]) * scale_y + offset_y,
+                                                               name=names[1], units=units,
+                                                               quantity=quantity,
+                                                               dimension_type=dimension_type))
+        self.datasets[key].original_metadata = self.metadata
 
-        self.datasets[-1].units = 'counts'
-        self.datasets[-1].quantity = 'intensity'
+        if not True:
+            print('nothing')
+
+        self.datasets[key].units = 'counts'
+        self.datasets[key].quantity = 'intensity'
         if self.image_key in self.label_dict:
-            self.datasets[-1].title = self.label_dict[self.image_key]
+            self.datasets[key].title = self.label_dict[self.image_key]
+        self.data_array=np.zeros([1,1])
 
-    def extract_crucial_metadata(self, index):
-        metadata = self.datasets[index].original_metadata
+    def extract_crucial_metadata(self, key):
+        metadata = self.datasets[key].original_metadata
         experiment = {'detector': metadata['BinaryResult']['Detector'],
                       'acceleration_voltage': float(metadata['Optics']['AccelerationVoltage']),
                       'microscope': metadata['Instrument']['InstrumentClass'],
@@ -294,15 +345,15 @@ class EMDReader(sidpy.Reader):
                                "tilt": {"alpha": float(metadata['Stage']['AlphaTilt']),
                                         "beta": float(metadata['Stage']['BetaTilt'])}}
 
-        self.datasets[index].metadata['experiment'] = experiment
-        if self.datasets[index].title == 'generic':
-            self.datasets[index].title = experiment['detector']
+        self.datasets[key].metadata['experiment'] = experiment
+        if self.datasets[key].title == 'generic':
+            self.datasets[key].title = experiment['detector']
 
     def close(self):
         self._h5_file.close()
 
 @njit(cache=True)
-def get_stream(data, size, data_stream):
+def get_stream(data, size, data_stream, bin):
     #for value in self.data_array[:, 0]:
     #from tqdm.auto import trange, tqdm
     pixel_number = 0
@@ -313,8 +364,6 @@ def get_stream(data, size, data_stream):
             if pixel_number >= size:
                 pixel_number = 0
                 frame += 1
-                # print(frame)
-                # progress.update(1)
         else:
-            data[pixel_number, value] += 1
+            data[pixel_number, int(value/bin-0.2)] += 1
     return data, frame

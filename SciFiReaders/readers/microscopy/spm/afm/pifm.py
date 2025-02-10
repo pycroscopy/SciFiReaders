@@ -14,16 +14,14 @@ import os
 import numpy as np
 import h5py
 
-from pyNSID.io.hdf_io import write_nsid_dataset
-from pyNSID.io.hdf_io import create_indexed_group, write_simple_attrs
 
-class PiFMTranslator(Reader):
+class PiFMReader(Reader):
     """
-    Class that writes images, spectrograms, point spectra and associated ancillary data sets to h5 file in pyUSID data
-    structure.
+    Class that reads images, spectrograms, point spectra and associated
+    ancillary data sets from an Anfatec scan structure.
     """
 
-    def read(self ):
+    def read(self):
         """
         Parameters
         ----------
@@ -101,13 +99,13 @@ class PiFMTranslator(Reader):
         spectrum_desc = {}
         pspectrum_desc = {}
         
-        with open(self.path,'r', encoding="ISO-8859-1") as f:
+        with open(self.path, 'r', encoding="ISO-8859-1") as f:
 
             lines = f.readlines()
             for index, line in enumerate(lines):
 
                 sline = [val.strip() for val in line.split(':')]
-                #if true, then file describes image.
+                # if true, then file describes image.
 
                 if sline[0].startswith('FileDescBegin'):
                     no_descriptors = 5
@@ -375,60 +373,4 @@ class PiFMTranslator(Reader):
         
         # self.pos_ind, self.pos_val, self.pos_dims = pos_ind, pos_val, pos_dims
         
-        return 
-        
-    # HDF5 creation        
-    def create_hdf5_file(self, append_path='', overwrite=False):
-        """ Sets up the HDF5 file for writing 
-        
-        append_path : string (Optional)
-            h5_file to add these data to, must be a path to the h5_file on disk
-        overwrite : bool (optional, default=False)
-            If True, will overwrite an existing .h5 file of the same name        
-        """
-        
-        if not append_path:
-            h5_path = os.path.join(self.directory, self.basename.replace('.txt', '.h5'))
-            if os.path.exists(h5_path):
-                if not overwrite:
-                    raise FileExistsError('This file already exists). Set attribute overwrite to True')
-                else:
-                    print('Overwriting file', h5_path)
-                    #os.remove(h5_path)
-                    
-            self.h5_f = h5py.File(h5_path, mode='w')
-
-        else:
-            if not os.path.exists(append_path):
-                raise Exception('File does not exist. Check pathname.')
-            self.h5_f = h5py.File(append_path, mode='r+')
-
-        self.h5_img_grp = create_indexed_group(self.h5_f, "Images")
-        self.h5_spectra_grp = create_indexed_group(self.h5_f, "Spectra")
-        self.h5_spectrogram_grp = create_indexed_group(self.h5_f, "Spectrogram")
-        
-        write_simple_attrs(self.h5_img_grp, self.params_dictionary)
-        write_simple_attrs(self.h5_spectra_grp, self.params_dictionary)
-        write_simple_attrs(self.h5_spectrogram_grp, self.params_dictionary)
-        
-        return
-    
-    def write_datasets_hdf5(self):
-        """ Writes the datasets as pyNSID datasets to the HDF5 file"""
-        for dset in self.datasets:
-            
-            if 'IMAGE' in dset.data_type.name:
-        
-                write_nsid_dataset(dset, self.h5_img_grp)
-        
-            elif 'SPECTRUM' in dset.data_type.name:
-        
-                write_nsid_dataset(dset, self.h5_spectra_grp) 
-                
-            else:
-                
-                write_nsid_dataset(dset, self.h5_spectrogram_grp) 
-    
-        self.h5_f.file.close()    
-    
         return

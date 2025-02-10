@@ -47,8 +47,6 @@ class ARhdf5Reader(Reader):
         ----------
         verbose : Boolean (Optional)
             Whether or not to show  print statements for debugging
-        debug : Boolean (Optional)
-            Whether or not to print log statements
         Returns
         -------
         sidpy.Dataset : List of sidpy.Dataset objects.
@@ -95,9 +93,9 @@ class ARhdf5Reader(Reader):
             self.channels_name = [name for name in channels_name]
 
         try:
-            self.points_per_sec = np.float(self.note_value('ARDoIVPointsPerSec'))
+            self.points_per_sec = float(self.note_value('ARDoIVPointsPerSec'))
         except NameError:
-            self.points_per_sec = np.float(self.note_value('NumPtsPerSec'))
+            self.points_per_sec = float(self.note_value('NumPtsPerSec'))
 
         if self.verbose:
             print('Map size [X, Y]: ', self.map_size)
@@ -116,11 +114,11 @@ class ARhdf5Reader(Reader):
         points_trimmed = np.array(self.segments[:, :, extension_idx]) - short_ext
 
         # Open the output hdf5 file
-        x_dim = np.linspace(0, np.float(self.note_value('FastScanSize')),
+        x_dim = np.linspace(0, float(self.note_value('FastScanSize')),
                             self.map_size['X'])
-        y_dim = np.linspace(0, np.float(self.note_value('FastScanSize')),
+        y_dim = np.linspace(0, float(self.note_value('FastScanSize')),
                             self.map_size['Y'])
-        z_dim = np.arange(tot_length) / np.float(self.points_per_sec)
+        z_dim = np.arange(tot_length) / float(self.points_per_sec)
 
         datasets = [] #list of sidpy datasets
 
@@ -239,7 +237,7 @@ class ARhdf5Reader(Reader):
         Parameters
         ----------------
         name : String / unicode
-            Name of the parameter to get teh value
+            Name of the parameter to get the value
 
         Returns
         ----------------
@@ -247,7 +245,7 @@ class ARhdf5Reader(Reader):
             Value of the Note entry requested.
         '''
         try:
-            match = re.search(r"^" + name + ":\s+(.+$)", self.notes, re.M)
+            match = re.search(r"^" + name + r":\s+(.+$)", self.notes, re.M)
             if not match:
                 raise Exception
         except:
@@ -310,7 +308,7 @@ class ARhdf5Reader(Reader):
             # This should be the laser virtual deflection
             default_unit = 'm'
         else:
-            if self.debug:
+            if self.verbose:
                 print('Unknown unit for channel: {}'.format(chan_name))
                 print('Unit set to "unknown"')
             default_unit = 'unknown'

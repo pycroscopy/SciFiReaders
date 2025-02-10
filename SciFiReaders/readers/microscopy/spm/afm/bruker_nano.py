@@ -152,7 +152,7 @@ class BrukerAFMReader(Reader):
         #Here are teh dimension details
         num_samps_line = layer_info['Samps/line']
         num_lines = layer_info['Number of lines']
-       
+        
         #Read through and write to sidpy dataset objects
         datasets = []
         for class_name in self.meta_data.keys():
@@ -162,10 +162,21 @@ class BrukerAFMReader(Reader):
                 quantity = layer_info.pop('Image Data_2')
                 title = quantity.split("\"")[1]
                 data = self._read_image_layer(layer_info)
-                num_cols, num_rows = data.shape
-                data_set = sid.Dataset.from_array(data, name=title)
-                data_set.data_type = 'Image'
+                traces = None
+                if len(data.shape)==2:
+                  num_cols, num_rows = data.shape
+                  
+                elif len(data.shape)==3:
+                  num_cols, num_rows, traces = data.shape
+                else:
+                  raise ValueError("data is shape {}, too few/many for image stack".format(data.shape))
 
+                data_set = sid.Dataset.from_array(data, name=title)
+                if traces is None:
+                  data_set.data_type = 'Image'
+                else:
+                  data_set.data_type='Image_Stack'
+                
                 #Add quantity and units
                 data_set.units = 'nm' #check this one
                 data_set.quantity = quantity
@@ -179,10 +190,11 @@ class BrukerAFMReader(Reader):
                                                         name = 'y',
                                                         units='nm', quantity='y',
                                                         dimension_type='spatial'))
-
+                if traces is not None:
+                  data_set.set_dimension(2, sid.Dimension(np.arange(traces), name = 'trace #', units ='#', quantity = 'none', dimension_type = 'frame'))
+                
                 # append metadata
                 data_set.original_metadata = self.meta_data[class_name]
-                data_set.data_type = 'image'
 
                 datasets.append(data_set)
 
@@ -335,7 +347,11 @@ class BrukerAFMReader(Reader):
             2D array representing the requested channel of information
         """
         data_vec = self._read_data_vector(layer_info)
-        data_mat = data_vec.reshape(layer_info['Number of lines'], layer_info['Samps/line'])
+        if np.size(data_vec)==layer_info['Number of lines']*layer_info['Samps/line']:
+          data_mat = data_vec.reshape(layer_info['Number of lines'], layer_info['Samps/line'])
+        elif np.size(data_vec)==layer_info['Number of lines']*layer_info['Samps/line']*2:
+          print('detected trace and retrace, attempting to reshape')
+          data_mat = data_vec.reshape(layer_info['Number of lines'], layer_info['Samps/line'],2)
         return data_mat
     
     def can_read(self):
@@ -347,4 +363,5 @@ class BrukerAFMReader(Reader):
         
         """
         return super(BrukerAFMReader, self).can_read(extension='')
+
 

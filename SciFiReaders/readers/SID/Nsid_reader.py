@@ -76,7 +76,7 @@ class NSIDReader(sidpy.Reader):
 
         Returns
         -------
-        sidpy.Dataset or list of sidpy.Dataset objects
+        dictionary of sidpy.Dataset objects
             Datasets present in the provided file
         """
         if h5_object is None:
@@ -90,6 +90,21 @@ class NSIDReader(sidpy.Reader):
             return read_h5py_dataset(h5_object)
         else:
             return self.read_all(parent=h5_object)
+        
+        #TODO: We need to add the ability to read functions in any sidpy datasets.
+        # We will assume that fitting functions are contained within a dictionary of the same name. 
+        #They will have been saved with dill and encoded. To decode them, use:
+
+        '''
+        fit_fn_packed = fit_data.metadata['fitting_functions']
+        loaded_dict = {}
+        fit_fns = []
+        for key in fit_fn_packed.keys():
+            encoded_value = fit_fn_packed['my_function']
+            serialized_value = base64.b64decode(encoded_value)
+            loaded_dict[key] = dill.loads(serialized_value)
+            fit_fns.append(loaded_dict[key]) #retrieve the function
+        '''
 
     def __validate_obj_in_same_file(self, h5_object):
         """
@@ -126,7 +141,7 @@ class NSIDReader(sidpy.Reader):
 
         Returns
         -------
-        sidpy.Dataset or list of sidpy.Dataset objects
+        dictionary of sidpy.Dataset objects
             Datasets present in the provided file
         """
 
@@ -140,18 +155,21 @@ class NSIDReader(sidpy.Reader):
 
         if recursive:
             list_of_main = self._main_dsets
+            keys = ['Channel_{:03}'.format(i) for i in range(len(list_of_main))]
         else:
             list_of_main = []
+            keys = []
             for key in h5_group:
                 if isinstance(h5_group[key], h5py.Dataset):
                     if check_if_main(h5_group[key]):
                         list_of_main.append(h5_group[key])
+                        keys.append(key)
 
         # Go through each of the identified
-        list_of_datasets = []
-        for dset in list_of_main:
-            list_of_datasets.append(read_h5py_dataset(dset))
-        return list_of_datasets
+        dictionary_of_datasets = {}
+        for i,dset in enumerate(list_of_main):
+            dictionary_of_datasets[keys[i]] = read_h5py_dataset(dset)
+        return dictionary_of_datasets
 
-def close(self):
-    self._h5_file.close()
+    def close(self):
+        self._h5_file.close()
