@@ -157,15 +157,14 @@ class MDTReader(Reader):
         #  19 bytes reserved (??)
         self._file.shift_position(19)
 
-    def can_read(self):
-        """
-        Tests whether or not the provided file has a .ibw extension
-        Returns
-        -------
-
-        """
-        return super(MDTReader, self).can_read(extension='mdt')
-
+    # def can_read(self):
+    #     """
+    #     Tests whether or not the provided file has a .ibw extension
+    #     Returns
+    #     -------
+    #
+    #     """
+    #     return super(MDTReader, self).can_read(extension='mdt')
 
 class Frame:
     '''
