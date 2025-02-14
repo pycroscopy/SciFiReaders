@@ -5,9 +5,5 @@ from .gwyddion import GwyddionReader
 from .axz import AxzReader
 from .mdt import MDTReader
 
-__all__ = ['IgorIBWReader', 'ARhdf5Reader', 'BrukerAFMReader',
-           'GwyddionReader', 'IgorMatrixReader', 'AxzReader',
-           'MDTReader']
-all_readers = [IgorIBWReader, ARhdf5Reader, BrukerAFMReader,
-               GwyddionReader, IgorMatrixReader, AxzReader,
-               MDTReader]
+__all__ = ['IgorIBWReader', 'ARhdf5Reader', 'BrukerAFMReader', 'GwyddionReader', 'IgorMatrixReader', 'AxzReader', 'MDTReader']
+all_readers = [IgorIBWReader, ARhdf5Reader, BrukerAFMReader, GwyddionReader, IgorMatrixReader, AxzReader, MDTReader]
