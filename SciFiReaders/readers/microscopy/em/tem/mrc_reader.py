@@ -56,6 +56,7 @@ class MRCReader(sidpy.Reader):
         for label in shape_cantidates:
             size = np.unique(extended_header[label])
             sizes.append(size)
+        sizes = np.array(sizes).flatten()
         y_shape = int(np.abs(sizes[0] - sizes[1]))
         x_shape = int(np.abs(sizes[2] - sizes[3]))
         reshape_target = (x_shape, y_shape, mrc_data.shape[-2], mrc_data.shape[-1])
