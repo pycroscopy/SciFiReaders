@@ -4,7 +4,7 @@ from sidpy.sid import Reader
 import io
 from struct import *
 
-#decarator has been copied from the https://github.com/symartin/PyMDT
+#Decarator has been copied from the https://github.com/symartin/PyMDT
 class MDTBufferedReaderDecorator(object):
     """
         a decorator class that facilitate the sequential reading of a file.
@@ -105,7 +105,8 @@ class MDTReader(Reader):
             print(f'File size: {self._file_size}')
             print(f'Number of frames: {self.nb_frame}')
             print()
-        dataset_list = []
+        dataset_dict = {}
+        #channel_number = 0
         #iterator for the frames inside the file
         for i in range(self.nb_frame):
             self._frame = Frame(decorator = self._file)
@@ -114,7 +115,9 @@ class MDTReader(Reader):
             if self._frame.type == 106:
                 self._frame._read_mda_frame()
 
-            dataset_list.append(self._frame.data)
+            #dataset_list.append(self._frame.data)
+            key_channel = f"Channel_{i:03d}"
+            dataset_dict[key_channel] = self._frame.data
 
             if verbose:
                 print(f'Frame #{i}: type - {self._frame.type}, '
@@ -133,7 +136,7 @@ class MDTReader(Reader):
 
         self._file.close()
 
-        return dataset_list
+        return dataset_dict
 
     def _read_header(self):
         '''
@@ -156,16 +159,6 @@ class MDTReader(Reader):
 
         #  19 bytes reserved (??)
         self._file.shift_position(19)
-
-    def can_read(self):
-        """
-        Tests whether or not the provided file has a .ibw extension
-        Returns
-        -------
-
-        """
-        return super(MDTReader, self).can_read(extension='mdt')
-
 
 class Frame:
     '''
@@ -377,10 +370,6 @@ class Frame:
                                                 units=y['unit'], quantity='y',
                                                 dimension_type='spatial'))
         return data_set
-
-
-
-#
 
 
 
