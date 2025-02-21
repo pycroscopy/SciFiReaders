@@ -15,14 +15,6 @@ import xml.etree.ElementTree as ET
 
 import gzip
 
-# try:
-#     import anasyspythontools as apt
-# except ModuleNotFoundError:
-#     print("You don't have anasyspythontools installed. \
-#     If you wish to open axz files, you will need to install it \
-#     (pip install anasyspythontools) before attempting.")
-#     apt = None
-
 
 class AxzReader(Reader):
     """
@@ -142,8 +134,6 @@ class AxzReader(Reader):
         else:
             return None
 
-
-
     def _read_image(self, obj):
         # Convert it to sidpy dataset object
         title = obj['Label']
@@ -185,21 +175,6 @@ class AxzReader(Reader):
             if key not in excluded_keys:
                 metadata[key] = obj[key]
 
-        # loc = {}
-        # for key in obj['Position']:
-        #     loc[key] = obj['Position'][key]
-        # metadata['Location'] = loc
-        #
-        # resol = {}
-        # for key in obj['Resolution']:
-        #     resol[key] = obj['Resolution'][key]
-        # metadata['Resolution'] = resol
-        #
-        # rot = {}
-        # for key in obj['Rotation']:
-        #     rot[key] = obj['Rotation'][key]
-        # metadata['Rotation'] = rot
-
         return metadata
 
     def _read_spectrum(self, obj):
@@ -239,16 +214,5 @@ class AxzReader(Reader):
         for key in obj:
             if key not in excluded_keys:
                 metadata[key] = obj[key]
-
-        # loc = {}
-        # for key in obj['Location']:
-        #     loc[key] = obj['Location'][key]
-        # metadata['Location'] = loc
-        #
-        # win_data = {}
-        # for key in obj['FreqWindowData'].attrs:
-        #     win_data[key] = obj['FreqWindowData'][key]
-        #
-        # metadata['FreqWindowData'] = win_data
 
         return metadata
