@@ -66,7 +66,6 @@ class EMDReader(sidpy.Reader):
         self.label_dict = {}
         self.no_eds = no_eds
         self.sum_frames = sum_frames
-            
         self.number_of_frames = 1
 
 
@@ -326,25 +325,62 @@ class EMDReader(sidpy.Reader):
 
     def extract_crucial_metadata(self, key):
         metadata = self.datasets[key].original_metadata
+       
         experiment = {'detector': metadata['BinaryResult']['Detector'],
                       'acceleration_voltage': float(metadata['Optics']['AccelerationVoltage']),
                       'microscope': metadata['Instrument']['InstrumentClass'],
-                      'start_date_time': int(metadata['Acquisition']['AcquisitionStartDatetime']['DateTime'])}
-
+                      'start_date_time': int(metadata['Acquisition']['AcquisitionStartDatetime']['DateTime']),
+                      'collection_angle': 0.0,
+                      'convergence_angle': 0.0}
         if metadata['Optics']['ProbeMode'] == "1":
             experiment['probe_mode'] = "convergent"
             if 'BeamConvergence' in metadata['Optics']:
                 experiment['convergence_angle'] = float(metadata['Optics']['BeamConvergence'])
         else:  # metadata['Optics']['ProbeMode'] == "2":
             experiment['probe_mode'] = "parallel"
-            experiment['convergence_angle'] = 0.0
-        experiment['stage'] = {"holder": "",
-                               "position": {"x": float(metadata['Stage']['Position']['x']),
-                                            "y": float(metadata['Stage']['Position']['y']),
-                                            "z": float(metadata['Stage']['Position']['z'])},
-                               "tilt": {"alpha": float(metadata['Stage']['AlphaTilt']),
-                                        "beta": float(metadata['Stage']['BetaTilt'])}}
-
+        if 'Stage' in metadata:
+            if 'BetaTilt' not in metadata['Stage']:
+                metadata['Stage']['BetaTilt'] = 0.0
+                experiment['stage'] = {"holder": "",
+                                       "position": {"x": float(metadata['Stage']['Position']['x']),
+                                                    "y": float(metadata['Stage']['Position']['y']),
+                                                    "z": float(metadata['Stage']['Position']['z'])},
+                                       "tilt": {"alpha": float(metadata['Stage']['AlphaTilt']),
+                                                "beta": float(metadata['Stage']['BetaTilt'])}}
+        if 'Instrument'in metadata:
+            if 'InstrumentModel' in metadata['Instrument']:
+                model = metadata['Instrument']['InstrumentModel']
+            else:
+                model = ''
+            if 'InstrumentId' in metadata['Instrument']:
+                id = metadata['Instrument']['InstrumentId']
+            else:
+                id = 0
+            experiment['instrument'] = model + str(id)
+        if 'Optics' in metadata:
+            if 'LastMeasuredScreenCurrent' in metadata['Optics']:
+                experiment['current'] = float(metadata['Optics']['LastMeasuredScreenCurrent'])
+        if 'Scan' in metadata:
+            if 'DwellTime' in metadata['Scan']:
+                experiment['pixel_time'] = float(metadata['Scan']['DwellTime'])
+            if 'FrameTime' in metadata['Scan']:
+                experiment['exposure_time'] = float(metadata['Scan']['FrameTime'])
+        if 'Sample' in metadata:
+            if 'SampleDescription' in metadata['Sample']:
+                experiment['sample'] = metadata['Sample']['SampleDescription']
+            if 'SampleId' in metadata['Sample']:
+                experiment['sample_id'] = metadata['Sample']['SampleId']
+        if 'Detectors' in metadata:
+            used_detector = experiment['detector']
+            for detector in metadata['Detectors'].values():
+                if 'DetectorName' in detector:
+                    if used_detector in detector['DetectorName']:
+                        if 'CollectionAngleRange' in detector:
+                            begin = detector['CollectionAngleRange']['begin']
+                            end = detector['CollectionAngleRange']['end']
+                            experiment['collection_angle'] = float(begin)
+                            experiment['collection_angle_end'] = float(end)
+        
         self.datasets[key].metadata['experiment'] = experiment
         if self.datasets[key].title == 'generic':
             self.datasets[key].title = experiment['detector']
