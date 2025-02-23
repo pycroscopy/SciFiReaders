@@ -66,7 +66,6 @@ class EMDReader(sidpy.Reader):
         self.label_dict = {}
         self.no_eds = no_eds
         self.sum_frames = sum_frames
-            
         self.number_of_frames = 1
 
 
@@ -344,7 +343,30 @@ class EMDReader(sidpy.Reader):
                                             "z": float(metadata['Stage']['Position']['z'])},
                                "tilt": {"alpha": float(metadata['Stage']['AlphaTilt']),
                                         "beta": float(metadata['Stage']['BetaTilt'])}}
-
+        
+        if 'Instrument'in metadata::
+            model = metadata['Instrument']['InstrumentModel']
+            id = metadata['Instrument']['InstrumentId']
+            experiment['instrument'] = model + str(id)
+        if 'Optics' in metadata:
+            experiment['current'] = float(metadata['Optics']['LastMeasuredScreenCurrent'])
+        if 'Scan' in metadata:
+            experiment['pixel_time'] = float(metadata['Scan']['DwellTime'])
+            experiment['exposure_time'] = float(metadata['Scan']['FrameTime'])
+        if 'Sample' in metadata:
+            experiment['sample'] = metadata['Sample']['SampleDescription']
+            experiment['sample_id'] = metadata['Sample']['SampleId']
+        if 'Detectors' in metadata:
+            used_detector = experiment['detector']
+            for detector in metadata['Detectors'].values():
+                if 'DetectorName' in detector:
+                    if used_detector in detector['DetectorName']:
+                        if 'CollectionAngleRange' in detector:
+                            begin = detector['CollectionAngleRange']['begin']
+                            end = detector['CollectionAngleRange']['end']
+                            experiment['collection_angle'] = float(begin)
+                            experiment['collection_angle_end'] = float(end)
+        
         self.datasets[key].metadata['experiment'] = experiment
         if self.datasets[key].title == 'generic':
             self.datasets[key].title = experiment['detector']
