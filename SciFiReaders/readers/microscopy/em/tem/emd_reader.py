@@ -344,7 +344,7 @@ class EMDReader(sidpy.Reader):
                                "tilt": {"alpha": float(metadata['Stage']['AlphaTilt']),
                                         "beta": float(metadata['Stage']['BetaTilt'])}}
         
-        if 'Instrument'in metadata::
+        if 'Instrument'in metadata:
             model = metadata['Instrument']['InstrumentModel']
             id = metadata['Instrument']['InstrumentId']
             experiment['instrument'] = model + str(id)
