@@ -338,13 +338,15 @@ class EMDReader(sidpy.Reader):
                 experiment['convergence_angle'] = float(metadata['Optics']['BeamConvergence'])
         else:  # metadata['Optics']['ProbeMode'] == "2":
             experiment['probe_mode'] = "parallel"
-        experiment['stage'] = {"holder": "",
-                               "position": {"x": float(metadata['Stage']['Position']['x']),
-                                            "y": float(metadata['Stage']['Position']['y']),
-                                            "z": float(metadata['Stage']['Position']['z'])},
-                               "tilt": {"alpha": float(metadata['Stage']['AlphaTilt']),
-                                        "beta": float(metadata['Stage']['BetaTilt'])}}
-        
+        if 'Stage' in metadata:
+            if 'BetaTilt' not in metadata['Stage']:
+                metadata['Stage']['BetaTilt'] = 0.0
+                experiment['stage'] = {"holder": "",
+                                       "position": {"x": float(metadata['Stage']['Position']['x']),
+                                                    "y": float(metadata['Stage']['Position']['y']),
+                                                    "z": float(metadata['Stage']['Position']['z'])},
+                                       "tilt": {"alpha": float(metadata['Stage']['AlphaTilt']),
+                                                "beta": float(metadata['Stage']['BetaTilt'])}}
         if 'Instrument'in metadata:
             if 'InstrumentModel' in metadata['Instrument']:
                 model = metadata['Instrument']['InstrumentModel']
