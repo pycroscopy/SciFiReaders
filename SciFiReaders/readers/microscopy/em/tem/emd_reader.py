@@ -330,9 +330,8 @@ class EMDReader(sidpy.Reader):
                       'acceleration_voltage': float(metadata['Optics']['AccelerationVoltage']),
                       'microscope': metadata['Instrument']['InstrumentClass'],
                       'start_date_time': int(metadata['Acquisition']['AcquisitionStartDatetime']['DateTime']),
-                      'collection_angle: 0.0,
-                      'convergence_angle': 0.0,}
-
+                      'collection_angle': 0.0,
+                      'convergence_angle': 0.0}
         if metadata['Optics']['ProbeMode'] == "1":
             experiment['probe_mode'] = "convergent"
             if 'BeamConvergence' in metadata['Optics']:
