@@ -352,7 +352,7 @@ class EMDReader(sidpy.Reader):
                 model = metadata['Instrument']['InstrumentModel']
             else:
                 model = ''
-            if 'InstrumentId' in metadata['Instrument:']:
+            if 'InstrumentId' in metadata['Instrument']:
                 id = metadata['Instrument']['InstrumentId']
             else:
                 id = 0
