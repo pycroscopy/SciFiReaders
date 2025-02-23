@@ -325,10 +325,13 @@ class EMDReader(sidpy.Reader):
 
     def extract_crucial_metadata(self, key):
         metadata = self.datasets[key].original_metadata
+       
         experiment = {'detector': metadata['BinaryResult']['Detector'],
                       'acceleration_voltage': float(metadata['Optics']['AccelerationVoltage']),
                       'microscope': metadata['Instrument']['InstrumentClass'],
-                      'start_date_time': int(metadata['Acquisition']['AcquisitionStartDatetime']['DateTime'])}
+                      'start_date_time': int(metadata['Acquisition']['AcquisitionStartDatetime']['DateTime']),
+                      'collection_angle: 0.0,
+                      'convergence_angle': 0.0,}
 
         if metadata['Optics']['ProbeMode'] == "1":
             experiment['probe_mode'] = "convergent"
@@ -336,7 +339,6 @@ class EMDReader(sidpy.Reader):
                 experiment['convergence_angle'] = float(metadata['Optics']['BeamConvergence'])
         else:  # metadata['Optics']['ProbeMode'] == "2":
             experiment['probe_mode'] = "parallel"
-            experiment['convergence_angle'] = 0.0
         experiment['stage'] = {"holder": "",
                                "position": {"x": float(metadata['Stage']['Position']['x']),
                                             "y": float(metadata['Stage']['Position']['y']),
@@ -345,17 +347,28 @@ class EMDReader(sidpy.Reader):
                                         "beta": float(metadata['Stage']['BetaTilt'])}}
         
         if 'Instrument'in metadata:
-            model = metadata['Instrument']['InstrumentModel']
-            id = metadata['Instrument']['InstrumentId']
+            if 'InstrumentModel' in metadata['Instrument']:
+                model = metadata['Instrument']['InstrumentModel']
+            else:
+                model = ''
+            if 'InstrumentId' in metadata['Instrument:']:
+                id = metadata['Instrument']['InstrumentId']
+            else:
+                id = 0
             experiment['instrument'] = model + str(id)
         if 'Optics' in metadata:
-            experiment['current'] = float(metadata['Optics']['LastMeasuredScreenCurrent'])
+            if 'LastMeasuredScreenCurrent' in metadata['Optics']:
+                experiment['current'] = float(metadata['Optics']['LastMeasuredScreenCurrent'])
         if 'Scan' in metadata:
-            experiment['pixel_time'] = float(metadata['Scan']['DwellTime'])
-            experiment['exposure_time'] = float(metadata['Scan']['FrameTime'])
+            if 'DwellTime' in metadata['Scan']:
+                experiment['pixel_time'] = float(metadata['Scan']['DwellTime'])
+            if 'FrameTime' in metadata['Scan']:
+                experiment['exposure_time'] = float(metadata['Scan']['FrameTime'])
         if 'Sample' in metadata:
-            experiment['sample'] = metadata['Sample']['SampleDescription']
-            experiment['sample_id'] = metadata['Sample']['SampleId']
+            if 'SampleDescription' in metadata['Sample']:
+                experiment['sample'] = metadata['Sample']['SampleDescription']
+            if 'SampleId' in metadata['Sample']:
+                experiment['sample_id'] = metadata['Sample']['SampleId']
         if 'Detectors' in metadata:
             used_detector = experiment['detector']
             for detector in metadata['Detectors'].values():
