@@ -10,6 +10,8 @@ except ImportError:
     pip.main(['install', 'gwyfile'])
 root_path = "https://github.com/pycroscopy/SciFiDatasets/blob/main/data/microscopy/spm/afm/"
 
+gwyfile = pytest.importorskip("gwyfile", reason="gwyfile not installed")
+
 @pytest.fixture
 def gwy_file():
     file_path = 'PTO_110_Virgin0001.gwy'
