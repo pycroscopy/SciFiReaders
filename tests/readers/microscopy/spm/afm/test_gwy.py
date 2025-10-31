@@ -7,8 +7,10 @@ try:
     import gwyfile
 except ImportError:
     import pip
-    pip.main(['install', 'gwyfile'])
+    pip.main(['install', 'git+https://github.com/pycroscopy/gwyfile.git'])
 root_path = "https://github.com/pycroscopy/SciFiDatasets/blob/main/data/microscopy/spm/afm/"
+
+gwyfile = pytest.importorskip("gwyfile", reason="gwyfile not installed")
 
 @pytest.fixture
 def gwy_file():
