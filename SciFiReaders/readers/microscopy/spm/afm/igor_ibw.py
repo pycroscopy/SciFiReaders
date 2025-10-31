@@ -17,9 +17,9 @@ from warnings import warn
 try:
     from igor2 import binarywave as bw
 except ModuleNotFoundError:
-    print("You don't have igor2 installed. \
+    warn("You don't have igor2 installed. \
     If you wish to open igor files, you will need to install it \
-    (pip install igor2) before attempting.")
+    (pip install igor2) before attempting.", ImportWarning)
     bw = None
 
 class IgorMatrixReader(Reader):
