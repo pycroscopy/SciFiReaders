@@ -155,6 +155,17 @@ class EMDReader(sidpy.Reader):
                     image_display_group[key][0].decode('utf-8'))
                 data_key = v['dataPath'].split('/')[-1]  # key in data group
                 self.label_dict[data_key] = v['display']['label']
+        else:
+            image_display_group = self._h5_file.get('Displays/ImageDisplay')
+            if image_display_group is not None:
+                for key in image_display_group.keys():
+                    v = json.loads(
+                        image_display_group[key][0].decode('utf-8'))
+                    if 'data' in v:
+                        data = json.loads(self._h5_file[v['data']][()][0].decode('utf-8'))
+                        data_key = data['dataPath'].split('/')[-1]  # key in data group
+                        self.label_dict[data_key] = v['title']
+
 
     def get_eds(self, eds_stream=False):
         """Get the EDS data from the file."""
@@ -181,6 +192,8 @@ class EMDReader(sidpy.Reader):
         self.data_array=np.zeros([1,1])
         self.datasets[key].original_metadata = self.metadata
         detectors = self.datasets[key].original_metadata.get('Detectors', {})
+
+        print(detectors)
         if eds_stream:
             pass
         else:
@@ -365,8 +378,8 @@ class EMDReader(sidpy.Reader):
         experiment['exposure_time'] = float(metadata.get('Scan', {}).get('FrameTime', 0.0))
 
         if isinstance(metadata.get('Sample'), dict):
-            experiment['sample'] = metadata['Sample']['SampleDescription']
-            experiment['sample_id'] = metadata['Sample']['SampleId']
+            experiment['sample'] = metadata['Sample'].get('SampleDescription', '')
+            experiment['sample_id'] = metadata['Sample'].get('SampleId', '')
         eds = {}
         used_detector = experiment.get('detector', 'unknown')
         for detector in metadata.get('Detectors', {}).values():
@@ -377,7 +390,11 @@ class EMDReader(sidpy.Reader):
                 experiment['collection_angle_end'] = float(end)
                 if 'SuperX' in detector['DetectorName']:
                     start_energy = int(detector.get('BeginEnergy', 120))
-                    start_channel = np.searchsorted(self.datasets[key].energy_scale.values, start_energy)
+                    energy_scale = self.datasets[key].get_spectral_dims(return_axis=True)
+                    if len(energy_scale) >0:
+                        start_channel = 100
+                    else:
+                        start_channel = np.searchsorted(energy_scale, start_energy)
                     eds = {'detector': {'layers': {13: {'thickness': 0.05*1e-6, 'Z': 13, 'element': 'Al'}},
                                         'SiDeadThickness': .13 *1e-6,  # in m
                                         'SiLiveThickness': 0.05 , # in m

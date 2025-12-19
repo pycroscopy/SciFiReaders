@@ -3,8 +3,21 @@ import sidpy
 import SciFiReaders as sr
 import urllib
 import os
-import gwyfile
+try:
+    import gwyfile
+except ImportError:
+    import pip
+    pip.main(['install', 'gwyfile'])
 
+"""
+numpy version >= 2.3.0 is not compatible with pypi version of gwyfile.
+The problem is fixed on github but no release is available yet.
+So we skip this test for now.
+"""
+import numpy as np
+print(np.__version__)
+if np.__version__ >= '2.3.0':
+    pytest.skip("Skipping test since gwyfile is not compatible with numpy >= 2.3.0", allow_module_level=True)
 root_path = "https://github.com/pycroscopy/SciFiDatasets/blob/main/data/microscopy/spm/afm/"
 
 @pytest.fixture

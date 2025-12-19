@@ -424,6 +424,7 @@ class Frame:
             xml_metadata = self._file.read(_xml_size).decode('utf-16')
             #original metadata
             element = ET.fromstring(xml_metadata)
+            
             original_metadata = self.xml_to_dict(element)
 
         #don't understand self.info, self.spec, self.source_info
