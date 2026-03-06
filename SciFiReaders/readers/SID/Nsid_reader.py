@@ -11,7 +11,7 @@ Created on Fri May 22 16:29:25 2020
 import h5py
 import sidpy
 
-from .hdf_utils import check_if_main, get_all_main, read_h5py_dataset
+from pyNSID.io.hdf_utils import check_if_main, get_all_main, read_h5py_dataset
 
 
 class NSIDReader(sidpy.Reader):
@@ -88,16 +88,6 @@ class NSIDReader(sidpy.Reader):
         # We will assume that fitting functions are contained within a dictionary of the same name. 
         #They will have been saved with dill and encoded. To decode them, use:
 
-        '''
-        fit_fn_packed = fit_data.metadata['fitting_functions']
-        loaded_dict = {}
-        fit_fns = []
-        for key in fit_fn_packed.keys():
-            encoded_value = fit_fn_packed['my_function']
-            serialized_value = base64.b64decode(encoded_value)
-            loaded_dict[key] = dill.loads(serialized_value)
-            fit_fns.append(loaded_dict[key]) #retrieve the function
-        '''
 
     def __validate_obj_in_same_file(self, h5_object):
         """
