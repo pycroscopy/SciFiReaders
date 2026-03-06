@@ -39,7 +39,10 @@ class EMDReader(sidpy.Reader):
     datasets: dict
         dictionary of sidpy.Datasets
     """
-    def __init__(self, file_path:str, sum_frames:bool=False, no_eds:bool=False):
+    def __init__(self, file_path:str, 
+                 sum_frames:bool=False, 
+                 no_eds:bool=False,
+                 eds_stream:bool=False):
         """
         Initialize an EMDReader instance.
 
@@ -74,6 +77,7 @@ class EMDReader(sidpy.Reader):
         self.label_dict = {}
         self.no_eds = no_eds
         self.sum_frames = sum_frames
+        self.eds_stream = eds_stream
         self.number_of_frames = 1
         self.image_key = ''
         self.bin_xy = 1
@@ -108,7 +112,8 @@ class EMDReader(sidpy.Reader):
         datasets: list of sidpy.Dataset objects
             Datasets present in the provided file
         """
-
+        if eds_stream or self.eds_stream:
+            eds_stream = True    
         if 'Data' not in self._h5_file:
             raise TypeError('Velox EMD File is empty')
 
@@ -193,7 +198,7 @@ class EMDReader(sidpy.Reader):
         self.datasets[key].original_metadata = self.metadata
         detectors = self.datasets[key].original_metadata.get('Detectors', {})
 
-        print(detectors)
+        # print(detectors)
         if eds_stream:
             pass
         else:
@@ -219,7 +224,7 @@ class EMDReader(sidpy.Reader):
 
             else:
                 self.datasets[key].data_type = 'spectral_image'
-                print(self.datasets[key].shape)
+                # print(self.datasets[key].shape)
 
                 scale =  self.metadata.get('BinaryResult', {}).get('PixelSize', {})
                 scale_x = float(scale.get('width', 1e-9)) * 1e9
