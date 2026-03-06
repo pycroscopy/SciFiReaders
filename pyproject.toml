@@ -37,7 +37,7 @@ dependencies = [
     "numba",
     "ipython>=7.1.0",
     "pyUSID",
-    "pyNSID"
+    "pyNSID",
     "gdown",
     "mrcfile",
     "pycroscopy-gwyfile",
