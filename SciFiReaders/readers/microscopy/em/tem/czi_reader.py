@@ -1,5 +1,11 @@
-"""Part of SciFiReaders, a pycroscopy module
-Author: Sirisha Madugula"""
+"""
+Part of SciFiReaders, a pycroscopy module
+A reader for Zeiss CZI (.czi) microscopy files.
+
+Author: Sita Sirisha Madugula
+madugulas@onrl.gov, sireesiru@gmail.com
+
+"""
 
 import numpy as np
 import xml.etree.ElementTree as ET
