@@ -17,6 +17,9 @@ class CZIReader(Reader):
     def __init__(self, file_path, *args, **kwargs):
         super().__init__(file_path, *args, **kwargs)
 
+    def can_read(self):
+        return self._input_file_path.lower().endswith('.czi')
+
     def read(self):
         """
         Main execution loop for reading CZI and converting to sidpy Datasets.

@@ -66,19 +66,52 @@ def _reader_summary(reader_cls: type) -> Dict[str, Any]:
     }
 
 
+_EXTENSION_READER_MAP: dict[str, set[str]] = {
+    ".bmp": {"imagereader"},
+    ".czi": {"czireader"},
+    ".dm3": {"dmreader", "dm3reader"},
+    ".dm4": {"dmreader"},
+    ".emd": {"emdreader"},
+    ".h5": {"edaxreader", "nionreader"},
+    ".ibw": {"igoribwreader"},
+    ".jpeg": {"imagereader"},
+    ".jpg": {"imagereader"},
+    ".mrc": {"mrcreader"},
+    ".ndata": {"nionreader"},
+    ".png": {"imagereader"},
+    ".spe": {"ramanspereader"},
+    ".tif": {"imagereader"},
+    ".tiff": {"imagereader"},
+}
+
+
 def _matches_extension(reader_cls: type, file_suffix: str) -> bool:
     """Best-effort extension routing for legacy readers whose can_read() is not compatible."""
     suffix = file_suffix.lower()
     module_name = reader_cls.__module__.lower()
     class_name = reader_cls.__name__.lower()
+    expected_classes = _EXTENSION_READER_MAP.get(suffix, set())
 
-    if suffix in {".tif", ".tiff", ".png", ".jpg", ".jpeg", ".bmp"}:
-        return class_name == "imagereader" or module_name.endswith("generic.image")
-    if suffix == ".ibw":
-        return class_name == "igoribwreader"
-    if suffix == ".spe":
-        return class_name == "ramanspereader" or "spe" in module_name
+    if class_name in expected_classes:
+        return True
+    if "imagereader" in expected_classes and module_name.endswith("generic.image"):
+        return True
+    if "ramanspereader" in expected_classes and "spe" in module_name:
+        return True
     return False
+
+
+def _is_deprecated_reader(reader_cls: type) -> bool:
+    """Return True for reader classes kept only for backward compatibility."""
+    return reader_cls.__name__.lower() == "dm3reader"
+
+
+def _preferred_reader(matches: Sequence[type]) -> type:
+    """Choose a reader while avoiding deprecated aliases when possible."""
+    active_matches = [reader_cls for reader_cls in matches if not _is_deprecated_reader(reader_cls)]
+    if active_matches:
+        return active_matches[-1]
+    return matches[-1]
 
 
 def available_readers() -> list[Dict[str, Any]]:
@@ -239,6 +272,8 @@ def _select_reader(file_path: str) -> tuple[type, list[Dict[str, Any]]]:
     file_suffix = str(Path(file_path).suffix).lower()
 
     for reader_cls in reader_classes:
+        if _is_deprecated_reader(reader_cls) and any(not _is_deprecated_reader(match) for match in matches):
+            continue
         if _matches_extension(reader_cls, file_suffix):
             matches.append(reader_cls)
             continue
@@ -256,15 +291,22 @@ def _select_reader(file_path: str) -> tuple[type, list[Dict[str, Any]]]:
             matches.append(reader_cls)
 
     if not matches:
-        raise TypeError("The automatic search for a suitable reader was unsuccessful.")
+        tried_readers = ", ".join(reader_cls.__name__ for reader_cls in reader_classes)
+        suffix_detail = file_suffix or "<no suffix>"
+        raise TypeError(
+            "The automatic search for a suitable reader was unsuccessful "
+            f"for files ending in {suffix_detail}. Tried readers: {tried_readers}."
+        )
+
+    selected_reader = _preferred_reader(matches)
 
     if len(matches) > 1:
         warn(
             "Multiple readers may be able to read this file. "
-            f"Using {matches[-1].__name__}."
+            f"Using {selected_reader.__name__}."
         )
 
-    return matches[-1], [_reader_summary(reader_cls) for reader_cls in matches]
+    return selected_reader, [_reader_summary(reader_cls) for reader_cls in matches]
 
 
 def read_file(file_path: str, return_mode: str = "file") -> Dict[str, Any]:

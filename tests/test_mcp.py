@@ -51,6 +51,38 @@ class DummyReader:
         ]
 
 
+class DMReader:
+    def __init__(self, file_path):
+        self.file_path = file_path
+
+    def can_read(self):
+        return None
+
+
+class DM3Reader:
+    def __init__(self, file_path):
+        self.file_path = file_path
+
+    def can_read(self):
+        return None
+
+
+class NionReader:
+    def __init__(self, file_path):
+        self.file_path = file_path
+
+    def can_read(self):
+        return None
+
+
+class NoMatchReader:
+    def __init__(self, file_path):
+        self.file_path = file_path
+
+    def can_read(self):
+        return False
+
+
 class TestMCPExport(unittest.TestCase):
     def test_read_file_exports_nexus_path(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -145,6 +177,54 @@ class TestMCPExport(unittest.TestCase):
     def test_read_file_rejects_invalid_return_mode(self):
         with self.assertRaises(ValueError):
             scifireaders_mcp.read_file("sample.dm4", return_mode="invalid")
+
+
+class TestMCPReaderSelection(unittest.TestCase):
+    def test_select_reader_routes_dm3_to_non_deprecated_reader(self):
+        with mock.patch.object(
+            scifireaders_mcp,
+            "_load_reader_classes",
+            return_value=[DMReader, DM3Reader],
+        ):
+            reader_cls, matched_readers = scifireaders_mcp._select_reader("sample.dm3")
+
+        self.assertIs(reader_cls, DMReader)
+        self.assertEqual([reader["name"] for reader in matched_readers], ["DMReader"])
+
+    def test_select_reader_routes_dm4_to_dm_reader(self):
+        with mock.patch.object(
+            scifireaders_mcp,
+            "_load_reader_classes",
+            return_value=[DMReader, DM3Reader],
+        ):
+            reader_cls, matched_readers = scifireaders_mcp._select_reader("sample.dm4")
+
+        self.assertIs(reader_cls, DMReader)
+        self.assertEqual([reader["name"] for reader in matched_readers], ["DMReader"])
+
+    def test_select_reader_routes_nion_extensions(self):
+        with mock.patch.object(
+            scifireaders_mcp,
+            "_load_reader_classes",
+            return_value=[NoMatchReader, NionReader],
+        ):
+            ndata_reader, _ = scifireaders_mcp._select_reader("sample.ndata")
+            h5_reader, _ = scifireaders_mcp._select_reader("sample.h5")
+
+        self.assertIs(ndata_reader, NionReader)
+        self.assertIs(h5_reader, NionReader)
+
+    def test_select_reader_error_includes_suffix_and_tried_readers(self):
+        with mock.patch.object(
+            scifireaders_mcp,
+            "_load_reader_classes",
+            return_value=[NoMatchReader],
+        ):
+            with self.assertRaisesRegex(
+                TypeError,
+                r"ending in \.unknown.*NoMatchReader",
+            ):
+                scifireaders_mcp._select_reader("sample.unknown")
 
 
 if __name__ == "__main__":

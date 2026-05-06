@@ -140,6 +140,9 @@ class NionReader(sidpy.Reader):
             except IOError:
                 raise IOError("File {} does not seem to be of Nion`s .h5 format".format(self.__filename))
 
+    def can_read(self):
+        return self.extension.lower() in {'.ndata', '.h5'}
+
     def read(self):
         if 'ndata' in self.extension:
             try:
