@@ -482,6 +482,9 @@ class NanoSurfNIDReader(Reader):
                 data_set.original_metadata = parameters
                 key_name = key_l1 + " " + key_l2
                 datasets[key_name] = data_set.copy()
+                
+                # sidpy.Dataset.copy() drops original_metadata
+                datasets[key_name].original_metadata = dict(parameters)
                
         return datasets
 
