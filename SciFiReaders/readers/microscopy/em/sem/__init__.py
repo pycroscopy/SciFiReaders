@@ -1,5 +1,5 @@
 """
-Tools to read, data in from TEM files
+Tools to read data in from SEM files
 
 Submodules
 ----------
@@ -13,7 +13,8 @@ Submodules
 
 from .edax_reader import EDAXReader
 from .bruker_reader import BrukerReader
+from .czi_reader import CZIReader
 
-__all__ = ['EDAXReader', 'BrukerReader']
+__all__ = ['EDAXReader', 'BrukerReader', 'CZIReader']
 
-all_readers = [EDAXReader, BrukerReader]
+all_readers = [EDAXReader, BrukerReader, CZIReader]

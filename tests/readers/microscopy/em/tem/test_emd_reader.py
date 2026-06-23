@@ -21,24 +21,36 @@ data_path = 'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/dat
 
 
 class TestEMDReader(unittest.TestCase):
+    downloaded_files = set()
+
+    @classmethod
+    def download_file(cls, file_name):
+        if not os.path.exists(file_name):
+            urllib.request.urlretrieve(data_path + file_name, file_name)
+        cls.downloaded_files.add(file_name)
+        return file_name
+
+    @classmethod
+    def tearDownClass(cls):
+        for file_name in cls.downloaded_files:
+            if os.path.exists(file_name):
+                os.remove(file_name)
 
     def test_data_available(self):
         file_name = 'EMDReader_Spectrum_FEI.emd'
-        urllib.request.urlretrieve(data_path + file_name, file_name)
+        self.download_file(file_name)
         emd_reader = SciFiReaders.EMDReader(file_name)
 
         self.assertIsInstance(emd_reader, sidpy.Reader)
         emd_reader.close()
-        os.remove(file_name)
 
     def test_read_spectrum(self):
         file_name = 'EMDReader_Spectrum_FEI.emd'
-        urllib.request.urlretrieve(data_path + file_name, file_name)
+        self.download_file(file_name)
         emd_reader = SciFiReaders.EMDReader(file_name)
         datasets = emd_reader.read()
         dataset = datasets['Channel_000']
         emd_reader.close()
-        os.remove(file_name)
 
         self.assertIsInstance(dataset, sidpy.Dataset)
         self.assertTrue(dataset.ndim == 1)
@@ -283,12 +295,11 @@ class TestEMDReader(unittest.TestCase):
 
     def test_read_image(self):
         file_name  = 'EMDReader_Image_FEI.emd'
-        urllib.request.urlretrieve(data_path + file_name, file_name)
+        self.download_file(file_name)
         emd_reader = SciFiReaders.EMDReader(file_name)
         datasets = emd_reader.read()
         dataset = datasets['Channel_000']
         emd_reader.close()
-        os.remove(file_name)
 
         self.assertIsInstance(dataset, sidpy.Dataset)
         self.assertTrue(dataset.data_type.name, 'IMAGE')
@@ -312,12 +323,11 @@ class TestEMDReader(unittest.TestCase):
 
     def test_read_spectrum_image(self):
         file_name  = 'EMDReader_SpectrumImage_Si.emd'
-        urllib.request.urlretrieve(data_path + file_name, file_name)
+        self.download_file(file_name)
         emd_reader = SciFiReaders.EMDReader(file_name)
         datasets = emd_reader.read()
         dataset = datasets['Channel_001']
         emd_reader.close()
-        os.remove(file_name)
 
         self.assertIsInstance(dataset, sidpy.Dataset)
         self.assertTrue(dataset.data_type.name, 'IMAGE_STACK')

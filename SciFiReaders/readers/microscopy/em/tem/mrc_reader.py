@@ -41,6 +41,9 @@ class MRCReader(sidpy.Reader):
 
         self.dataset = None
 
+    def can_read(self):
+        return self.file_path.lower().endswith('.mrc')
+
             
     def read(self, handedness='right', scan_pixel_size=None):
         # scan pixel size needs to be in meters, if you know it

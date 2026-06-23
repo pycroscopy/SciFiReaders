@@ -31,21 +31,24 @@ data_files = {
 }
 
 #Since we don't have the files yet, I am disabling the tests    
-print('Skipping tests for wsxm reader')
+#print('Skipping tests for wsxm reader')
 
-@unittest.skip("Skipping this test class temporarily")
+#@unittest.skip("Skipping this test class temporarily")
 class TestWSxM(unittest.TestCase):
+    downloaded_files = set()
+
+    @classmethod
+    def tearDownClass(cls):
+        for file_i in cls.downloaded_files:
+            if os.path.exists(file_i):
+                os.remove(file_i)
 
     def download_files(self, file_type):
         for file_i in data_files[file_type]:
             if not os.path.exists(file_i):
                 print(root_path + file_i + "?raw=true")
                 urllib.request.urlretrieve(root_path + file_i + "?raw=true", file_i)
-    
-    def clear_files(self, file_type):
-        for file_i in data_files[file_type]:
-            if os.path.exists(file_i):
-                os.remove(file_i)
+            self.downloaded_files.add(file_i)
 
     def test_wsxm_1d_file(self):
         self.download_files('1d')
@@ -66,7 +69,6 @@ class TestWSxM(unittest.TestCase):
                 print(data.metadata['File path'])
                 data.plot() # Plot the data
 
-        self.clear_files('1d')
         print("\nWSxM 1D files read successfully")
         plt.show()
         print("WSxM 1D data plotted successfully\n")
@@ -92,7 +94,6 @@ class TestWSxM(unittest.TestCase):
                 print(data.metadata['File path'])
                 data.plot() # Plot the data
 
-        self.clear_files('2d')
         print("\nWSxM 2D files read successfully")
         plt.show()
         print("WSxM 2D data plotted successfully\n")
@@ -120,14 +121,13 @@ class TestWSxM(unittest.TestCase):
                 print(data.metadata['File path'])
                 data.plot() # Plot the data
 
-        self.clear_files('3d')
         print("\nWSxM 3D files read successfully")
         plt.show()
         print("WSxM 3D data plotted successfully\n")
 
 if __name__ == '__main__': 
     #Since we don't have the files yet, I am disabling the tests    
-    print('Skipping tests for wsxm reader')
+    #print('Skipping tests for wsxm reader')
     test = TestWSxM()
     test.test_wsxm_1d_file()
     test.test_wsxm_2d_file()

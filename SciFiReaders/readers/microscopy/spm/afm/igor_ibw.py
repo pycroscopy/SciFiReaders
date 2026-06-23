@@ -309,6 +309,55 @@ class IgorIBWReader(Reader):
             chan_units = chan_units[1:]
 
         channel_number = 0
+        if parm_dict.get('datatype') == 'Volume CITS':
+            if verbose:
+                print('Found Volume CITS dataset of size {}'.format(images.shape))
+
+            bias_start = float(parm_dict['parm_list'][parm_dict['spec_curve_idx']].split('axis start =')[1].split(',')[0])
+            bias_end = float(parm_dict['parm_list'][parm_dict['spec_curve_idx']].split('end =')[1].split(',')[0])
+            bias_wave = np.linspace(bias_start, bias_end, parm_dict['spec_points_per_curve'])
+            xvec = np.linspace(0, parm_dict['image_width'], images.shape[0])
+            yvec = np.linspace(0, parm_dict['image_height'], images.shape[1])
+
+            data_set = sid.Dataset.from_array(images, name=parm_dict['channel_name'])
+            data_set.title = parm_dict['channel_name']
+            data_set.data_type = sid.DataType.SPECTRAL_IMAGE
+            data_set.units = parm_dict['channel_unit']
+            data_set.quantity = parm_dict['parm_list'][0]
+
+            data_set.set_dimension(
+                0,
+                sid.Dimension(
+                    xvec,
+                    name='x',
+                    units=parm_dict['image_units'],
+                    quantity='x',
+                    dimension_type='spatial',
+                ),
+            )
+            data_set.set_dimension(
+                1,
+                sid.Dimension(
+                    yvec,
+                    name='y',
+                    units=parm_dict['image_units'],
+                    quantity='y',
+                    dimension_type='spatial',
+                ),
+            )
+            data_set.set_dimension(
+                2,
+                sid.Dimension(
+                    bias_wave,
+                    name='Bias',
+                    units='V',
+                    quantity='V',
+                    dimension_type='spectral',
+                ),
+            )
+            data_set.original_metadata = parm_dict
+            return data_set
+
         if images.ndim == 3:  # Image stack
             if verbose:
                 print('Found image stack of size {}'.format(images.shape))
@@ -319,6 +368,7 @@ class IgorIBWReader(Reader):
             for channel in range(images.shape[-1]):
                 #Convert it to sidpy dataset object
                 data_set = sid.Dataset.from_array(images[:,:,channel], name=chan_labels[channel])
+                data_set.title = chan_labels[channel]
                 data_set.data_type = 'Image'
 
                 #Add quantity and units
@@ -371,6 +421,7 @@ class IgorIBWReader(Reader):
 
                 #convert to sidpy dataset
                 data_set = sid.Dataset.from_array((images[:,channel,0]), name=chan_labels[channel])
+                data_set.title = chan_labels[channel]
 
                 if verbose:
                     print('Channel {} and spec_data is {}'.format(channel, spec_data))
@@ -446,6 +497,68 @@ class IgorIBWReader(Reader):
                 parm_dict[key] = other_parms[key]
             except KeyError:
                 pass
+
+        def _find_idx(*needles):
+            for needle in needles:
+                matches = [ind for ind, value in enumerate(parm_list) if needle.lower() in value.lower()]
+                if matches:
+                    return matches[0]
+            return None
+
+        wh_idx = _find_idx('Width =', 'Width:', 'Image Width', 'ScanSize', 'FastScanSize')
+        lines_img_idx = _find_idx('lines per image', 'ScanLines', 'PointsLines')
+        channel_idx = _find_idx('Channel name')
+
+        if wh_idx is not None:
+            if 'Width' in parm_list[wh_idx]:
+                width_vals = re.findall(r'[-+]?(?:\d*\.\d+|\d+)(?:[eE][-+]?\d+)?', parm_list[wh_idx])
+                if len(width_vals) >= 2:
+                    parm_dict['image_width'] = float(width_vals[0])
+                    parm_dict['image_height'] = float(width_vals[1])
+                elif len(width_vals) == 1:
+                    parm_dict['image_width'] = float(width_vals[0])
+                    parm_dict['image_height'] = float(width_vals[0])
+                else:
+                    parm_dict['image_width'] = float(parm_dict.get('FastScanSize', parm_dict.get('ScanSize', 0)))
+                    parm_dict['image_height'] = float(parm_dict.get('SlowScanSize', parm_dict.get('ScanSize', 0)))
+                parm_dict['image_units'] = 'm'
+            else:
+                # Newer Igor notes often record fast/slow scan sizes independently.
+                parm_dict['image_width'] = float(parm_dict.get('FastScanSize', parm_dict.get('ScanSize', 0)))
+                parm_dict['image_height'] = float(parm_dict.get('SlowScanSize', parm_dict.get('ScanSize', 0)))
+                parm_dict['image_units'] = 'm'
+        else:
+            parm_dict['image_width'] = float(parm_dict.get('FastScanSize', parm_dict.get('ScanSize', 0)))
+            parm_dict['image_height'] = float(parm_dict.get('SlowScanSize', parm_dict.get('ScanSize', 0)))
+            parm_dict['image_units'] = 'm'
+
+        if channel_idx is not None:
+            parm_dict['channel_name'] = parm_list[channel_idx].split(':')[1][:-3]
+            parm_dict['channel_unit'] = parm_list[channel_idx].split(':')[1][-3:][1]
+        else:
+            parm_dict['channel_name'] = parm_dict.get('bname', 'Channel_000')
+            parm_dict['channel_unit'] = 'm'
+
+        if any('Volume CITS' in line for line in parm_list):
+            spec_lines_idx = [ind for ind in range(len(parm_list)) if 'Spectroscopy points' in parm_list[ind]][0]
+            sub_grid_idx = [ind for ind in range(len(parm_list)) if 'Scan Sub-Grid' in parm_list[ind]][0]
+            spec_curve_idx = [ind for ind in range(len(parm_list)) if 'axis start' in parm_list[ind]][0]
+            parm_dict['spec_curve_idx'] = spec_curve_idx
+            parm_dict['scan_subgrid_x'] = int(re.findall(r'\d+', parm_list[sub_grid_idx].split('=')[1])[0])
+            parm_dict['scan_subgrid_y'] = int(re.findall(r'\d+', parm_list[sub_grid_idx].split('=')[2])[0])
+            parm_dict['spec_points_per_line'] = int(re.findall(r'\d+', parm_list[spec_lines_idx].split('=')[1])[0])
+            parm_dict['spec_lines_per_plane'] = int(re.findall(r'\d+', parm_list[spec_lines_idx].split('=')[-1])[0])
+            parm_dict['spec_points_per_curve'] = int(parm_list[spec_curve_idx].split('curve =')[1].split(',')[0])
+            parm_dict['datatype'] = 'Volume CITS'
+            if lines_img_idx is not None:
+                parm_dict['lines_img_idx'] = parm_list[lines_img_idx]
+        elif 'Image data' in parm_dict or len(parm_list) > 0:
+            if lines_img_idx is not None:
+                parm_dict['lines_img_idx'] = parm_list[lines_img_idx]
+            parm_dict['datatype'] = 'image'
+
+        parm_dict['parm_list'] = parm_list
+        parm_dict['other_parms'] = other_parms
         return parm_dict
 
     @staticmethod
@@ -503,5 +616,4 @@ class IgorIBWReader(Reader):
         -------
 
         """
-
-        return super(IgorIBWReader, self).can_read(extension='ibw')
+        return self._input_file_path.lower().endswith('.ibw')

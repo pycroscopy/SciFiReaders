@@ -13,15 +13,25 @@ import glob
 
 
 class TestUSIDReader(unittest.TestCase):
+    file_name = 'relax_test_data.h5'
+    file_url = 'https://www.dropbox.com/scl/fi/ggvatabim4zgbcie4yddm/HfOx_-2V_0001.h5?rlkey=rzwdutxnyb0gwu2cw3cmrjst4&dl=1'
+
+    @classmethod
+    def setUpClass(cls):
+        if not os.path.exists(cls.file_name):
+            urllib.request.urlretrieve(cls.file_url, cls.file_name)
+
+    @classmethod
+    def tearDownClass(cls):
+        if os.path.exists(cls.file_name):
+            os.remove(cls.file_name)
 
     def test_data_available(self):
-        urllib.request.urlretrieve('https://www.dropbox.com/scl/fi/ggvatabim4zgbcie4yddm/HfOx_-2V_0001.h5?rlkey=rzwdutxnyb0gwu2cw3cmrjst4&dl=1', 'relax_test_data.h5')
-        reader = Usid_reader('relax_test_data.h5')
+        reader = Usid_reader(self.file_name)
         self.assertIsInstance(reader, sidpy.Reader)
 
     def test_read_ndim_issue(self):
-        urllib.request.urlretrieve('https://www.dropbox.com/scl/fi/ggvatabim4zgbcie4yddm/HfOx_-2V_0001.h5?rlkey=rzwdutxnyb0gwu2cw3cmrjst4&dl=1', 'relax_test_data2.h5')
-        reader = Usid_reader('relax_test_data2.h5')
+        reader = Usid_reader(self.file_name)
         datasets = reader.read()
         reader.close()
     

@@ -5,7 +5,7 @@ import sys
 
 import sidpy
 import hyperspy.api as hs
-import hyperspy.data.artificial_data as ad
+import hyperspy.data as ad
 
 sys.path.append("../SciFiReaders/")
 import SciFiReaders
