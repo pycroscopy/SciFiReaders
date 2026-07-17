@@ -175,6 +175,9 @@ class DMReader(sidpy.Reader):
         """Close the DM file."""
         self.__dm_file.close()
 
+    def can_read(self):
+        return self.dm_version in {3, 4}
+
     def read(self):
         """Read the DM file and extract metadata."""
         try:
@@ -570,3 +573,6 @@ class DM3Reader(DMReader):
         warnings.warn(DeprecationWarning('Use DMReader class instead marking\n '
                                          'Note that you can now read dm4 files too'))
         super().__init__(file_path, verbose=verbose)
+
+    def can_read(self):
+        return self.dm_version == 3

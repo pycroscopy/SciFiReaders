@@ -188,6 +188,9 @@ class EDAXReader(sidpy.Reader):
             except IOError:
                 raise IOError("File {} does not seem to be of EDAX's .h5 format".format(self.__filename))
 
+    def can_read(self):
+        return self.extension.lower() == '.h5'
+
     def read(self):
         if 'h5' in self.extension:
             # TODO: use lazy load for large datasets
@@ -301,5 +304,4 @@ class EDAXReader(sidpy.Reader):
             experiment['analysis']['weight_fractions'] = original_metadata['WeightFraction']
         
         self.datasets[key].metadata['experiment'] = experiment
-
 

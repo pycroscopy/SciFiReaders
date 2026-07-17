@@ -15,13 +15,28 @@ root_path = "https://github.com/pycroscopy/SciFiDatasets/blob/main/data/microsco
 igor2 = pytest.importorskip("igor2", reason="igor2 not installed")
 
 class TestIgorIBW(unittest.TestCase):
+    downloaded_files = set()
+
+    @classmethod
+    def download_file(cls, source_path, destination):
+        if not os.path.exists(destination):
+            urllib.request.urlretrieve(source_path, destination)
+        cls.downloaded_files.add(destination)
+        return destination
+
+    @classmethod
+    def tearDownClass(cls):
+        for file_path in cls.downloaded_files:
+            if os.path.exists(file_path):
+                os.remove(file_path)
+
     # Tests the nanonis_dat reader
     def test_igor_matrix_file_cits(self):
         #Test the CITS file reads correctly
         file_cits = r"20230110-152047_ScV6Sn6-2023-01-10-STM_NANOPROBE_AtomManipulation--37_1-Aux2(V)_3_Forward_Down_Trace.ibw?raw=true"
         file_path =root_path + file_cits
         file_out = 'cits_file.ibw'
-        urllib.request.urlretrieve(file_path, file_out)
+        self.download_file(file_path, file_out)
         reader = sr.IgorMatrixReader(file_out)
         dataset = reader.read()
 
@@ -44,7 +59,7 @@ class TestIgorIBW(unittest.TestCase):
         file_metadata = 'orig_dict.p?raw=true'
         file_path = root_path + file_metadata
         metadata_out = 'cits_metadata.p'
-        urllib.request.urlretrieve(file_path, metadata_out)
+        self.download_file(file_path, metadata_out)
         true_metadata = pickle.load(open(metadata_out, 'rb'))
         received_metadata = dataset.original_metadata
         for key in true_metadata: 
@@ -57,8 +72,6 @@ class TestIgorIBW(unittest.TestCase):
                 "Was expecting {} for key {} but received {}".format(true_metadata[key],
                                             key,received_metadata[key] )
 
-        os.remove(file_out)
-        os.remove(metadata_out)
         return
     
     def test_igor_matrix_file_image(self):
@@ -66,7 +79,7 @@ class TestIgorIBW(unittest.TestCase):
         file_cits = r'20230110-152047_ScV6Sn6-2023-01-10-STM_NANOPROBE_AtomManipulation--37_1-I_3_Backward_Down.ibw?raw=true'
         file_path = root_path + file_cits
         file_out = 'img_file.ibw'
-        urllib.request.urlretrieve(file_path, file_out)
+        self.download_file(file_path, file_out)
         reader = sr.IgorMatrixReader(file_out)
         dataset = reader.read()
 
@@ -89,7 +102,7 @@ class TestIgorIBW(unittest.TestCase):
         file_metadata = 'image_dict.p?raw=true'
         file_path = root_path + file_metadata
         img_metadata_out = 'img_metadata.p'
-        urllib.request.urlretrieve(file_path, img_metadata_out)
+        self.download_file(file_path, img_metadata_out)
         true_metadata = pickle.load(open(img_metadata_out, 'rb'))
         received_metadata = dataset.original_metadata
         for key in true_metadata: 
@@ -102,9 +115,6 @@ class TestIgorIBW(unittest.TestCase):
                 "Was expecting {} for key {} but received {}".format(true_metadata[key],
                                             key,received_metadata[key] )
 
-        os.remove(file_out)
-        os.remove(img_metadata_out)
-
     
     def test_load_test_ibw_force_file(self):
 
@@ -112,7 +122,7 @@ class TestIgorIBW(unittest.TestCase):
 
         file_path = 'force_ibw.ibw'
         # Download the required files
-        urllib.request.urlretrieve(root_path + "/IgorIBWReader_ForceCurve.ibw?raw=true", file_path) 
+        self.download_file(root_path + "/IgorIBWReader_ForceCurve.ibw?raw=true", file_path)
 
         data_translator = sr.IgorIBWReader(file_path)
         datasets = data_translator.read(verbose=False)
@@ -767,13 +777,11 @@ class TestIgorIBW(unittest.TestCase):
             assert datasets[key].data_descriptor == data_descriptors[ind], "Dataset {} " \
             "should have descriptor {} but instead has descriptor {}".format(ind, data_descriptors[ind], datasets[key].data_descriptor)
 
-        os.remove(file_path)
-
     def test_load_test_ibw_image_file(self):
         #Test if the IGOR Image IBW file can be read in correctly
 
         file_path = 'image_ibw.ibw'
-        urllib.request.urlretrieve(root_path + "/IgorIBWReader_ImageStack_BTFO_DSO.ibw?raw=true", file_path)
+        self.download_file(root_path + "/IgorIBWReader_ImageStack_BTFO_DSO.ibw?raw=true", file_path)
 
         data_translator = sr.IgorIBWReader(file_path)
         datasets = data_translator.read(verbose=True)
@@ -1443,4 +1451,3 @@ class TestIgorIBW(unittest.TestCase):
             assert datasets[key].data_descriptor == data_descriptors[ind], "Dataset {} " \
             "should have descriptor {} but instead has descriptor {}".format(ind, data_descriptors[ind], datasets[key].data_descriptor)
         
-        os.remove(file_path)

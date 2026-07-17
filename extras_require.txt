@@ -3,3 +3,4 @@ igor2
 pyNSID
 pillow
 tifffile
+aicspylibczi
