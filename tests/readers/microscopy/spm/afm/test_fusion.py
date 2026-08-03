@@ -274,7 +274,7 @@ class TestFSexpReader(unittest.TestCase):
 
         self.assertEqual(image_keys[2], IMAGE_KEY)
         self.assertEqual(image_keys[0], "000_1_OverviewFrame")
-        self.assertEqual(image_keys[-1], "021_10_Frame_7_Channel_0")
+        self.assertEqual(image_keys[-1], "021_10_Frame_7_Channel_0_Raw_DataIndex_78")
 
 if __name__ == "__main__":
     unittest.main()
