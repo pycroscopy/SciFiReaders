@@ -141,8 +141,14 @@ class FSexpReader(Reader):
                 number = len(metadata["image_datasets"])
                 index = f"{number:03d}"
 
-                name = h5_dataset.attrs.get("SUBCHANNEL_NAME") or frame_name or "fsexp image"
+                name = h5_dataset.attrs.get("SUBCHANNEL_NAME")
 
+                if not name:
+                  if "OverviewFrame" in frame_name:
+                    name = frame_name
+                  else:
+                    name = f"{frame_name}_{processing_state}_{data_index_name}"
+                  
                 if isinstance(name, bytes):
                   name = name.decode("utf-8")
 
