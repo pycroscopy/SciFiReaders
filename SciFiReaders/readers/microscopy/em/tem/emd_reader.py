@@ -252,17 +252,16 @@ class EMDReader(sidpy.Reader):
 
         size_x = 1
         size_y = 1
-        if self.metadata is not None:
-            scan = self.metadata.get('Scan', {})
-            size_x = float(scan.get('ScanArea', {}).get('right', 1))
-            size_x -= float(scan.get('ScanArea', {}).get('left', 1))
-            size_x *= float(scan.get('ScanSize', {}).get('width', 0))
-            size_y = float(scan.get('ScanArea', {}).get('bottom', 1))
-            size_y -= float(scan.get('ScanArea', {}).get('top', 1))
-            size_y *= float(scan.get('ScanSize', {}).get('height', 0))
+        scan = self.metadata.get('Scan', {}) if self.metadata is not None else {}
+        if 'ScanArea' in scan and 'ScanSize' in scan:
+            area, size = scan['ScanArea'], scan['ScanSize']
+            size_x = int(round((float(area['right']) - float(area['left'])) * float(size['width'])))
+            size_y = int(round((float(area['bottom']) - float(area['top'])) * float(size['height'])))
         elif 'RasterScanDefinition' in acquisition:
             size_x = int(acquisition.get('RasterScanDefinition', {}).get('Width', 0))
             size_y = int(acquisition.get('RasterScanDefinition', {}).get('Height', 0))
+        size_x = max(size_x, 1)
+        size_y = max(size_y, 1)
 
         spectrum_size = int(acquisition.get('bincount', 0))
 

@@ -1,26 +1,22 @@
+import os
+import urllib.request
 
 import pytest
 import sidpy
 import SciFiReaders as sr
-import os
-import gdown
-try:
-    import gdown
-except ImportError:
-    import pip
-    pip.main(['install', 'gdown'])
 
 
-# Google Drive file ID for a sample .mrc file (replace with actual ID)
-MRC_FILE_ID = "1eKRk7nCiSH07z2CetXbBLudbO0pM4V76"
-MRC_FILE_PATH = "test_data.mrc"
+
+data_path = 'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/microscopy/em/tem/'
+MRC_FILE_NAME = 'MRCReader_4DSTEM_Velox.mrc'
+MRC_FILE_PATH = MRC_FILE_NAME
+
 
 @pytest.fixture(scope="session")
 def download_mrc_file():
     """Download the test MRC file before running tests."""
     if not os.path.exists(MRC_FILE_PATH):
-        url = f"https://drive.google.com/uc?id={MRC_FILE_ID}"
-        gdown.download(url, MRC_FILE_PATH, quiet=False)
+        urllib.request.urlretrieve(data_path + MRC_FILE_NAME, MRC_FILE_PATH)
     return MRC_FILE_PATH
 
 def test_read_mrc(download_mrc_file):
