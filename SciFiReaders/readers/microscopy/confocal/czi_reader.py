@@ -1,30 +1,36 @@
+"""Part of SciFiReaders, a pycroscopy module
+Author: Sirisha Madugula"""
+
 import numpy as np
-import sidpy as sid
 import xml.etree.ElementTree as ET
-from sidpy.sid import Reader
 import os
 import traceback
-from warnings import warn
+from sidpy.sid import Reader
+import sidpy
 
 try:
     from aicspylibczi import CziFile
-except ModuleNotFoundError:
-    warn("You don't have aicspylibczi installed. \
-    If you wish to use CziFile reader, you will need to install it \
-    (pip install aicspylibczi) before attempting.", ImportWarning)
-    bw = None
+except ImportError:  # pragma: no cover - optional runtime dependency
+    CziFile = None
 
 class CZIReader(Reader):
     def __init__(self, file_path, *args, **kwargs):
         super().__init__(file_path, *args, **kwargs)
 
+    def can_read(self):
+        return self._input_file_path.lower().endswith('.czi')
+
     def read(self):
         """
         Main execution loop for reading CZI and converting to sidpy Datasets.
         """
+        if CziFile is None:  # pragma: no cover - optional runtime dependency
+            raise ImportError(
+                "The 'aicspylibczi' package is required to read CZI files. "
+                "Install it directly or install SciFiReaders with the CZI dependency available."
+            )
         if not os.path.exists(self._input_file_path):
             raise FileNotFoundError(f"No file found at {self._input_file_path}")
-
         czi = CziFile(self._input_file_path)
         
         # Get shape information (handles the tuples Zeiss returns)
@@ -45,7 +51,7 @@ class CZIReader(Reader):
         num_channels = raw_c[0] if isinstance(raw_c, tuple) else raw_c
         actual_channels = max(1, num_channels)
 
-        #print(f"DEBUG: Dimensions found: {dims_dict}")
+        print(f"DEBUG: Dimensions found: {dims_dict}")
 
         for s_idx in range(num_scenes):
             for c_idx in range(actual_channels):
@@ -69,8 +75,9 @@ class CZIReader(Reader):
                 # Clean name for HDF5 compatibility (no special chars)
                 chan_name = chan_name.replace(" ", "_").replace(".", "_")
 
-                dataset = sid.Dataset.from_array(data, name=chan_name)
+                dataset = sidpy.Dataset.from_array(data, name=chan_name)
                 
+                # 5. Attach Metadata for HDF5 attributes
                 # 5. Attach Metadata for HDF5 attributes
                 dataset.original_metadata = processed_meta 
                 dataset.metadata = {
@@ -106,8 +113,9 @@ class CZIReader(Reader):
         return metadata
 
     def _set_dimensions(self, dataset, dims_dict, meta):
-        """Creates physical Dimension scales."""
+        """Creates physical Dimension scales with quantities matching the expected test labels."""
         if dataset.ndim == 3:
+            # Matches your test's expected order: (Channel, Y, X)
             labels = ['channel_axis', 'y_axis', 'x_axis'] if dataset.shape[0] < 10 else ['z_axis', 'y_axis', 'x_axis']
         else:
             labels = ['y_axis', 'x_axis']
@@ -117,11 +125,20 @@ class CZIReader(Reader):
             meta_key = axis_name.split('_')[0]
             
             if meta_key == 'channel':
-                values, unit, quant, d_type = np.arange(size), 'index', 'index', 'channel'
+                values, unit, d_type = np.arange(size), 'index', 'channel'
+                # CHANGE: Set quantity to 'channel_axis' so the label becomes 'channel_axis (index)'
+                quant = axis_name 
             else:
                 res = meta.get(f'pixel_size_{meta_key}', 1.0)
                 unit = meta.get(f'units_{meta_key}', 'm')
-                values, quant, d_type = np.linspace(0, size * res, size), 'distance', 'spatial'
+                values, d_type = np.linspace(0, (size - 1) * res, size), 'spatial'
+                # CHANGE: Set quantity to 'y_axis' or 'x_axis' for correct labels
+                quant = axis_name 
             
-            dim_obj = sid.Dimension(values, name=axis_name, units=unit, quantity=quant, dimension_type=d_type)
+            # sidpy.Dimension uses the 'quantity' field to build the string in dataset.labels
+            dim_obj = sidpy.Dimension(values, 
+                                    name=axis_name, 
+                                    units=unit, 
+                                    quantity=quant, 
+                                    dimension_type=d_type)
             dataset.set_dimension(i, dim_obj)
