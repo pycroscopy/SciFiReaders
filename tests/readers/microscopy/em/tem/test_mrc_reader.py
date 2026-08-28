@@ -8,7 +8,7 @@ import SciFiReaders as sr
 
 
 data_path = 'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/microscopy/em/tem/'
-MRC_FILE_NAME = 'MRCReader_Image.mrc'
+MRC_FILE_NAME = 'MRCReader_4DSTEM_Velox.mrc'
 MRC_FILE_PATH = MRC_FILE_NAME
 
 
