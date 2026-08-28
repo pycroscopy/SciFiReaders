@@ -1,10 +1,18 @@
 import numpy as np
 import sidpy as sid
 import xml.etree.ElementTree as ET
-from aicspylibczi import CziFile
 from sidpy.sid import Reader
 import os
 import traceback
+from warnings import warn
+
+try:
+    from aicspylibczi import CziFile
+except ModuleNotFoundError:
+    warn("You don't have aicspylibczi installed. \
+    If you wish to use CziFile reader, you will need to install it \
+    (pip install aicspylibczi) before attempting.", ImportWarning)
+    bw = None
 
 class CZIReader(Reader):
     def __init__(self, file_path, *args, **kwargs):
@@ -37,7 +45,7 @@ class CZIReader(Reader):
         num_channels = raw_c[0] if isinstance(raw_c, tuple) else raw_c
         actual_channels = max(1, num_channels)
 
-        print(f"DEBUG: Dimensions found: {dims_dict}")
+        #print(f"DEBUG: Dimensions found: {dims_dict}")
 
         for s_idx in range(num_scenes):
             for c_idx in range(actual_channels):
