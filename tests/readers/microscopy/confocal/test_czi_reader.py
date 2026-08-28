@@ -12,8 +12,11 @@ import urllib.request
 import os
 import unittest
 
-sys.path.append("../../../../../SciFiReaders/")
+sys.path.append("../../../../SciFiReaders/")
 import SciFiReaders
+import pytest
+
+aicspylibczi = pytest.importorskip("aicspylibczi", reason="aicspylibczi not installed")
 
 data_path = "https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/data/microscopy/em/tem/"
 

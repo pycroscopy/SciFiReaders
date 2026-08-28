@@ -13,8 +13,7 @@ Submodules
 
 from .edax_reader import EDAXReader
 from .bruker_reader import BrukerReader
-from .czi_reader import CZIReader
 
-__all__ = ['EDAXReader', 'BrukerReader', 'CZIReader']
+__all__ = ['EDAXReader', 'BrukerReader']
 
-all_readers = [EDAXReader, BrukerReader, CZIReader]
+all_readers = [EDAXReader, BrukerReader]
