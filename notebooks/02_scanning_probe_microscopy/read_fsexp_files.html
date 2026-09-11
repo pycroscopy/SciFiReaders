@@ -1,0 +1,1682 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Parsing .fsexp FusionScope HDF5 Experiment Files &#8212; SciFiReaders 0.12.7 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=7cf6be21"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/02_scanning_probe_microscopy/read_fsexp_files';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Data formats and converters" href="../03_data_formats_and_converters/index.html" />
+    <link rel="prev" title="Parsing .mdt experimental files. Basic example." href="read_mdt_files.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SciFiReaders 0.12.7 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    SciFiReaders
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../available_readers.html">Available Readers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contact.html">Contact us</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples by method</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../00_developing_a_reader/index.html">Creating a Reader</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../00_developing_a_reader/developing_a_reader.html">Creating a Reader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_electron_microscopy/index.html">Electron microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_electron_microscopy/read_dm3_files.html">Reading a DM3 File with ScopeReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_electron_microscopy/read_nion_files.html">Reading a Nion File with ScopeReader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Scanning probe microscopy</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="read_mdt_files.html">Parsing .mdt experimental files. Basic example.</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#"><strong>Parsing .fsexp FusionScope HDF5 Experiment Files</strong></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../03_data_formats_and_converters/index.html">Data formats and converters</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_data_formats_and_converters/convert_hyperspy.html">Working with Hyperspy Data</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api.html">API reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/SciFiReaders.html">SciFiReaders</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders/issues/new?title=Issue%20on%20page%20%2Fnotebooks/02_scanning_probe_microscopy/read_fsexp_files.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/02_scanning_probe_microscopy/read_fsexp_files.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Parsing .fsexp FusionScope HDF5 Experiment Files</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Overview"><strong>Overview</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Key-Naming-Convention"><strong>Key Naming Convention</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Output-Structure"><strong>Output Structure</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Image"><strong>Image</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Single-Scan-Metadata"><strong>Single Scan Metadata</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#In-depth-.fsexp-File-Data-Structure"><strong>In-depth .fsexp File Data Structure</strong></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="Parsing-.fsexp-FusionScope-HDF5-Experiment-Files">
+<h1><strong>Parsing .fsexp FusionScope HDF5 Experiment Files</strong><a class="headerlink" href="#Parsing-.fsexp-FusionScope-HDF5-Experiment-Files" title="Link to this heading">#</a></h1>
+<p>Created on Fri Jul 31 2026</p>
+<p>Author: Aidan Swanger</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install SciFiReaders</span>
+<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">cache</span><span class="o">-</span><span class="nb">dir</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pycroscopy</span><span class="o">/</span><span class="n">SciFiReaders</span><span class="o">.</span><span class="n">git</span><span class="nd">@main</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+window["5f5f69de-8d19-11f1-ba93-0242ac1c000c"] = google.colab.output.setIframeHeight(-1, true, {"interactive": true, "maxHeight": 99999});
+//# sourceURL=js_89dc534150
+</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Collecting git+https://github.com/aswanger011/SciFiReadersAS.git@main
+  Cloning https://github.com/aswanger011/SciFiReadersAS.git (to revision main) to /tmp/pip-req-build-t0fkwv5v
+  Running command git clone --filter=blob:none --quiet https://github.com/aswanger011/SciFiReadersAS.git /tmp/pip-req-build-t0fkwv5v
+  Resolved https://github.com/aswanger011/SciFiReadersAS.git to commit 2c4bd86eef59e4ee837f776c015361227a0926a9
+  Installing build dependencies ... done
+  Getting requirements to build wheel ... done
+  Preparing metadata (pyproject.toml) ... done
+Requirement already satisfied: setuptools in /usr/local/lib/python3.12/dist-packages (from SciFiReaders==0.12.7) (75.2.0)
+Requirement already satisfied: numpy in /usr/local/lib/python3.12/dist-packages (from SciFiReaders==0.12.7) (2.0.2)
+Requirement already satisfied: toolz in /usr/local/lib/python3.12/dist-packages (from SciFiReaders==0.12.7) (0.12.1)
+Collecting cytoolz (from SciFiReaders==0.12.7)
+  Downloading cytoolz-1.1.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (5.2 kB)
+Requirement already satisfied: dask&gt;=2.20.0 in /usr/local/lib/python3.12/dist-packages (from SciFiReaders==0.12.7) (2026.7.0)
+Collecting sidpy&gt;=0.11.2 (from SciFiReaders==0.12.7)
+  Downloading sidpy-0.12.9-py2.py3-none-any.whl.metadata (3.3 kB)
+Requirement already satisfied: numba in /usr/local/lib/python3.12/dist-packages (from SciFiReaders==0.12.7) (0.60.0)
+Requirement already satisfied: ipython&gt;=7.1.0 in /usr/local/lib/python3.12/dist-packages (from SciFiReaders==0.12.7) (7.34.0)
+Collecting pyUSID (from SciFiReaders==0.12.7)
+  Downloading pyUSID-0.0.12-py2.py3-none-any.whl.metadata (2.4 kB)
+Collecting pyNSID (from SciFiReaders==0.12.7)
+  Downloading pyNSID-0.0.7.2-py2.py3-none-any.whl.metadata (1.4 kB)
+Requirement already satisfied: gdown in /usr/local/lib/python3.12/dist-packages (from SciFiReaders==0.12.7) (5.2.2)
+Collecting mrcfile (from SciFiReaders==0.12.7)
+  Downloading mrcfile-1.5.4-py2.py3-none-any.whl.metadata (7.0 kB)
+Collecting pycroscopy-gwyfile (from SciFiReaders==0.12.7)
+  Downloading pycroscopy_gwyfile-1.0.2-py2.py3-none-any.whl.metadata (3.5 kB)
+Requirement already satisfied: scipy&gt;=1.11 in /usr/local/lib/python3.12/dist-packages (from SciFiReaders==0.12.7) (1.16.3)
+Requirement already satisfied: click&gt;=8.1 in /usr/local/lib/python3.12/dist-packages (from dask&gt;=2.20.0-&gt;SciFiReaders==0.12.7) (8.4.2)
+Requirement already satisfied: cloudpickle&gt;=3.0.0 in /usr/local/lib/python3.12/dist-packages (from dask&gt;=2.20.0-&gt;SciFiReaders==0.12.7) (3.1.2)
+Requirement already satisfied: fsspec&gt;=2021.09.0 in /usr/local/lib/python3.12/dist-packages (from dask&gt;=2.20.0-&gt;SciFiReaders==0.12.7) (2025.3.0)
+Requirement already satisfied: packaging&gt;=20.0 in /usr/local/lib/python3.12/dist-packages (from dask&gt;=2.20.0-&gt;SciFiReaders==0.12.7) (26.2)
+Requirement already satisfied: partd&gt;=1.4.0 in /usr/local/lib/python3.12/dist-packages (from dask&gt;=2.20.0-&gt;SciFiReaders==0.12.7) (1.4.2)
+Requirement already satisfied: pyyaml&gt;=5.4.1 in /usr/local/lib/python3.12/dist-packages (from dask&gt;=2.20.0-&gt;SciFiReaders==0.12.7) (6.0.3)
+Collecting jedi&gt;=0.16 (from ipython&gt;=7.1.0-&gt;SciFiReaders==0.12.7)
+  Downloading jedi-0.20.0-py2.py3-none-any.whl.metadata (23 kB)
+Requirement already satisfied: decorator in /usr/local/lib/python3.12/dist-packages (from ipython&gt;=7.1.0-&gt;SciFiReaders==0.12.7) (4.4.2)
+Requirement already satisfied: pickleshare in /usr/local/lib/python3.12/dist-packages (from ipython&gt;=7.1.0-&gt;SciFiReaders==0.12.7) (0.7.5)
+Requirement already satisfied: traitlets&gt;=4.2 in /usr/local/lib/python3.12/dist-packages (from ipython&gt;=7.1.0-&gt;SciFiReaders==0.12.7) (5.7.1)
+Requirement already satisfied: prompt-toolkit!=3.0.0,!=3.0.1,&lt;3.1.0,&gt;=2.0.0 in /usr/local/lib/python3.12/dist-packages (from ipython&gt;=7.1.0-&gt;SciFiReaders==0.12.7) (3.0.52)
+Requirement already satisfied: pygments in /usr/local/lib/python3.12/dist-packages (from ipython&gt;=7.1.0-&gt;SciFiReaders==0.12.7) (2.20.0)
+Requirement already satisfied: backcall in /usr/local/lib/python3.12/dist-packages (from ipython&gt;=7.1.0-&gt;SciFiReaders==0.12.7) (0.2.0)
+Requirement already satisfied: matplotlib-inline in /usr/local/lib/python3.12/dist-packages (from ipython&gt;=7.1.0-&gt;SciFiReaders==0.12.7) (0.2.2)
+Requirement already satisfied: pexpect&gt;4.3 in /usr/local/lib/python3.12/dist-packages (from ipython&gt;=7.1.0-&gt;SciFiReaders==0.12.7) (4.9.0)
+Collecting dask-ml&gt;=2025.1.0 (from sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7)
+  Downloading dask_ml-2025.1.0-py3-none-any.whl.metadata (6.0 kB)
+Requirement already satisfied: h5py&gt;=2.6.0 in /usr/local/lib/python3.12/dist-packages (from sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (3.16.0)
+Requirement already satisfied: matplotlib&gt;=2.0.0 in /usr/local/lib/python3.12/dist-packages (from sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (3.10.0)
+Collecting distributed&gt;=2.0.0 (from sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7)
+  Downloading distributed-2026.7.1-py3-none-any.whl.metadata (3.4 kB)
+Requirement already satisfied: six in /usr/local/lib/python3.12/dist-packages (from sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.17.0)
+Requirement already satisfied: joblib&gt;=0.11.0 in /usr/local/lib/python3.12/dist-packages (from sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.5.3)
+Requirement already satisfied: ipywidgets in /usr/local/lib/python3.12/dist-packages (from sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (7.7.1)
+Requirement already satisfied: ipykernel in /usr/local/lib/python3.12/dist-packages (from sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (6.17.1)
+Requirement already satisfied: scikit-learn&gt;=1.6.1 in /usr/local/lib/python3.12/dist-packages (from sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.6.1)
+Collecting ase (from sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7)
+  Downloading ase-3.29.0-py3-none-any.whl.metadata (4.4 kB)
+Collecting ipympl (from sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7)
+  Downloading ipympl-0.10.0-py3-none-any.whl.metadata (9.4 kB)
+Requirement already satisfied: dill in /usr/local/lib/python3.12/dist-packages (from sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (0.3.8)
+Collecting pyswarms&gt;=1.3.0 (from sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7)
+  Downloading pyswarms-1.3.0-py2.py3-none-any.whl.metadata (33 kB)
+Requirement already satisfied: beautifulsoup4 in /usr/local/lib/python3.12/dist-packages (from gdown-&gt;SciFiReaders==0.12.7) (4.13.5)
+Requirement already satisfied: filelock in /usr/local/lib/python3.12/dist-packages (from gdown-&gt;SciFiReaders==0.12.7) (3.29.7)
+Requirement already satisfied: requests[socks] in /usr/local/lib/python3.12/dist-packages (from gdown-&gt;SciFiReaders==0.12.7) (2.32.4)
+Requirement already satisfied: tqdm in /usr/local/lib/python3.12/dist-packages (from gdown-&gt;SciFiReaders==0.12.7) (4.67.3)
+Requirement already satisfied: llvmlite&lt;0.44,&gt;=0.43.0dev0 in /usr/local/lib/python3.12/dist-packages (from numba-&gt;SciFiReaders==0.12.7) (0.43.0)
+Requirement already satisfied: pillow in /usr/local/lib/python3.12/dist-packages (from pyUSID-&gt;SciFiReaders==0.12.7) (11.3.0)
+Requirement already satisfied: psutil in /usr/local/lib/python3.12/dist-packages (from pyUSID-&gt;SciFiReaders==0.12.7) (5.9.5)
+Collecting dask-glm&gt;=0.2.0 (from dask-ml&gt;=2025.1.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7)
+  Downloading dask_glm-0.4.0-py3-none-any.whl.metadata (2.4 kB)
+Requirement already satisfied: multipledispatch&gt;=0.4.9 in /usr/local/lib/python3.12/dist-packages (from dask-ml&gt;=2025.1.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.0.0)
+Requirement already satisfied: pandas&gt;=2.0 in /usr/local/lib/python3.12/dist-packages (from dask-ml&gt;=2025.1.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (2.2.2)
+Collecting dask&gt;=2.20.0 (from SciFiReaders==0.12.7)
+  Downloading dask-2026.7.1-py3-none-any.whl.metadata (3.8 kB)
+Requirement already satisfied: jinja2&gt;=2.10.3 in /usr/local/lib/python3.12/dist-packages (from distributed&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (3.1.6)
+Requirement already satisfied: locket&gt;=1.0.0 in /usr/local/lib/python3.12/dist-packages (from distributed&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.0.0)
+Requirement already satisfied: msgpack&gt;=1.0.2 in /usr/local/lib/python3.12/dist-packages (from distributed&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.2.1)
+Collecting sortedcontainers&gt;=2.0.5 (from distributed&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7)
+  Downloading sortedcontainers-2.4.0-py2.py3-none-any.whl.metadata (10 kB)
+Collecting tblib!=3.2.0,!=3.2.1,&gt;=1.6.0 (from distributed&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7)
+  Downloading tblib-3.2.2-py3-none-any.whl.metadata (27 kB)
+Requirement already satisfied: tornado&gt;=6.2.0 in /usr/local/lib/python3.12/dist-packages (from distributed&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (6.5.7)
+Collecting zict&gt;=3.0.0 (from distributed&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7)
+  Downloading zict-3.0.0-py2.py3-none-any.whl.metadata (899 bytes)
+Requirement already satisfied: parso&lt;0.9.0,&gt;=0.8.6 in /usr/local/lib/python3.12/dist-packages (from jedi&gt;=0.16-&gt;ipython&gt;=7.1.0-&gt;SciFiReaders==0.12.7) (0.8.7)
+Requirement already satisfied: contourpy&gt;=1.0.1 in /usr/local/lib/python3.12/dist-packages (from matplotlib&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.3.3)
+Requirement already satisfied: cycler&gt;=0.10 in /usr/local/lib/python3.12/dist-packages (from matplotlib&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (0.12.1)
+Requirement already satisfied: fonttools&gt;=4.22.0 in /usr/local/lib/python3.12/dist-packages (from matplotlib&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (4.63.0)
+Requirement already satisfied: kiwisolver&gt;=1.3.1 in /usr/local/lib/python3.12/dist-packages (from matplotlib&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.5.0)
+Requirement already satisfied: pyparsing&gt;=2.3.1 in /usr/local/lib/python3.12/dist-packages (from matplotlib&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (3.3.2)
+Requirement already satisfied: python-dateutil&gt;=2.7 in /usr/local/lib/python3.12/dist-packages (from matplotlib&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (2.9.0.post0)
+Requirement already satisfied: ptyprocess&gt;=0.5 in /usr/local/lib/python3.12/dist-packages (from pexpect&gt;4.3-&gt;ipython&gt;=7.1.0-&gt;SciFiReaders==0.12.7) (0.7.0)
+Requirement already satisfied: wcwidth in /usr/local/lib/python3.12/dist-packages (from prompt-toolkit!=3.0.0,!=3.0.1,&lt;3.1.0,&gt;=2.0.0-&gt;ipython&gt;=7.1.0-&gt;SciFiReaders==0.12.7) (0.8.2)
+Requirement already satisfied: attrs in /usr/local/lib/python3.12/dist-packages (from pyswarms&gt;=1.3.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (26.1.0)
+Requirement already satisfied: future in /usr/local/lib/python3.12/dist-packages (from pyswarms&gt;=1.3.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.0.0)
+Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /usr/local/lib/python3.12/dist-packages (from scikit-learn&gt;=1.6.1-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (3.6.0)
+Requirement already satisfied: typing_extensions&gt;=4.13.1 in /usr/local/lib/python3.12/dist-packages (from ase-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (4.16.0)
+Requirement already satisfied: soupsieve&gt;1.2 in /usr/local/lib/python3.12/dist-packages (from beautifulsoup4-&gt;gdown-&gt;SciFiReaders==0.12.7) (2.8.4)
+Requirement already satisfied: debugpy&gt;=1.0 in /usr/local/lib/python3.12/dist-packages (from ipykernel-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.8.15)
+Requirement already satisfied: jupyter-client&gt;=6.1.12 in /usr/local/lib/python3.12/dist-packages (from ipykernel-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (7.4.9)
+Requirement already satisfied: nest-asyncio in /usr/local/lib/python3.12/dist-packages (from ipykernel-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.6.0)
+Requirement already satisfied: pyzmq&gt;=17 in /usr/local/lib/python3.12/dist-packages (from ipykernel-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (26.2.1)
+Requirement already satisfied: ipython-genutils~=0.2.0 in /usr/local/lib/python3.12/dist-packages (from ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (0.2.0)
+Requirement already satisfied: widgetsnbextension~=3.6.0 in /usr/local/lib/python3.12/dist-packages (from ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (3.6.10)
+Requirement already satisfied: jupyterlab-widgets&gt;=1.0.0 in /usr/local/lib/python3.12/dist-packages (from ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (3.0.16)
+Requirement already satisfied: charset_normalizer&lt;4,&gt;=2 in /usr/local/lib/python3.12/dist-packages (from requests[socks]-&gt;gdown-&gt;SciFiReaders==0.12.7) (3.4.9)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in /usr/local/lib/python3.12/dist-packages (from requests[socks]-&gt;gdown-&gt;SciFiReaders==0.12.7) (3.18)
+Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in /usr/local/lib/python3.12/dist-packages (from requests[socks]-&gt;gdown-&gt;SciFiReaders==0.12.7) (2.5.0)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.12/dist-packages (from requests[socks]-&gt;gdown-&gt;SciFiReaders==0.12.7) (2026.6.17)
+Requirement already satisfied: PySocks!=1.5.7,&gt;=1.5.6 in /usr/local/lib/python3.12/dist-packages (from requests[socks]-&gt;gdown-&gt;SciFiReaders==0.12.7) (1.7.1)
+Collecting sparse&gt;=0.15 (from dask-glm&gt;=0.2.0-&gt;dask-ml&gt;=2025.1.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7)
+  Downloading sparse-0.19.0-py2.py3-none-any.whl.metadata (5.3 kB)
+INFO: pip is looking at multiple versions of dask[array,dataframe] to determine which version is compatible with other requirements. This could take a while.
+Requirement already satisfied: pyarrow&gt;=16.0 in /usr/local/lib/python3.12/dist-packages (from dask[array,dataframe]&gt;=2025.1.0-&gt;dask-ml&gt;=2025.1.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (18.1.0)
+Requirement already satisfied: MarkupSafe&gt;=2.0 in /usr/local/lib/python3.12/dist-packages (from jinja2&gt;=2.10.3-&gt;distributed&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (3.0.3)
+Requirement already satisfied: entrypoints in /usr/local/lib/python3.12/dist-packages (from jupyter-client&gt;=6.1.12-&gt;ipykernel-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (0.4)
+Requirement already satisfied: jupyter-core&gt;=4.9.2 in /usr/local/lib/python3.12/dist-packages (from jupyter-client&gt;=6.1.12-&gt;ipykernel-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (5.9.1)
+Requirement already satisfied: pytz&gt;=2020.1 in /usr/local/lib/python3.12/dist-packages (from pandas&gt;=2.0-&gt;dask-ml&gt;=2025.1.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (2025.2)
+Requirement already satisfied: tzdata&gt;=2022.7 in /usr/local/lib/python3.12/dist-packages (from pandas&gt;=2.0-&gt;dask-ml&gt;=2025.1.0-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (2026.3)
+Requirement already satisfied: notebook&gt;=4.4.1 in /usr/local/lib/python3.12/dist-packages (from widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (6.5.7)
+Requirement already satisfied: platformdirs&gt;=2.5 in /usr/local/lib/python3.12/dist-packages (from jupyter-core&gt;=4.9.2-&gt;jupyter-client&gt;=6.1.12-&gt;ipykernel-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (4.10.0)
+Requirement already satisfied: argon2-cffi in /usr/local/lib/python3.12/dist-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (25.1.0)
+Requirement already satisfied: nbformat in /usr/local/lib/python3.12/dist-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (5.10.4)
+Requirement already satisfied: nbconvert&gt;=5 in /usr/local/lib/python3.12/dist-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (7.17.1)
+Requirement already satisfied: Send2Trash&gt;=1.8.0 in /usr/local/lib/python3.12/dist-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (2.1.0)
+Requirement already satisfied: terminado&gt;=0.8.3 in /usr/local/lib/python3.12/dist-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (0.18.1)
+Requirement already satisfied: prometheus-client in /usr/local/lib/python3.12/dist-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (0.25.0)
+Requirement already satisfied: nbclassic&gt;=0.4.7 in /usr/local/lib/python3.12/dist-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.3.3)
+Requirement already satisfied: notebook-shim&gt;=0.2.3 in /usr/local/lib/python3.12/dist-packages (from nbclassic&gt;=0.4.7-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (0.2.4)
+Requirement already satisfied: bleach!=5.0.0 in /usr/local/lib/python3.12/dist-packages (from bleach[css]!=5.0.0-&gt;nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (6.4.0)
+Requirement already satisfied: defusedxml in /usr/local/lib/python3.12/dist-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (0.7.1)
+Requirement already satisfied: jupyterlab-pygments in /usr/local/lib/python3.12/dist-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (0.3.0)
+Requirement already satisfied: mistune&lt;4,&gt;=2.0.3 in /usr/local/lib/python3.12/dist-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (3.3.3)
+Requirement already satisfied: nbclient&gt;=0.5.0 in /usr/local/lib/python3.12/dist-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (0.10.4)
+Requirement already satisfied: pandocfilters&gt;=1.4.1 in /usr/local/lib/python3.12/dist-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.5.1)
+Requirement already satisfied: fastjsonschema&gt;=2.15 in /usr/local/lib/python3.12/dist-packages (from nbformat-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (2.21.2)
+Requirement already satisfied: jsonschema&gt;=2.6 in /usr/local/lib/python3.12/dist-packages (from nbformat-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (4.26.0)
+Requirement already satisfied: argon2-cffi-bindings in /usr/local/lib/python3.12/dist-packages (from argon2-cffi-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (25.1.0)
+Requirement already satisfied: webencodings in /usr/local/lib/python3.12/dist-packages (from bleach!=5.0.0-&gt;bleach[css]!=5.0.0-&gt;nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (0.5.1)
+Requirement already satisfied: tinycss2&gt;=1.1.0 in /usr/local/lib/python3.12/dist-packages (from bleach[css]!=5.0.0-&gt;nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.5.1)
+Requirement already satisfied: jsonschema-specifications&gt;=2023.03.6 in /usr/local/lib/python3.12/dist-packages (from jsonschema&gt;=2.6-&gt;nbformat-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (2025.9.1)
+Requirement already satisfied: referencing&gt;=0.28.4 in /usr/local/lib/python3.12/dist-packages (from jsonschema&gt;=2.6-&gt;nbformat-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (0.37.0)
+Requirement already satisfied: rpds-py&gt;=0.25.0 in /usr/local/lib/python3.12/dist-packages (from jsonschema&gt;=2.6-&gt;nbformat-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (2026.6.3)
+Requirement already satisfied: jupyter-server&lt;3,&gt;=1.8 in /usr/local/lib/python3.12/dist-packages (from notebook-shim&gt;=0.2.3-&gt;nbclassic&gt;=0.4.7-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (2.20.0)
+Requirement already satisfied: cffi&gt;=1.0.1 in /usr/local/lib/python3.12/dist-packages (from argon2-cffi-bindings-&gt;argon2-cffi-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (2.1.0)
+Requirement already satisfied: pycparser in /usr/local/lib/python3.12/dist-packages (from cffi&gt;=1.0.1-&gt;argon2-cffi-bindings-&gt;argon2-cffi-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (3.0)
+Requirement already satisfied: anyio&gt;=3.1.0 in /usr/local/lib/python3.12/dist-packages (from jupyter-server&lt;3,&gt;=1.8-&gt;notebook-shim&gt;=0.2.3-&gt;nbclassic&gt;=0.4.7-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (4.14.2)
+Requirement already satisfied: jupyter-events&gt;=0.11.0 in /usr/local/lib/python3.12/dist-packages (from jupyter-server&lt;3,&gt;=1.8-&gt;notebook-shim&gt;=0.2.3-&gt;nbclassic&gt;=0.4.7-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (0.12.1)
+Requirement already satisfied: jupyter-server-terminals&gt;=0.4.4 in /usr/local/lib/python3.12/dist-packages (from jupyter-server&lt;3,&gt;=1.8-&gt;notebook-shim&gt;=0.2.3-&gt;nbclassic&gt;=0.4.7-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (0.5.4)
+Requirement already satisfied: websocket-client&gt;=1.7 in /usr/local/lib/python3.12/dist-packages (from jupyter-server&lt;3,&gt;=1.8-&gt;notebook-shim&gt;=0.2.3-&gt;nbclassic&gt;=0.4.7-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.9.0)
+Requirement already satisfied: python-json-logger&gt;=2.0.4 in /usr/local/lib/python3.12/dist-packages (from jupyter-events&gt;=0.11.0-&gt;jupyter-server&lt;3,&gt;=1.8-&gt;notebook-shim&gt;=0.2.3-&gt;nbclassic&gt;=0.4.7-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (4.1.0)
+Requirement already satisfied: rfc3339-validator in /usr/local/lib/python3.12/dist-packages (from jupyter-events&gt;=0.11.0-&gt;jupyter-server&lt;3,&gt;=1.8-&gt;notebook-shim&gt;=0.2.3-&gt;nbclassic&gt;=0.4.7-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (0.1.4)
+Requirement already satisfied: rfc3986-validator&gt;=0.1.1 in /usr/local/lib/python3.12/dist-packages (from jupyter-events&gt;=0.11.0-&gt;jupyter-server&lt;3,&gt;=1.8-&gt;notebook-shim&gt;=0.2.3-&gt;nbclassic&gt;=0.4.7-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (0.1.1)
+Requirement already satisfied: fqdn in /usr/local/lib/python3.12/dist-packages (from jsonschema[format-nongpl]&gt;=4.18.0-&gt;jupyter-events&gt;=0.11.0-&gt;jupyter-server&lt;3,&gt;=1.8-&gt;notebook-shim&gt;=0.2.3-&gt;nbclassic&gt;=0.4.7-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.5.1)
+Requirement already satisfied: isoduration in /usr/local/lib/python3.12/dist-packages (from jsonschema[format-nongpl]&gt;=4.18.0-&gt;jupyter-events&gt;=0.11.0-&gt;jupyter-server&lt;3,&gt;=1.8-&gt;notebook-shim&gt;=0.2.3-&gt;nbclassic&gt;=0.4.7-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (20.11.0)
+Requirement already satisfied: jsonpointer&gt;1.13 in /usr/local/lib/python3.12/dist-packages (from jsonschema[format-nongpl]&gt;=4.18.0-&gt;jupyter-events&gt;=0.11.0-&gt;jupyter-server&lt;3,&gt;=1.8-&gt;notebook-shim&gt;=0.2.3-&gt;nbclassic&gt;=0.4.7-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (3.1.1)
+Requirement already satisfied: rfc3987-syntax&gt;=1.1.0 in /usr/local/lib/python3.12/dist-packages (from jsonschema[format-nongpl]&gt;=4.18.0-&gt;jupyter-events&gt;=0.11.0-&gt;jupyter-server&lt;3,&gt;=1.8-&gt;notebook-shim&gt;=0.2.3-&gt;nbclassic&gt;=0.4.7-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.1.0)
+Requirement already satisfied: uri-template in /usr/local/lib/python3.12/dist-packages (from jsonschema[format-nongpl]&gt;=4.18.0-&gt;jupyter-events&gt;=0.11.0-&gt;jupyter-server&lt;3,&gt;=1.8-&gt;notebook-shim&gt;=0.2.3-&gt;nbclassic&gt;=0.4.7-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.3.0)
+Requirement already satisfied: webcolors&gt;=24.6.0 in /usr/local/lib/python3.12/dist-packages (from jsonschema[format-nongpl]&gt;=4.18.0-&gt;jupyter-events&gt;=0.11.0-&gt;jupyter-server&lt;3,&gt;=1.8-&gt;notebook-shim&gt;=0.2.3-&gt;nbclassic&gt;=0.4.7-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (25.10.0)
+Requirement already satisfied: lark&gt;=1.2.2 in /usr/local/lib/python3.12/dist-packages (from rfc3987-syntax&gt;=1.1.0-&gt;jsonschema[format-nongpl]&gt;=4.18.0-&gt;jupyter-events&gt;=0.11.0-&gt;jupyter-server&lt;3,&gt;=1.8-&gt;notebook-shim&gt;=0.2.3-&gt;nbclassic&gt;=0.4.7-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.3.1)
+Requirement already satisfied: arrow&gt;=0.15.0 in /usr/local/lib/python3.12/dist-packages (from isoduration-&gt;jsonschema[format-nongpl]&gt;=4.18.0-&gt;jupyter-events&gt;=0.11.0-&gt;jupyter-server&lt;3,&gt;=1.8-&gt;notebook-shim&gt;=0.2.3-&gt;nbclassic&gt;=0.4.7-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.6.0-&gt;ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;SciFiReaders==0.12.7) (1.4.0)
+Downloading sidpy-0.12.9-py2.py3-none-any.whl (128 kB)
+   <span class="ansi-black-intense-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">128.0/128.0 kB</span> <span class="ansi-red-fg">20.0 MB/s</span> eta <span class="ansi-cyan-fg">0:00:00</span>
+Downloading cytoolz-1.1.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (2.9 MB)
+   <span class="ansi-black-intense-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">2.9/2.9 MB</span> <span class="ansi-red-fg">76.6 MB/s</span> eta <span class="ansi-cyan-fg">0:00:00</span>
+Downloading mrcfile-1.5.4-py2.py3-none-any.whl (45 kB)
+   <span class="ansi-black-intense-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">45.0/45.0 kB</span> <span class="ansi-red-fg">153.3 MB/s</span> eta <span class="ansi-cyan-fg">0:00:00</span>
+Downloading pycroscopy_gwyfile-1.0.2-py2.py3-none-any.whl (8.1 kB)
+Downloading pyNSID-0.0.7.2-py2.py3-none-any.whl (12 kB)
+Downloading pyUSID-0.0.12-py2.py3-none-any.whl (69 kB)
+   <span class="ansi-black-intense-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">69.9/69.9 kB</span> <span class="ansi-red-fg">167.3 MB/s</span> eta <span class="ansi-cyan-fg">0:00:00</span>
+Downloading dask_ml-2025.1.0-py3-none-any.whl (149 kB)
+   <span class="ansi-black-intense-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">150.0/150.0 kB</span> <span class="ansi-red-fg">305.8 MB/s</span> eta <span class="ansi-cyan-fg">0:00:00</span>
+Downloading distributed-2026.7.1-py3-none-any.whl (1.0 MB)
+   <span class="ansi-black-intense-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">1.0/1.0 MB</span> <span class="ansi-red-fg">357.3 MB/s</span> eta <span class="ansi-cyan-fg">0:00:00</span>
+Downloading dask-2026.7.1-py3-none-any.whl (1.5 MB)
+   <span class="ansi-black-intense-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">1.5/1.5 MB</span> <span class="ansi-red-fg">312.4 MB/s</span> eta <span class="ansi-cyan-fg">0:00:00</span>
+Downloading jedi-0.20.0-py2.py3-none-any.whl (4.9 MB)
+   <span class="ansi-black-intense-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">4.9/4.9 MB</span> <span class="ansi-red-fg">166.6 MB/s</span> eta <span class="ansi-cyan-fg">0:00:00</span>
+Downloading pyswarms-1.3.0-py2.py3-none-any.whl (104 kB)
+   <span class="ansi-black-intense-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">104.1/104.1 kB</span> <span class="ansi-red-fg">183.4 MB/s</span> eta <span class="ansi-cyan-fg">0:00:00</span>
+Downloading ase-3.29.0-py3-none-any.whl (3.0 MB)
+   <span class="ansi-black-intense-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">3.0/3.0 MB</span> <span class="ansi-red-fg">261.2 MB/s</span> eta <span class="ansi-cyan-fg">0:00:00</span>
+Downloading ipympl-0.10.0-py3-none-any.whl (519 kB)
+   <span class="ansi-black-intense-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">519.0/519.0 kB</span> <span class="ansi-red-fg">202.7 MB/s</span> eta <span class="ansi-cyan-fg">0:00:00</span>
+Downloading dask_glm-0.4.0-py3-none-any.whl (21 kB)
+Downloading sortedcontainers-2.4.0-py2.py3-none-any.whl (29 kB)
+Downloading tblib-3.2.2-py3-none-any.whl (12 kB)
+Downloading zict-3.0.0-py2.py3-none-any.whl (43 kB)
+   <span class="ansi-black-intense-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">43.3/43.3 kB</span> <span class="ansi-red-fg">203.7 MB/s</span> eta <span class="ansi-cyan-fg">0:00:00</span>
+Downloading sparse-0.19.0-py2.py3-none-any.whl (155 kB)
+   <span class="ansi-black-intense-fg">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-green-fg">155.9/155.9 kB</span> <span class="ansi-red-fg">280.9 MB/s</span> eta <span class="ansi-cyan-fg">0:00:00</span>
+Building wheels for collected packages: SciFiReaders
+  Building wheel for SciFiReaders (pyproject.toml) ... done
+  Created wheel for SciFiReaders: filename=scifireaders-0.12.7-py3-none-any.whl size=136266 sha256=7abe05280d8dba0d0c9089708c5c8ee408d9cde946b581fe2108c1949d458f64
+  Stored in directory: /tmp/pip-ephem-wheel-cache-r53od1_z/wheels/52/fb/dc/dcaffd6258b8c92e42d3fdb12c5c29ff67b19c1c0b6bf6c2e5
+Successfully built SciFiReaders
+Installing collected packages: sortedcontainers, zict, tblib, pycroscopy-gwyfile, mrcfile, jedi, cytoolz, sparse, dask, pyswarms, distributed, ase, dask-glm, dask-ml, ipympl, sidpy, pyUSID, pyNSID, SciFiReaders
+  Attempting uninstall: dask
+    Found existing installation: dask 2026.7.0
+    Uninstalling dask-2026.7.0:
+      Successfully uninstalled dask-2026.7.0
+Successfully installed SciFiReaders-0.12.7 ase-3.29.0 cytoolz-1.1.0 dask-2026.7.1 dask-glm-0.4.0 dask-ml-2025.1.0 distributed-2026.7.1 ipympl-0.10.0 jedi-0.20.0 mrcfile-1.5.4 pyNSID-0.0.7.2 pyUSID-0.0.12 pycroscopy-gwyfile-1.0.2 pyswarms-1.3.0 sidpy-0.12.9 sortedcontainers-2.4.0 sparse-0.19.0 tblib-3.2.2 zict-3.0.0
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Imports</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">SciFiReaders</span><span class="w"> </span><span class="kn">import</span> <span class="n">FSexpReader</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+window["9034f98e-8d19-11f1-ba93-0242ac1c000c"] = google.colab.output.setIframeHeight(-1, true, {"interactive": true, "maxHeight": 99999});
+//# sourceURL=js_d0e50bb0b0
+</script></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Upload test file from github</span>
+<span class="err">!</span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">raw</span><span class="o">.</span><span class="n">githubusercontent</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pycroscopy</span><span class="o">/</span><span class="n">SciFiDatasets</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">microscopy</span><span class="o">/</span><span class="n">spm</span><span class="o">/</span><span class="n">afm</span><span class="o">/</span><span class="n">test_FSexp</span><span class="o">.</span><span class="n">fsexp</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+window["acb889c2-8d19-11f1-ba93-0242ac1c000c"] = google.colab.output.setIframeHeight(-1, true, {"interactive": true, "maxHeight": 99999});
+//# sourceURL=js_2d2391cfd7
+</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+--2026-07-31 19:54:43--  https://raw.githubusercontent.com/aswanger011/SciFiDatasetsAS/main/data/microscopy/spm/afm/test_FSexp.fsexp
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.108.133, 185.199.109.133, 185.199.110.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.108.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 12968094 (12M) [application/octet-stream]
+Saving to: ‘test_FSexp.fsexp’
+
+test_FSexp.fsexp    100%[===================&gt;]  12.37M  --.-KB/s    in 0.1s
+
+2026-07-31 19:54:44 (107 MB/s) - ‘test_FSexp.fsexp’ saved [12968094/12968094]
+
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize reader</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">FSexpReader</span><span class="p">(</span><span class="s2">"test_FSexp.fsexp"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+window["b248c618-8d19-11f1-ba93-0242ac1c000c"] = google.colab.output.setIframeHeight(-1, true, {"interactive": true, "maxHeight": 99999});
+//# sourceURL=js_c8a2df071e
+</script></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read file</span>
+<span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+window["b3c0e57a-8d19-11f1-ba93-0242ac1c000c"] = google.colab.output.setIframeHeight(-1, true, {"interactive": true, "maxHeight": 99999});
+//# sourceURL=js_eae13572ec
+</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;000_1_OverviewFrame&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(1000, 1000), dtype=float32, chunksize=(1000, 1000), chunktype=numpy.ndarray&gt;
+  data contains: 000_1_OverviewFrame (arb.u.)
+  and Dimensions:
+ x:  x-axis (um) of size (1000,)
+ y:  y-axis (um) of size (1000,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;001_SEM_Secondary_Electron&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(2000, 2000), dtype=float32, chunksize=(2000, 2000), chunktype=numpy.ndarray&gt;
+  data contains: 001_SEM_Secondary_Electron (arb.u.)
+  and Dimensions:
+ x:  x-axis (um) of size (2000,)
+ y:  y-axis (um) of size (2000,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;002_AFM_Topography_(Trace)&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(128, 128), dtype=float32, chunksize=(128, 128), chunktype=numpy.ndarray&gt;
+  data contains: 002_AFM_Topography_(Trace) (um)
+  and Dimensions:
+ x:  x-axis (um) of size (128,)
+ y:  y-axis (um) of size (128,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;003_AFM_Topography_(Retrace)&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(128, 128), dtype=float32, chunksize=(128, 128), chunktype=numpy.ndarray&gt;
+  data contains: 003_AFM_Topography_(Retrace) (um)
+  and Dimensions:
+ x:  x-axis (um) of size (128,)
+ y:  y-axis (um) of size (128,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;004_AFM_Topography_(Trace)&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(128, 128), dtype=float32, chunksize=(128, 128), chunktype=numpy.ndarray&gt;
+  data contains: 004_AFM_Topography_(Trace) (um)
+  and Dimensions:
+ x:  x-axis (um) of size (128,)
+ y:  y-axis (um) of size (128,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;005_AFM_Topography_(Retrace)&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(128, 128), dtype=float32, chunksize=(128, 128), chunktype=numpy.ndarray&gt;
+  data contains: 005_AFM_Topography_(Retrace) (um)
+  and Dimensions:
+ x:  x-axis (um) of size (128,)
+ y:  y-axis (um) of size (128,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;006_AFM_Error_Signal_(Trace)&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(128, 128), dtype=float32, chunksize=(128, 128), chunktype=numpy.ndarray&gt;
+  data contains: 006_AFM_Error_Signal_(Trace) (um)
+  and Dimensions:
+ x:  x-axis (um) of size (128,)
+ y:  y-axis (um) of size (128,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;007_AFM_Error_Signal_(Retrace)&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(128, 128), dtype=float32, chunksize=(128, 128), chunktype=numpy.ndarray&gt;
+  data contains: 007_AFM_Error_Signal_(Retrace) (um)
+  and Dimensions:
+ x:  x-axis (um) of size (128,)
+ y:  y-axis (um) of size (128,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;008_AFM_Amplitude_(Trace)&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(128, 128), dtype=float32, chunksize=(128, 128), chunktype=numpy.ndarray&gt;
+  data contains: 008_AFM_Amplitude_(Trace) (um)
+  and Dimensions:
+ x:  x-axis (um) of size (128,)
+ y:  y-axis (um) of size (128,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;009_AFM_Amplitude_(Retrace)&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(128, 128), dtype=float32, chunksize=(128, 128), chunktype=numpy.ndarray&gt;
+  data contains: 009_AFM_Amplitude_(Retrace) (um)
+  and Dimensions:
+ x:  x-axis (um) of size (128,)
+ y:  y-axis (um) of size (128,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;010_AFM_Phase_(Trace)&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(128, 128), dtype=float32, chunksize=(128, 128), chunktype=numpy.ndarray&gt;
+  data contains: 010_AFM_Phase_(Trace) (rad)
+  and Dimensions:
+ x:  x-axis (um) of size (128,)
+ y:  y-axis (um) of size (128,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;011_AFM_Phase_(Retrace)&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(128, 128), dtype=float32, chunksize=(128, 128), chunktype=numpy.ndarray&gt;
+  data contains: 011_AFM_Phase_(Retrace) (rad)
+  and Dimensions:
+ x:  x-axis (um) of size (128,)
+ y:  y-axis (um) of size (128,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;012_AFM_X_Position_(Trace)&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(128, 128), dtype=float32, chunksize=(128, 128), chunktype=numpy.ndarray&gt;
+  data contains: 012_AFM_X_Position_(Trace) (um)
+  and Dimensions:
+ x:  x-axis (um) of size (128,)
+ y:  y-axis (um) of size (128,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;013_AFM_X_Position_(Retrace)&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(128, 128), dtype=float32, chunksize=(128, 128), chunktype=numpy.ndarray&gt;
+  data contains: 013_AFM_X_Position_(Retrace) (um)
+  and Dimensions:
+ x:  x-axis (um) of size (128,)
+ y:  y-axis (um) of size (128,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;014_AFM_Y_Position_(Trace)&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(128, 128), dtype=float32, chunksize=(128, 128), chunktype=numpy.ndarray&gt;
+  data contains: 014_AFM_Y_Position_(Trace) (um)
+  and Dimensions:
+ x:  x-axis (um) of size (128,)
+ y:  y-axis (um) of size (128,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;015_AFM_Y_Position_(Retrace)&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(128, 128), dtype=float32, chunksize=(128, 128), chunktype=numpy.ndarray&gt;
+  data contains: 015_AFM_Y_Position_(Retrace) (um)
+  and Dimensions:
+ x:  x-axis (um) of size (128,)
+ y:  y-axis (um) of size (128,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;016_AFM_Z_Position_(Trace)&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(128, 128), dtype=float32, chunksize=(128, 128), chunktype=numpy.ndarray&gt;
+  data contains: 016_AFM_Z_Position_(Trace) (um)
+  and Dimensions:
+ x:  x-axis (um) of size (128,)
+ y:  y-axis (um) of size (128,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;017_AFM_Z_Position_(Retrace)&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(128, 128), dtype=float32, chunksize=(128, 128), chunktype=numpy.ndarray&gt;
+  data contains: 017_AFM_Z_Position_(Retrace) (um)
+  and Dimensions:
+ x:  x-axis (um) of size (128,)
+ y:  y-axis (um) of size (128,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;018_10_Frame_7_Channel_0_Raw_DataIndex_5&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(64, 64), dtype=float32, chunksize=(64, 64), chunktype=numpy.ndarray&gt;
+  data contains: 018_10_Frame_7_Channel_0_Raw_DataIndex_5 (arb.u.)
+  and Dimensions:
+ x:  x-axis (um) of size (64,)
+ y:  y-axis (um) of size (64,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;019_10_Frame_7_Channel_0_Raw_DataIndex_7&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(64, 64), dtype=float32, chunksize=(64, 64), chunktype=numpy.ndarray&gt;
+  data contains: 019_10_Frame_7_Channel_0_Raw_DataIndex_7 (arb.u.)
+  and Dimensions:
+ x:  x-axis (um) of size (64,)
+ y:  y-axis (um) of size (64,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;020_10_Frame_7_Channel_0_Raw_DataIndex_13&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(64, 64), dtype=float32, chunksize=(64, 64), chunktype=numpy.ndarray&gt;
+  data contains: 020_10_Frame_7_Channel_0_Raw_DataIndex_13 (arb.u.)
+  and Dimensions:
+ x:  x-axis (um) of size (64,)
+ y:  y-axis (um) of size (64,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;],
+ &#39;021_10_Frame_7_Channel_0_Raw_DataIndex_78&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(64, 64), dtype=float32, chunksize=(64, 64), chunktype=numpy.ndarray&gt;
+  data contains: 021_10_Frame_7_Channel_0_Raw_DataIndex_78 (arb.u.)
+  and Dimensions:
+ x:  x-axis (um) of size (64,)
+ y:  y-axis (um) of size (64,)
+  with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;]}
+</pre></div></div>
+</div>
+<section id="Overview">
+<h2><strong>Overview</strong><a class="headerlink" href="#Overview" title="Link to this heading">#</a></h2>
+<p><strong>FusionScope .fsexp HDF5 Experiment files</strong> store all images and image data from one use of the microscope into a single file. This means the reader must go through that file and label and extract all image data from it.</p>
+<hr class="docutils" />
+</section>
+<section id="Key-Naming-Convention">
+<h2><strong>Key Naming Convention</strong><a class="headerlink" href="#Key-Naming-Convention" title="Link to this heading">#</a></h2>
+<p>Each dictionary key follows this pattern:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>00N_Name
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>N = the sequential number of the measurement (e.g., 001, 002, …)</p></li>
+<li><p>Name = the full original measurement name from the .fsexp file (e.g. AFM_Topography_(Trace))</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="Output-Structure">
+<h2><strong>Output Structure</strong><a class="headerlink" href="#Output-Structure" title="Link to this heading">#</a></h2>
+<p>The reader returns a Python dictionary where each key represents a separate single scan from the file.</p>
+<p>Each entry is represented by a sidpy.Dataset, which includes the data and metadata.</p>
+<p>Learn more about sidpy format and pycroscopy: <a class="reference external" href="https://pycroscopy.github.io/pycroscopy/ecosystem.html">pycroscopy</a></p>
+</section>
+<section id="Image">
+<h2><strong>Image</strong><a class="headerlink" href="#Image" title="Link to this heading">#</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Single scan sidpy.Dataset</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">scan</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"001_SEM_Secondary_Electron"</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">scan</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+window["67db67ba-8d1a-11f1-ba93-0242ac1c000c"] = google.colab.output.setIframeHeight(-1, true, {"interactive": true, "maxHeight": 99999});
+//# sourceURL=js_857cb8dd77
+</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+sidpy.Dataset of type IMAGE with:
+ dask.array&lt;array, shape=(2000, 2000), dtype=float32, chunksize=(2000, 2000), chunktype=numpy.ndarray&gt;
+ data contains: 001_SEM_Secondary_Electron (arb.u.)
+ and Dimensions:
+x:  x-axis (um) of size (2000,)
+y:  y-axis (um) of size (2000,)
+ with metadata: [&#39;key&#39;, &#39;dataset_info&#39;, &#39;region_info&#39;, &#39;frame_info&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Single scan NumPy array</span>
+<span class="n">scan</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+window["69cd8bfc-8d1a-11f1-ba93-0242ac1c000c"] = google.colab.output.setIframeHeight(-1, true, {"interactive": true, "maxHeight": 99999});
+//# sourceURL=js_772b70cc92
+</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[0.1962005 , 0.17320515, 0.17402914, ..., 0.19429313, 0.17633326,
+        0.17555505],
+       [0.1833219 , 0.16270696, 0.17198443, ..., 0.180148  , 0.15785459,
+        0.18260472],
+       [0.16655223, 0.15623713, 0.15963988, ..., 0.16969559, 0.16971084,
+        0.17265584],
+       ...,
+       [0.1714046 , 0.1728542 , 0.17230487, ..., 0.17187762, 0.19816892,
+        0.1950103 ],
+       [0.16520943, 0.17447166, 0.1841764 , ..., 0.1785153 , 0.18844892,
+        0.19418631],
+       [0.1728542 , 0.17222857, 0.18423744, ..., 0.17312886, 0.1906157 ,
+        0.18013275]], dtype=float32)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Single SEM scan visualization</span>
+<span class="n">scan</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scale_bar</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">'viridis'</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+window["6b71f696-8d1a-11f1-ba93-0242ac1c000c"] = google.colab.output.setIframeHeight(-1, true, {"interactive": true, "maxHeight": 99999});
+//# sourceURL=js_60a3b07d9e
+</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_02_scanning_probe_microscopy_read_fsexp_files_18_1.png" src="../../_images/notebooks_02_scanning_probe_microscopy_read_fsexp_files_18_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Single AFM scan visualization</span>
+<span class="n">scan</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"002_AFM_Topography_(Trace)"</span><span class="p">]</span>
+
+<span class="n">scan</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scale_bar</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">'viridis'</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+window["6e26892e-8d1a-11f1-ba93-0242ac1c000c"] = google.colab.output.setIframeHeight(-1, true, {"interactive": true, "maxHeight": 99999});
+//# sourceURL=js_e7211e27d1
+</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_02_scanning_probe_microscopy_read_fsexp_files_19_1.png" src="../../_images/notebooks_02_scanning_probe_microscopy_read_fsexp_files_19_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Single EDS map scan visualization</span>
+<span class="n">scan</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"018_10_Frame_7_Channel_0_Raw_DataIndex_5"</span><span class="p">]</span>
+
+<span class="n">scan</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">scale_bar</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">'viridis'</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+window["6eec1d88-8d1a-11f1-ba93-0242ac1c000c"] = google.colab.output.setIframeHeight(-1, true, {"interactive": true, "maxHeight": 99999});
+//# sourceURL=js_235598589e
+</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_02_scanning_probe_microscopy_read_fsexp_files_20_1.png" src="../../_images/notebooks_02_scanning_probe_microscopy_read_fsexp_files_20_1.png" />
+</div>
+</div>
+</section>
+<section id="Single-Scan-Metadata">
+<h2><strong>Single Scan Metadata</strong><a class="headerlink" href="#Single-Scan-Metadata" title="Link to this heading">#</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Single SEM scan</span>
+<span class="n">scan</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"001_SEM_Secondary_Electron"</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+window["8d30fe80-8d1a-11f1-ba93-0242ac1c000c"] = google.colab.output.setIframeHeight(-1, true, {"interactive": true, "maxHeight": 99999});
+//# sourceURL=js_5661d6cde2
+</script></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Summarized single scan metadata</span>
+<span class="n">scan</span><span class="o">.</span><span class="n">metadata</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+window["8defc6ee-8d1a-11f1-ba93-0242ac1c000c"] = google.colab.output.setIframeHeight(-1, true, {"interactive": true, "maxHeight": 99999});
+//# sourceURL=js_d68dc8f5ba
+</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;key&#39;: &#39;001_SEM_Secondary_Electron&#39;,
+ &#39;dataset_info&#39;: {&#39;key&#39;: &#39;001_SEM_Secondary_Electron&#39;,
+  &#39;index&#39;: &#39;001&#39;,
+  &#39;region_name&#39;: &#39;1_Region_1&#39;,
+  &#39;frame_name&#39;: &#39;1_Frame_1_Channel_0&#39;,
+  &#39;processing_state&#39;: &#39;Raw&#39;,
+  &#39;data_index_name&#39;: &#39;DataIndex_0&#39;,
+  &#39;shape&#39;: (2000, 2000),
+  &#39;dtype&#39;: &#39;float32&#39;,
+  &#39;subchannel_name&#39;: &#39;SEM Secondary Electron&#39;,
+  &#39;image_range&#39;: array([0.08253605, 0.26614785], dtype=float32),
+  &#39;display_origin&#39;: np.bytes_(b&#39;UL&#39;),
+  &#39;path&#39;: &#39;/PipelineData/1_Region_1/SourceFrames/1_Frame_1_Channel_0/Raw/DataIndex_0&#39;},
+ &#39;region_info&#39;: {&#39;regionName&#39;: &#39;Auto-Saved Scan&#39;,
+  &#39;regionDescription&#39;: &#39;Auto-saved @ 20260731-114822&#39;,
+  &#39;regionWidth&#39;: 6.101858139038086,
+  &#39;regionHeight&#39;: 6.101858139038086,
+  &#39;regionUnits&#39;: &#39;&#39;,
+  &#39;regionXOrigin&#39;: -64.3509162068367,
+  &#39;regionYOrigin&#39;: -74.75094324350357,
+  &#39;rotationAngle&#39;: -0.0003376007080078125},
+ &#39;frame_info&#39;: {&#39;frame_number&#39;: 1,
+  &#39;channel&#39;: 0,
+  &#39;frameType&#39;: 0,
+  &#39;frame_valid&#39;: True,
+  &#39;samplesPerLine&#39;: 2000,
+  &#39;num_lines&#39;: 2000,
+  &#39;actual_num_lines&#39;: 2000,
+  &#39;xStart&#39;: -64.3509162068367,
+  &#39;xEnd&#39;: -58.249058067798615,
+  &#39;yStart&#39;: -74.75094324350357,
+  &#39;yEnd&#39;: -68.64908510446548,
+  &#39;zScale&#39;: 1,
+  &#39;rotation&#39;: -0.0003376007080078125}}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Original full single scan metadata</span>
+<span class="n">scan</span><span class="o">.</span><span class="n">original_metadata</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+window["90c6937a-8d1a-11f1-ba93-0242ac1c000c"] = google.colab.output.setIframeHeight(-1, true, {"interactive": true, "maxHeight": 99999});
+//# sourceURL=js_b575336e53
+</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;key&#39;: &#39;001_SEM_Secondary_Electron&#39;,
+ &#39;dataset_info&#39;: {&#39;key&#39;: &#39;001_SEM_Secondary_Electron&#39;,
+  &#39;index&#39;: &#39;001&#39;,
+  &#39;path&#39;: &#39;/PipelineData/1_Region_1/SourceFrames/1_Frame_1_Channel_0/Raw/DataIndex_0&#39;,
+  &#39;region_name&#39;: &#39;1_Region_1&#39;,
+  &#39;frame_name&#39;: &#39;1_Frame_1_Channel_0&#39;,
+  &#39;processing_state&#39;: &#39;Raw&#39;,
+  &#39;data_index_name&#39;: &#39;DataIndex_0&#39;,
+  &#39;shape&#39;: (2000, 2000),
+  &#39;dtype&#39;: &#39;float32&#39;,
+  &#39;attrs&#39;: {&#39;CLASS&#39;: np.bytes_(b&#39;IMAGE&#39;),
+   &#39;DISPLAY_ORIGIN&#39;: np.bytes_(b&#39;UL&#39;),
+   &#39;IMAGE_MINMAXRANGE&#39;: array([0.08253605, 0.26614785], dtype=float32),
+   &#39;IMAGE_SUBCLASS&#39;: np.bytes_(b&#39;IMAGE_GRAYSCALE&#39;),
+   &#39;IMAGE_VERSION&#39;: np.bytes_(b&#39;1.2&#39;),
+   &#39;IMAGE_WHITE_IS_ZERO&#39;: np.uint8(0),
+   &#39;SUBCHANNEL_NAME&#39;: &#39;SEM Secondary Electron&#39;}},
+ &#39;region_info&#39;: {&#39;regionDescription&#39;: &#39;Auto-saved @ 20260731-114822&#39;,
+  &#39;regionHeight&#39;: 6.101858139038086,
+  &#39;regionIsCorrelated&#39;: False,
+  &#39;regionName&#39;: &#39;Auto-Saved Scan&#39;,
+  &#39;regionSaveCount&#39;: 1,
+  &#39;regionSaveId&#39;: 1,
+  &#39;regionType&#39;: 1,
+  &#39;regionUnits&#39;: &#39;&#39;,
+  &#39;regionWidth&#39;: 6.101858139038086,
+  &#39;regionXOrigin&#39;: -64.3509162068367,
+  &#39;regionYOrigin&#39;: -74.75094324350357,
+  &#39;rotationAngle&#39;: -0.0003376007080078125},
+ &#39;frame_info&#39;: {&#39;actual_num_lines&#39;: 2000,
+  &#39;channel&#39;: 0,
+  &#39;current_line&#39;: 1999,
+  &#39;eds_spectra_group_path&#39;: &#39;&#39;,
+  &#39;frameType&#39;: 0,
+  &#39;frame_number&#39;: 1,
+  &#39;frame_valid&#39;: True,
+  &#39;meta_data_processed_0&#39;: {&#39;brightness&#39;: -0.47154533711670865,
+   &#39;contrast&#39;: 5.702662467956543,
+   &#39;frameCompleted&#39;: True,
+   &#39;histogram&#39;: [[0, 1],
+    [1, 0],
+    [2, 0],
+    [3, 1],
+    [4, 1],
+    [5, 3],
+    [6, 3],
+    [7, 6],
+    [8, 4],
+    [9, 7],
+    [10, 8],
+    [11, 23],
+    [12, 25],
+    [13, 15],
+    [14, 34],
+    [15, 40],
+    [16, 31],
+    [17, 34],
+    [18, 56],
+    [19, 62],
+    [20, 68],
+    [21, 65],
+    [22, 71],
+    [23, 94],
+    [24, 89],
+    [25, 100],
+    [26, 115],
+    [27, 114],
+    [28, 125],
+    [29, 128],
+    [30, 159],
+    [31, 153],
+    [32, 185],
+    [33, 214],
+    [34, 187],
+    [35, 230],
+    [36, 214],
+    [37, 268],
+    [38, 277],
+    [39, 308],
+    [40, 328],
+    [41, 340],
+    [42, 376],
+    [43, 394],
+    [44, 418],
+    [45, 469],
+    [46, 510],
+    [47, 555],
+    [48, 546],
+    [49, 611],
+    [50, 629],
+    [51, 772],
+    [52, 791],
+    [53, 891],
+    [54, 913],
+    [55, 1040],
+    [56, 1149],
+    [57, 1279],
+    [58, 1405],
+    [59, 1603],
+    [60, 1692],
+    [61, 1812],
+    [62, 2145],
+    [63, 2248],
+    [64, 2505],
+    [65, 2829],
+    [66, 3005],
+    [67, 3354],
+    [68, 3673],
+    [69, 4101],
+    [70, 4526],
+    [71, 4913],
+    [72, 5544],
+    [73, 5868],
+    [74, 6598],
+    [75, 7256],
+    [76, 8070],
+    [77, 8759],
+    [78, 9539],
+    [79, 10530],
+    [80, 11567],
+    [81, 12212],
+    [82, 13337],
+    [83, 14977],
+    [84, 15766],
+    [85, 17107],
+    [86, 18641],
+    [87, 20046],
+    [88, 21265],
+    [89, 23170],
+    [90, 24465],
+    [91, 25609],
+    [92, 27520],
+    [93, 29204],
+    [94, 31170],
+    [95, 32683],
+    [96, 34545],
+    [97, 36201],
+    [98, 38339],
+    [99, 39501],
+    [100, 40712],
+    [101, 43426],
+    [102, 45055],
+    [103, 46531],
+    [104, 47880],
+    [105, 49348],
+    [106, 51420],
+    [107, 52177],
+    [108, 54048],
+    [109, 53986],
+    [110, 56440],
+    [111, 57218],
+    [112, 58472],
+    [113, 59790],
+    [114, 60147],
+    [115, 61447],
+    [116, 61510],
+    [117, 62119],
+    [118, 60624],
+    [119, 62888],
+    [120, 62559],
+    [121, 62682],
+    [122, 63136],
+    [123, 62904],
+    [124, 63360],
+    [125, 62471],
+    [126, 61371],
+    [127, 61304],
+    [128, 59181],
+    [129, 60193],
+    [130, 58941],
+    [131, 58391],
+    [132, 57089],
+    [133, 56829],
+    [134, 55364],
+    [135, 54279],
+    [136, 53149],
+    [137, 50556],
+    [138, 50911],
+    [139, 49539],
+    [140, 48066],
+    [141, 46946],
+    [142, 45771],
+    [143, 44665],
+    [144, 43336],
+    [145, 41716],
+    [146, 39418],
+    [147, 39178],
+    [148, 37847],
+    [149, 37069],
+    [150, 35468],
+    [151, 33830],
+    [152, 32987],
+    [153, 31499],
+    [154, 30554],
+    [155, 28569],
+    [156, 28427],
+    [157, 27006],
+    [158, 26659],
+    [159, 24811],
+    [160, 23828],
+    [161, 22830],
+    [162, 21901],
+    [163, 20941],
+    [164, 19554],
+    [165, 19155],
+    [166, 18347],
+    [167, 17387],
+    [168, 16671],
+    [169, 15791],
+    [170, 15212],
+    [171, 14100],
+    [172, 13306],
+    [173, 12509],
+    [174, 12114],
+    [175, 11440],
+    [176, 10782],
+    [177, 10145],
+    [178, 9334],
+    [179, 8805],
+    [180, 8346],
+    [181, 7911],
+    [182, 7274],
+    [183, 6707],
+    [184, 6375],
+    [185, 5917],
+    [186, 5373],
+    [187, 5135],
+    [188, 4800],
+    [189, 4471],
+    [190, 4024],
+    [191, 3707],
+    [192, 3339],
+    [193, 3220],
+    [194, 2973],
+    [195, 2728],
+    [196, 2455],
+    [197, 2288],
+    [198, 2072],
+    [199, 1910],
+    [200, 1648],
+    [201, 1517],
+    [202, 1371],
+    [203, 1266],
+    [204, 1156],
+    [205, 982],
+    [206, 952],
+    [207, 864],
+    [208, 805],
+    [209, 650],
+    [210, 620],
+    [211, 569],
+    [212, 493],
+    [213, 456],
+    [214, 435],
+    [215, 347],
+    [216, 314],
+    [217, 264],
+    [218, 248],
+    [219, 207],
+    [220, 218],
+    [221, 173],
+    [222, 148],
+    [223, 144],
+    [224, 112],
+    [225, 103],
+    [226, 107],
+    [227, 74],
+    [228, 61],
+    [229, 52],
+    [230, 58],
+    [231, 50],
+    [232, 32],
+    [233, 39],
+    [234, 27],
+    [235, 19],
+    [236, 26],
+    [237, 20],
+    [238, 15],
+    [239, 24],
+    [240, 15],
+    [241, 8],
+    [242, 9],
+    [243, 4],
+    [244, 10],
+    [245, 3],
+    [246, 3],
+    [247, 1],
+    [248, 0],
+    [249, 0],
+    [250, 1],
+    [251, 0],
+    [252, 0],
+    [253, 0],
+    [254, 0],
+    [255, 1]],
+   &#39;maxVal&#39;: 0.2661478519439697,
+   &#39;offset&#39;: 0.08268863707780838,
+   &#39;range&#39;: 0.1753566861152649,
+   &#39;tempSourceId&#39;: &#39;{b1dd38d7-1f26-45fd-b4f9-7c1544111d4e}&#39;},
+  &#39;meta_data_raw_0&#39;: {&#39;beamVoltage&#39;: 7499.90087890625,
+   &#39;datachannel_units&#39;: &#39;&#39;,
+   &#39;frameAverages&#39;: 1,
+   &#39;is_full_frame&#39;: True,
+   &#39;objective&#39;: 0.5789577960968018,
+   &#39;pipeline_id_num&#39;: 0,
+   &#39;pixelAverages&#39;: 1,
+   &#39;tilt&#39;: 0.0011223554611206055,
+   &#39;timeStamp&#39;: &#39;1785512902&#39;,
+   &#39;workingDistance&#39;: 16.003700256347656,
+   &#39;x_astigmatism&#39;: -0.18771934509277344,
+   &#39;y_astigmatism&#39;: -0.031373027712106705,
+   &#39;zScaleCorrection&#39;: 1.0000073910305791},
+  &#39;num_lines&#39;: 2000,
+  &#39;pipeline_string&#39;: &#39;{&#34;components&#34;:[&#34;{\\&#34;componentId\\&#34;:\\&#34;{b1dd38d7-1f26-45fd-b4f9-7c1544111d4e}\\&#34;,\\&#34;componentName\\&#34;:\\&#34;SEM Channel 0: Secondary Electron\\&#34;,\\&#34;componentParameters\\&#34;:{\\&#34;Processor Enabled\\&#34;:true},\\&#34;inputConnections\\&#34;:[],\\&#34;outputConnections\\&#34;:[\\&#34;{0cbaae2c-7998-4d45-af15-5fc18a309147}\\&#34;],\\&#34;processorType\\&#34;:1}&#34;,&#34;{\\&#34;componentId\\&#34;:\\&#34;{0cbaae2c-7998-4d45-af15-5fc18a309147}\\&#34;,\\&#34;componentName\\&#34;:\\&#34;Previous Frame Rescale\\&#34;,\\&#34;componentParameters\\&#34;:{\\&#34;Processor Enabled\\&#34;:true,\\&#34;Use Overview Image\\&#34;:true},\\&#34;inputConnections\\&#34;:[\\&#34;{b1dd38d7-1f26-45fd-b4f9-7c1544111d4e}\\&#34;],\\&#34;outputConnections\\&#34;:[\\&#34;{e763fe75-5d37-47d8-a83c-65845aa83fa9}\\&#34;],\\&#34;processorType\\&#34;:2}&#34;,&#34;{\\&#34;componentId\\&#34;:\\&#34;{7a31ec03-4127-4b33-9ee0-b4f5d92d32b3}\\&#34;,\\&#34;componentName\\&#34;:\\&#34;Auto Adjust\\&#34;,\\&#34;componentParameters\\&#34;:{\\&#34;Equalize Histogram\\&#34;:false,\\&#34;Processor Enabled\\&#34;:true,\\&#34;userOffsetAndRange\\&#34;:\\&#34;\\&#34;,\\&#34;α (-1..0)\\&#34;:-0.4},\\&#34;inputConnections\\&#34;:[\\&#34;{e763fe75-5d37-47d8-a83c-65845aa83fa9}\\&#34;],\\&#34;outputConnections\\&#34;:[\\&#34;{9b288cd9-803b-4d08-a6d6-d7dfc12f92f6}\\&#34;],\\&#34;processorType\\&#34;:3}&#34;,&#34;{\\&#34;componentId\\&#34;:\\&#34;{9b288cd9-803b-4d08-a6d6-d7dfc12f92f6}\\&#34;,\\&#34;componentName\\&#34;:\\&#34;Video Frame Emitter\\&#34;,\\&#34;componentParameters\\&#34;:{\\&#34;Processor Enabled\\&#34;:true},\\&#34;inputConnections\\&#34;:[\\&#34;{7a31ec03-4127-4b33-9ee0-b4f5d92d32b3}\\&#34;],\\&#34;outputConnections\\&#34;:[],\\&#34;processorType\\&#34;:4}&#34;,&#34;{\\&#34;componentId\\&#34;:\\&#34;{e763fe75-5d37-47d8-a83c-65845aa83fa9}\\&#34;,\\&#34;componentName\\&#34;:\\&#34;FFT visualization\\&#34;,\\&#34;componentParameters\\&#34;:{\\&#34;Block Size\\&#34;:11,\\&#34;Display FFT\\&#34;:false,\\&#34;Offset\\&#34;:12,\\&#34;Processor Enabled\\&#34;:false,\\&#34;Threshold\\&#34;:127,\\&#34;Threshold Mode\\&#34;:0,\\&#34;Window Size\\&#34;:0.5,\\&#34;Windowing Enabled\\&#34;:true},\\&#34;inputConnections\\&#34;:[\\&#34;{0cbaae2c-7998-4d45-af15-5fc18a309147}\\&#34;],\\&#34;outputConnections\\&#34;:[\\&#34;{7a31ec03-4127-4b33-9ee0-b4f5d92d32b3}\\&#34;],\\&#34;processorType\\&#34;:16}&#34;],&#34;pipelineName&#34;:&#34;SEM: Secondary Electron&#34;,&#34;pipelineType&#34;:0}&#39;,
+  &#39;rotation&#39;: -0.0003376007080078125,
+  &#39;samplesPerLine&#39;: 2000,
+  &#39;xEnd&#39;: -58.249058067798615,
+  &#39;xStart&#39;: -64.3509162068367,
+  &#39;yEnd&#39;: -68.64908510446548,
+  &#39;yStart&#39;: -74.75094324350357,
+  &#39;zScale&#39;: 1}}
+</pre></div></div>
+</div>
+</section>
+<section id="In-depth-.fsexp-File-Data-Structure">
+<h2><strong>In-depth .fsexp File Data Structure</strong><a class="headerlink" href="#In-depth-.fsexp-File-Data-Structure" title="Link to this heading">#</a></h2>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>.fsexp file
+│
+├── Root attributes
+│   ├── EXPERIMENT_INFO
+│   ├── APPLICATION_VERSION
+│   ├── EXPERIMENT_FILE_VERSION
+│   ├── OVERVIEW_RECT
+│   └── Additional attributes
+│
+├── PipelineData
+│   │
+│   ├── OverviewRegion
+│   │   ├── Attribute: REGION_INFO
+│   │   │
+│   │   └── SourceFrames
+│   │       │
+│   │       └── Frame_Name
+│   │           ├── Attribute: FRAME_INFO
+│   │           │
+│   │           ├── Raw
+│   │           │   ├── DataIndex_0
+│   │           │   ├── DataIndex_1
+│   │           │   └── Additional datasets
+│   │           │
+│   │           └── Processed
+│   │               ├── DataIndex_0
+│   │               ├── DataIndex_1
+│   │               └── Additional datasets
+│   │
+│   ├── Numbered_Region
+│   │   ├── Attribute: REGION_INFO
+│   │   │
+│   │   └── SourceFrames
+│   │       │
+│   │       ├── 1_Frame_0_Channel_0
+│   │       │   ├── Attribute: FRAME_INFO
+│   │       │   ├── Raw
+│   │       │   │   └── DataIndex_0
+│   │       │   └── Processed
+│   │       │       └── DataIndex_0
+│   │       │
+│   │       └── Additional frames
+│   │
+│   └── Additional regions
+│
+└── Other top-level HDF5 objects
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="read_mdt_files.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Parsing .mdt experimental files. Basic example.</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../03_data_formats_and_converters/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Data formats and converters</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Overview"><strong>Overview</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Key-Naming-Convention"><strong>Key Naming Convention</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Output-Structure"><strong>Output Structure</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Image"><strong>Image</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Single-Scan-Metadata"><strong>Single Scan Metadata</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#In-depth-.fsexp-File-Data-Structure"><strong>In-depth .fsexp File Data Structure</strong></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Pycroscopy contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2020, Pycroscopy contributors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

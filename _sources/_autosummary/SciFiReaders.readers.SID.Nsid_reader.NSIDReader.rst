@@ -1,0 +1,28 @@
+SciFiReaders.readers.SID.Nsid\_reader.NSIDReader
+================================================
+
+.. currentmodule:: SciFiReaders.readers.SID.Nsid_reader
+
+.. autoclass:: NSIDReader
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~NSIDReader.can_read
+      ~NSIDReader.close
+      ~NSIDReader.read
+      ~NSIDReader.read_all
+   
+   
+
+   
+   
+   

@@ -1,0 +1,850 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SciFiReaders.mcp.scifireaders_mcp &#8212; SciFiReaders 0.12.7 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=7cf6be21"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/SciFiReaders/mcp/scifireaders_mcp';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SciFiReaders 0.12.7 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../index.html">
+                    SciFiReaders
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../available_readers.html">Available Readers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contact.html">Contact us</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples by method</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../notebooks/00_developing_a_reader/index.html">Creating a Reader</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/00_developing_a_reader/developing_a_reader.html">Creating a Reader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../notebooks/01_electron_microscopy/index.html">Electron microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/01_electron_microscopy/read_dm3_files.html">Reading a DM3 File with ScopeReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/01_electron_microscopy/read_nion_files.html">Reading a Nion File with ScopeReader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../notebooks/02_scanning_probe_microscopy/index.html">Scanning probe microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/02_scanning_probe_microscopy/read_mdt_files.html">Parsing .mdt experimental files. Basic example.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/02_scanning_probe_microscopy/read_fsexp_files.html"><strong>Parsing .fsexp FusionScope HDF5 Experiment Files</strong></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../notebooks/03_data_formats_and_converters/index.html">Data formats and converters</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/03_data_formats_and_converters/convert_hyperspy.html">Working with Hyperspy Data</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api.html">API reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../_autosummary/SciFiReaders.html">SciFiReaders</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders/issues/new?title=Issue%20on%20page%20%2F_modules/SciFiReaders/mcp/scifireaders_mcp.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for SciFiReaders.mcp.scifireaders_mcp</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">Model Context Protocol server for SciFiReaders.</span>
+
+<span class="sd">The server intentionally exposes a single tool:</span>
+<span class="sd">``read_file``. It automatically selects the best reader from the package's</span>
+<span class="sd">registered readers, executes that reader, and can either return serialized</span>
+<span class="sd">dataset content, export it to a NeXus-compatible HDF5 file, or do both.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">warnings</span><span class="w"> </span><span class="kn">import</span> <span class="n">warn</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">h5py</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sidpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">sidpy_to_nexus_hdf5</span>
+
+<span class="k">try</span><span class="p">:</span>  <span class="c1"># pragma: no cover - optional runtime dependency</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mcp.server.fastmcp</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastMCP</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>  <span class="c1"># pragma: no cover - optional runtime dependency</span>
+    <span class="n">FastMCP</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_as_builtin</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Convert nested numpy/sidpy-heavy structures into JSON-friendly values."""</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">):</span> <span class="n">_as_builtin</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">_as_builtin</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Path</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">encoding</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"utf-8"</span><span class="p">,</span> <span class="s2">"latin-1"</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">encoding</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+                <span class="k">continue</span>
+        <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">"replace"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">return</span> <span class="n">value</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_load_reader_classes</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">type</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Import the package reader registry lazily."""</span>
+    <span class="n">readers_module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">"SciFiReaders.readers"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">readers_module</span><span class="p">,</span> <span class="s2">"all_readers"</span><span class="p">,</span> <span class="p">[]))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_reader_summary</span><span class="p">(</span><span class="n">reader_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Return a short, serializable description of a reader class."""</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="p">(</span><span class="n">reader_cls</span><span class="o">.</span><span class="vm">__doc__</span> <span class="ow">or</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">"name"</span><span class="p">:</span> <span class="n">reader_cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+        <span class="s2">"module"</span><span class="p">:</span> <span class="n">reader_cls</span><span class="o">.</span><span class="vm">__module__</span><span class="p">,</span>
+        <span class="s2">"doc"</span><span class="p">:</span> <span class="n">doc</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">doc</span> <span class="k">else</span> <span class="s2">""</span><span class="p">,</span>
+    <span class="p">}</span>
+
+
+<span class="n">_EXTENSION_READER_MAP</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">".bmp"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"imagereader"</span><span class="p">},</span>
+    <span class="s2">".czi"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"czireader"</span><span class="p">},</span>
+    <span class="s2">".dm3"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"dmreader"</span><span class="p">,</span> <span class="s2">"dm3reader"</span><span class="p">},</span>
+    <span class="s2">".dm4"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"dmreader"</span><span class="p">},</span>
+    <span class="s2">".emd"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"emdreader"</span><span class="p">},</span>
+    <span class="s2">".h5"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"edaxreader"</span><span class="p">,</span> <span class="s2">"nionreader"</span><span class="p">},</span>
+    <span class="s2">".ibw"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"igoribwreader"</span><span class="p">},</span>
+    <span class="s2">".jpeg"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"imagereader"</span><span class="p">},</span>
+    <span class="s2">".jpg"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"imagereader"</span><span class="p">},</span>
+    <span class="s2">".mrc"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"mrcreader"</span><span class="p">},</span>
+    <span class="s2">".ndata"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"nionreader"</span><span class="p">},</span>
+    <span class="s2">".png"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"imagereader"</span><span class="p">},</span>
+    <span class="s2">".spe"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"ramanspereader"</span><span class="p">},</span>
+    <span class="s2">".tif"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"imagereader"</span><span class="p">},</span>
+    <span class="s2">".tiff"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"imagereader"</span><span class="p">},</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_matches_extension</span><span class="p">(</span><span class="n">reader_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span> <span class="n">file_suffix</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Best-effort extension routing for legacy readers whose can_read() is not compatible."""</span>
+    <span class="n">suffix</span> <span class="o">=</span> <span class="n">file_suffix</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">module_name</span> <span class="o">=</span> <span class="n">reader_cls</span><span class="o">.</span><span class="vm">__module__</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">class_name</span> <span class="o">=</span> <span class="n">reader_cls</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">expected_classes</span> <span class="o">=</span> <span class="n">_EXTENSION_READER_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">suffix</span><span class="p">,</span> <span class="nb">set</span><span class="p">())</span>
+
+    <span class="k">if</span> <span class="n">class_name</span> <span class="ow">in</span> <span class="n">expected_classes</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="s2">"imagereader"</span> <span class="ow">in</span> <span class="n">expected_classes</span> <span class="ow">and</span> <span class="n">module_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">"generic.image"</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="s2">"ramanspereader"</span> <span class="ow">in</span> <span class="n">expected_classes</span> <span class="ow">and</span> <span class="s2">"spe"</span> <span class="ow">in</span> <span class="n">module_name</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_deprecated_reader</span><span class="p">(</span><span class="n">reader_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Return True for reader classes kept only for backward compatibility."""</span>
+    <span class="k">return</span> <span class="n">reader_cls</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"dm3reader"</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_preferred_reader</span><span class="p">(</span><span class="n">matches</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">type</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Choose a reader while avoiding deprecated aliases when possible."""</span>
+    <span class="n">active_matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">reader_cls</span> <span class="k">for</span> <span class="n">reader_cls</span> <span class="ow">in</span> <span class="n">matches</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">_is_deprecated_reader</span><span class="p">(</span><span class="n">reader_cls</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">active_matches</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">active_matches</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">matches</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="available_readers">
+<a class="viewcode-back" href="../../../_autosummary/SciFiReaders.mcp.scifireaders_mcp.available_readers.html#SciFiReaders.mcp.scifireaders_mcp.available_readers">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">available_readers</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Advertise the reader classes currently registered by the package."""</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">reader_classes</span> <span class="o">=</span> <span class="n">_load_reader_classes</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - runtime import problems</span>
+        <span class="k">return</span> <span class="p">[{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"&lt;unavailable&gt;"</span><span class="p">,</span> <span class="s2">"module"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"doc"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Could not load readers: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">"</span><span class="p">}]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">_reader_summary</span><span class="p">(</span><span class="n">reader_cls</span><span class="p">)</span> <span class="k">for</span> <span class="n">reader_cls</span> <span class="ow">in</span> <span class="n">reader_classes</span><span class="p">]</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_dataset_like</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Best-effort check for sidpy.Dataset without importing sidpy eagerly."""</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="nb">hasattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s2">"compute"</span><span class="p">)</span>
+        <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s2">"shape"</span><span class="p">)</span>
+        <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s2">"metadata"</span><span class="p">)</span>
+        <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s2">"get_dimension_by_number"</span><span class="p">)</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_dimension_payload</span><span class="p">(</span><span class="n">dataset</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Serialize a single sidpy dimension."""</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">dimension</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_dimension_by_number</span><span class="p">(</span><span class="n">index</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"index"</span><span class="p">:</span> <span class="n">index</span><span class="p">}</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">"index"</span><span class="p">:</span> <span class="n">index</span><span class="p">,</span>
+        <span class="s2">"name"</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"dim_</span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">"</span><span class="p">),</span>
+        <span class="s2">"quantity"</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="s2">"quantity"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+        <span class="s2">"units"</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="s2">"units"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+        <span class="s2">"dimension_type"</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="s2">"dimension_type"</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="s2">"name"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="s2">"dimension_type"</span><span class="p">,</span> <span class="s2">""</span><span class="p">))),</span>
+        <span class="s2">"values"</span><span class="p">:</span> <span class="n">_as_builtin</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="s2">"values"</span><span class="p">,</span> <span class="p">[])),</span>
+    <span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_dataset_payload</span><span class="p">(</span><span class="n">dataset</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Convert a sidpy.Dataset into a serializable dictionary."""</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+
+    <span class="n">shape</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s2">"shape"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+    <span class="n">dimensions</span> <span class="o">=</span> <span class="p">[</span><span class="n">_dimension_payload</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">))]</span>
+    <span class="n">data_type</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s2">"data_type"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">data_type_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">data_type</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">data_type</span><span class="p">))</span> <span class="k">if</span> <span class="n">data_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">"UNKNOWN"</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">"title"</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s2">"title"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+        <span class="s2">"quantity"</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s2">"quantity"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+        <span class="s2">"units"</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s2">"units"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+        <span class="s2">"data_type"</span><span class="p">:</span> <span class="n">data_type_name</span><span class="p">,</span>
+        <span class="s2">"shape"</span><span class="p">:</span> <span class="n">shape</span><span class="p">,</span>
+        <span class="s2">"dtype"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="s2">"dtype"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)),</span>
+        <span class="s2">"labels"</span><span class="p">:</span> <span class="n">_as_builtin</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s2">"labels"</span><span class="p">,</span> <span class="p">[])),</span>
+        <span class="s2">"data"</span><span class="p">:</span> <span class="n">_as_builtin</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+        <span class="s2">"metadata"</span><span class="p">:</span> <span class="n">_as_builtin</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s2">"metadata"</span><span class="p">,</span> <span class="p">{})),</span>
+        <span class="s2">"original_metadata"</span><span class="p">:</span> <span class="n">_as_builtin</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s2">"original_metadata"</span><span class="p">,</span> <span class="p">{})),</span>
+        <span class="s2">"dimensions"</span><span class="p">:</span> <span class="n">dimensions</span><span class="p">,</span>
+    <span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_flatten_dataset_items</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"Channel"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Collect dataset-like objects from nested reader output."""</span>
+    <span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">_is_dataset_like</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">prefix</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">items</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">child_prefix</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">else</span> <span class="n">prefix</span>
+            <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">_flatten_dataset_items</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">child_prefix</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">items</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">_flatten_dataset_items</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">index</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">"</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">items</span>
+
+    <span class="k">return</span> <span class="n">items</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_sanitize_hdf5_name</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">fallback</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Normalize names so they are safe and predictable in HDF5 paths."""</span>
+    <span class="n">cleaned</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">"[^0-9A-Za-z_]+"</span><span class="p">,</span> <span class="s2">"_"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">"_"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cleaned</span> <span class="ow">or</span> <span class="n">fallback</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_output_hdf5_path</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Return the generated NeXus HDF5 path for the provided source file."""</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">suffix</span> <span class="o">+</span> <span class="s2">".nxs.h5"</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_write_datasets_to_nexus</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">datasets</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Persist one or more sidpy datasets into a NeXus HDF5 file."""</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">datasets</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"The selected reader did not return any sidpy.Dataset objects to export."</span><span class="p">)</span>
+
+    <span class="n">output_path</span> <span class="o">=</span> <span class="n">_output_hdf5_path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">h5_file</span><span class="p">:</span>
+        <span class="n">used_entry_names</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">default_entry_name</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">datasets</span><span class="p">):</span>
+            <span class="n">entry_name</span> <span class="o">=</span> <span class="n">_sanitize_hdf5_name</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"entry_</span><span class="si">{</span><span class="n">index</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">entry_name</span> <span class="ow">in</span> <span class="n">used_entry_names</span><span class="p">:</span>
+                <span class="n">entry_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">entry_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">index</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">"</span>
+            <span class="n">used_entry_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">entry_name</span><span class="p">)</span>
+
+            <span class="n">signal_path</span> <span class="o">=</span> <span class="n">sidpy_to_nexus_hdf5</span><span class="p">(</span>
+                <span class="n">dataset</span><span class="p">,</span>
+                <span class="n">h5_file</span><span class="p">,</span>
+                <span class="n">entry_name</span><span class="o">=</span><span class="n">entry_name</span><span class="p">,</span>
+                <span class="n">nxdata_name</span><span class="o">=</span><span class="s2">"data"</span><span class="p">,</span>
+                <span class="n">signal_name</span><span class="o">=</span><span class="s2">"data"</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">default_entry_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">default_entry_name</span> <span class="o">=</span> <span class="n">signal_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">default_entry_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">h5_file</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">"default"</span><span class="p">]</span> <span class="o">=</span> <span class="n">default_entry_name</span>
+        <span class="n">h5_file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">output_path</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_serialize_result</span><span class="p">(</span><span class="n">result</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Recursively serialize reader output."""</span>
+    <span class="k">if</span> <span class="n">_is_dataset_like</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_dataset_payload</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">):</span> <span class="n">_serialize_result</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">_serialize_result</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">result</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">_as_builtin</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_looks_like_dataset_payload</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Detect a serialized single-dataset payload."""</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"title"</span><span class="p">,</span> <span class="s2">"shape"</span><span class="p">,</span> <span class="s2">"data_type"</span><span class="p">,</span> <span class="s2">"data"</span><span class="p">}</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_select_reader</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">type</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]:</span>
+<span class="w">    </span><span class="sd">"""Select the best matching reader using the package's own registry."""</span>
+    <span class="n">reader_classes</span> <span class="o">=</span> <span class="n">_load_reader_classes</span><span class="p">()</span>
+    <span class="n">matches</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">type</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">file_suffix</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span><span class="o">.</span><span class="n">suffix</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">reader_cls</span> <span class="ow">in</span> <span class="n">reader_classes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">_is_deprecated_reader</span><span class="p">(</span><span class="n">reader_cls</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="ow">not</span> <span class="n">_is_deprecated_reader</span><span class="p">(</span><span class="n">match</span><span class="p">)</span> <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">matches</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">_matches_extension</span><span class="p">(</span><span class="n">reader_cls</span><span class="p">,</span> <span class="n">file_suffix</span><span class="p">):</span>
+            <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reader_cls</span><span class="p">)</span>
+            <span class="k">continue</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">candidate</span> <span class="o">=</span> <span class="n">reader_cls</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+            <span class="n">readable</span> <span class="o">=</span> <span class="n">candidate</span><span class="o">.</span><span class="n">can_read</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="c1"># Older SciFiReaders readers call sidpy.Reader.can_read(extension=...)</span>
+            <span class="c1"># which no longer exists in newer sidpy releases. Fall back to</span>
+            <span class="c1"># extension-based routing for those readers.</span>
+            <span class="k">continue</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">readable</span><span class="p">:</span>
+            <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reader_cls</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">matches</span><span class="p">:</span>
+        <span class="n">tried_readers</span> <span class="o">=</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">reader_cls</span><span class="o">.</span><span class="vm">__name__</span> <span class="k">for</span> <span class="n">reader_cls</span> <span class="ow">in</span> <span class="n">reader_classes</span><span class="p">)</span>
+        <span class="n">suffix_detail</span> <span class="o">=</span> <span class="n">file_suffix</span> <span class="ow">or</span> <span class="s2">"&lt;no suffix&gt;"</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="s2">"The automatic search for a suitable reader was unsuccessful "</span>
+            <span class="sa">f</span><span class="s2">"for files ending in </span><span class="si">{</span><span class="n">suffix_detail</span><span class="si">}</span><span class="s2">. Tried readers: </span><span class="si">{</span><span class="n">tried_readers</span><span class="si">}</span><span class="s2">."</span>
+        <span class="p">)</span>
+
+    <span class="n">selected_reader</span> <span class="o">=</span> <span class="n">_preferred_reader</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">warn</span><span class="p">(</span>
+            <span class="s2">"Multiple readers may be able to read this file. "</span>
+            <span class="sa">f</span><span class="s2">"Using </span><span class="si">{</span><span class="n">selected_reader</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">."</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">selected_reader</span><span class="p">,</span> <span class="p">[</span><span class="n">_reader_summary</span><span class="p">(</span><span class="n">reader_cls</span><span class="p">)</span> <span class="k">for</span> <span class="n">reader_cls</span> <span class="ow">in</span> <span class="n">matches</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="read_file">
+<a class="viewcode-back" href="../../../_autosummary/SciFiReaders.mcp.scifireaders_mcp.read_file.html#SciFiReaders.mcp.scifireaders_mcp.read_file">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">return_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"file"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Read a file with the appropriate SciFiReaders reader.</span>
+
+<span class="sd">    The payload includes:</span>
+<span class="sd">    - ``available_readers``: all registered readers in the package</span>
+<span class="sd">    - ``matched_readers``: readers that reported they could read the file</span>
+<span class="sd">    - ``selected_reader``: the reader that was actually used</span>
+<span class="sd">    - ``output_file_path``: generated NeXus HDF5 path containing exported datasets</span>
+<span class="sd">    - ``datasets``: serialized dataset payloads when inline output is requested</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file_path : str</span>
+<span class="sd">        Source file to read.</span>
+<span class="sd">    return_mode : str, optional</span>
+<span class="sd">        One of ``"file"``, ``"data"``, or ``"both"``.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">return_mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">"file"</span><span class="p">,</span> <span class="s2">"data"</span><span class="p">,</span> <span class="s2">"both"</span><span class="p">}:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"return_mode must be one of: 'file', 'data', 'both'"</span><span class="p">)</span>
+
+    <span class="n">reader_cls</span><span class="p">,</span> <span class="n">matched_readers</span> <span class="o">=</span> <span class="n">_select_reader</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="n">extracted</span> <span class="o">=</span> <span class="n">reader_cls</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">dataset_items</span> <span class="o">=</span> <span class="n">_flatten_dataset_items</span><span class="p">(</span><span class="n">extracted</span><span class="p">)</span>
+
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"file_path"</span><span class="p">:</span> <span class="n">file_path</span><span class="p">,</span>
+        <span class="s2">"return_mode"</span><span class="p">:</span> <span class="n">return_mode</span><span class="p">,</span>
+        <span class="s2">"available_readers"</span><span class="p">:</span> <span class="n">available_readers</span><span class="p">(),</span>
+        <span class="s2">"matched_readers"</span><span class="p">:</span> <span class="n">matched_readers</span><span class="p">,</span>
+        <span class="s2">"selected_reader"</span><span class="p">:</span> <span class="n">_reader_summary</span><span class="p">(</span><span class="n">reader_cls</span><span class="p">),</span>
+        <span class="s2">"dataset_count"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset_items</span><span class="p">),</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">return_mode</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">"data"</span><span class="p">,</span> <span class="s2">"both"</span><span class="p">}:</span>
+        <span class="n">payload</span><span class="p">[</span><span class="s2">"datasets"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">name</span><span class="p">:</span> <span class="n">_dataset_payload</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">dataset_items</span>
+        <span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">return_mode</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">"file"</span><span class="p">,</span> <span class="s2">"both"</span><span class="p">}:</span>
+        <span class="n">payload</span><span class="p">[</span><span class="s2">"output_file_path"</span><span class="p">]</span> <span class="o">=</span> <span class="n">_write_datasets_to_nexus</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">dataset_items</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">payload</span></div>
+
+
+
+<div class="viewcode-block" id="list_readers">
+<a class="viewcode-back" href="../../../_autosummary/SciFiReaders.mcp.scifireaders_mcp.list_readers.html#SciFiReaders.mcp.scifireaders_mcp.list_readers">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_readers</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Return the package's reader registry for discovery and routing."""</span>
+    <span class="k">return</span> <span class="n">available_readers</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="create_mcp_server">
+<a class="viewcode-back" href="../../../_autosummary/SciFiReaders.mcp.scifireaders_mcp.create_mcp_server.html#SciFiReaders.mcp.scifireaders_mcp.create_mcp_server">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_mcp_server</span><span class="p">(</span><span class="n">server_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"scifireaders"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Create the MCP server exposing the discovery and file-reading tools."""</span>
+    <span class="k">if</span> <span class="n">FastMCP</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pragma: no cover - optional runtime dependency</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">"The 'mcp' package is required to create the SciFiReaders MCP server."</span><span class="p">)</span>
+
+    <span class="n">server</span> <span class="o">=</span> <span class="n">FastMCP</span><span class="p">(</span><span class="n">server_name</span><span class="p">)</span>
+
+    <span class="nd">@server</span><span class="o">.</span><span class="n">tool</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">"list_readers"</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">"SciFiReaders reader list"</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">"List the SciFiReaders reader classes currently available in this environment."</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">list_readers_tool</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+        <span class="k">return</span> <span class="n">list_readers</span><span class="p">()</span>
+
+    <span class="nd">@server</span><span class="o">.</span><span class="n">tool</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">"read_file"</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">"SciFiReaders file reader"</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">"Read a scientific file with the best available SciFiReaders reader."</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_file_tool</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">return_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"file"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Read a file with the automatically selected SciFiReaders reader."""</span>
+        <span class="k">return</span> <span class="n">read_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">return_mode</span><span class="o">=</span><span class="n">return_mode</span><span class="p">)</span>
+
+    <span class="nd">@server</span><span class="o">.</span><span class="n">tool</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">"read_scifireaders_file"</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">"SciFiReaders file reader"</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">"Read a scientific file with the best available SciFiReaders reader."</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_scifireaders_file_tool</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">return_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"file"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Read a file with the automatically selected SciFiReaders reader."""</span>
+        <span class="k">return</span> <span class="n">read_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">return_mode</span><span class="o">=</span><span class="n">return_mode</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">server</span></div>
+
+
+
+<span class="k">if</span> <span class="n">FastMCP</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pragma: no cover - optional runtime dependency</span>
+    <span class="n">mcp</span> <span class="o">=</span> <span class="n">create_mcp_server</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: no cover - optional runtime dependency</span>
+    <span class="n">mcp</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../_autosummary/SciFiReaders.mcp.scifireaders_mcp.main.html#SciFiReaders.mcp.scifireaders_mcp.main">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Run the MCP server over stdio."""</span>
+    <span class="k">if</span> <span class="n">mcp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pragma: no cover - optional runtime dependency</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">"Install the 'mcp' package or the optional 'SciFiReaders[mcp]' extra to run this server."</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">mcp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">transport</span><span class="o">=</span><span class="s2">"stdio"</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>  <span class="c1"># pragma: no cover - compatibility with older MCP releases</span>
+        <span class="n">mcp</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"AVAILABLE_READERS"</span><span class="p">,</span>
+    <span class="s2">"available_readers"</span><span class="p">,</span>
+    <span class="s2">"create_mcp_server"</span><span class="p">,</span>
+    <span class="s2">"list_readers"</span><span class="p">,</span>
+    <span class="s2">"main"</span><span class="p">,</span>
+    <span class="s2">"read_file"</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="n">AVAILABLE_READERS</span> <span class="o">=</span> <span class="n">available_readers</span><span class="p">()</span>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Pycroscopy contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2020, Pycroscopy contributors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1478 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SciFiReaders.readers.microscopy.spm.afm.wsxm &#8212; SciFiReaders 0.12.7 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../../../../_static/documentation_options.js?v=7cf6be21"></script>
+    <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/SciFiReaders/readers/microscopy/spm/afm/wsxm';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SciFiReaders 0.12.7 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../index.html">
+                    SciFiReaders
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../available_readers.html">Available Readers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../contact.html">Contact us</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples by method</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/00_developing_a_reader/index.html">Creating a Reader</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/00_developing_a_reader/developing_a_reader.html">Creating a Reader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/index.html">Electron microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/read_dm3_files.html">Reading a DM3 File with ScopeReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/read_nion_files.html">Reading a Nion File with ScopeReader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/index.html">Scanning probe microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/read_mdt_files.html">Parsing .mdt experimental files. Basic example.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/read_fsexp_files.html"><strong>Parsing .fsexp FusionScope HDF5 Experiment Files</strong></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/03_data_formats_and_converters/index.html">Data formats and converters</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/03_data_formats_and_converters/convert_hyperspy.html">Working with Hyperspy Data</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../api.html">API reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../_autosummary/SciFiReaders.html">SciFiReaders</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders/issues/new?title=Issue%20on%20page%20%2F_modules/SciFiReaders/readers/microscopy/spm/afm/wsxm.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for SciFiReaders.readers.microscopy.spm.afm.wsxm</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">Author: Pranav Sudersan</span>
+<span class="sd">Date: February 2025</span>
+
+<span class="sd">This module provides classes and functions for reading and processing WSxM/Nanotec AFM controller files.</span>
+<span class="sd">It includes SID readers for 1D, 2D, and 3D data formats as three separate classes:</span>
+
+<span class="sd">Classes:</span>
+<span class="sd">--------</span>
+<span class="sd">WSxM2DReader(Reader)</span>
+<span class="sd">    A reader class for extracting 2D WSxM data and metadata (e.g., topography, phase, adhesion, etc.)</span>
+<span class="sd">    and converting them into a dictionary of SID Dataset objects for all channels and directions</span>
+<span class="sd">    of the measurement.</span>
+
+<span class="sd">WSxM1DReader(Reader)</span>
+<span class="sd">    A reader class for extracting 1D WSxM data and metadata (e.g., force spectroscopy, tune, etc.)</span>
+<span class="sd">    and converting them into a dictionary of SID Dataset objects for all channels and directions</span>
+<span class="sd">    of the measurement.</span>
+
+<span class="sd">WSxM3DReader(Reader)</span>
+<span class="sd">    A reader class for extracting 3D WSxM data and metadata (e.g., force volume, video, etc.)</span>
+<span class="sd">    and converting them into a dictionary of SID Dataset objects for all channels and directions</span>
+<span class="sd">    of the measurement.</span>
+
+<span class="sd">WSxMFuncs</span>
+<span class="sd">    A class containing optional static methods to directly read WSxM files, including reading headers,</span>
+<span class="sd">    image data, and spectroscopy curves without the SID format. These methods are used by the above</span>
+<span class="sd">    WSxM reader classes but can also be used independently for reading WSxM files, and they offer</span>
+<span class="sd">    additional input parameters.</span>
+
+<span class="sd">Usage:</span>
+<span class="sd">------</span>
+<span class="sd">To use the readers, instantiate the appropriate reader class with the file path and call the</span>
+<span class="sd">read method to extract the data and metadata.</span>
+
+<span class="sd">Example:</span>
+<span class="sd">--------</span>
+<span class="sd">    data_file_path = '/path/to/wsxm/file'</span>
+<span class="sd">    reader = WSxM2DReader(data_file_path)</span>
+<span class="sd">    data = reader.read()</span>
+<span class="sd">    for channel, dataset in data.items():</span>
+<span class="sd">        print(channel, dataset.quantity, dataset.direction)</span>
+<span class="sd">        dataset.plot()</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sidpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sidpy.sid</span><span class="w"> </span><span class="kn">import</span> <span class="n">Reader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+
+<span class="c1"># Read two dimensional AFM image data (e.g. Topography, Phase etc.)</span>
+<div class="viewcode-block" id="WSxM2DReader">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxM2DReader.html#SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxM2DReader">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WSxM2DReader</span><span class="p">(</span><span class="n">Reader</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        A reader class for extracting 2 dimensional WSxM data and metadata (e.g. topography, </span>
+<span class="sd">        phase, adhesion etc) and converting them into a dictionary of SID Dataset objects </span>
+<span class="sd">        for all channels and directions of the measurement.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file_path : str</span>
+<span class="sd">            Path to the input file to be read.</span>
+<span class="sd">        *args : tuple, optional</span>
+<span class="sd">            Additional arguments to pass to the parent sidpy Reader class.</span>
+<span class="sd">        **kwargs : dict, optional</span>
+<span class="sd">            Additional keyword arguments to pass to the parent sidpy Reader class.</span>
+
+<span class="sd">        Methods</span>
+<span class="sd">        -------</span>
+<span class="sd">        read()</span>
+<span class="sd">            Extracts the data and metadata from the input 2D data file and returns it as</span>
+<span class="sd">            a dictionary of sidpy.Dataset objects.</span>
+<span class="sd">        """</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="WSxM2DReader.read">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxM2DReader.html#SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxM2DReader.read">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Reads and processes 2D WSxM files.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary where keys are channel identifiers ("Channel_xxx") and values are </span>
+<span class="sd">                    sidpy.Dataset objects containing the extracted data and metadata.</span>
+<span class="sd">        """</span>
+
+        <span class="n">filepath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_input_file_path</span><span class="p">)</span>
+        <span class="n">filepath_all</span> <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">_wsxm_get_common_files</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="c1">#get all files of measurement, with common base name</span>
+        <span class="n">datasets</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">channel_number</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">#channel number</span>
+        <span class="k">for</span> <span class="n">path_i</span> <span class="ow">in</span> <span class="n">filepath_all</span><span class="p">:</span>
+            <span class="n">path_ext</span> <span class="o">=</span> <span class="n">path_i</span><span class="o">.</span><span class="n">suffix</span>  <span class="c1">#file extension</span>
+            <span class="k">if</span> <span class="n">path_ext</span> <span class="o">!=</span> <span class="s1">'.gsi'</span><span class="p">:</span> <span class="c1">#ignore *.gsi files sharing same name               </span>
+                <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">path_i</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span><span class="s1">'rb'</span><span class="p">)</span>
+                <span class="n">header_dict</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">_wsxm_readheader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+                <span class="n">header_dict</span><span class="p">[</span><span class="s1">'File path'</span><span class="p">]</span> <span class="o">=</span> <span class="n">path_i</span> <span class="c1">#file path included to header</span>
+                <span class="n">chan_label</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Acquisition channel [General Info]'</span><span class="p">]</span>
+                <span class="n">data_dict_chan</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">_wsxm_readimg</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">header_dict</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="k">if</span> <span class="s1">'X scanning direction [General Info]'</span> <span class="ow">in</span> <span class="n">header_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">x_dir</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'X scanning direction [General Info]'</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">x_dir</span> <span class="o">=</span> <span class="kc">None</span>
+
+                <span class="n">data_set</span> <span class="o">=</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'Z'</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">),</span>
+                                                  <span class="n">title</span><span class="o">=</span><span class="n">chan_label</span><span class="p">)</span>
+                
+                <span class="c1">#Add quantity and units</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'units'</span><span class="p">][</span><span class="s1">'Z'</span><span class="p">]</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">quantity</span> <span class="o">=</span> <span class="n">chan_label</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">x_dir</span> <span class="c1">#image direction information</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">'image'</span>                
+
+                <span class="c1">#Add dimension info</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'X'</span><span class="p">],</span>
+                                                        <span class="n">name</span> <span class="o">=</span> <span class="s1">'x'</span><span class="p">,</span>
+                                                        <span class="n">units</span><span class="o">=</span><span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'units'</span><span class="p">][</span><span class="s1">'X'</span><span class="p">],</span> 
+                                                        <span class="n">quantity</span> <span class="o">=</span> <span class="s1">'x'</span><span class="p">,</span>
+                                                        <span class="n">dimension_type</span><span class="o">=</span><span class="s1">'spatial'</span><span class="p">))</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'Y'</span><span class="p">],</span>
+                                                        <span class="n">name</span> <span class="o">=</span> <span class="s1">'y'</span><span class="p">,</span>
+                                                        <span class="n">units</span><span class="o">=</span><span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'units'</span><span class="p">][</span><span class="s1">'Y'</span><span class="p">],</span> 
+                                                        <span class="n">quantity</span><span class="o">=</span><span class="s1">'y'</span><span class="p">,</span>
+                                                        <span class="n">dimension_type</span><span class="o">=</span><span class="s1">'spatial'</span><span class="p">))</span> 
+                <span class="c1">#Writing the metadata</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'header'</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+                <span class="c1">#Add dataset to dictionary</span>
+                <span class="n">key_channel</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"Channel_</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">channel_number</span><span class="p">)</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">"</span>
+                <span class="n">datasets</span><span class="p">[</span><span class="n">key_channel</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_set</span>
+                <span class="n">channel_number</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">datasets</span></div>
+</div>
+
+
+<span class="c1"># Read one dimensional AFM data (e.g. force-distance curves)        </span>
+<div class="viewcode-block" id="WSxM1DReader">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxM1DReader.html#SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxM1DReader">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WSxM1DReader</span><span class="p">(</span><span class="n">Reader</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        A reader class for extracting 1 dimensional WSxM data and metadata (e.g. force </span>
+<span class="sd">        spectroscopy, tune etc) and converting them into a dictionary of SID Dataset objects </span>
+<span class="sd">        for all channels and directions of the measurement.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file_path : str</span>
+<span class="sd">            Path to the input file to be read.</span>
+<span class="sd">        *args : tuple, optional</span>
+<span class="sd">            Additional arguments to pass to the parent sidpy Reader class.</span>
+<span class="sd">        **kwargs : dict, optional</span>
+<span class="sd">            Additional keyword arguments to pass to the parent sidpy Reader class.</span>
+
+<span class="sd">        Methods</span>
+<span class="sd">        -------</span>
+<span class="sd">        read()</span>
+<span class="sd">            Extracts the data and metadata from the input 1D data file and returns it as</span>
+<span class="sd">            a dictionary of sidpy.Dataset objects.</span>
+<span class="sd">        """</span>    
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="WSxM1DReader.read">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxM1DReader.html#SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxM1DReader.read">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Reads and processes 1D WSxM files.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary where keys are channel identifiers ("Channel_xxx") and values are </span>
+<span class="sd">                    sidpy.Dataset objects containing the extracted data and metadata.</span>
+<span class="sd">        """</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_input_file_path</span><span class="p">)</span>
+        <span class="n">filepath_all</span> <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">_wsxm_get_common_files</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="c1">#get all files of measurement, with common base name</span>
+
+        <span class="n">data_dict_chan</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">data_dict_stp</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1">#dictionary for *.stp files to combine approach and retract data from separate files</span>
+        <span class="n">datasets</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">channel_number</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">#channel number</span>
+        <span class="k">for</span> <span class="n">path_i</span> <span class="ow">in</span> <span class="n">filepath_all</span><span class="p">:</span>
+            <span class="n">path_ext</span> <span class="o">=</span> <span class="n">path_i</span><span class="o">.</span><span class="n">suffix</span>                
+            <span class="k">if</span> <span class="n">path_ext</span> <span class="o">==</span> <span class="s1">'.curves'</span><span class="p">:</span> <span class="c1"># read *.curves spectroscopy files</span>
+                <span class="n">temp_dict</span><span class="p">,</span> <span class="n">chan_label</span> <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">_wsxm_readcurves</span><span class="p">(</span><span class="n">path_i</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">chan_label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data_dict_chan</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">data_dict_chan</span><span class="p">[</span><span class="n">chan_label</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">curv_ind_i</span> <span class="ow">in</span> <span class="n">temp_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="c1">#replace with *.curves data even if it already exists (more robust)</span>
+                        <span class="n">data_dict_chan</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">][</span><span class="n">curv_ind_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">][</span><span class="n">curv_ind_i</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">path_ext</span> <span class="o">==</span> <span class="s1">'.stp'</span><span class="p">:</span> <span class="c1"># read *.stp spectroscopy files</span>
+                <span class="n">temp_dict</span><span class="p">,</span> <span class="n">chan_label</span> <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">_wsxm_readstp</span><span class="p">(</span><span class="n">path_i</span><span class="p">,</span> <span class="n">data_dict_stp</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">chan_label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data_dict_chan</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="c1">#ignore data if *.curves already found</span>
+                    <span class="n">data_dict_chan</span><span class="p">[</span><span class="n">chan_label</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">curv_ind_i</span> <span class="ow">in</span> <span class="n">temp_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="n">curv_ind_i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data_dict_chan</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                            <span class="n">data_dict_chan</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">][</span><span class="n">curv_ind_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">][</span><span class="n">curv_ind_i</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">path_ext</span> <span class="o">==</span> <span class="s1">'.cur'</span><span class="p">:</span> <span class="c1"># read *.cur spectroscopy files</span>
+                <span class="n">temp_dict</span><span class="p">,</span> <span class="n">chan_label</span> <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">_wsxm_readcur</span><span class="p">(</span><span class="n">path_i</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">chan_label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data_dict_chan</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="c1">#ignore data if *.curves already found</span>
+                    <span class="n">data_dict_chan</span><span class="p">[</span><span class="n">chan_label</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">curv_ind_i</span> <span class="ow">in</span> <span class="n">temp_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="n">curv_ind_i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data_dict_chan</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                            <span class="n">data_dict_chan</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">][</span><span class="n">curv_ind_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">][</span><span class="n">curv_ind_i</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>        
+
+        <span class="c1">#convert data dictionary to SID dataset</span>
+        <span class="k">for</span> <span class="n">chan_i</span><span class="p">,</span> <span class="n">chandata_i</span> <span class="ow">in</span> <span class="n">data_dict_chan</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">curv_i</span><span class="p">,</span> <span class="n">curvdata_i</span> <span class="ow">in</span> <span class="n">chandata_i</span><span class="p">[</span><span class="s1">'curves'</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">curve_list</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">curve_dir_list</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">curv_dir_i</span><span class="p">,</span> <span class="n">curvdata_dir_i</span> <span class="ow">in</span> <span class="n">curvdata_i</span><span class="p">[</span><span class="s1">'data'</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">curve_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curvdata_dir_i</span><span class="p">[</span><span class="s1">'y'</span><span class="p">])</span>
+                    <span class="n">curve_dir_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curv_dir_i</span><span class="p">)</span>
+                    <span class="n">x_data_i</span> <span class="o">=</span> <span class="n">curvdata_dir_i</span><span class="p">[</span><span class="s1">'x'</span><span class="p">]</span>
+                <span class="n">curve_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">curve_list</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+                <span class="n">data_set</span> <span class="o">=</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">curve_matrix</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">chan_i</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">curv_i</span><span class="si">}</span><span class="s1">)'</span><span class="p">)</span>
+                
+                <span class="c1">#Add quantity and units</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">curvdata_i</span><span class="p">[</span><span class="s1">'units'</span><span class="p">][</span><span class="s1">'y'</span><span class="p">]</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">quantity</span> <span class="o">=</span> <span class="n">chan_i</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">curve_dir_list</span> <span class="c1">#image direction information</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">'spectrum'</span>                
+
+                <span class="c1">#Add dimension info</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">x_data_i</span><span class="p">,</span>
+                                                        <span class="n">name</span> <span class="o">=</span> <span class="s1">'x'</span><span class="p">,</span>
+                                                        <span class="n">units</span><span class="o">=</span><span class="n">curvdata_i</span><span class="p">[</span><span class="s1">'units'</span><span class="p">][</span><span class="s1">'x'</span><span class="p">],</span>
+                                                        <span class="n">quantity</span> <span class="o">=</span> <span class="s1">'x'</span><span class="p">,</span>
+                                                        <span class="n">dimension_type</span><span class="o">=</span><span class="s1">'spatial'</span><span class="p">))</span>
+                
+                <span class="c1">#Writing the metadata</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">curvdata_i</span><span class="p">[</span><span class="s1">'header'</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+                <span class="c1">#Add dataset to dictionary</span>
+                <span class="n">key_channel</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"Channel_</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">channel_number</span><span class="p">)</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">"</span>
+                <span class="n">datasets</span><span class="p">[</span><span class="n">key_channel</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_set</span>
+                <span class="n">channel_number</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">datasets</span></div>
+</div>
+
+
+
+<span class="c1"># Read three dimensional AFM image data (e.g. Force volume, video etc)</span>
+<div class="viewcode-block" id="WSxM3DReader">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxM3DReader.html#SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxM3DReader">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WSxM3DReader</span><span class="p">(</span><span class="n">Reader</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        A reader class for extracting 3 dimensional WSxM data and metadata (e.g. Force </span>
+<span class="sd">        volume, video etc) and converting them into a dictionary of SID Dataset objects </span>
+<span class="sd">        for all channels and directions of the measurement.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file_path : str</span>
+<span class="sd">            Path to the input file to be read.</span>
+<span class="sd">        *args : tuple, optional</span>
+<span class="sd">            Additional arguments to pass to the parent sidpy Reader class.</span>
+<span class="sd">        **kwargs : dict, optional</span>
+<span class="sd">            Additional keyword arguments to pass to the parent sidpy Reader class.</span>
+
+<span class="sd">        Methods</span>
+<span class="sd">        -------</span>
+<span class="sd">        read()</span>
+<span class="sd">            Extracts the data and metadata from the input 3D data file and returns it as</span>
+<span class="sd">            a dictionary of sidpy.Dataset objects.</span>
+<span class="sd">        """</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="WSxM3DReader.read">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxM3DReader.html#SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxM3DReader.read">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Reads and processes 3D WSxM files.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary where keys are channel identifiers ("Channel_xxx") and values are </span>
+<span class="sd">                    sidpy.Dataset objects containing the extracted data and metadata.</span>
+<span class="sd">        """</span>
+
+        <span class="n">filepath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_input_file_path</span><span class="p">)</span>
+        <span class="n">filepath_all</span> <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">_wsxm_get_common_files</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="c1">#get all files of measurement, with common base name</span>
+
+        <span class="n">datasets</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">channel_number</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">#channel number</span>
+        <span class="k">for</span> <span class="n">path_i</span> <span class="ow">in</span> <span class="n">filepath_all</span><span class="p">:</span>
+            <span class="n">path_ext</span> <span class="o">=</span> <span class="n">path_i</span><span class="o">.</span><span class="n">suffix</span>
+            <span class="k">if</span> <span class="n">path_ext</span> <span class="o">==</span> <span class="s1">'.gsi'</span><span class="p">:</span> <span class="c1">#force volume data from *.gsi files</span>
+                <span class="n">data_dict_chan</span><span class="p">,</span> <span class="n">chan_label</span><span class="p">,</span> <span class="n">topo_data</span> <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">_wsxm_readforcevol</span><span class="p">(</span><span class="n">path_i</span><span class="p">)</span>
+                <span class="n">zz_data_type</span> <span class="o">=</span> <span class="n">sid</span><span class="o">.</span><span class="n">DataType</span><span class="o">.</span><span class="n">SPECTRAL_IMAGE</span> 
+                <span class="n">z_dimension_type</span> <span class="o">=</span> <span class="s1">'spectral'</span>
+            <span class="k">elif</span> <span class="n">path_ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'.MOV'</span><span class="p">,</span> <span class="s1">'.mpp'</span><span class="p">]:</span> <span class="c1">#movie data files</span>
+                <span class="n">data_dict_chan</span><span class="p">,</span> <span class="n">chan_label</span> <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">_wsxm_readmovie</span><span class="p">(</span><span class="n">path_i</span><span class="p">)</span>
+                <span class="n">zz_data_type</span> <span class="o">=</span> <span class="n">sid</span><span class="o">.</span><span class="n">DataType</span><span class="o">.</span><span class="n">IMAGE_STACK</span>  
+                <span class="n">z_dimension_type</span> <span class="o">=</span> <span class="s1">'frame'</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">assert</span><span class="p">(</span><span class="s2">"Invalid file type. Please choose *.gsi/*.MOV/*.mpp file"</span><span class="p">)</span>
+
+            <span class="c1">#image rotated to correct orientation of measurement in final dataset</span>
+            <span class="n">data_set</span> <span class="o">=</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">rot90</span><span class="p">(</span><span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'ZZ'</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                                                <span class="n">title</span><span class="o">=</span><span class="n">chan_label</span><span class="p">)</span>
+            
+            <span class="c1">#Add quantity and units</span>
+            <span class="n">data_set</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'units'</span><span class="p">][</span><span class="s1">'ZZ'</span><span class="p">]</span>
+            <span class="n">data_set</span><span class="o">.</span><span class="n">quantity</span> <span class="o">=</span> <span class="n">chan_label</span>
+            <span class="n">data_set</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="n">zz_data_type</span>            
+
+            <span class="c1">#Add dimension info</span>
+            <span class="n">data_set</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'Z'</span><span class="p">],</span>
+                                                    <span class="n">name</span> <span class="o">=</span> <span class="s1">'z'</span><span class="p">,</span>
+                                                    <span class="n">units</span><span class="o">=</span><span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'units'</span><span class="p">][</span><span class="s1">'Z'</span><span class="p">],</span> 
+                                                    <span class="n">quantity</span> <span class="o">=</span> <span class="s1">'z'</span><span class="p">,</span>
+                                                    <span class="n">dimension_type</span><span class="o">=</span><span class="n">z_dimension_type</span><span class="p">))</span>
+            <span class="n">data_set</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'X'</span><span class="p">],</span>
+                                                    <span class="n">name</span> <span class="o">=</span> <span class="s1">'x'</span><span class="p">,</span>
+                                                    <span class="n">units</span><span class="o">=</span><span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'units'</span><span class="p">][</span><span class="s1">'X'</span><span class="p">],</span> 
+                                                    <span class="n">quantity</span><span class="o">=</span><span class="s1">'x'</span><span class="p">,</span>
+                                                    <span class="n">dimension_type</span><span class="o">=</span><span class="s1">'spatial'</span><span class="p">))</span>
+            <span class="n">data_set</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'Y'</span><span class="p">],</span>
+                                                    <span class="n">name</span> <span class="o">=</span> <span class="s1">'y'</span><span class="p">,</span>
+                                                    <span class="n">units</span><span class="o">=</span><span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'units'</span><span class="p">][</span><span class="s1">'Y'</span><span class="p">],</span> 
+                                                    <span class="n">quantity</span><span class="o">=</span><span class="s1">'y'</span><span class="p">,</span>
+                                                    <span class="n">dimension_type</span><span class="o">=</span><span class="s1">'spatial'</span><span class="p">))</span> 
+            
+            <span class="c1">#Writing the metadata            </span>
+            <span class="n">header_spectroscopy</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'header'</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="s2">"[Spectroscopy images ramp value list]"</span> <span class="ow">in</span> <span class="n">k</span> <span class="ow">or</span> <span class="s2">"[maxmins list]"</span> <span class="ow">in</span> <span class="n">k</span><span class="p">}</span>
+            <span class="n">header_general</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'header'</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">header_spectroscopy</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+            <span class="n">data_set</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">header_general</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">data_set</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'Spectroscopy metadata'</span><span class="p">]</span> <span class="o">=</span> <span class="n">header_spectroscopy</span>
+            <span class="k">if</span> <span class="n">zz_data_type</span> <span class="o">==</span> <span class="n">sid</span><span class="o">.</span><span class="n">DataType</span><span class="o">.</span><span class="n">SPECTRAL_IMAGE</span><span class="p">:</span> 
+                <span class="n">data_set</span><span class="o">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'header'</span><span class="p">][</span><span class="s1">'Spectroscopy type [General Info]'</span><span class="p">]</span> <span class="c1">#image direction information</span>
+                <span class="c1">#create topography dataset</span>
+                <span class="n">data_set_topo</span> <span class="o">=</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">topo_data</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">'Topography'</span><span class="p">)</span>
+                <span class="n">data_set_topo</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'X'</span><span class="p">],</span>
+                                                    <span class="n">name</span> <span class="o">=</span> <span class="s1">'x'</span><span class="p">,</span>
+                                                    <span class="n">units</span><span class="o">=</span><span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'units'</span><span class="p">][</span><span class="s1">'X'</span><span class="p">],</span> 
+                                                    <span class="n">quantity</span><span class="o">=</span><span class="s1">'x'</span><span class="p">,</span>
+                                                    <span class="n">dimension_type</span><span class="o">=</span><span class="s1">'spatial'</span><span class="p">))</span>
+                <span class="n">data_set_topo</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'Y'</span><span class="p">],</span>
+                                                        <span class="n">name</span> <span class="o">=</span> <span class="s1">'y'</span><span class="p">,</span>
+                                                        <span class="n">units</span><span class="o">=</span><span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'units'</span><span class="p">][</span><span class="s1">'Y'</span><span class="p">],</span> 
+                                                        <span class="n">quantity</span><span class="o">=</span><span class="s1">'y'</span><span class="p">,</span>
+                                                        <span class="n">dimension_type</span><span class="o">=</span><span class="s1">'spatial'</span><span class="p">))</span>
+                <span class="n">data_set_topo</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'units'</span><span class="p">][</span><span class="s1">'Z'</span><span class="p">]</span>
+                <span class="n">data_set_topo</span><span class="o">.</span><span class="n">quantity</span> <span class="o">=</span> <span class="s1">'Topography'</span>
+                <span class="n">data_set_topo</span><span class="o">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">data_dict_chan</span><span class="p">[</span><span class="s1">'header'</span><span class="p">][</span><span class="s1">'Spectroscopy type [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="c1">#image direction information</span>
+                <span class="n">data_set_topo</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">'image'</span>
+
+                <span class="n">data_set</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'Topography'</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_set_topo</span> <span class="c1">#topography data added to metadata</span>
+                
+            <span class="k">elif</span> <span class="n">zz_data_type</span> <span class="o">==</span> <span class="n">sid</span><span class="o">.</span><span class="n">DataType</span><span class="o">.</span><span class="n">IMAGE_STACK</span><span class="p">:</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">direction</span> <span class="o">=</span> <span class="s1">'None'</span>
+
+
+            <span class="c1">#Add dataset to dictionary</span>
+            <span class="n">key_channel</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"Channel_</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">channel_number</span><span class="p">)</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">"</span>
+            <span class="n">datasets</span><span class="p">[</span><span class="n">key_channel</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_set</span>
+            <span class="n">channel_number</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">datasets</span></div>
+</div>
+
+
+<span class="c1"># collection of general functions used in WSxM readers</span>
+<div class="viewcode-block" id="WSxMFuncs">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxMFuncs.html#SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxMFuncs">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WSxMFuncs</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    A class containing static methods for handling WSxM files, including reading headers,</span>
+<span class="sd">    image data, and spectroscopy curves. These methods are used by the WSxM reader classes</span>
+<span class="sd">    above but can also be used by itself for reading WSxM files, offering additional input </span>
+<span class="sd">    parameters.</span>
+<span class="sd">    Methods</span>
+<span class="sd">    -------</span>
+<span class="sd">    _wsxm_get_common_files(filepath, ext=None)</span>
+<span class="sd">    _wsxm_readheader(file, pos=0, inibyte=100)</span>
+<span class="sd">    _wsxm_readimg(file, header_dict, pos)</span>
+<span class="sd">    _wsxm_readcurves(filepath)</span>
+<span class="sd">    """</span>
+    <span class="c1"># binary data type definitions used in header file</span>
+    <span class="n">DATA_TYPES</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'short'</span><span class="p">:(</span><span class="mi">2</span><span class="p">,</span><span class="s1">'h'</span><span class="p">),</span><span class="s1">'short-data'</span><span class="p">:(</span><span class="mi">2</span><span class="p">,</span><span class="s1">'h'</span><span class="p">),</span> <span class="s1">'unsignedshort'</span><span class="p">:(</span><span class="mi">2</span><span class="p">,</span><span class="s1">'H'</span><span class="p">),</span>
+        <span class="s1">'integer-data'</span><span class="p">:(</span><span class="mi">4</span><span class="p">,</span><span class="s1">'i'</span><span class="p">),</span> <span class="s1">'signedinteger'</span><span class="p">:(</span><span class="mi">4</span><span class="p">,</span><span class="s1">'i'</span><span class="p">),</span>
+        <span class="s1">'float-data'</span><span class="p">:(</span><span class="mi">4</span><span class="p">,</span><span class="s1">'f'</span><span class="p">),</span> <span class="s1">'double'</span><span class="p">:(</span><span class="mi">8</span><span class="p">,</span><span class="s1">'d'</span><span class="p">)</span>
+                <span class="p">}</span>
+    
+    <span class="c1">#rename spectroscopy line to standard names: approach and retract</span>
+    <span class="n">SPECT_DICT</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'Forward'</span><span class="p">:</span> <span class="s1">'approach'</span><span class="p">,</span> <span class="s1">'Backward'</span><span class="p">:</span> <span class="s1">'retract'</span><span class="p">,</span>
+        <span class="s1">'b'</span><span class="p">:</span> <span class="s1">'retract'</span><span class="p">,</span> <span class="s1">'f'</span><span class="p">:</span> <span class="s1">'approach'</span>
+                <span class="p">}</span> 
+
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_wsxm_get_common_files</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Retrieve a list of files corresponding to all the channels of the </span>
+<span class="sd">        chosen measurement file (including "Forward" and "Backward" data), if they exist.</span>
+<span class="sd">        </span>
+<span class="sd">        This function searches for files in the same directory as the provided</span>
+<span class="sd">        `filepath` that share a common base name, identified by a 4-digit number</span>
+<span class="sd">        in the filename (standard WSxM naming convention). The provided `filepath` </span>
+<span class="sd">        is always included as the first item in the returned list. Optionally, the </span>
+<span class="sd">        search can be filtered by file extension.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            filepath (Path): The path to the reference file.</span>
+<span class="sd">            ext (str, optional): The file extension to filter by (e.g. ".top", ".ch1", ".gsi" etc.). </span>
+<span class="sd">                     If None, all files with the common base name are included.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            list[Path]: A list of Path objects representing the files for all channels of the measurement, </span>
+<span class="sd">                with the provided `filepath` as the first item.</span>
+<span class="sd">        </span>
+<span class="sd">        Note:</span>
+<span class="sd">            - If the data files were renamed later, this function may not work as expected. </span>
+<span class="sd">              It is recommended to avoid renaming the part of the file name before the 4-digit number.</span>
+<span class="sd">        """</span>
+
+        <span class="n">path_dir</span> <span class="o">=</span> <span class="n">filepath</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">filepath</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">'\_\d</span><span class="si">{4}</span><span class="s1">'</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span> <span class="c1">#regex to find 4 digit number in filename</span>
+        <span class="k">if</span> <span class="n">match</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span> <span class="c1">#return same file if no matches</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">filepath</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filename_com</span> <span class="o">=</span> <span class="n">filename</span><span class="p">[:</span><span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">()</span><span class="o">+</span><span class="mi">5</span><span class="p">]</span>
+
+        <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">path_i</span> <span class="ow">in</span> <span class="n">path_dir</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+            <span class="n">path_ext_i</span> <span class="o">=</span> <span class="n">path_i</span><span class="o">.</span><span class="n">suffix</span>
+            <span class="k">if</span> <span class="n">ext</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">path_ext_i</span> <span class="o">!=</span> <span class="n">ext</span><span class="p">:</span> <span class="c1">#if ext given, skip files dont match the extension</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">path_i</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span> <span class="ow">and</span> <span class="n">path_i</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">filename_com</span><span class="p">):</span>
+                <span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path_i</span><span class="p">)</span> 
+        <span class="n">files</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="c1">#make sure filepath is the first item in the list</span>
+        <span class="n">files</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">filepath</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">files</span>
+
+
+    <span class="c1">#read WSxM header data</span>
+<div class="viewcode-block" id="WSxMFuncs._wsxm_readheader">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxMFuncs.html#SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxMFuncs._wsxm_readheader">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_wsxm_readheader</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inibyte</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Reads the header of a WSxM file and returns it as a dictionary.</span>
+<span class="sd">        Parameters:</span>
+<span class="sd">        file (file object): The file object to read from.</span>
+<span class="sd">        pos (int, optional): The position in the file (in bytes) to start reading from. Defaults to 0.</span>
+<span class="sd">        inibyte (int, optional): The initial number of bytes to read to find 'Image header size'. Defaults to 100.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: A tuple containing:</span>
+<span class="sd">                - header_dict (dict): A dictionary containing the header information.</span>
+<span class="sd">                - pos_new (int): The new position (in bytes) in the file after reading the header.</span>
+<span class="sd">        """</span>
+
+        <span class="n">header_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">title_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Find header size</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">inibyte</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ln</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+            <span class="n">hd_lst</span> <span class="o">=</span> <span class="n">ln</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'latin-1'</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">'ignore'</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">':'</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">hd_lst</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">hd_lst</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'Image header size'</span><span class="p">:</span>
+                    <span class="n">header_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hd_lst</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="k">break</span>
+        <span class="c1"># read header data</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">header_size</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ln</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+            <span class="n">hd_lst</span> <span class="o">=</span> <span class="n">ln</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'latin-1'</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">'ignore'</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">':'</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">hd_lst</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">header_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">hd_lst</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">title_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="n">header_dict</span><span class="p">[</span><span class="n">header_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">hd_lst</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">hd_lst</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">hd_lst</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">''</span><span class="p">:</span> <span class="c1">#collect section tiles in header file</span>
+                <span class="n">title_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hd_lst</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        
+        <span class="n">pos_new</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">+</span> <span class="n">header_size</span> <span class="c1">#bytes read so far</span>
+        <span class="k">return</span> <span class="n">header_dict</span><span class="p">,</span> <span class="n">pos_new</span></div>
+
+
+    <span class="c1">#read WSxM binary image data</span>
+<div class="viewcode-block" id="WSxMFuncs._wsxm_readimg">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxMFuncs.html#SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxMFuncs._wsxm_readimg">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_wsxm_readimg</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">header_dict</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Reads an image from a WSxM file and returns the image data along with updated position.</span>
+<span class="sd">        Parameters:</span>
+<span class="sd">        file (file object): The file object to read the image data from.</span>
+<span class="sd">        header_dict (dict): Dictionary containing the header information of the WSxM file.</span>
+<span class="sd">        pos (int): The current position in the file (in bytes) from where to start reading the image data.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: A tuple containing:</span>
+<span class="sd">                - data_dict_chan (dict): A dictionary with the image data and header information.</span>
+<span class="sd">                    - 'data' (dict): Contains the image data arrays.</span>
+<span class="sd">                        - 'Z' (numpy.ndarray): The 2D image data (image data) calibrated and reshaped.</span>
+<span class="sd">                        - 'X' (numpy.ndarray): The 1D X-axis data.</span>
+<span class="sd">                        - 'Y' (numpy.ndarray): The 1D Y-axis data.</span>
+<span class="sd">                    - 'header' (dict): A copy of the header dictionary.</span>
+<span class="sd">                    - 'unit' (dict): Units for 'Z', 'X' and 'Y' data</span>
+<span class="sd">                - pos (int): The updated position in the file after reading the image data.</span>
+<span class="sd">        """</span>
+
+        <span class="n">data_format</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Image Data Type [General Info]'</span><span class="p">]</span>
+        <span class="n">chan_label</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Acquisition channel [General Info]'</span><span class="p">]</span>
+        <span class="n">x_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Number of rows [General Info]'</span><span class="p">])</span>
+        <span class="n">y_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Number of columns [General Info]'</span><span class="p">])</span>
+        <span class="n">x_len</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'X Amplitude [Control]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">y_len</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Y Amplitude [Control]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">z_len</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Z Amplitude [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">z_min</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Minimum [Miscellaneous]'</span><span class="p">])</span>
+        <span class="n">z_max</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Maximum [Miscellaneous]'</span><span class="p">])</span>
+        <span class="k">if</span> <span class="s1">'X starting offset [General Info]'</span> <span class="ow">in</span> <span class="n">header_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="c1">#for "3D mode" images</span>
+            <span class="n">x_offset</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'X starting offset [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">y_offset</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Y starting offset [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x_offset</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">y_offset</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x_offset</span><span class="p">,</span> <span class="n">x_len</span><span class="o">+</span><span class="n">x_offset</span><span class="p">,</span> <span class="n">x_num</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">y_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">y_len</span><span class="o">+</span><span class="n">y_offset</span><span class="p">,</span> <span class="n">y_offset</span><span class="p">,</span> <span class="n">y_num</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        
+        <span class="c1">#read binary image data</span>
+        <span class="n">point_length</span><span class="p">,</span> <span class="n">type_code</span>  <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">DATA_TYPES</span><span class="p">[</span><span class="n">data_format</span><span class="p">]</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">data_len</span> <span class="o">=</span> <span class="n">x_num</span><span class="o">*</span><span class="n">y_num</span><span class="o">*</span><span class="n">point_length</span>
+        <span class="n">bin_data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">data_len</span><span class="p">)</span>
+        <span class="n">ch_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">iter_unpack</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">type_code</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span> <span class="n">bin_data</span><span class="p">)))</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">z_len</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1">#for zero data</span>
+            <span class="n">z_calib</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">z_calib</span> <span class="o">=</span> <span class="n">z_len</span><span class="o">/</span><span class="p">(</span><span class="n">z_max</span><span class="o">-</span><span class="n">z_min</span><span class="p">)</span>
+        
+        <span class="n">z_unit</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Z Amplitude [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1">#the following fixes a bug in the data format for amplitude channel, ensures that data is read in volts, not nanometers (which is fake)</span>
+        <span class="k">if</span> <span class="n">chan_label</span> <span class="o">==</span> <span class="s1">'Amplitude'</span> <span class="ow">and</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Z Amplitude [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">'V'</span><span class="p">:</span>
+            <span class="n">chan_factor</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Conversion Factor 00 [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">z_calib</span> <span class="o">=</span> <span class="n">z_calib</span><span class="o">/</span><span class="n">chan_factor</span>
+            <span class="n">z_unit</span> <span class="o">=</span> <span class="s1">'V'</span>
+        
+        <span class="c1">#img data dictionary</span>
+        <span class="n">data_dict_chan</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'data'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'Z'</span><span class="p">:</span> <span class="p">(</span><span class="n">z_calib</span><span class="o">*</span><span class="n">ch_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x_num</span><span class="p">,</span> <span class="n">y_num</span><span class="p">)),</span>
+                                <span class="s1">'X'</span><span class="p">:</span> <span class="n">x_data</span><span class="p">,</span>
+                                <span class="s1">'Y'</span><span class="p">:</span> <span class="n">y_data</span><span class="p">},</span>
+                        <span class="s1">'header'</span><span class="p">:</span> <span class="n">header_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
+                        <span class="s1">'units'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'Z'</span><span class="p">:</span> <span class="n">z_unit</span><span class="p">,</span>
+                                  <span class="s1">'X'</span><span class="p">:</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'X Amplitude [Control]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                  <span class="s1">'Y'</span><span class="p">:</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Y Amplitude [Control]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                                  <span class="p">}</span>
+                        <span class="p">}</span>
+        
+        <span class="n">pos</span> <span class="o">+=</span> <span class="n">data_len</span> <span class="c1">#bytes read so far</span>
+        
+        <span class="k">return</span> <span class="n">data_dict_chan</span><span class="p">,</span> <span class="n">pos</span></div>
+
+
+    <span class="c1"># read *.curves file with image and f-d curves</span>
+<div class="viewcode-block" id="WSxMFuncs._wsxm_readcurves">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxMFuncs.html#SciFiReaders.readers.microscopy.spm.afm.wsxm.WSxMFuncs._wsxm_readcurves">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_wsxm_readcurves</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Reads WSxM spectroscopy curves (*.curves format) from a given file.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            filepath (str): The path to the WSxM file to be read.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: A tuple containing:</span>
+<span class="sd">            - data_dict (dict): A dictionary containing the parsed data from the file.</span>
+<span class="sd">            - y_label (str): The channel name of the Y-axis data.</span>
+<span class="sd">        The structure of the returned data_dict is as follows:</span>
+<span class="sd">        {</span>
+<span class="sd">            'Y axis channel label': {</span>
+<span class="sd">            'image': {</span>
+<span class="sd">                'data': {</span>
+<span class="sd">                'Z': 2D array of embedded topography data,</span>
+<span class="sd">                'X': 1D array of X-axis data,</span>
+<span class="sd">                'Y': 1D array of Y-axis data</span>
+<span class="sd">                },</span>
+<span class="sd">                'header': header_dict</span>
+<span class="sd">            },</span>
+<span class="sd">            'curves': {</span>
+<span class="sd">                curve_index: {</span>
+<span class="sd">                'header': header_dict,</span>
+<span class="sd">                'units': {'x': x_unit, 'y': y_unit},</span>
+<span class="sd">                'data': {</span>
+<span class="sd">                    'approach': {'x': x_data, 'y': y_data},</span>
+<span class="sd">                    'retract': {'x': x_data, 'y': y_data}</span>
+<span class="sd">                }</span>
+<span class="sd">                }</span>
+<span class="sd">            }</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+<span class="sd">        """</span>
+
+        <span class="n">data_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span><span class="s1">'rb'</span><span class="p">)</span>
+        <span class="n">header_dict_top</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">_wsxm_readheader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="n">data_dict_chan</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">_wsxm_readimg</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">header_dict_top</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span> 
+        
+        <span class="n">data_format</span> <span class="o">=</span> <span class="n">header_dict_top</span><span class="p">[</span><span class="s1">'Image Data Type [General Info]'</span><span class="p">]</span>
+        <span class="n">point_length</span><span class="p">,</span> <span class="n">type_code</span>  <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">DATA_TYPES</span><span class="p">[</span><span class="n">data_format</span><span class="p">]</span>
+        <span class="n">data_dict_curv</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">header_dict</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">_wsxm_readheader</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">)</span>
+            <span class="n">header_dict</span><span class="p">[</span><span class="s1">'File path'</span><span class="p">]</span> <span class="o">=</span> <span class="n">filepath</span> <span class="c1">#file path included to header </span>
+            <span class="n">line_pts</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Number of points [General Info]'</span><span class="p">])</span>
+            <span class="n">line_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Number of lines [General Info]'</span><span class="p">])</span>
+            <span class="n">y_label</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Y axis text [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'['</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">x_label</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'X axis text [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'['</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">curv_ind</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Index of this Curve [Control]'</span><span class="p">])</span>
+            <span class="n">curv_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Number of Curves in this serie [Control]'</span><span class="p">])</span>
+            <span class="n">chan_fact</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Conversion Factor 00 [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">chan_inv</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Channel is inverted [General Info]'</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">chan_inv</span> <span class="o">==</span> <span class="s1">'Yes'</span><span class="p">:</span>
+                <span class="n">chan_fact</span> <span class="o">=</span> <span class="o">-</span><span class="n">chan_fact</span>
+            <span class="n">chan_offs</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Conversion Offset 00 [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Spectroscopy channel'</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_label</span> <span class="c1">#Insert channel name information into dictionary</span>
+            
+            <span class="n">line_order</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'approach'</span><span class="p">,</span> <span class="s1">'retract'</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'First Forward [Miscellaneous]'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'No'</span><span class="p">:</span> <span class="c1">#CHECK THIS</span>
+                <span class="n">line_order</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'retract'</span><span class="p">,</span> <span class="s1">'approach'</span><span class="p">]</span>
+
+            <span class="n">data_len</span> <span class="o">=</span> <span class="n">line_pts</span><span class="o">*</span><span class="n">line_num</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">point_length</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">line_pts</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1">#skip if no data for curve exists (bug in file format)</span>
+                <span class="k">continue</span>
+            
+            <span class="n">bin_data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">data_len</span><span class="p">)</span>
+            <span class="n">ch_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">iter_unpack</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">type_code</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span> <span class="n">bin_data</span><span class="p">)))</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+            <span class="n">x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">ch_array</span><span class="p">[::</span><span class="mi">2</span><span class="p">],</span> <span class="n">line_num</span><span class="p">)</span>
+            <span class="n">y_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">ch_array</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">],</span> <span class="n">line_num</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">line_num</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">line_order</span><span class="p">))):</span>
+                <span class="n">k</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">line_order</span><span class="p">)</span> <span class="o">*</span> <span class="n">j</span>
+                <span class="n">curv_ind_j</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">curv_ind</span><span class="si">}{</span><span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s2">"a"</span><span class="p">)</span><span class="o">+</span><span class="n">j</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span> <span class="k">if</span> <span class="n">line_num</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">curv_ind</span>
+                <span class="n">data_dict_curv</span><span class="p">[</span><span class="n">curv_ind_j</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'header'</span><span class="p">:</span> <span class="n">header_dict_top</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="o">|</span> <span class="n">header_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="c1">#merge header dictionaries</span>
+                                              <span class="s1">'data'</span><span class="p">:</span> <span class="p">{},</span>
+                                              <span class="s1">'units'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'x'</span><span class="p">:</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'X axis unit [General Info]'</span><span class="p">],</span>
+                                                        <span class="s1">'y'</span><span class="p">:</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Conversion Factor 00 [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                                                        <span class="p">}</span>
+                                            <span class="p">}</span> 
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">curv_dir</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">line_order</span><span class="p">):</span>
+                    <span class="n">data_dict_curv</span><span class="p">[</span><span class="n">curv_ind_j</span><span class="p">][</span><span class="s1">'data'</span><span class="p">][</span><span class="n">curv_dir</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s1">'x'</span><span class="p">:</span> <span class="n">x_data</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="n">i</span><span class="p">],</span>
+                        <span class="s1">'y'</span><span class="p">:</span> <span class="n">chan_offs</span><span class="o">+</span><span class="p">(</span><span class="n">y_data</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">chan_fact</span><span class="p">)</span>
+                        <span class="p">}</span>                                                  
+            
+            <span class="k">if</span> <span class="n">curv_ind</span> <span class="o">==</span> <span class="n">curv_num</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pos</span> <span class="o">+=</span> <span class="n">data_len</span> <span class="c1">#bytes read so far</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">data_dict</span><span class="p">[</span><span class="n">y_label</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'image'</span><span class="p">:</span> <span class="n">data_dict_chan</span><span class="p">,</span>
+                            <span class="s1">'curves'</span><span class="p">:</span> <span class="n">data_dict_curv</span>
+                            <span class="p">}</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        
+        <span class="k">return</span> <span class="n">data_dict</span><span class="p">,</span> <span class="n">y_label</span></div>
+
+
+    <span class="c1"># read *.cur WSxM file</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_wsxm_readcur</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Reads WSxM spectroscopy curve (*.cur) files and extracts the data.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            filepath (str): The path to the .cur file to be read.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: A tuple containing:</span>
+<span class="sd">                - data_dict (dict): A dictionary containing the extracted data.</span>
+<span class="sd">                - y_label (str): The channel name for the Y-axis data.</span>
+<span class="sd">        The structure of the returned data_dict is as follows:</span>
+<span class="sd">        {</span>
+<span class="sd">            'Y axis channel label': {</span>
+<span class="sd">                'curves': {</span>
+<span class="sd">                    curve_index: {</span>
+<span class="sd">                        'header': header_dict,</span>
+<span class="sd">                        'units': {'x': x_unit, 'y': y_unit},</span>
+<span class="sd">                        'data': {</span>
+<span class="sd">                            'approach': {'x': x_data, 'y': y_data},</span>
+<span class="sd">                            'retract': {'x': x_data, 'y': y_data}</span>
+<span class="sd">                },</span>
+<span class="sd">                'image': {}</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+<span class="sd">        Note:</span>
+<span class="sd">            - The 'image' key is empty in this case as it does not exist in .cur files.</span>
+<span class="sd">        """</span>
+
+        <span class="n">data_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span><span class="s1">'rb'</span><span class="p">)</span>
+        <span class="n">header_dict</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">_wsxm_readheader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'File path'</span><span class="p">]</span> <span class="o">=</span> <span class="n">filepath</span> <span class="c1">#file path included to header</span>
+
+        <span class="k">if</span> <span class="s1">'Index of this Curve [Control]'</span> <span class="ow">in</span> <span class="n">header_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="c1">#for spectroscopy curves</span>
+            <span class="n">line_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Number of lines [General Info]'</span><span class="p">])</span>
+            <span class="n">y_label</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Y axis text [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'['</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">x_label</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'X axis text [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'['</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Index of this Curve [Control]'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'Average'</span><span class="p">:</span> <span class="c1">#for average curves</span>
+                <span class="n">curv_ind</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Index of this Curve [Control]'</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">curv_ind</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Index of this Curve [Control]'</span><span class="p">])</span>
+            <span class="n">curv_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Number of Curves in this serie [Control]'</span><span class="p">])</span>
+            <span class="n">chan_fact</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Conversion Factor 00 [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">y_unit</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Conversion Factor 00 [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">chan_inv</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Channel is inverted [General Info]'</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">chan_inv</span> <span class="o">==</span> <span class="s1">'Yes'</span><span class="p">:</span>
+                <span class="n">chan_fact</span> <span class="o">=</span> <span class="o">-</span><span class="n">chan_fact</span>
+            <span class="n">chan_offs</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Conversion Offset 00 [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            
+            <span class="n">line_order</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'approach'</span><span class="p">,</span> <span class="s1">'retract'</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'First Forward [Miscellaneous]'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'No'</span><span class="p">:</span> <span class="c1">#CHECK THIS</span>
+                <span class="n">line_order</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'retract'</span><span class="p">,</span> <span class="s1">'approach'</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1">#for other kinds of *.cur (e.g. tune data)</span>
+            <span class="n">line_pts</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Number of points [General Info]'</span><span class="p">])</span>
+            <span class="n">line_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Number of lines [General Info]'</span><span class="p">])</span>
+            <span class="n">y_label</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Y axis text [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'['</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">x_label</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'X axis text [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'['</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="c1">#set generic values for irrelevant parameters here</span>
+            <span class="n">curv_ind</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">curv_num</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">chan_fact</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">chan_offs</span> <span class="o">=</span> <span class="mi">0</span>  
+            <span class="n">y_unit</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Y axis unit [General Info]'</span><span class="p">]</span>                         
+            <span class="n">line_order</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">y_label</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">ln_i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">'</span> <span class="k">for</span> <span class="n">ln_i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">line_num</span><span class="p">)]</span>
+        
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Spectroscopy channel'</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_label</span> <span class="c1">#Insert channel name information into dictionary</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">data_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ln</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+            <span class="n">ln_array</span> <span class="o">=</span> <span class="n">ln</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'latin-1'</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">'ignore'</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'#QNAN'</span><span class="p">,</span><span class="s1">''</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)</span>
+            <span class="n">data_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span><span class="n">ln_array</span><span class="p">)))</span>
+        <span class="n">data_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_list</span><span class="p">)</span> <span class="c1">#data matrix   </span>
+
+        <span class="k">if</span> <span class="n">y_label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">data_dict</span><span class="p">[</span><span class="n">y_label</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'curves'</span><span class="p">:{},</span> <span class="s1">'image'</span><span class="p">:{}}</span>
+
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">line_num</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">line_order</span><span class="p">))):</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">line_order</span><span class="p">)</span> <span class="o">*</span> <span class="n">j</span>
+            <span class="n">curv_ind_j</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">curv_ind</span><span class="si">}{</span><span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s2">"a"</span><span class="p">)</span><span class="o">+</span><span class="n">j</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span> <span class="k">if</span> <span class="n">line_num</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">curv_ind</span>
+            <span class="n">data_dict</span><span class="p">[</span><span class="n">y_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">][</span><span class="n">curv_ind_j</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'header'</span><span class="p">:</span> <span class="n">header_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> 
+                                                        <span class="s1">'data'</span><span class="p">:</span> <span class="p">{},</span>
+                                                        <span class="s1">'units'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'x'</span><span class="p">:</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'X axis unit [General Info]'</span><span class="p">],</span>
+                                                                <span class="s1">'y'</span><span class="p">:</span> <span class="n">y_unit</span>
+                                                                <span class="p">}</span>
+                                                        <span class="p">}</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">curv_dir</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">line_order</span><span class="p">):</span>
+                <span class="n">data_dict</span><span class="p">[</span><span class="n">y_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">][</span><span class="n">curv_ind_j</span><span class="p">][</span><span class="s1">'data'</span><span class="p">][</span><span class="n">curv_dir</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">'x'</span><span class="p">:</span> <span class="n">data_mat</span><span class="p">[:,</span><span class="n">k</span><span class="o">+</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="p">)],</span>
+                    <span class="s1">'y'</span><span class="p">:</span> <span class="n">chan_offs</span><span class="o">+</span><span class="p">(</span><span class="n">data_mat</span><span class="p">[:,</span><span class="n">k</span><span class="o">+</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span><span class="o">*</span><span class="n">chan_fact</span><span class="p">)</span> <span class="c1">#converted to units</span>
+                    <span class="p">}</span>
+
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        
+        <span class="k">return</span> <span class="n">data_dict</span><span class="p">,</span> <span class="n">y_label</span>
+
+    <span class="c1">#read *.stp spectroscopy curves. Pass "data_dict" to update data of both approach and retract into it correctly</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_wsxm_readstp</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">data_dict</span><span class="o">=</span><span class="p">{}):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Reads a WSxM .stp spectroscopy file and extracts the data into a dictionary.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            filepath (str): The path to the .stp file to be read.</span>
+<span class="sd">            data_dict (dict, optional): A dictionary to store the extracted data. </span>
+<span class="sd">            Use this to combine "approach" and "retract" curve data spread across different files into the same dictionary passed here.</span>
+<span class="sd">            Defaults to an empty dictionary.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: A tuple containing:</span>
+<span class="sd">                - data_dict (dict): The dictionary containing the extracted data.</span>
+<span class="sd">                - chan_label (str): The label of the spectroscopy channel.</span>
+<span class="sd">        The structure of the returned data_dict is as follows:</span>
+<span class="sd">        {</span>
+<span class="sd">            'Channel label': {</span>
+<span class="sd">                'curves': {</span>
+<span class="sd">                    curve_index: {</span>
+<span class="sd">                        'header': header_dict,</span>
+<span class="sd">                        'units': {'x': x_unit', 'y': y_unit},</span>
+<span class="sd">                        'data': {</span>
+<span class="sd">                            'approach': {'x': x_data, 'y': y_data},</span>
+<span class="sd">                            'retract': {'x': x_data, 'y': y_data}</span>
+<span class="sd">                        }</span>
+<span class="sd">                    }</span>
+<span class="sd">                },</span>
+<span class="sd">                'image': {}</span>
+<span class="sd">            }</span>
+<span class="sd">        }</span>
+<span class="sd">        """</span>
+
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span><span class="s1">'rb'</span><span class="p">)</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">filepath</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">header_dict</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">_wsxm_readheader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'File path'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">filepath</span><span class="p">]</span> <span class="c1">#file path included to header</span>
+        <span class="n">data_format</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Image Data Type [General Info]'</span><span class="p">]</span>
+        
+        <span class="n">x_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Number of rows [General Info]'</span><span class="p">])</span>
+        <span class="n">y_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Number of columns [General Info]'</span><span class="p">])</span>
+        <span class="n">x_len</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'X Amplitude [Control]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">y_len</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Y Amplitude [Control]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">z_len</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Z Amplitude [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">x_dir</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'X scanning direction [General Info]'</span><span class="p">]</span>
+        <span class="n">y_dir</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Y scanning direction [General Info]'</span><span class="p">]</span>
+        <span class="n">file_dirkey</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_dirkey</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">chan_label</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'_'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> 
+            <span class="n">z_dir</span> <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">SPECT_DICT</span><span class="p">[</span><span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">]]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">file_dirkey_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">'line\_\d</span><span class="si">{1}</span><span class="s1">'</span><span class="p">,</span> <span class="n">file_dirkey</span><span class="p">)</span>
+            <span class="n">chan_label</span> <span class="o">=</span> <span class="n">file_dirkey</span><span class="p">[:</span><span class="n">file_dirkey_match</span><span class="o">.</span><span class="n">start</span><span class="p">()]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'_'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">z_dir</span> <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">SPECT_DICT</span><span class="p">[</span><span class="n">x_dir</span><span class="p">]</span> 
+            
+        <span class="k">if</span> <span class="s1">'X starting offset [General Info]'</span> <span class="ow">in</span> <span class="n">header_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="c1">#for "3D mode" images</span>
+            <span class="n">x_offset</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'X starting offset [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">y_offset</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Y starting offset [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x_offset</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">y_offset</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Spectroscopy channel'</span><span class="p">]</span> <span class="o">=</span> <span class="n">chan_label</span> <span class="c1">#Insert channel name information into dictionary</span>
+
+        <span class="n">z_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x_offset</span><span class="p">,</span> <span class="n">x_offset</span><span class="o">+</span><span class="n">x_len</span><span class="p">,</span> <span class="n">y_num</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1">#CHECK THIS</span>
+        <span class="c1">#read binary image data</span>
+        <span class="n">point_length</span><span class="p">,</span> <span class="n">type_code</span>  <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">DATA_TYPES</span><span class="p">[</span><span class="n">data_format</span><span class="p">]</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">data_len</span> <span class="o">=</span> <span class="n">x_num</span><span class="o">*</span><span class="n">y_num</span><span class="o">*</span><span class="n">point_length</span>
+        <span class="n">bin_data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">data_len</span><span class="p">)</span>
+        <span class="n">ch_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">iter_unpack</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">type_code</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span> <span class="n">bin_data</span><span class="p">)))</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> 
+        <span class="n">ch_mat</span> <span class="o">=</span> <span class="n">ch_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x_num</span><span class="p">,</span><span class="n">y_num</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">z_len</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1">#for zero data</span>
+            <span class="n">z_calib</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">z_calib</span> <span class="o">=</span> <span class="n">z_len</span><span class="o">/</span><span class="p">(</span><span class="n">ch_array</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">ch_array</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+        
+        <span class="c1">#create separate curve data for each line (consistent with '1D' data format)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x_num</span><span class="p">):</span> 
+            <span class="n">curv_ind</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>        
+            <span class="c1">#data dictionary initialised in a consistant format (also check wsxm_readcurves())</span>
+            <span class="k">if</span> <span class="n">chan_label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">data_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'curves'</span><span class="p">:</span> <span class="p">{},</span> <span class="s1">'image'</span><span class="p">:{}}</span>
+            <span class="k">if</span> <span class="n">curv_ind</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">data_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">][</span><span class="n">curv_ind</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'data'</span><span class="p">:</span> <span class="p">{},</span>
+                                                             <span class="s1">'header'</span><span class="p">:</span> <span class="n">header_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
+                                                             <span class="s1">'units'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'x'</span><span class="p">:</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'X Amplitude [Control]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                                       <span class="s1">'y'</span><span class="p">:</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Z Amplitude [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                                                                       <span class="p">}</span>
+                                                            <span class="p">}</span>
+                <span class="c1">#insert curve number info into header</span>
+                <span class="n">data_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">][</span><span class="n">curv_ind</span><span class="p">][</span><span class="s1">'header'</span><span class="p">][</span><span class="s1">'Index of this Curve [Control]'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">curv_ind</span><span class="p">)</span> 
+                <span class="n">data_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">][</span><span class="n">curv_ind</span><span class="p">][</span><span class="s1">'header'</span><span class="p">][</span><span class="s1">'Number of Curves in this serie [Control]'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">x_num</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">z_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">][</span><span class="n">curv_ind</span><span class="p">][</span><span class="s1">'data'</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">data_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">][</span><span class="n">curv_ind</span><span class="p">][</span><span class="s1">'data'</span><span class="p">][</span><span class="n">z_dir</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">if</span> <span class="n">filepath</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">][</span><span class="n">curv_ind</span><span class="p">][</span><span class="s1">'header'</span><span class="p">][</span><span class="s1">'File path'</span><span class="p">]:</span> <span class="c1">#file path included to header</span>
+                <span class="n">data_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">][</span><span class="n">curv_ind</span><span class="p">][</span><span class="s1">'header'</span><span class="p">][</span><span class="s1">'File path'</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+            <span class="n">data_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">][</span><span class="n">curv_ind</span><span class="p">][</span><span class="s1">'data'</span><span class="p">][</span><span class="n">z_dir</span><span class="p">][</span><span class="s1">'x'</span><span class="p">]</span> <span class="o">=</span> <span class="n">z_data</span>
+            <span class="n">data_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">][</span><span class="n">curv_ind</span><span class="p">][</span><span class="s1">'data'</span><span class="p">][</span><span class="n">z_dir</span><span class="p">][</span><span class="s1">'y'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">z_calib</span><span class="o">*</span><span class="n">ch_mat</span><span class="p">[:][</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">x_dir</span> <span class="o">==</span> <span class="s1">'Forward'</span><span class="p">:</span>
+                <span class="n">data_dict</span><span class="p">[</span><span class="n">chan_label</span><span class="p">][</span><span class="s1">'curves'</span><span class="p">][</span><span class="n">curv_ind</span><span class="p">][</span><span class="s1">'data'</span><span class="p">][</span><span class="n">z_dir</span><span class="p">][</span><span class="s1">'y'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">((</span><span class="n">z_calib</span><span class="o">*</span><span class="n">ch_mat</span><span class="p">[:][</span><span class="n">i</span><span class="p">]))</span>
+
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        
+        <span class="k">return</span> <span class="n">data_dict</span><span class="p">,</span> <span class="n">chan_label</span>
+    
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_wsxm_readforcevol</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Reads a WSxM .gsi force-volume data and extracts the data into a dictionary.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            filepath (str): The path to the .stp file to be read.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: A tuple containing:</span>
+<span class="sd">                - data_dict_chan (dict): The dictionary containing the extracted data.</span>
+<span class="sd">                - chan_label (str): The label of the spectroscopy channel.</span>
+<span class="sd">                - topo_data (numpy.ndarray): 2D array containing topography data.</span>
+<span class="sd">        The structure of the returned data_dict_chan is as follows:</span>
+<span class="sd">        {</span>
+<span class="sd">            'header': header_dict,</span>
+<span class="sd">            'units': {</span>
+<span class="sd">                    'ZZ': data_unit,</span>
+<span class="sd">                    'X': x_unit,</span>
+<span class="sd">                    'Y': y_unit,</span>
+<span class="sd">                    'Z': z_unit,</span>
+<span class="sd">                    }</span>
+<span class="sd">            'data': {</span>
+<span class="sd">                    'ZZ': 3D data,</span>
+<span class="sd">                    'X': x_data,</span>
+<span class="sd">                    'Y': y_data,</span>
+<span class="sd">                    'Z': z_data</span>
+<span class="sd">                    },</span>
+<span class="sd">            </span>
+<span class="sd">        }</span>
+<span class="sd">        """</span>
+
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span><span class="s1">'rb'</span><span class="p">)</span>
+        <span class="n">header_dict</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">_wsxm_readheader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'File path'</span><span class="p">]</span> <span class="o">=</span> <span class="n">filepath</span> <span class="c1">#file path included to header</span>
+
+        <span class="n">data_format</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Image Data Type [General Info]'</span><span class="p">]</span>
+        <span class="n">chan_label</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Acquisition channel [General Info]'</span><span class="p">]</span>
+        <span class="n">x_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Number of rows [General Info]'</span><span class="p">])</span>
+        <span class="n">y_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Number of columns [General Info]'</span><span class="p">])</span>
+        <span class="n">chan_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Number of points per ramp [General Info]'</span><span class="p">])</span>
+        <span class="n">x_len</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'X Amplitude [Control]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">y_len</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Y Amplitude [Control]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">z_len</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Z Amplitude [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">chan_adc2v</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'ADC to V conversion factor [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">chan_fact</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Conversion factor 0 for input channel [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">chan_offs</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Conversion offset 0 for input channel [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#0</span>
+
+        <span class="n">chan_inv</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Channel is inverted [General Info]'</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">chan_inv</span> <span class="o">==</span> <span class="s1">'Yes'</span><span class="p">:</span>
+            <span class="n">chan_fact</span> <span class="o">=</span> <span class="o">-</span><span class="n">chan_fact</span>
+                
+        <span class="n">x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x_len</span><span class="p">,</span> <span class="n">x_num</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">y_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">y_len</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y_num</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+        <span class="n">z_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">chan_num</span><span class="p">):</span>
+            <span class="n">z_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">z_data</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="sa">f</span><span class="s1">'Image </span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s1">03</span><span class="si">}</span><span class="s1"> [Spectroscopy images ramp value list]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">]))</span>
+
+        <span class="n">z_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">z_data</span><span class="p">)</span> <span class="c1">#reverse z data order to make zero as point of contact</span>
+        
+        <span class="c1">#read binary image data</span>
+        <span class="n">point_length</span><span class="p">,</span> <span class="n">type_code</span>  <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">DATA_TYPES</span><span class="p">[</span><span class="n">data_format</span><span class="p">]</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">data_len</span> <span class="o">=</span> <span class="n">x_num</span><span class="o">*</span><span class="n">y_num</span><span class="o">*</span><span class="n">point_length</span>
+        <span class="c1">#read first topography data</span>
+        <span class="n">bin_data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">data_len</span><span class="p">)</span>
+        <span class="n">topo_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">iter_unpack</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">type_code</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span> <span class="n">bin_data</span><span class="p">)))</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">z_len</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1">#for zero data</span>
+            <span class="n">topo_calib</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">topo_calib</span> <span class="o">=</span> <span class="n">z_len</span><span class="o">/</span><span class="p">(</span><span class="n">topo_array</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">topo_array</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+        
+        <span class="n">topo_data</span> <span class="o">=</span> <span class="n">topo_calib</span><span class="o">*</span><span class="n">topo_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x_num</span><span class="p">,</span> <span class="n">y_num</span><span class="p">)</span> <span class="c1">#topography data</span>
+
+        <span class="n">pos</span> <span class="o">+=</span> <span class="n">data_len</span>
+        <span class="n">ch_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1">#initialize channel data array</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">chan_num</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">bin_data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">data_len</span><span class="p">)</span>
+            <span class="n">ch_array_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">iter_unpack</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">type_code</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span> <span class="n">bin_data</span><span class="p">)))</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+            <span class="n">ch_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ch_array</span><span class="p">,</span> <span class="n">chan_offs</span><span class="o">+</span><span class="p">(</span><span class="n">ch_array_temp</span><span class="o">*</span><span class="n">chan_adc2v</span><span class="o">*</span><span class="n">chan_fact</span><span class="p">))</span>
+            <span class="n">pos</span> <span class="o">+=</span> <span class="n">data_len</span> <span class="c1">#next image</span>
+            
+        <span class="c1">#img data dictionary</span>
+        <span class="n">data_dict_chan</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'data'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'ZZ'</span><span class="p">:</span> <span class="n">ch_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">chan_num</span><span class="p">,</span><span class="n">y_num</span><span class="p">,</span><span class="n">x_num</span><span class="p">),</span><span class="c1">#,</span>
+                                <span class="s1">'X'</span><span class="p">:</span> <span class="n">x_data</span><span class="p">,</span>
+                                <span class="s1">'Y'</span><span class="p">:</span> <span class="n">y_data</span><span class="p">,</span>
+                                <span class="s1">'Z'</span><span class="p">:</span> <span class="n">z_data</span>
+                                <span class="p">},</span>
+                        <span class="s1">'header'</span><span class="p">:</span> <span class="n">header_dict</span><span class="p">,</span>
+                        <span class="s1">'units'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'ZZ'</span><span class="p">:</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Conversion factor 0 for input channel [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                    <span class="s1">'X'</span><span class="p">:</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'X Amplitude [Control]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                    <span class="s1">'Y'</span><span class="p">:</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Y Amplitude [Control]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                    <span class="s1">'Z'</span><span class="p">:</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Z Amplitude [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                    <span class="p">}</span>
+                        <span class="p">}</span>
+        
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        
+        <span class="k">return</span> <span class="n">data_dict_chan</span><span class="p">,</span> <span class="n">chan_label</span><span class="p">,</span> <span class="n">topo_data</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_wsxm_readmovie</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Reads a WSxM .MOV and .mpp movie data and extracts the data into a dictionary.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            filepath (str): The path to the .stp file to be read.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: A tuple containing:</span>
+<span class="sd">                - data_dict_chan (dict): The dictionary containing the extracted data.</span>
+<span class="sd">                - chan_label (str): The label of the spectroscopy channel.</span>
+<span class="sd">        The structure of the returned data_dict_chan is as follows:</span>
+<span class="sd">        {</span>
+<span class="sd">            'header': header_dict,</span>
+<span class="sd">            'units': {</span>
+<span class="sd">                    'ZZ': data_unit,</span>
+<span class="sd">                    'X': x_unit,</span>
+<span class="sd">                    'Y': y_unit,</span>
+<span class="sd">                    'Z': z_unit,</span>
+<span class="sd">                    }</span>
+<span class="sd">            'data': {</span>
+<span class="sd">                    'ZZ': 3D data,</span>
+<span class="sd">                    'X': x_data,</span>
+<span class="sd">                    'Y': y_data,</span>
+<span class="sd">                    'Z': z_data</span>
+<span class="sd">                    },</span>
+<span class="sd">            </span>
+<span class="sd">        }</span>
+<span class="sd">        """</span>
+
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span><span class="s1">'rb'</span><span class="p">)</span>
+        <span class="n">header_dict</span><span class="p">,</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">_wsxm_readheader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'File path'</span><span class="p">]</span> <span class="o">=</span> <span class="n">filepath</span> <span class="c1">#file path included to header</span>
+
+        <span class="n">data_format</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Image Data Type [General Info]'</span><span class="p">]</span>
+        <span class="n">chan_label</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Acquisition channel [General Info]'</span><span class="p">]</span>
+        <span class="n">x_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Number of rows [General Info]'</span><span class="p">])</span>
+        <span class="n">y_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Number of columns [General Info]'</span><span class="p">])</span>
+        <span class="n">chan_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Number of Frames [General Info]'</span><span class="p">])</span>
+        <span class="n">x_len</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'X Amplitude [Control]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">y_len</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Y Amplitude [Control]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">z_len</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Z Amplitude [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">z_min</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Minimum [Miscellaneous]'</span><span class="p">])</span>
+        <span class="n">z_max</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Maximum [Miscellaneous]'</span><span class="p">])</span>
+                
+        <span class="n">x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x_len</span><span class="p">,</span> <span class="n">x_num</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">y_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">y_len</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y_num</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">z_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">chan_num</span><span class="p">,</span> <span class="n">chan_num</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1">#frame number array</span>
+
+        <span class="c1">#read binary image data</span>
+        <span class="n">point_length</span><span class="p">,</span> <span class="n">type_code</span>  <span class="o">=</span> <span class="n">WSxMFuncs</span><span class="o">.</span><span class="n">DATA_TYPES</span><span class="p">[</span><span class="n">data_format</span><span class="p">]</span>
+        <span class="n">data_len</span> <span class="o">=</span> <span class="n">x_num</span><span class="o">*</span><span class="n">y_num</span><span class="o">*</span><span class="n">point_length</span>
+
+        <span class="k">if</span> <span class="n">z_len</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1">#for zero data</span>
+            <span class="n">z_calib</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">z_calib</span> <span class="o">=</span> <span class="n">z_len</span><span class="o">/</span><span class="p">(</span><span class="n">z_max</span><span class="o">-</span><span class="n">z_min</span><span class="p">)</span>
+        
+        <span class="n">z_unit</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Z Amplitude [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c1">#the following fixes a bug in the data format for amplitude channel, ensures that data is read in volts, not nanometers (which is fake)</span>
+        <span class="k">if</span> <span class="n">chan_label</span> <span class="o">==</span> <span class="s1">'Amplitude'</span> <span class="ow">and</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Z Amplitude [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">'V'</span><span class="p">:</span>
+            <span class="n">chan_factor</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'Conversion Factor 00 [General Info]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">z_calib</span> <span class="o">=</span> <span class="n">z_calib</span><span class="o">/</span><span class="n">chan_factor</span>
+            <span class="n">z_unit</span> <span class="o">=</span> <span class="s1">'V'</span>
+
+        <span class="n">ch_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1">#initialize channel data array</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">chan_num</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">bin_data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">data_len</span><span class="p">)</span>
+            <span class="n">ch_array_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">iter_unpack</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">type_code</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span> <span class="n">bin_data</span><span class="p">)))</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>          
+            <span class="n">ch_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ch_array</span><span class="p">,</span> <span class="n">z_calib</span><span class="o">*</span><span class="n">ch_array_temp</span><span class="p">)</span>
+            <span class="n">pos</span> <span class="o">+=</span> <span class="n">data_len</span> <span class="c1">#next image</span>
+            
+        <span class="c1">#img data dictionary</span>
+        <span class="n">data_dict_chan</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'data'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'ZZ'</span><span class="p">:</span> <span class="n">ch_array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">chan_num</span><span class="p">,</span><span class="n">y_num</span><span class="p">,</span><span class="n">x_num</span><span class="p">),</span><span class="c1">#,</span>
+                                <span class="s1">'X'</span><span class="p">:</span> <span class="n">x_data</span><span class="p">,</span>
+                                <span class="s1">'Y'</span><span class="p">:</span> <span class="n">y_data</span><span class="p">,</span>
+                                <span class="s1">'Z'</span><span class="p">:</span> <span class="n">z_data</span>
+                                <span class="p">},</span>
+                        <span class="s1">'header'</span><span class="p">:</span> <span class="n">header_dict</span><span class="p">,</span>
+                        <span class="s1">'units'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'ZZ'</span><span class="p">:</span> <span class="n">z_unit</span><span class="p">,</span>
+                                    <span class="s1">'X'</span><span class="p">:</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'X Amplitude [Control]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                    <span class="s1">'Y'</span><span class="p">:</span> <span class="n">header_dict</span><span class="p">[</span><span class="s1">'Y Amplitude [Control]'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                    <span class="s1">'Z'</span><span class="p">:</span> <span class="s1">'frame'</span><span class="p">,</span>
+                                    <span class="p">}</span>
+                        <span class="p">}</span>
+        
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        
+        <span class="k">return</span> <span class="n">data_dict_chan</span><span class="p">,</span> <span class="n">chan_label</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Pycroscopy contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2020, Pycroscopy contributors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

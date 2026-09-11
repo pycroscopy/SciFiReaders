@@ -1,0 +1,1245 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SciFiReaders.readers.microscopy.spm.stm.nanonis_base &#8212; SciFiReaders 0.12.7 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../../../../_static/documentation_options.js?v=7cf6be21"></script>
+    <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/SciFiReaders/readers/microscopy/spm/stm/nanonis_base';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SciFiReaders 0.12.7 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../index.html">
+                    SciFiReaders
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../available_readers.html">Available Readers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../contact.html">Contact us</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples by method</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/00_developing_a_reader/index.html">Creating a Reader</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/00_developing_a_reader/developing_a_reader.html">Creating a Reader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/index.html">Electron microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/read_dm3_files.html">Reading a DM3 File with ScopeReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/read_nion_files.html">Reading a Nion File with ScopeReader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/index.html">Scanning probe microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/read_mdt_files.html">Parsing .mdt experimental files. Basic example.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/read_fsexp_files.html"><strong>Parsing .fsexp FusionScope HDF5 Experiment Files</strong></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/03_data_formats_and_converters/index.html">Data formats and converters</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/03_data_formats_and_converters/convert_hyperspy.html">Working with Hyperspy Data</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../api.html">API reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../_autosummary/SciFiReaders.html">SciFiReaders</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders/issues/new?title=Issue%20on%20page%20%2F_modules/SciFiReaders/readers/microscopy/spm/stm/nanonis_base.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for SciFiReaders.readers.microscopy.spm.stm.nanonis_base</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">This file is taken directly from naononispy, which is at https://github.com/underchemist/nanonispy</span>
+<span class="sd">and written by @underchemist</span>
+
+<span class="sd">Due to a change to numpy, the existing version of nanonispy does not build. </span>
+
+<span class="sd">The fixed version appears below and is also given as a pull request  to the original package.</span>
+
+<span class="sd">Note that nanonispy was released with the MIT license, as is SciFiReaders. </span>
+
+<span class="sd">Read details about the license in the LICENSE file.</span>
+
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">nanonis_format_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'big endian float 32'</span><span class="p">:</span> <span class="s1">'&gt;f4'</span><span class="p">,</span>
+    <span class="s1">'little endian float 32'</span><span class="p">:</span> <span class="s1">'&lt;f4'</span><span class="p">,</span>
+    <span class="s1">'big endian float 64'</span><span class="p">:</span> <span class="s1">'&gt;f8'</span><span class="p">,</span>
+    <span class="s1">'little endian float 64'</span><span class="p">:</span> <span class="s1">'&lt;f8'</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">nanonis_end_tags</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="s1">':HEADER_END:'</span><span class="p">,</span> <span class="n">scan</span><span class="o">=</span><span class="s1">'SCANIT_END'</span><span class="p">,</span> <span class="n">spec</span><span class="o">=</span><span class="s1">'[DATA]'</span><span class="p">)</span>
+
+<div class="viewcode-block" id="NanonisFile">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.stm.nanonis_base.NanonisFile.html#SciFiReaders.readers.microscopy.spm.stm.nanonis_base.NanonisFile">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">NanonisFile</span><span class="p">:</span>
+
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Base class for Nanonis data files (grid, scan, point spectroscopy).</span>
+
+<span class="sd">    Handles methods and parsing tasks common to all Nanonis files.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fname : str</span>
+<span class="sd">        Name of Nanonis file.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    datadir : str</span>
+<span class="sd">        Directory path for Nanonis file.</span>
+<span class="sd">    basename : str</span>
+<span class="sd">        Just the filename, no path.</span>
+<span class="sd">    fname : str</span>
+<span class="sd">        Full path of Nanonis file.</span>
+<span class="sd">    filetype : str</span>
+<span class="sd">        filetype corresponding to filename extension.</span>
+<span class="sd">    byte_offset : int</span>
+<span class="sd">        Size of header in bytes.</span>
+<span class="sd">    header_raw : str</span>
+<span class="sd">        Unproccessed header information.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
+        <span class="n">_data_format</span> <span class="o">=</span> <span class="n">nanonis_format_dict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">datadir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fname</span> <span class="o">=</span> <span class="n">fname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filetype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_determine_filetype</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">byte_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_byte</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_raw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_raw_header</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">byte_offset</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_determine_filetype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Check last three characters for appropriate file extension,</span>
+<span class="sd">        raise error if not.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            Filetype name associated with extension.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        UnhandledFileError</span>
+<span class="sd">            If last three characters of filename are not one of '3ds',</span>
+<span class="sd">            'sxm', or 'dat'.</span>
+<span class="sd">        """</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="n">fname_ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fname_ext</span> <span class="o">==</span> <span class="s1">'.3ds'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">'grid'</span>
+        <span class="k">elif</span> <span class="n">fname_ext</span> <span class="o">==</span> <span class="s1">'.sxm'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">'scan'</span>
+        <span class="k">elif</span> <span class="n">fname_ext</span> <span class="o">==</span> <span class="s1">'.dat'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">'spec'</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UnhandledFileError</span><span class="p">(</span><span class="s1">'</span><span class="si">{}</span><span class="s1"> is not a supported filetype or does not exist'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basename</span><span class="p">))</span>
+
+<div class="viewcode-block" id="NanonisFile.read_raw_header">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.stm.nanonis_base.NanonisFile.html#SciFiReaders.readers.microscopy.spm.stm.nanonis_base.NanonisFile.read_raw_header">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_raw_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">byte_offset</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Return header as a raw string.</span>
+
+<span class="sd">        Everything before the end tag is considered to be part of the header.</span>
+<span class="sd">        the parsing will be done later by subclass methods.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        byte_offset : int</span>
+<span class="sd">            Size of header in bytes. Read up to this point in file.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            Contents of filename up to byte_offset as a decoded binary</span>
+<span class="sd">            string.</span>
+<span class="sd">        """</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">,</span> <span class="s1">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">byte_offset</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">'replace'</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="NanonisFile.start_byte">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.stm.nanonis_base.NanonisFile.html#SciFiReaders.readers.microscopy.spm.stm.nanonis_base.NanonisFile.start_byte">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">start_byte</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Find first byte after end tag signalling end of header info.</span>
+
+<span class="sd">        Caveat, I believe this is the first byte after the end of the</span>
+<span class="sd">        line that the end tag is found on, not strictly the first byte</span>
+<span class="sd">        directly after the end tag is found. For example in Scan</span>
+<span class="sd">        __init__, byte_offset is incremented by 4 to account for a</span>
+<span class="sd">        'start' byte that is not actual data.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        int</span>
+<span class="sd">            Size of header in bytes.</span>
+<span class="sd">        """</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">,</span> <span class="s1">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">tag</span> <span class="o">=</span> <span class="n">nanonis_end_tags</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">filetype</span><span class="p">]</span>
+
+            <span class="c1"># Set to a default value to know if end_tag wasn't found</span>
+            <span class="n">byte_offset</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="c1"># Convert from bytes to str</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">entry</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+                <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">'</span><span class="si">{}</span><span class="s1"> has non-uft-8 characters, replacing them.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                    <span class="n">entry</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">'replace'</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">entry</span><span class="p">:</span>
+                    <span class="n">byte_offset</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+                    <span class="k">break</span>
+
+            <span class="k">if</span> <span class="n">byte_offset</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">FileHeaderNotFoundError</span><span class="p">(</span>
+                        <span class="s1">'Could not find the </span><span class="si">{}</span><span class="s1"> end tag in </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">basename</span><span class="p">)</span>
+                        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">byte_offset</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_data_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_format</span><span class="p">):</span>
+        <span class="c1"># default value is '&gt;f4' big endian float 32 bit</span>
+        <span class="k">if</span> <span class="n">data_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_format</span> <span class="o">=</span> <span class="n">nanonis_format_dict</span><span class="p">[</span><span class="s1">'big endian float 32'</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data_format</span> <span class="o">=</span> <span class="n">nanonis_format_dict</span><span class="p">[</span><span class="n">data_format</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data_format</span> <span class="o">=</span> <span class="n">nanonis_format_dict</span><span class="p">[</span><span class="s1">'big endian float 32'</span><span class="p">]</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">'</span><span class="si">{}</span><span class="s1"> is not a valid data format'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data_format</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Grid">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.stm.nanonis_base.Grid.html#SciFiReaders.readers.microscopy.spm.stm.nanonis_base.Grid">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Grid</span><span class="p">(</span><span class="n">NanonisFile</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Nanonis grid file class.</span>
+
+<span class="sd">    Contains data loading method specific to Nanonis grid file. Nanonis</span>
+<span class="sd">    3ds files contain a header terminated by '\r\n:HEADER_END:\r\n'</span>
+<span class="sd">    line, after which big endian encoded binary data starts. A grid is</span>
+<span class="sd">    always recorded in an 'up' direction, and data is recorded</span>
+<span class="sd">    sequentially starting from the first pixel. The number of bytes</span>
+<span class="sd">    corresponding to a single pixel will depend on the experiment</span>
+<span class="sd">    parameters. In general the size of one pixel will be a sum of</span>
+
+<span class="sd">        - # fixed parameters</span>
+<span class="sd">        - # experimental parameters</span>
+<span class="sd">        - # sweep signal points (typically bias).</span>
+
+<span class="sd">    Hence if there are 2 fixed parameters, 8 experimental parameters,</span>
+<span class="sd">    and a 512 point bias sweep, a pixel will account 4 x (522) = 2088</span>
+<span class="sd">    bytes of data. The class intuits this from header info and extracts</span>
+<span class="sd">    the data for you and cuts it up into each channel, though normally</span>
+<span class="sd">    this should be just the current.</span>
+
+<span class="sd">    Currently cannot accept grids that are incomplete.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fname : str</span>
+<span class="sd">        Filename for grid file.</span>
+<span class="sd">    header_override : dict, optional</span>
+<span class="sd">        A dict of key:value to override any corresponding key:value should</span>
+<span class="sd">        they be wrong or missing in your header. Keys in header_override must</span>
+<span class="sd">        match keys in Grid.header_raw.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    header : dict</span>
+<span class="sd">        Parsed 3ds header. Relevant fields are converted to float,</span>
+<span class="sd">        otherwise most are string values.</span>
+<span class="sd">    signals : dict</span>
+<span class="sd">        Dict keys correspond to channel name, with values being the</span>
+<span class="sd">        corresponding data array.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    UnhandledFileError</span>
+<span class="sd">        If fname does not have a '.3ds' extension.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">header_override</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">_is_valid_file</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="s1">'3ds'</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_data_format</span><span class="p">(</span><span class="n">data_format</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">_parse_3ds_header</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_raw</span><span class="p">,</span> <span class="n">header_override</span><span class="o">=</span><span class="n">header_override</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_data</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signals</span><span class="p">[</span><span class="s1">'sweep_signal'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_derive_sweep_signal</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signals</span><span class="p">[</span><span class="s1">'topo'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_topo</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Read binary data for Nanonis 3ds file.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Channel name keyed dict of 3d array.</span>
+<span class="sd">        """</span>
+        <span class="c1"># load grid params</span>
+        <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">'dim_px'</span><span class="p">]</span>
+        <span class="n">num_sweep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">'num_sweep_signal'</span><span class="p">]</span>
+        <span class="n">num_param</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">'num_parameters'</span><span class="p">]</span>
+        <span class="n">num_chan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">'num_channels'</span><span class="p">]</span>
+        <span class="n">data_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="c1"># open and seek to start of data</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">,</span> <span class="s1">'rb'</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">byte_offset</span><span class="p">)</span>
+        <span class="n">data_format</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_format</span>
+        <span class="n">griddata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">data_format</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="c1"># pixel size in bytes</span>
+        <span class="n">exp_size_per_pix</span> <span class="o">=</span> <span class="n">num_param</span> <span class="o">+</span> <span class="n">num_sweep</span><span class="o">*</span><span class="n">num_chan</span>
+
+        <span class="c1"># resize from 1d to 3d</span>
+        <span class="n">griddata</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">exp_size_per_pix</span><span class="p">))</span>
+
+        <span class="c1"># experimental parameters are first num_param of every pixel</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">griddata</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:</span><span class="n">num_param</span><span class="p">]</span>
+        <span class="n">data_dict</span><span class="p">[</span><span class="s1">'params'</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span>
+
+        <span class="c1"># extract data for each channel</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chann</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">'channels'</span><span class="p">]):</span>
+            <span class="n">start_ind</span> <span class="o">=</span> <span class="n">num_param</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">num_sweep</span>
+            <span class="n">stop_ind</span> <span class="o">=</span> <span class="n">num_param</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">num_sweep</span>
+            <span class="n">data_dict</span><span class="p">[</span><span class="n">chann</span><span class="p">]</span> <span class="o">=</span> <span class="n">griddata</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">start_ind</span><span class="p">:</span><span class="n">stop_ind</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">data_dict</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_derive_sweep_signal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Computer sweep signal.</span>
+
+<span class="sd">        Based on start and stop points of sweep signal in header, and</span>
+<span class="sd">        number of sweep signal points.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            1d sweep signal, should be sample bias in most cases.</span>
+<span class="sd">        """</span>
+        <span class="c1"># find sweep signal start and end from a given pixel value</span>
+        <span class="n">sweep_start</span><span class="p">,</span> <span class="n">sweep_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">signals</span><span class="p">[</span><span class="s1">'params'</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">num_sweep_signal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">'num_sweep_signal'</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">sweep_start</span><span class="p">,</span> <span class="n">sweep_end</span><span class="p">,</span> <span class="n">num_sweep_signal</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_topo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Extract topographic map based on z-controller height at each</span>
+<span class="sd">        pixel.</span>
+
+<span class="sd">        The data is already extracted, though it lives in the signals</span>
+<span class="sd">        dict under the key 'parameters'. Currently the 4th column is the</span>
+<span class="sd">        Z (m) information at each pixel, should update this to be more</span>
+<span class="sd">        general in case the fixed/experimental parameters are not the</span>
+<span class="sd">        same for other Nanonis users.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            Copy of already extracted data to be more easily accessible</span>
+<span class="sd">            in signals dict.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">signals</span><span class="p">[</span><span class="s1">'params'</span><span class="p">][:,</span> <span class="p">:,</span> <span class="mi">4</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="Scan">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.stm.nanonis_base.Scan.html#SciFiReaders.readers.microscopy.spm.stm.nanonis_base.Scan">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Scan</span><span class="p">(</span><span class="n">NanonisFile</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Nanonis scan file class.</span>
+
+<span class="sd">    Contains data loading methods specific to Nanonis sxm files. The</span>
+<span class="sd">    header is terminated by a 'SCANIT_END' tag followed by the \1A\04</span>
+<span class="sd">    code. The NanonisFile header parse method doesn't account for this</span>
+<span class="sd">    so the Scan __init__ method just adds 4 bytes to the byte_offset</span>
+<span class="sd">    attribute so as to not include this as a datapoint.</span>
+
+<span class="sd">    Data is structured a little differently from grid files, obviously.</span>
+<span class="sd">    For each pixel in the scan, each channel is recorded forwards and</span>
+<span class="sd">    backwards one after the other.</span>
+
+<span class="sd">    Currently cannot take scans that do not have both directions</span>
+<span class="sd">    recorded for each channel, nor incomplete scans.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fname : str</span>
+<span class="sd">        Filename for scan file.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    header : dict</span>
+<span class="sd">        Parsed sxm header. Some fields are converted to float,</span>
+<span class="sd">        otherwise most are string values.</span>
+<span class="sd">    signals : dict</span>
+<span class="sd">        Dict keys correspond to channel name, values correspond to</span>
+<span class="sd">        another dict whose keys are simply forward and backward arrays</span>
+<span class="sd">        for the scan image.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    UnhandledFileError</span>
+<span class="sd">        If fname does not have a '.sxm' extension.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">data_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">_is_valid_file</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="s1">'sxm'</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_data_format</span><span class="p">(</span><span class="n">data_format</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">_parse_sxm_header</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_raw</span><span class="p">)</span>
+
+        <span class="c1"># data begins with 4 byte code, add 4 bytes to offset instead</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">byte_offset</span> <span class="o">+=</span> <span class="mi">4</span>
+
+        <span class="c1"># load data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_data</span><span class="p">()</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Read binary data for Nanonis sxm file.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Channel name keyed dict of each channel array.</span>
+<span class="sd">        """</span>
+        <span class="n">channs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">'data_info'</span><span class="p">][</span><span class="s1">'Name'</span><span class="p">])</span>
+        <span class="n">nchanns</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">channs</span><span class="p">)</span>
+        <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">'scan_pixels'</span><span class="p">]</span>
+
+        <span class="c1"># assume both directions for now</span>
+        <span class="n">ndir</span> <span class="o">=</span> <span class="mi">2</span>
+
+        <span class="n">data_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="c1"># open and seek to start of data</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">,</span> <span class="s1">'rb'</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">byte_offset</span><span class="p">)</span>
+        <span class="n">data_format</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_format</span>
+        <span class="n">scandata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">data_format</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="c1"># reshape</span>
+        <span class="n">scandata_shaped</span> <span class="o">=</span> <span class="n">scandata</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nchanns</span><span class="p">,</span> <span class="n">ndir</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nx</span><span class="p">)</span>
+
+        <span class="c1"># extract data for each channel</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chann</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">channs</span><span class="p">):</span>
+            <span class="n">chann_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">forward</span><span class="o">=</span><span class="n">scandata_shaped</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span>
+                              <span class="n">backward</span><span class="o">=</span><span class="n">scandata_shaped</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:])</span>
+            <span class="n">data_dict</span><span class="p">[</span><span class="n">chann</span><span class="p">]</span> <span class="o">=</span> <span class="n">chann_dict</span>
+
+        <span class="k">return</span> <span class="n">data_dict</span></div>
+
+
+
+<div class="viewcode-block" id="Spec">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.stm.nanonis_base.Spec.html#SciFiReaders.readers.microscopy.spm.stm.nanonis_base.Spec">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Spec</span><span class="p">(</span><span class="n">NanonisFile</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Nanonis point spectroscopy file class.</span>
+
+<span class="sd">    These files are a little easier to handle since they are stored in</span>
+<span class="sd">    ascii format.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fname : str</span>
+<span class="sd">        Filename for spec file.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    header : dict</span>
+<span class="sd">        Parsed dat header.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    UnhandledFileError</span>
+<span class="sd">        If fname does not have a '.dat' extension.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
+        <span class="n">_is_valid_file</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="s1">'dat'</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">_parse_dat_header</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_raw</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_data</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Loads ascii formatted .dat file.</span>
+
+<span class="sd">        Header ended by '[DATA]' tag.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Keys correspond to each channel recorded, including</span>
+<span class="sd">            saved/filtered versions of other channels.</span>
+<span class="sd">        """</span>
+
+        <span class="c1"># done differently since data is ascii, not binary</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">byte_offset</span><span class="p">)</span>
+        <span class="n">data_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="n">column_names</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\t</span><span class="s1">'</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">num_lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_header_lines</span><span class="p">()</span>
+        <span class="n">specdata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">'</span><span class="se">\t</span><span class="s1">'</span><span class="p">,</span> <span class="n">skip_header</span><span class="o">=</span><span class="n">num_lines</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">column_names</span><span class="p">):</span>
+            <span class="n">data_dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">specdata</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">data_dict</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_num_header_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Number of lines the header is composed of"""</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">nanonis_end_tags</span><span class="p">[</span><span class="s1">'spec'</span><span class="p">]</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span>  <span class="c1"># add 2 to skip the tag itself and column names</span>
+        <span class="k">return</span> <span class="mi">0</span></div>
+
+
+
+<div class="viewcode-block" id="UnhandledFileError">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.stm.nanonis_base.UnhandledFileError.html#SciFiReaders.readers.microscopy.spm.stm.nanonis_base.UnhandledFileError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UnhandledFileError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    To be raised when unknown file extension is passed.</span>
+<span class="sd">    """</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="FileHeaderNotFoundError">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.stm.nanonis_base.FileHeaderNotFoundError.html#SciFiReaders.readers.microscopy.spm.stm.nanonis_base.FileHeaderNotFoundError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">FileHeaderNotFoundError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    To be raised when no header information could be determined.</span>
+<span class="sd">    """</span>
+    <span class="k">pass</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_parse_3ds_header</span><span class="p">(</span><span class="n">header_raw</span><span class="p">,</span> <span class="n">header_override</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Parse raw header string.</span>
+
+<span class="sd">    Empirically done based on Nanonis header structure. See Grid</span>
+<span class="sd">    docstring or Nanonis help documentation for more details.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    header_raw : str</span>
+<span class="sd">        Raw header string from read_raw_header() method.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Channel name keyed dict of 3d array.</span>
+<span class="sd">    """</span>
+    <span class="c1"># cleanup string and remove end tag as entry</span>
+    <span class="n">header_entries</span> <span class="o">=</span> <span class="n">header_raw</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\r\n</span><span class="s1">'</span><span class="p">)</span>
+    <span class="n">header_entries</span> <span class="o">=</span> <span class="n">header_entries</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="c1"># Convert the strings to a dictionary.</span>
+    <span class="n">raw_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">header_entries</span><span class="p">:</span>
+        <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="n">_split_header_entry</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+        <span class="n">raw_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+
+    <span class="k">if</span> <span class="n">header_override</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">header_override</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">raw_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>  <span class="c1"># creates new entry if key doesn't match key in raw_dict</span>
+
+    <span class="c1"># Transfer parameters from raw_dict to header_dict</span>
+    <span class="c1"># Get the expected parameters first</span>
+    <span class="n">header_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># grid dimensions in pixels</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'dim_px'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">raw_dict</span><span class="p">[</span><span class="s1">'Grid dim'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' x '</span><span class="p">)]</span>
+        <span class="n">raw_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'Grid dim'</span><span class="p">)</span>
+
+        <span class="c1"># grid frame center position, size, angle. Assumes len(raw_dict['Grid settings']) = 4</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'pos_xy'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">raw_dict</span><span class="p">[</span><span class="s1">'Grid settings'</span><span class="p">][:</span><span class="mi">2</span><span class="p">]]</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'size_xy'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">raw_dict</span><span class="p">[</span><span class="s1">'Grid settings'</span><span class="p">][</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]]</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'angle'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">raw_dict</span><span class="p">[</span><span class="s1">'Grid settings'</span><span class="p">][</span><span class="mi">4</span><span class="p">])</span>
+        <span class="n">raw_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'Grid settings'</span><span class="p">)</span>
+
+        <span class="c1"># sweep signal</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'sweep_signal'</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_dict</span><span class="p">[</span><span class="s1">'Sweep Signal'</span><span class="p">]</span>
+        <span class="n">raw_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'Sweep Signal'</span><span class="p">)</span>
+
+        <span class="c1"># fixed parameters</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'fixed_parameters'</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_dict</span><span class="p">[</span><span class="s1">'Fixed parameters'</span><span class="p">]</span>
+        <span class="n">raw_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'Fixed parameters'</span><span class="p">)</span>
+
+        <span class="c1"># experimental parameters</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'experimental_parameters'</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_dict</span><span class="p">[</span><span class="s1">'Experiment parameters'</span><span class="p">]</span>
+        <span class="n">raw_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'Experiment parameters'</span><span class="p">)</span>
+
+        <span class="c1"># number of parameters (each 4 bytes)</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'num_parameters'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">raw_dict</span><span class="p">[</span><span class="s1">'# Parameters (4 byte)'</span><span class="p">])</span>
+        <span class="n">raw_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'# Parameters (4 byte)'</span><span class="p">)</span>
+
+        <span class="c1"># experiment size in bytes</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'experiment_size'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">raw_dict</span><span class="p">[</span><span class="s1">'Experiment size (bytes)'</span><span class="p">])</span>
+        <span class="n">raw_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'Experiment size (bytes)'</span><span class="p">)</span>
+
+        <span class="c1"># number of points of sweep signal</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'num_sweep_signal'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">raw_dict</span><span class="p">[</span><span class="s1">'Points'</span><span class="p">])</span>
+        <span class="n">raw_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'Points'</span><span class="p">)</span>
+
+        <span class="c1"># channel names</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'channels'</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_dict</span><span class="p">[</span><span class="s1">'Channels'</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'channels'</span><span class="p">])</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="c1"># will be str if only one channel, make list of str so number of channels can be counted properly</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'channels'</span><span class="p">])</span>
+            <span class="n">header_dict</span><span class="p">[</span><span class="s1">'channels'</span><span class="p">]</span> <span class="o">=</span> <span class="n">l</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'num_channels'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="s1">'channels'</span><span class="p">])</span>
+        <span class="n">raw_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'Channels'</span><span class="p">)</span>
+
+        <span class="c1"># measure delay</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'measure_delay'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">raw_dict</span><span class="p">[</span><span class="s1">'Delay before measuring (s)'</span><span class="p">])</span>
+        <span class="n">raw_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'Delay before measuring (s)'</span><span class="p">)</span>
+
+        <span class="c1"># metadata</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'experiment_name'</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_dict</span><span class="p">[</span><span class="s1">'Experiment'</span><span class="p">]</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'start_time'</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_dict</span><span class="p">[</span><span class="s1">'Start time'</span><span class="p">]</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'end_time'</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_dict</span><span class="p">[</span><span class="s1">'End time'</span><span class="p">]</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'user'</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_dict</span><span class="p">[</span><span class="s1">'User'</span><span class="p">]</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="s1">'comment'</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_dict</span><span class="p">[</span><span class="s1">'Comment'</span><span class="p">]</span>
+        <span class="n">raw_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'Experiment'</span><span class="p">)</span>
+        <span class="n">raw_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'Start time'</span><span class="p">)</span>
+        <span class="n">raw_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'End time'</span><span class="p">)</span>
+        <span class="n">raw_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'User'</span><span class="p">)</span>
+        <span class="n">raw_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'Comment'</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s1">' You can edit your header file or provide an override value in header_override'</span>
+
+        <span class="c1"># guide user to using override dict</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">'[</span><span class="si">{key}</span><span class="s1">] is missing from header.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Unexpected value found in header.'</span> <span class="o">+</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span>
+
+    <span class="c1"># fold remaining header entries into dict</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">raw_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+
+    <span class="k">return</span> <span class="n">header_dict</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_parse_sxm_header</span><span class="p">(</span><span class="n">header_raw</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Parse raw header string.</span>
+
+<span class="sd">    Empirically done based on Nanonis header structure. See Scan</span>
+<span class="sd">    docstring or Nanonis help documentation for more details.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    header_raw : str</span>
+<span class="sd">        Raw header string from read_raw_header() method.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Channel name keyed dict of each channel array.</span>
+<span class="sd">    """</span>
+    <span class="n">header_entries</span> <span class="o">=</span> <span class="n">header_raw</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+    <span class="n">header_entries</span> <span class="o">=</span> <span class="n">header_entries</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="n">header_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">entries_to_be_split</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'scan_offset'</span><span class="p">,</span>
+                           <span class="s1">'scan_pixels'</span><span class="p">,</span>
+                           <span class="s1">'scan_range'</span><span class="p">,</span>
+                           <span class="s1">'scan_time'</span><span class="p">]</span>
+
+    <span class="n">entries_to_be_floated</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'scan_offset'</span><span class="p">,</span>
+                             <span class="s1">'scan_range'</span><span class="p">,</span>
+                             <span class="s1">'scan_time'</span><span class="p">,</span>
+                             <span class="s1">'bias'</span><span class="p">,</span>
+                             <span class="s1">'acq_time'</span><span class="p">]</span>
+
+    <span class="n">entries_to_be_inted</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'scan_pixels'</span><span class="p">]</span>
+
+    <span class="n">entries_to_be_dict</span> <span class="o">=</span> <span class="p">[</span><span class="s1">':DATA_INFO:'</span><span class="p">,</span>
+                          <span class="s1">':Z-CONTROLLER:'</span><span class="p">,</span>
+                          <span class="s1">':Multipass-Config:'</span><span class="p">]</span>
+
+    <span class="n">entries_possibly_multilines</span> <span class="o">=</span> <span class="p">[</span><span class="s1">':COMMENT:'</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">entry</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">header_entries</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">entries_to_be_dict</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">header_entries</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">header_entries</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">':'</span><span class="p">):</span>
+                    <span class="k">break</span>
+                <span class="k">if</span> <span class="n">header_entries</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'</span><span class="se">\t</span><span class="s1">'</span><span class="p">:</span>
+                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">header_dict</span><span class="p">[</span><span class="n">entry</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">':'</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span> <span class="o">=</span> <span class="n">_parse_scan_header_table</span><span class="p">(</span><span class="n">header_entries</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">count</span><span class="p">])</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">entries_possibly_multilines</span><span class="p">:</span>
+            <span class="n">multilines_entry</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">header_entries</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">header_entries</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">':'</span><span class="p">):</span>
+                    <span class="k">break</span>
+                <span class="n">multilines_entry</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">header_entries</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">header_dict</span><span class="p">[</span><span class="n">entry</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">':'</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span> <span class="o">=</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">multilines_entry</span><span class="p">)</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">':'</span><span class="p">):</span>
+            <span class="n">header_dict</span><span class="p">[</span><span class="n">entry</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">':'</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span> <span class="o">=</span> <span class="n">header_entries</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">entries_to_be_split</span><span class="p">:</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">header_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">entries_to_be_floated</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">header_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">header_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">entries_to_be_inted</span><span class="p">:</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">header_dict</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">header_dict</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_parse_dat_header</span><span class="p">(</span><span class="n">header_raw</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Parse point spectroscopy header.</span>
+
+<span class="sd">    Each key-value pair is separated by '\t' characters. Values may be</span>
+<span class="sd">    further delimited by more '\t' characters.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Parsed point spectroscopy header.</span>
+<span class="sd">    """</span>
+    <span class="n">header_entries</span> <span class="o">=</span> <span class="n">header_raw</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\r\n</span><span class="s1">'</span><span class="p">)</span>
+    <span class="n">header_entries</span> <span class="o">=</span> <span class="n">header_entries</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">header_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">header_entries</span><span class="p">:</span>
+        <span class="c1"># homogenize output of .dat files with \t delimit at end of every key</span>
+        <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'</span><span class="se">\t</span><span class="s1">'</span><span class="p">:</span>
+            <span class="n">entry</span> <span class="o">=</span> <span class="n">entry</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">'</span><span class="se">\t</span><span class="s1">'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">entry</span><span class="p">:</span>
+            <span class="n">entry</span> <span class="o">+=</span> <span class="s1">'</span><span class="se">\t</span><span class="s1">'</span>
+
+        <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\t</span><span class="s1">'</span><span class="p">)</span>
+        <span class="n">header_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+
+    <span class="k">return</span> <span class="n">header_dict</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_clean_sxm_header</span><span class="p">(</span><span class="n">header_dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Cleanup header dicitonary key-value pairs.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    header_dict : dict</span>
+<span class="sd">        Should be dict returned from _parse_sxm_header method.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    clean_header_dict : dict</span>
+<span class="sd">        Cleaned header dictionary.</span>
+<span class="sd">    """</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_split_header_entry</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Split 3ds header entries by '=' character. If multiple values split</span>
+<span class="sd">    those by ';' character.</span>
+<span class="sd">    """</span>
+
+    <span class="n">key_str</span><span class="p">,</span> <span class="n">val_str</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"="</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="s1">';'</span> <span class="ow">in</span> <span class="n">val_str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">key_str</span><span class="p">,</span> <span class="p">(</span><span class="n">val_str</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">'"'</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">';'</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">key_str</span><span class="p">,</span> <span class="n">val_str</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">'"'</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="save_array">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.stm.nanonis_base.save_array.html#SciFiReaders.readers.microscopy.spm.stm.nanonis_base.save_array">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">save_array</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">arr</span><span class="p">,</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Wrapper to numpy.save method for arrays.</span>
+
+<span class="sd">    The idea would be to use this to save a processed array for later</span>
+<span class="sd">    use in a matplotlib figure generation scripts. See numpy.save</span>
+<span class="sd">    documentation for details.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file : file or str</span>
+<span class="sd">        File or filename to which the data is saved.  If file is a file-</span>
+<span class="sd">        object, then the filename is unchanged.  If file is a string, a</span>
+<span class="sd">        ``.npy`` extension will be appended to the file name if it does</span>
+<span class="sd">        not already have one.</span>
+<span class="sd">    arr : array_like</span>
+<span class="sd">        Array data to be saved.</span>
+<span class="sd">    allow_pickle : bool, optional</span>
+<span class="sd">        Allow saving object arrays using Python pickles. Reasons for</span>
+<span class="sd">        disallowing pickles include security (loading pickled data can</span>
+<span class="sd">        execute arbitrary code) and portability (pickled objects may not</span>
+<span class="sd">        be loadable on different Python installations, for example if</span>
+<span class="sd">        the stored objects require libraries that are not available, and</span>
+<span class="sd">        not all pickled data is compatible between Python 2 and Python</span>
+<span class="sd">        3). Default: True</span>
+<span class="sd">    """</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">arr</span><span class="p">,</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="n">allow_pickle</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="load_array">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.stm.nanonis_base.load_array.html#SciFiReaders.readers.microscopy.spm.stm.nanonis_base.load_array">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_array</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Wrapper to numpy.load method for binary files.</span>
+
+<span class="sd">    See numpy.load documentation for more details.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file : file or str</span>
+<span class="sd">        The file to read. File-like objects must support the</span>
+<span class="sd">    ``seek()`` and ``read()`` methods. Pickled files require that the</span>
+<span class="sd">    file-like object support the ``readline()`` method as well.</span>
+<span class="sd">    allow_pickle : bool, optional</span>
+<span class="sd">        Allow loading pickled object arrays stored in npy files. Reasons</span>
+<span class="sd">        for disallowing pickles include security, as loading pickled</span>
+<span class="sd">        data can execute arbitrary code. If pickles are disallowed,</span>
+<span class="sd">        loading object arrays will fail. Default: True</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    result : array, tuple, dict, etc.</span>
+<span class="sd">        Data stored in the file. For ``.npz`` files, the returned</span>
+<span class="sd">        instance of NpzFile class must be closed to avoid leaking file</span>
+<span class="sd">        descriptors.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_parse_scan_header_table</span><span class="p">(</span><span class="n">table_list</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Parse scan file header entries whose values are tab-separated</span>
+<span class="sd">    tables.</span>
+<span class="sd">    """</span>
+    <span class="n">table_processed</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">table_list</span><span class="p">:</span>
+        <span class="c1"># strip leading \t, split by \t</span>
+        <span class="n">table_processed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">'</span><span class="se">\t</span><span class="s1">'</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\t</span><span class="s1">'</span><span class="p">))</span>
+
+    <span class="c1"># column names are first row</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="n">table_processed</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">table_processed</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="n">zip_vals</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">values</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">zip_vals</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_valid_file</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">ext</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Detect if invalid file is being initialized by class.</span>
+<span class="sd">    """</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">fname_ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">fname_ext</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">!=</span> <span class="n">ext</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">UnhandledFileError</span><span class="p">(</span><span class="s1">'</span><span class="si">{}</span><span class="s1"> is not a </span><span class="si">{}</span><span class="s1"> file'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">ext</span><span class="p">))</span>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Pycroscopy contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2020, Pycroscopy contributors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

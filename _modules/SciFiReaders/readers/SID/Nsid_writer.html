@@ -1,0 +1,684 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SciFiReaders.readers.SID.Nsid_writer &#8212; SciFiReaders 0.12.7 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../../_static/documentation_options.js?v=7cf6be21"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/SciFiReaders/readers/SID/Nsid_writer';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SciFiReaders 0.12.7 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../index.html">
+                    SciFiReaders
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../available_readers.html">Available Readers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contact.html">Contact us</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples by method</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../notebooks/00_developing_a_reader/index.html">Creating a Reader</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/00_developing_a_reader/developing_a_reader.html">Creating a Reader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../notebooks/01_electron_microscopy/index.html">Electron microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/01_electron_microscopy/read_dm3_files.html">Reading a DM3 File with ScopeReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/01_electron_microscopy/read_nion_files.html">Reading a Nion File with ScopeReader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../notebooks/02_scanning_probe_microscopy/index.html">Scanning probe microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/02_scanning_probe_microscopy/read_mdt_files.html">Parsing .mdt experimental files. Basic example.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/02_scanning_probe_microscopy/read_fsexp_files.html"><strong>Parsing .fsexp FusionScope HDF5 Experiment Files</strong></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../notebooks/03_data_formats_and_converters/index.html">Data formats and converters</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/03_data_formats_and_converters/convert_hyperspy.html">Working with Hyperspy Data</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api.html">API reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../_autosummary/SciFiReaders.html">SciFiReaders</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders/issues/new?title=Issue%20on%20page%20%2F_modules/SciFiReaders/readers/SID/Nsid_writer.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for SciFiReaders.readers.SID.Nsid_writer</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">"""</span>
+<span class="sd">NSIDWriter - mirror of NSIDReader</span>
+
+<span class="sd">Writes sidpy.Dataset objects to HDF5 in NSID (pyNSID-style) format such that</span>
+<span class="sd">SciFiReaders.readers.SID.Nsid_reader.NSIDReader can read them back.</span>
+
+<span class="sd">Key compatibility requirements (enforced here):</span>
+<span class="sd">- Main dataset must have attrs: quantity, units, main_data_name, pyNSID_version,</span>
+<span class="sd">  data_type, modality, source</span>
+<span class="sd">- Each axis must be stored as a dataset in the same parent group, whose name</span>
+<span class="sd">  matches the HDF5 dimension label, and must have attrs: name, quantity, units,</span>
+<span class="sd">  dimension_type</span>
+<span class="sd">- Dimension labels MUST be unique (sidpy will error otherwise on readback)</span>
+
+<span class="sd">@author: Boris Slautin</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">h5py</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sidpy</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyNSID.io.hdf_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">link_as_main</span><span class="p">,</span> <span class="n">write_pynsid_book_keeping_attrs</span><span class="p">,</span> <span class="n">pynsid_version</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_as_str</span><span class="p">(</span><span class="n">val</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"generic"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">default</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">bytes_</span><span class="p">)):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">val</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_enum_name_or_default</span><span class="p">(</span><span class="n">val</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">enum_cls</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Normalize sidpy enum-like values to a valid enum member name string.</span>
+<span class="sd">    Examples:</span>
+<span class="sd">      DataType.IMAGE -&gt; "IMAGE"</span>
+<span class="sd">      "DataType.IMAGE" -&gt; "IMAGE"</span>
+<span class="sd">      "image" -&gt; "IMAGE"</span>
+<span class="sd">      None -&gt; default</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">default</span>
+    <span class="c1"># Already enum</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">enum_cls</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">val</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="n">s</span> <span class="o">=</span> <span class="n">_as_str</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">if</span> <span class="s2">"."</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"."</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">s_up</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">members</span> <span class="o">=</span> <span class="n">enum_cls</span><span class="o">.</span><span class="n">__members__</span>
+        <span class="k">if</span> <span class="n">s_up</span> <span class="ow">in</span> <span class="n">members</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">s_up</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="k">return</span> <span class="n">default</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_safe_unique_name</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">taken</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Ensure an HDF5-safe, unique dataset name within a group.</span>
+<span class="sd">    """</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="n">name</span> <span class="k">else</span> <span class="s2">"dim"</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"/"</span><span class="p">,</span> <span class="s2">"_"</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"-"</span><span class="p">,</span> <span class="s2">"_"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">base</span> <span class="o">==</span> <span class="s2">""</span><span class="p">:</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="s2">"dim"</span>
+    <span class="k">if</span> <span class="n">base</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">taken</span><span class="p">:</span>
+        <span class="n">taken</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">base</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">"</span> <span class="ow">in</span> <span class="n">taken</span><span class="p">:</span>
+        <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">taken</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_write_dict_to_group</span><span class="p">(</span><span class="n">h5_group</span><span class="p">:</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Lightweight recursive dict writer for metadata. Only writes JSON-ish values.</span>
+<span class="sd">    Skips large arrays/objects to avoid exploding file size.</span>
+<span class="sd">    """</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">_as_str</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">"key"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">h5_group</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">h5_group</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
+            <span class="n">sub</span> <span class="o">=</span> <span class="n">h5_group</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="n">write_pynsid_book_keeping_attrs</span><span class="p">(</span><span class="n">sub</span><span class="p">)</span>
+            <span class="n">_write_dict_to_group</span><span class="p">(</span><span class="n">sub</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Skip huge arrays (safety)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">v</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">1_000_000</span><span class="p">:</span>
+            <span class="n">h5_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_as_str</span><span class="p">(</span><span class="sa">f</span><span class="s2">"&lt;skipped ndarray shape=</span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> dtype=</span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&gt;"</span><span class="p">))</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Scalars / small arrays</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">arr</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">object</span><span class="p">:</span>
+                <span class="n">h5_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_as_str</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">h5_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">arr</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">h5_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_as_str</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="NSIDWriter">
+<a class="viewcode-back" href="../../../../_autosummary/SciFiReaders.readers.SID.Nsid_writer.NSIDWriter.html#SciFiReaders.readers.SID.Nsid_writer.NSIDWriter">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">NSIDWriter</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Write sidpy.Dataset (or mapping of name -&gt; Dataset) to HDF5 in NSID format.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">sidpy</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dataset</span><span class="p">]]):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_datasets</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dataset</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Channel_000"</span><span class="p">:</span> <span class="n">obj</span><span class="p">}</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_datasets</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"All values must be sidpy.Dataset. Key=</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">, type=</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">_as_str</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Channel_</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_datasets</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"obj must be a sidpy.Dataset or mapping[str, sidpy.Dataset]"</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">path_to_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">parent_group</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"/"</span><span class="p">,</span>
+        <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">compression</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"gzip"</span><span class="p">,</span>
+        <span class="n">compression_opts</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="n">chunks</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">write_metadata</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="s2">"w"</span> <span class="k">if</span> <span class="n">overwrite</span> <span class="k">else</span> <span class="s2">"a"</span>
+        <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">path_to_file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span> <span class="k">as</span> <span class="n">h5_file</span><span class="p">:</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="n">h5_file</span><span class="p">[</span><span class="n">parent_group</span><span class="p">]</span> <span class="k">if</span> <span class="n">parent_group</span> <span class="ow">in</span> <span class="n">h5_file</span> <span class="k">else</span> <span class="n">h5_file</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">parent_group</span><span class="p">)</span>
+            <span class="n">write_pynsid_book_keeping_attrs</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">chan_name</span><span class="p">,</span> <span class="n">dset</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datasets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">chan_name</span> <span class="ow">in</span> <span class="n">parent</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="n">parent</span><span class="p">[</span><span class="n">chan_name</span><span class="p">]</span>
+                <span class="n">chan_grp</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">chan_name</span><span class="p">)</span>
+                <span class="n">write_pynsid_book_keeping_attrs</span><span class="p">(</span><span class="n">chan_grp</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_write_one</span><span class="p">(</span><span class="n">chan_grp</span><span class="p">,</span> <span class="n">dset</span><span class="p">,</span> <span class="n">compression</span><span class="p">,</span> <span class="n">compression_opts</span><span class="p">,</span> <span class="n">chunks</span><span class="p">,</span> <span class="n">write_metadata</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">path_to_file</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_write_one</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">h5_group</span><span class="p">:</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">,</span>
+        <span class="n">dset</span><span class="p">:</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span>
+        <span class="n">compression</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">compression_opts</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">chunks</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">write_metadata</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+
+        <span class="c1"># Main dataset name: use title tail if available</span>
+        <span class="n">main_name</span> <span class="o">=</span> <span class="n">_as_str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dset</span><span class="p">,</span> <span class="s2">"title"</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="s2">"Main"</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">"Main"</span>
+        <span class="n">main_name</span> <span class="o">=</span> <span class="n">main_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"-"</span><span class="p">,</span> <span class="s2">"_"</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">main_name</span> <span class="ow">in</span> <span class="n">h5_group</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">h5_group</span><span class="p">[</span><span class="n">main_name</span><span class="p">]</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dset</span><span class="p">)</span>
+
+        <span class="n">create_kw</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">compression</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">create_kw</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">compression</span><span class="o">=</span><span class="n">compression</span><span class="p">,</span> <span class="n">compression_opts</span><span class="o">=</span><span class="n">compression_opts</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">chunks</span><span class="p">:</span>
+            <span class="n">create_kw</span><span class="p">[</span><span class="s2">"chunks"</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">h5_main</span> <span class="o">=</span> <span class="n">h5_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="n">main_name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">create_kw</span><span class="p">)</span>
+        <span class="n">write_pynsid_book_keeping_attrs</span><span class="p">(</span><span class="n">h5_main</span><span class="p">)</span>
+
+        <span class="c1"># ---- Required main attrs (check_if_main) ----</span>
+        <span class="n">h5_main</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">"quantity"</span><span class="p">]</span> <span class="o">=</span> <span class="n">_as_str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dset</span><span class="p">,</span> <span class="s2">"quantity"</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+        <span class="n">h5_main</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">"units"</span><span class="p">]</span> <span class="o">=</span> <span class="n">_as_str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dset</span><span class="p">,</span> <span class="s2">"units"</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+        <span class="n">h5_main</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">"main_data_name"</span><span class="p">]</span> <span class="o">=</span> <span class="n">_as_str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dset</span><span class="p">,</span> <span class="s2">"title"</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="n">main_name</span><span class="p">)</span>
+        <span class="n">h5_main</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">"pyNSID_version"</span><span class="p">]</span> <span class="o">=</span> <span class="n">_as_str</span><span class="p">(</span><span class="n">pynsid_version</span><span class="p">)</span>
+
+        <span class="c1"># sidpy enums must be member names:</span>
+        <span class="n">h5_main</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">"data_type"</span><span class="p">]</span> <span class="o">=</span> <span class="n">_enum_name_or_default</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dset</span><span class="p">,</span> <span class="s2">"data_type"</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">DataType</span><span class="p">,</span> <span class="s2">"UNKNOWN"</span><span class="p">)</span>
+        <span class="n">h5_main</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">"modality"</span><span class="p">]</span> <span class="o">=</span> <span class="n">_as_str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dset</span><span class="p">,</span> <span class="s2">"modality"</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+        <span class="n">h5_main</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">"source"</span><span class="p">]</span> <span class="o">=</span> <span class="n">_as_str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dset</span><span class="p">,</span> <span class="s2">"source"</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+
+        <span class="c1"># Helpful</span>
+        <span class="n">h5_main</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">"title"</span><span class="p">]</span> <span class="o">=</span> <span class="n">_as_str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dset</span><span class="p">,</span> <span class="s2">"title"</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="n">main_name</span><span class="p">)</span>
+
+        <span class="c1"># ---- Dimensions ----</span>
+        <span class="n">dim_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Dataset</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">taken_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">h5_group</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        <span class="n">axes</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dset</span><span class="p">,</span> <span class="s2">"_axes"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dset</span><span class="p">,</span> <span class="s2">"axes"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="c1"># sidpy stores axes in dset._axes (dict). Use that if possible.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">axes</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">"dim_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">"generic"</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="s2">"generic"</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dset</span><span class="o">.</span><span class="n">shape</span><span class="p">)}</span>
+
+        <span class="c1"># We must ensure unique dimension LABELS (and that label == dim dataset name).</span>
+        <span class="n">used_labels</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">dim_ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dset</span><span class="o">.</span><span class="n">shape</span><span class="p">)):</span>
+            <span class="n">dim_obj</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dim_ind</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">dim_obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">dim_obj</span> <span class="o">=</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">dset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">dim_ind</span><span class="p">]),</span>
+                                          <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">"dim_</span><span class="si">{</span><span class="n">dim_ind</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                                          <span class="n">units</span><span class="o">=</span><span class="s2">"generic"</span><span class="p">,</span>
+                                          <span class="n">quantity</span><span class="o">=</span><span class="s2">"generic"</span><span class="p">)</span>
+
+            <span class="n">raw_label</span> <span class="o">=</span> <span class="n">_as_str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dim_obj</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="sa">f</span><span class="s2">"dim_</span><span class="si">{</span><span class="n">dim_ind</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="n">_safe_unique_name</span><span class="p">(</span><span class="n">raw_label</span><span class="p">,</span> <span class="n">used_labels</span><span class="p">)</span>
+
+            <span class="c1"># Also avoid clashing with existing objects in this group:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="n">_safe_unique_name</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">taken_names</span><span class="p">)</span>
+
+            <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dim_obj</span><span class="p">,</span> <span class="s2">"values"</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">values</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">values</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">dset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">dim_ind</span><span class="p">])</span>
+
+            <span class="k">if</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">h5_group</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">h5_group</span><span class="p">[</span><span class="n">label</span><span class="p">]</span>
+            <span class="n">h5_dim</span> <span class="o">=</span> <span class="n">h5_group</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">values</span><span class="p">)</span>
+            <span class="n">write_pynsid_book_keeping_attrs</span><span class="p">(</span><span class="n">h5_dim</span><span class="p">)</span>
+
+            <span class="c1"># Critical: attrs['name'] MUST match label so:</span>
+            <span class="c1"># - link_as_main sets dset.dims[i].label to this value</span>
+            <span class="c1"># - reader uses dset.parent[label]</span>
+            <span class="n">h5_dim</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]</span> <span class="o">=</span> <span class="n">label</span>
+            <span class="n">h5_dim</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">"quantity"</span><span class="p">]</span> <span class="o">=</span> <span class="n">_as_str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dim_obj</span><span class="p">,</span> <span class="s2">"quantity"</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+            <span class="n">h5_dim</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">"units"</span><span class="p">]</span> <span class="o">=</span> <span class="n">_as_str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dim_obj</span><span class="p">,</span> <span class="s2">"units"</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+            <span class="n">h5_dim</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">"dimension_type"</span><span class="p">]</span> <span class="o">=</span> <span class="n">_enum_name_or_default</span><span class="p">(</span>
+                <span class="nb">getattr</span><span class="p">(</span><span class="n">dim_obj</span><span class="p">,</span> <span class="s2">"dimension_type"</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">DimensionType</span><span class="p">,</span> <span class="s2">"UNKNOWN"</span>
+            <span class="p">)</span>
+
+            <span class="n">dim_dict</span><span class="p">[</span><span class="n">dim_ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">h5_dim</span>
+
+        <span class="c1"># Attach scales and set labels</span>
+        <span class="n">link_as_main</span><span class="p">(</span><span class="n">h5_main</span><span class="p">,</span> <span class="n">dim_dict</span><span class="p">)</span>
+
+        <span class="c1"># ---- Optional metadata (stored under _metadata to avoid setattr in reader) ----</span>
+        <span class="k">if</span> <span class="n">write_metadata</span><span class="p">:</span>
+            <span class="n">md</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dset</span><span class="p">,</span> <span class="s2">"metadata"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">md</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">md</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">"_metadata"</span> <span class="ow">in</span> <span class="n">h5_group</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="n">h5_group</span><span class="p">[</span><span class="s2">"_metadata"</span><span class="p">]</span>
+                <span class="n">md_g</span> <span class="o">=</span> <span class="n">h5_group</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="s2">"_metadata"</span><span class="p">)</span>
+                <span class="n">write_pynsid_book_keeping_attrs</span><span class="p">(</span><span class="n">md_g</span><span class="p">)</span>
+                <span class="n">_write_dict_to_group</span><span class="p">(</span><span class="n">md_g</span><span class="p">,</span> <span class="n">md</span><span class="p">)</span>
+
+        <span class="c1"># Mark group</span>
+        <span class="n">h5_group</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">"sidpy_class"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"sidpy.Dataset"</span>
+        <span class="k">return</span> <span class="n">h5_main</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Pycroscopy contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2020, Pycroscopy contributors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

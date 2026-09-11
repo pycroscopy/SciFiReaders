@@ -1,0 +1,1361 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SciFiReaders.readers.microscopy.spm.afm.mdt &#8212; SciFiReaders 0.12.7 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../../../../_static/documentation_options.js?v=7cf6be21"></script>
+    <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/SciFiReaders/readers/microscopy/spm/afm/mdt';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SciFiReaders 0.12.7 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../index.html">
+                    SciFiReaders
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../available_readers.html">Available Readers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../contact.html">Contact us</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples by method</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/00_developing_a_reader/index.html">Creating a Reader</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/00_developing_a_reader/developing_a_reader.html">Creating a Reader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/index.html">Electron microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/read_dm3_files.html">Reading a DM3 File with ScopeReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/read_nion_files.html">Reading a Nion File with ScopeReader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/index.html">Scanning probe microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/read_mdt_files.html">Parsing .mdt experimental files. Basic example.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/read_fsexp_files.html"><strong>Parsing .fsexp FusionScope HDF5 Experiment Files</strong></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/03_data_formats_and_converters/index.html">Data formats and converters</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/03_data_formats_and_converters/convert_hyperspy.html">Working with Hyperspy Data</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../api.html">API reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../_autosummary/SciFiReaders.html">SciFiReaders</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders/issues/new?title=Issue%20on%20page%20%2F_modules/SciFiReaders/readers/microscopy/spm/afm/mdt.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for SciFiReaders.readers.microscopy.spm.afm.mdt</h1><div class="highlight"><pre>
+<span></span>
+<span class="c1">#The following code have been particularly copied from the https://github.com/symartin/PyMDT</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sidpy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sidpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sidpy.sid</span><span class="w"> </span><span class="kn">import</span> <span class="n">Reader</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">struct</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xml.etree.ElementTree</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ET</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.interpolate</span><span class="w"> </span><span class="kn">import</span> <span class="n">PchipInterpolator</span>
+
+
+<span class="c1">#Decarator has been copied from the https://github.com/symartin/PyMDT</span>
+
+<div class="viewcode-block" id="MDTBufferedReaderDecorator">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.html#SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MDTBufferedReaderDecorator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">        A decorator class that facilitate the sequential reading of a file.</span>
+
+<span class="sd">        The class will redirect al the standard file methods and add some methods to read and integer and float number</span>
+<span class="sd">        encoded on 8, 16, 32 or 64 bits</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="n">file_</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">shift_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shift_bytes</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">shift_bytes</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">SEEK_CUR</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MDTBufferedReaderDecorator.read_uint8">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.html#SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.read_uint8">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_uint8</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Read a unsigned integer coded on 1 byte (a char)"""</span>
+        <span class="k">return</span> <span class="n">unpack</span><span class="p">(</span><span class="s2">"&lt;B"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="MDTBufferedReaderDecorator.read_uint16">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.html#SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.read_uint16">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_uint16</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Read a unsigned integer coded on 2 byte (a short)"""</span>
+        <span class="k">return</span> <span class="n">unpack</span><span class="p">(</span><span class="s2">"&lt;H"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">2</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="MDTBufferedReaderDecorator.read_uint32">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.html#SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.read_uint32">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_uint32</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Read a unsigned integer coded on 4 byte (a usual int or long int)"""</span>
+        <span class="k">return</span> <span class="n">unpack</span><span class="p">(</span><span class="s2">"&lt;I"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="MDTBufferedReaderDecorator.read_uint64">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.html#SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.read_uint64">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_uint64</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Read a unsigned integer coded on 8 byte (a long long)"""</span>
+        <span class="k">return</span> <span class="n">unpack</span><span class="p">(</span><span class="s2">"&lt;Q"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">8</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="MDTBufferedReaderDecorator.read_int8">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.html#SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.read_int8">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_int8</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Read a signed integer coded on 1 byte (a char)"""</span>
+        <span class="k">return</span> <span class="n">unpack</span><span class="p">(</span><span class="s2">"&lt;b"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="MDTBufferedReaderDecorator.read_int16">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.html#SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.read_int16">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_int16</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Read a signed integer coded on 2 byte (a short)"""</span>
+        <span class="k">return</span> <span class="n">unpack</span><span class="p">(</span><span class="s2">"&lt;h"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">2</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="MDTBufferedReaderDecorator.read_int32">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.html#SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.read_int32">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_int32</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Read a unsigned integer coded on 4 byte (a usual int or long int)"""</span>
+        <span class="k">return</span> <span class="n">unpack</span><span class="p">(</span><span class="s2">"&lt;i"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="MDTBufferedReaderDecorator.read_int64">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.html#SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.read_int64">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_int64</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Read a unsigned integer coded on 8 byte (a long long)"""</span>
+        <span class="k">return</span> <span class="n">unpack</span><span class="p">(</span><span class="s2">"&lt;q"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">8</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="MDTBufferedReaderDecorator.read_char">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.html#SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.read_char">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_char</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Read one character coded on 1 byte (a usual char)"""</span>
+        <span class="k">return</span> <span class="n">unpack</span><span class="p">(</span><span class="s2">"&lt;c"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="MDTBufferedReaderDecorator.read_uchar">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.html#SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.read_uchar">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_uchar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Read a unsigned integer coded on 1 byte (a char)</span>
+<span class="sd">            idem that read_uint8()</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'&lt;B'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="MDTBufferedReaderDecorator.read_float32">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.html#SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.read_float32">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_float32</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Read a signed float coded on 4 byte (a float)"""</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'&lt;f'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="MDTBufferedReaderDecorator.read_float64">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.html#SciFiReaders.readers.microscopy.spm.afm.mdt.MDTBufferedReaderDecorator.read_float64">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_float64</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Read a signed float coded on 8 byte (au double float)"""</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'&lt;d'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">8</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">extract_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string_len</span><span class="p">):</span>
+        <span class="n">string_bytes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">string_len</span><span class="p">)</span>
+        <span class="c1"># i don't really know why but decode('utf-8) does't work for '°'</span>
+        <span class="k">return</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">chr</span><span class="p">,</span> <span class="n">string_bytes</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MDTReader">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.mdt.MDTReader.html#SciFiReaders.readers.microscopy.spm.afm.mdt.MDTReader">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MDTReader</span><span class="p">(</span><span class="n">Reader</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">        Extracts data and metadata from NT-MDT (.mdt) binary files containing</span>
+<span class="sd">        images or curves.</span>
+
+<span class="sd">    """</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MDTReader.read">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.mdt.MDTReader.html#SciFiReaders.readers.microscopy.spm.afm.mdt.MDTReader.read">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">'''</span>
+<span class="sd">        Reads the file given in file_path into a list of sidpy dataset</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        sidpy.Dataset : List of sidpy.Dataset objects.</span>
+<span class="sd">            Multi-channel inputs are separated into individual dataset objects</span>
+<span class="sd">        '''</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="n">MDTBufferedReaderDecorator</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_input_file_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'rb'</span><span class="p">))</span>
+
+        <span class="c1">#read header of the file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_read_header</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'File size: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_file_size</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Number of frames: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nb_frame</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">()</span>
+        <span class="n">dataset_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">dataset_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1">#channel_number = 0</span>
+        <span class="c1">#iterator for the frames inside the file</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nb_frame</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_frame</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="n">decorator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="p">)</span>
+
+            <span class="c1"># 2d scan</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_frame</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="mi">106</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_frame</span><span class="o">.</span><span class="n">_read_mda_frame</span><span class="p">()</span>
+            <span class="c1">#curves_new: point cloud, spectra</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_frame</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="mi">190</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_frame</span><span class="o">.</span><span class="n">_read_point_cloud</span><span class="p">()</span>
+            <span class="c1">#text</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1">#self._frame.type == 3:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_frame</span><span class="o">.</span><span class="n">_read_text</span><span class="p">()</span><span class="c1">#TODO</span>
+
+
+            <span class="n">dataset_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_frame</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+            <span class="c1"># key_channel = f"Channel_{i:03d}"</span>
+            <span class="c1"># dataset_dict[key_channel] = self._frame.data</span>
+
+            <span class="c1">#might be rewrite to create dict() initially - without list()</span>
+            <span class="n">dataset_dict</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataset_list</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="o">==</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+                    <span class="n">title</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">title</span>
+                <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
+                    <span class="n">title</span> <span class="o">=</span> <span class="s1">'Point_Cloud'</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">title</span> <span class="o">=</span> <span class="s1">'Unknown'</span>
+
+                <span class="n">dataset_dict</span><span class="p">[</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">index</span><span class="si">:</span><span class="s1">03</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s1">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span>
+
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Frame #</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">: type - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_frame</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span>
+                      <span class="sa">f</span><span class="s1">'start_position - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_frame</span><span class="o">.</span><span class="n">start_pos</span><span class="si">}</span><span class="s1">,'</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_frame</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="mi">106</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_frame</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="mi">190</span><span class="p">):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'title - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_frame</span><span class="o">.</span><span class="n">title</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span>
+                          <span class="sa">f</span><span class="s1">'version - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_frame</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s1">, '</span>
+                          <span class="sa">f</span><span class="s1">'time - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_frame</span><span class="o">.</span><span class="n">date</span><span class="si">}</span><span class="s1">, '</span>
+                          <span class="sa">f</span><span class="s1">'uuid - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_frame</span><span class="o">.</span><span class="n">uuid</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">dataset_dict</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_read_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">'''</span>
+
+<span class="sd">        Read of the header of MDT file contained information about a number of frames (self.nb_frame)</span>
+<span class="sd">        and file size (self._file_size)</span>
+
+<span class="sd">        '''</span>
+        <span class="c1"># magic header</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">shift_position</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="c1"># File frm_byte_size (w/o header)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+        <span class="c1">#  4 bytes reserved (??)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">shift_position</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="c1"># last frame</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nb_frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint16</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1">#it originally returns number of frame -1, due to numeration from zero</span>
+        <span class="c1">#  19 bytes reserved (??)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">shift_position</span><span class="p">(</span><span class="mi">19</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MDTReader.to_point_cloud">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.mdt.MDTReader.html#SciFiReaders.readers.microscopy.spm.afm.mdt.MDTReader.to_point_cloud">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_point_cloud</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spectrum_dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Convert a dictionary of spectra into a point cloud.</span>
+
+<span class="sd">        If the number of points differs between spectra, interpolate them</span>
+<span class="sd">        to a common size before conversion.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spectrum_dict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"The input data must be a dictionary."</span><span class="p">)</span>
+
+        <span class="n">_keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">spectrum_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">_values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">spectrum_dict</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+        <span class="c1">#check that all datasets are spectra</span>
+        <span class="n">invalid</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">_keys</span> <span class="k">if</span> <span class="n">spectrum_dict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">data_type</span> <span class="o">!=</span> <span class="n">sid</span><span class="o">.</span><span class="n">DataType</span><span class="o">.</span><span class="n">SPECTRUM</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">invalid</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Non-SPECTRUM datasets found: </span><span class="si">{</span><span class="n">invalid</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="c1">#check units and channels</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_metadata_consistency</span><span class="p">(</span><span class="n">spectrum_dict</span><span class="p">,</span> <span class="n">_keys</span><span class="p">)</span>
+
+        <span class="c1">#check number of channel</span>
+        <span class="n">ref_ch_number</span> <span class="o">=</span> <span class="n">spectrum_dict</span><span class="p">[</span><span class="n">_keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">mismatched</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">spectrum_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">ds</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">ref_ch_number</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">mismatched</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"Datasets </span><span class="si">{</span><span class="n">mismatched</span><span class="si">}</span><span class="s2"> have inconsistent number of channels"</span>
+                <span class="sa">f</span><span class="s2">"(expected </span><span class="si">{</span><span class="n">ref_ch_number</span><span class="si">}</span><span class="s2">)."</span>
+            <span class="p">)</span>
+        <span class="c1">#----------------------------------</span>
+        <span class="c1">#spectrums to array</span>
+
+        <span class="c1"># Find the dataset with the shortest x-axis</span>
+        <span class="n">lengths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">_values</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">main_x</span> <span class="o">=</span> <span class="n">_values</span><span class="p">[</span><span class="n">lengths</span><span class="o">.</span><span class="n">argmin</span><span class="p">()]</span><span class="o">.</span><span class="n">x</span>
+
+        <span class="c1"># Collect aligned datasets</span>
+        <span class="n">_points_data_y</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">sp_point</span> <span class="ow">in</span> <span class="n">_values</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">sp_point</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">main_x</span><span class="p">):</span>
+                <span class="c1"># Already aligned → use directly</span>
+                <span class="n">_points_data_y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sp_point</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Align by fitting and interpolating</span>
+                <span class="n">aligned</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate_branchwise</span><span class="p">(</span><span class="n">main_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fit_branches</span><span class="p">(</span><span class="n">sp_point</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">spect</span><span class="p">))</span>
+                    <span class="k">for</span> <span class="n">spect</span> <span class="ow">in</span> <span class="n">sp_point</span><span class="o">.</span><span class="n">T</span>
+                <span class="p">]</span>
+                <span class="n">_points_data_y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">(</span><span class="n">aligned</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+        <span class="c1">#points coordinates</span>
+        <span class="n">_coordinates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">d</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">"coordinate"</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">_values</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+        <span class="c1">#to np.array</span>
+        <span class="n">_points_data_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">_points_data_y</span><span class="p">)</span>
+
+        <span class="c1">#build point cloud</span>
+        <span class="n">_metadata</span> <span class="o">=</span> <span class="n">_values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">_units</span> <span class="o">=</span> <span class="n">_metadata</span><span class="p">[</span><span class="s1">'units'</span><span class="p">]</span>
+        <span class="n">_ar_channels</span> <span class="o">=</span> <span class="n">_metadata</span><span class="p">[</span><span class="s1">'channels'</span><span class="p">]</span>
+        <span class="n">_u</span> <span class="o">=</span> <span class="n">_units</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_units</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">'a.u.'</span>
+        <span class="n">_q</span> <span class="o">=</span> <span class="n">_ar_channels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_ar_channels</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">'signal'</span>
+
+        <span class="n">point_cloud_dset</span> <span class="o">=</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">_points_data_y</span><span class="p">,</span>
+                                                    <span class="n">datatype</span><span class="o">=</span><span class="s1">'point_cloud'</span><span class="p">,</span>  <span class="c1"># specify point_cloud datatype</span>
+                                                    <span class="n">coordinates</span><span class="o">=</span><span class="n">_coordinates</span><span class="p">,</span>  <span class="c1"># necessery</span>
+                                                    <span class="n">units</span><span class="o">=</span><span class="n">_u</span><span class="p">,</span>
+                                                    <span class="n">quantity</span><span class="o">=</span><span class="n">_q</span><span class="p">,</span>
+                                                    <span class="p">)</span>
+
+        <span class="n">point_cloud_dset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">_points_data_y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                                              <span class="n">name</span><span class="o">=</span><span class="s1">'point number'</span><span class="p">,</span>
+                                              <span class="n">quantity</span><span class="o">=</span><span class="s1">'Point number'</span><span class="p">,</span>
+                                              <span class="n">dimension_type</span><span class="o">=</span><span class="s1">'point_cloud'</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_points_data_y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">point_cloud_dset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">_values</span><span class="p">[</span><span class="n">lengths</span><span class="o">.</span><span class="n">argmin</span><span class="p">()]</span><span class="o">.</span><span class="n">channel</span><span class="p">)</span>
+            <span class="n">point_cloud_dset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">main_x</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">point_cloud_dset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">main_x</span><span class="p">)</span>
+
+        <span class="n">point_cloud_dset</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">_metadata</span>
+        <span class="n">point_cloud_dset</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'coordinate'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">point_cloud_dset</span><span class="o">.</span><span class="n">original_metadata</span> <span class="o">=</span> <span class="n">_values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">original_metadata</span>
+
+        <span class="k">return</span> <span class="n">point_cloud_dset</span></div>
+
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_metadata_consistency</span><span class="p">(</span><span class="n">spectrum_dict</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">(</span><span class="s1">'units'</span><span class="p">,</span> <span class="s1">'channels'</span><span class="p">)):</span>
+<span class="w">        </span><span class="sd">"""Check metadata consistency for the .to_point_cloud method"""</span>
+        <span class="n">ref_key</span> <span class="o">=</span> <span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ref_meta</span> <span class="o">=</span> <span class="n">spectrum_dict</span><span class="p">[</span><span class="n">ref_key</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span>
+
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
+            <span class="n">mismatched</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span>
+                <span class="k">if</span> <span class="n">spectrum_dict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ref_meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+            <span class="p">]</span>
+            <span class="k">if</span> <span class="n">mismatched</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"Mismatch in '</span><span class="si">{</span><span class="n">field</span><span class="si">}</span><span class="s2">': datasets </span><span class="si">{</span><span class="n">mismatched</span><span class="si">}</span><span class="s2"> differ "</span>
+                    <span class="sa">f</span><span class="s2">"from reference dataset '</span><span class="si">{</span><span class="n">ref_key</span><span class="si">}</span><span class="s2">' "</span>
+                    <span class="sa">f</span><span class="s2">"(</span><span class="si">{</span><span class="n">ref_meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">)</span><span class="si">!r}</span><span class="s2">)."</span><span class="p">)</span>
+
+        <span class="n">spans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">values</span><span class="p">))</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">spectrum_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span>
+        <span class="n">minimums</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">spectrum_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span>
+
+        <span class="c1"># Define threshold as 10% of mean span</span>
+        <span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">spans</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="c1">#print(f"Spans: {spans}, Minimums: {minimums}, Threshold: {threshold} ")</span>
+        <span class="c1"># Check consistency of the x axes</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">spans</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">spans</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">minimums</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">minimums</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"⚠️ Significant difference between the x axes is detected. "</span>
+                             <span class="sa">f</span><span class="s2">"Spans: </span><span class="si">{</span><span class="n">spans</span><span class="si">}</span><span class="s2">, Minimums: </span><span class="si">{</span><span class="n">minimums</span><span class="si">}</span><span class="s2">, Threshold: </span><span class="si">{</span><span class="n">threshold</span><span class="si">}</span><span class="s2"> "</span><span class="p">)</span>
+
+        <span class="c1">#below is 3 service functions for self.to_point_cloud() method</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_split_branches</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return inclusive [start, end] indices of monotonic branches."""</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">size</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">s</span><span class="p">[</span><span class="n">s</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">cuts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">starts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">cuts</span><span class="p">]</span>
+        <span class="n">ends</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="n">cuts</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">starts</span><span class="p">,</span> <span class="n">ends</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_fit_branches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Fit a PCHIP model per branch of (x, y)."""</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+
+        <span class="n">models</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_branches</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="n">xs</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">a</span><span class="p">:</span><span class="n">b</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+            <span class="n">ys</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">a</span><span class="p">:</span><span class="n">b</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+            <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">xs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">ys</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="n">xu</span><span class="p">,</span> <span class="n">inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">return_inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">yu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">inv</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">ys</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">inv</span><span class="p">)</span>
+            <span class="n">models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">PchipInterpolator</span><span class="p">(</span><span class="n">xu</span><span class="p">,</span> <span class="n">yu</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">models</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_interpolate_branchwise</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_ref</span><span class="p">,</span> <span class="n">models</span><span class="p">):</span>
+        <span class="n">x_ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x_ref</span><span class="p">)</span>
+        <span class="n">lim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_branches</span><span class="p">(</span><span class="n">x_ref</span><span class="p">)</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lim</span><span class="p">):</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># skip duplicated join point</span>
+            <span class="n">e</span> <span class="o">=</span> <span class="n">b</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># inclusive end</span>
+            <span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">models</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">x_ref</span><span class="p">[</span><span class="n">s</span><span class="p">:</span><span class="n">e</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Frame">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.mdt.Frame.html#SciFiReaders.readers.microscopy.spm.afm.mdt.Frame">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Frame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">'''</span>
+<span class="sd">    Class for MDA frames</span>
+<span class="sd">    '''</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">decorator</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="n">decorator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MDT_data_types</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_int8</span><span class="p">,</span>
+                               <span class="mi">1</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint8</span><span class="p">,</span>
+                               <span class="o">-</span><span class="mi">2</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_int16</span><span class="p">,</span>
+                               <span class="mi">2</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint16</span><span class="p">,</span>
+                               <span class="o">-</span><span class="mi">4</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_int32</span><span class="p">,</span>
+                               <span class="mi">4</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">,</span>
+                               <span class="o">-</span><span class="mi">8</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_int64</span><span class="p">,</span>
+                               <span class="mi">8</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint64</span><span class="p">,</span>
+                               <span class="o">-</span><span class="mi">5892</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_float32</span><span class="p">,</span>
+                               <span class="o">-</span><span class="mi">13320</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_float64</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_read_frame_header</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'date'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
+                         <span class="s1">'version'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="p">,}</span>
+
+
+        <span class="c1">#TODO how to extract one frame without iteration?</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_read_frame_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<span class="w">        </span><span class="sd">'''Extract data common for all type of frames'''</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint16</span><span class="p">()</span>
+        <span class="c1"># frame version</span>
+        <span class="n">_version_minor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint8</span><span class="p">()</span>
+        <span class="n">_version_major</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint8</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">_version_major</span> <span class="o">+</span> <span class="n">_version_minor</span><span class="o">*</span><span class="mf">1e-1</span>
+        <span class="c1"># date and time</span>
+        <span class="n">_year</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint16</span><span class="p">()</span>
+        <span class="n">_month</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint16</span><span class="p">()</span>
+        <span class="n">_day</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint16</span><span class="p">()</span>
+        <span class="n">_hour</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint16</span><span class="p">()</span>
+        <span class="n">_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint16</span><span class="p">()</span>
+        <span class="n">_sec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint16</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">_month</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">_day</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">_year</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">_hour</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">_min</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">_sec</span><span class="si">}</span><span class="s1">'</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint16</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_read_mda_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">'''read mda frame'''</span>
+
+        <span class="c1">#skip frame header</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_pos</span><span class="o">+</span><span class="mi">22</span><span class="p">)</span>
+
+        <span class="n">_head_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+        <span class="n">_total_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+
+        <span class="c1">#read_uuid</span>
+        <span class="n">_bin_uuid</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+            <span class="n">_bin_uuid</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_char</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uuid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">restore_guid</span><span class="p">(</span><span class="n">_bin_uuid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'uuid'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uuid</span>
+
+        <span class="c1">#uuid is written 2 times</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">shift_position</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+
+        <span class="c1"># skip 4 empty bytes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">shift_position</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+        <span class="c1">#size of name and xml</span>
+        <span class="n">_name_size</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+        <span class="n">_xml_size</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+        <span class="c1">#some metrics</span>
+        <span class="n">_info_size</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+        <span class="n">_spec_size</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+        <span class="n">_source_info_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+        <span class="n">_var_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+        <span class="n">_data_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+        <span class="n">_data_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+
+        <span class="c1">#extract metadata and title</span>
+        <span class="k">if</span> <span class="n">_name_size</span> <span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">_name_size</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">_xml_size</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">xml_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">_xml_size</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'utf-16'</span><span class="p">)</span>
+            <span class="c1">#original metadata</span>
+            <span class="n">element</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">xml_metadata</span><span class="p">)</span>
+            
+            <span class="n">original_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_to_dict</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+        <span class="c1">#don't understand self.info, self.spec, self.source_info</span>
+        <span class="k">if</span> <span class="n">_info_size</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">_info_size</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">_spec_size</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">_spec_size</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">_source_info_size</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">source_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">_source_info_size</span><span class="p">)</span>
+
+        <span class="c1">#skip _var_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">shift_position</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+
+        <span class="n">_struct_len</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+        <span class="n">_current_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+        <span class="n">_array_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint64</span><span class="p">()</span>
+        <span class="n">_cell_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_dimensions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_measurands</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">_struct_len</span> <span class="o">+</span> <span class="n">_current_pos</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_dimensions</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_dimensions</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_read_mda_calibrations</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_measurands</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">measurands</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_measurands</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">measurands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_read_mda_calibrations</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_dimensions</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_measurands</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_2d_frame</span><span class="p">()</span>
+            <span class="c1">#self.data.type = '2D IMAGE'</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">original_metadata</span> <span class="o">=</span> <span class="n">original_metadata</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_pos</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_read_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1">#TODO</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_pos</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_read_maps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        read scanned data (maps of curves)</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_pos</span> <span class="o">+</span> <span class="mi">22</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_pos</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_read_point_cloud</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        '''</span>
+<span class="sd">        Extract data from spectroscopy map</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list:  sidpy.Dataset objects</span>
+<span class="sd">        '''</span>
+<span class="sd">        """</span>
+        <span class="c1"># parm_dict = {'date': self.date,</span>
+        <span class="c1">#              } #dictionary for metadata</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_pos</span> <span class="o">+</span> <span class="mi">22</span><span class="p">)</span>
+        <span class="c1">#read numer of blocks with data</span>
+        <span class="n">_block_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+
+        <span class="c1">#read blocks headers: (name length, length, length from starting point)</span>
+        <span class="n">_block_headers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">_full_len</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">_block_count</span><span class="p">):</span>
+            <span class="n">_name_len</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+            <span class="n">_len</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+            <span class="n">_full_len</span> <span class="o">+=</span> <span class="n">_len</span>
+            <span class="n">_block_headers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">_name_len</span><span class="p">,</span> <span class="n">_len</span><span class="p">,</span> <span class="n">_full_len</span><span class="p">))</span>
+
+        <span class="c1">#read block names</span>
+        <span class="n">_block_names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">_block_count</span><span class="p">):</span>
+            <span class="n">_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">_block_headers</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">)</span>
+            <span class="n">_block_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_name</span><span class="p">)</span>
+
+        <span class="c1">#indexes of points blocks</span>
+        <span class="n">ind_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">_block_names</span><span class="p">)</span> <span class="k">if</span> <span class="n">name</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"point"</span><span class="p">])</span>
+
+        <span class="n">_current_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+
+        <span class="c1">#calibration for points, calibration for data in each curve in points, and calibrations for x axis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calibr_p</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">calibr_d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">calibr_ax</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">calibr_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_curves_new_calibrations</span><span class="p">(</span><span class="n">_block_names</span><span class="p">,</span> <span class="n">_block_headers</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'uuid'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uuid</span>
+
+        <span class="c1">#finding  positions: xreal, yreal</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_real</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_real</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_curves_new_xreal_yreal</span><span class="p">()</span>
+        <span class="c1">#extract passes, directions, axes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">passes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inverse</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_curves_new_array_params</span><span class="p">()</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">point_data_indexes</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1">#to find points indexes corresponding data indexes</span>
+        <span class="n">_point_data</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1">#dict for spectroscopic data</span>
+        <span class="c1">#extract z data for all points</span>
+        <span class="k">for</span> <span class="n">num</span><span class="p">,</span><span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ind_points</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">shift_position</span><span class="p">(</span><span class="n">_block_headers</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">_header</span> <span class="o">=</span> <span class="n">_block_headers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">_ind_data</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="c1">#read number of data files corresponding to this point</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">_header</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">//</span><span class="mi">4</span><span class="p">):</span>
+                <span class="n">_ind_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">())</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">point_data_indexes</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">_block_names</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">5</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">])]</span> <span class="o">=</span> <span class="n">_ind_data</span> <span class="c1">#save curve indexes for each point</span>
+            <span class="n">_ind_for_sort</span> <span class="o">=</span> <span class="p">[]</span><span class="c1">#searching corresponded calibrations</span>
+
+            <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">_ind_data</span><span class="p">:</span>
+                <span class="n">indd</span> <span class="o">=</span> <span class="n">_block_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="sa">f</span><span class="s1">'data</span><span class="si">{</span><span class="n">ind</span><span class="si">}</span><span class="s1">.dat'</span><span class="p">)</span> <span class="c1">#real index or the data block</span>
+
+                <span class="c1"># return to the start position of the block</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">_current_pos</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">indd</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">shift_position</span><span class="p">(</span><span class="n">_block_headers</span><span class="p">[</span><span class="n">indd</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+                <span class="n">_header_data</span> <span class="o">=</span> <span class="n">_block_headers</span><span class="p">[</span><span class="n">indd</span><span class="p">]</span>
+                <span class="n">_dat_el</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">_header_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">//</span><span class="mi">8</span><span class="p">):</span>
+                    <span class="n">_dat_el</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_dat_el</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_float64</span><span class="p">())</span>
+                <span class="c1">#reverse backward pass</span>
+                <span class="c1"># if self.calibr_d[ind][1] == 0: #TODO which one we should reverse?</span>
+                <span class="c1">#     _dat_el = np.flip(_dat_el)</span>
+                <span class="n">_point_data</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">_dat_el</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">_current_pos</span><span class="p">)</span>
+
+        <span class="c1">#here we already have</span>
+        <span class="c1">#self.point_data_indexes - indexes of the curves in the each point</span>
+        <span class="c1">#self.x_real, self.y_real - all real coordinates of the points</span>
+        <span class="c1">#self.passes, self.inverse - lists with the numbers of cycles and directions (0 - forward, 1 - backward, 2 - ?undetermined)</span>
+
+        <span class="c1"># all coordinates of spectral data (real_x, real_y, cycle, direction)</span>
+        <span class="n">coordinate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calibr_p</span><span class="o">.</span><span class="n">values</span><span class="p">()))[:,:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'float'</span><span class="p">)</span>
+
+        <span class="c1">#add points coordinates to the metadata</span>
+        <span class="c1">#self.metadata['coordinates'] = coordinate</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">_ppoint</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">point_data_indexes</span><span class="p">:</span>
+            <span class="n">_ar</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">_units</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">_p_coord</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calibr_p</span><span class="p">[</span><span class="n">_ppoint</span><span class="p">])[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'float'</span><span class="p">)</span>
+            <span class="n">curves</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">point_data_indexes</span><span class="p">[</span><span class="n">_ppoint</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">curve</span> <span class="ow">in</span> <span class="n">curves</span><span class="p">:</span>
+                <span class="n">_dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calibr_d</span><span class="p">[</span><span class="n">curve</span><span class="p">]</span>
+                <span class="n">_y_data</span> <span class="o">=</span> <span class="n">_point_data</span><span class="p">[</span><span class="n">curve</span><span class="p">]</span>
+                <span class="n">_x_ax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calibr_ax</span><span class="p">[</span><span class="n">_dim</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+                <span class="n">_x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">_x_ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">_x_ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">_x_ax</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">-</span> <span class="n">_x_ax</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">_dim</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">_x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">_x_data</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">_dim</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="ow">in</span> <span class="n">_ar</span><span class="p">:</span>
+                    <span class="n">comb_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">_ar</span><span class="p">[</span><span class="n">_dim</span><span class="p">[</span><span class="mi">4</span><span class="p">]][</span><span class="mi">1</span><span class="p">],</span> <span class="n">_y_data</span><span class="p">])</span>
+                    <span class="n">x_combined</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">_ar</span><span class="p">[</span><span class="n">_dim</span><span class="p">[</span><span class="mi">4</span><span class="p">]][</span><span class="mi">0</span><span class="p">],</span> <span class="n">_x_data</span><span class="p">])</span>
+                    <span class="n">_ar</span><span class="p">[</span><span class="n">_dim</span><span class="p">[</span><span class="mi">4</span><span class="p">]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x_combined</span><span class="p">,</span> <span class="n">comb_data</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">_ar</span><span class="p">[</span><span class="n">_dim</span><span class="p">[</span><span class="mi">4</span><span class="p">]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">_x_data</span><span class="p">,</span> <span class="n">_y_data</span><span class="p">])</span>
+                    <span class="n">_units</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_dim</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+
+            <span class="c1">#converting dict with np.arrays into multichannel sidpy spectrum</span>
+            <span class="n">_ar_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">_ar</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+            <span class="n">_ar_channels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">_ar</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="n">_full_y_data</span> <span class="o">=</span> <span class="n">_ar_values</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">_full_x_data</span> <span class="o">=</span> <span class="n">_ar_values</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="n">_u</span> <span class="o">=</span> <span class="n">_units</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_units</span><span class="p">)</span><span class="o">==</span><span class="mi">1</span> <span class="k">else</span> <span class="s1">'a.u.'</span>
+            <span class="n">_q</span> <span class="o">=</span> <span class="n">_ar_channels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_ar_channels</span><span class="p">)</span><span class="o">==</span><span class="mi">1</span> <span class="k">else</span> <span class="s1">'signal'</span>
+
+            <span class="n">_data</span> <span class="o">=</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">_full_y_data</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                                           <span class="n">name</span><span class="o">=</span><span class="s1">'spectrum'</span><span class="p">,</span>
+                                           <span class="n">units</span><span class="o">=</span><span class="n">_u</span><span class="p">,</span>
+                                           <span class="n">quantity</span><span class="o">=</span><span class="n">_q</span><span class="p">,</span>
+                                           <span class="n">datatype</span> <span class="o">=</span> <span class="s1">'spectrum'</span><span class="p">,</span>
+                                           <span class="n">title</span><span class="o">=</span><span class="s1">'Spectrum'</span><span class="p">)</span>
+
+            <span class="n">_data</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">_full_x_data</span><span class="p">,</span> <span class="s1">'x'</span><span class="p">))</span>
+            <span class="n">_data</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">dimension_type</span> <span class="o">=</span> <span class="s1">'spectral'</span>
+            <span class="n">_data</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">_x_ax</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">_data</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">quantity</span> <span class="o">=</span> <span class="n">_x_ax</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+
+            <span class="n">_data</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">_full_y_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s1">'channel'</span><span class="p">))</span>
+            <span class="n">_data</span><span class="o">.</span><span class="n">dim_1</span><span class="o">.</span><span class="n">dimension_type</span> <span class="o">=</span> <span class="s1">'channel'</span>
+            <span class="c1">#_data.metadata = self.metadata</span>
+            <span class="c1">#_data.metadata.update({'channels': _ar_channels, 'units': _units, 'coordinate': _p_coord})</span>
+            <span class="n">_data</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'channels'</span><span class="p">:</span> <span class="n">_ar_channels</span><span class="p">,</span> <span class="s1">'units'</span><span class="p">:</span> <span class="n">_units</span><span class="p">,</span> <span class="s1">'coordinate'</span><span class="p">:</span> <span class="n">_p_coord</span><span class="p">}</span>
+            <span class="n">_data</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span>
+            <span class="n">_data</span><span class="o">.</span><span class="n">original_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">original_metadata</span> <span class="c1">#shared for all points</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">point_data_indexes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="sa">f</span><span class="s1">'point_</span><span class="si">{</span><span class="n">_ppoint</span><span class="si">}</span><span class="s1">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">_data</span><span class="c1">#_ar</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span> <span class="o">=</span> <span class="n">_data</span><span class="c1">#_ar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_pos</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_read_curves_new_calibrations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_block_names</span><span class="p">,</span> <span class="n">_block_headers</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">'''</span>
+<span class="sd">        Read calibrations from the index.xml blocks</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Calibrations for each point position: real_x, real_y, xy_unit</span>
+<span class="sd">        dict</span>
+<span class="sd">            Calibrations for curves (y axis): pass, direction, signal_name, signal_unit</span>
+<span class="sd">        dict</span>
+<span class="sd">            Calibrations for curves (x axis): start_value, stop_value, count, x_axis_name, x_axis_units</span>
+<span class="sd">        '''</span>
+        <span class="n">_current_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span> <span class="c1">#just to be sure</span>
+
+        <span class="n">calibr_points</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1">#Point tag in index.xml block</span>
+        <span class="n">calibr_data</span>   <span class="o">=</span> <span class="p">{}</span> <span class="c1">#Meas tag in index.xml block</span>
+        <span class="n">calibr_axis</span>   <span class="o">=</span> <span class="p">{}</span> <span class="c1">#Axis tag in index.xml block</span>
+        <span class="n">calibr_name</span>   <span class="o">=</span> <span class="p">{}</span> <span class="c1">#Name tag in index.xml block</span>
+        <span class="n">calibr_meas</span>   <span class="o">=</span> <span class="p">{}</span> <span class="c1">#part of calibr_name  representing Y axes</span>
+
+        <span class="c1">#read_uuid</span>
+        <span class="n">_bin_uuid</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+            <span class="n">_bin_uuid</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_char</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uuid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">restore_guid</span><span class="p">(</span><span class="n">_bin_uuid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">_current_pos</span><span class="p">)</span>
+        <span class="c1">#--------</span>
+
+        <span class="c1">#find index.xml block position</span>
+        <span class="n">ind</span> <span class="o">=</span> <span class="n">_block_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">'index.xml'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">shift_position</span><span class="p">(</span><span class="n">_block_headers</span><span class="p">[</span><span class="n">ind</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="c1">#string with xml data</span>
+        <span class="n">xmml</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">_block_headers</span><span class="p">[</span><span class="n">ind</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xml</span> <span class="o">=</span> <span class="n">xmml</span>
+
+
+
+        <span class="c1">#parsing of index.xml string</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">xmml</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'version'</span><span class="p">]</span>
+        <span class="c1">#read general data about axis dimensions</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">root</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">'Name'</span><span class="p">:</span>
+                <span class="n">calibr_name</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'index'</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'name'</span><span class="p">],</span>
+                                                      <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'unit'</span><span class="p">],)</span>
+        <span class="c1">#read points, data and axis calirations</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">root</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">'Axis'</span><span class="p">:</span>
+                <span class="n">calibr_axis</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'index'</span><span class="p">])]</span> <span class="o">=</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'start'</span><span class="p">]),</span>
+                                                           <span class="nb">float</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'stop'</span><span class="p">]),</span>
+                                                           <span class="nb">int</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]),</span>
+                                                           <span class="nb">float</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'value'</span><span class="p">]),</span>
+                                                           <span class="n">calibr_name</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]][</span><span class="mi">0</span><span class="p">],</span>
+                                                           <span class="n">calibr_name</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]][</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">'Point'</span><span class="p">:</span>
+                <span class="n">calibr_points</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'index'</span><span class="p">])]</span> <span class="o">=</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'x'</span><span class="p">]),</span>
+                                                             <span class="nb">float</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'y'</span><span class="p">]),</span>
+                                                             <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'unit'</span><span class="p">],)</span>
+            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">'Meas'</span><span class="p">:</span>
+                <span class="n">calibr_data</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'index'</span><span class="p">])]</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'pass'</span><span class="p">]),</span>
+                                                            <span class="nb">int</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'inverse0'</span><span class="p">]),</span>
+                                                            <span class="nb">int</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'axis0'</span><span class="p">]),</span>
+                                                            <span class="nb">int</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]),</span>
+                                                            <span class="n">calibr_name</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]][</span><span class="mi">0</span><span class="p">],</span>
+                                                            <span class="n">calibr_name</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]][</span><span class="mi">1</span><span class="p">],</span>
+                                                            <span class="p">)</span>
+                <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'name'</span><span class="p">])</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">calibr_meas</span><span class="p">:</span>
+                    <span class="n">calibr_meas</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'name'</span><span class="p">])]</span> <span class="o">=</span> <span class="n">calibr_name</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">_current_pos</span><span class="p">)</span>
+
+        <span class="c1">#Extraction of metadata from the last block.</span>
+        <span class="c1">#Actually, number of metadata blocks == number of points, but looks like they are absolutely identical</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">shift_position</span><span class="p">(</span><span class="n">_block_headers</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">xml_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">_block_headers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'utf-16'</span><span class="p">)</span>
+        <span class="n">element</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">xml_metadata</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">original_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_to_dict</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">original_metadata</span><span class="p">[</span><span class="s1">'Parameters'</span><span class="p">][</span><span class="s1">'Name'</span><span class="p">][</span><span class="s1">'Name'</span><span class="p">]</span>
+        <span class="c1">#original metadata</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">_current_pos</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">calibr_points</span><span class="p">,</span> <span class="n">calibr_data</span><span class="p">,</span> <span class="n">calibr_axis</span><span class="p">,</span> <span class="n">calibr_meas</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_read_curves_new_xreal_yreal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">'''Create array from real coordinated of points in curves_new'''</span>
+        <span class="n">xreal</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">yreal</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">calibr_p</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calibr_p</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calibr_p</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">xreal</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">yreal</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+        <span class="n">xreal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">xreal</span><span class="p">)))</span>
+        <span class="n">yreal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">yreal</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">xreal</span><span class="p">,</span> <span class="n">yreal</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_read_curves_new_array_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">'''Create array with cycles numbers and directions'''</span>
+        <span class="n">cycles</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">passes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">meas</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">dat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">calibr_d</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">_c</span><span class="p">,</span> <span class="n">_d</span><span class="p">,</span> <span class="n">_a</span><span class="p">,</span> <span class="n">_m</span>  <span class="o">=</span> <span class="n">dat</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">cycles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_c</span><span class="p">)</span>
+            <span class="n">passes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_d</span><span class="p">)</span>
+            <span class="n">axes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_a</span><span class="p">)</span>
+            <span class="n">meas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_m</span><span class="p">)</span>
+
+        <span class="n">cycles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">cycles</span><span class="p">)))</span>
+        <span class="n">passes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">passes</span><span class="p">)))</span>
+        <span class="n">meas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">meas</span><span class="p">)))))</span>  <span class="c1"># meas was string list</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">axes</span><span class="p">)))</span>
+
+        <span class="k">return</span> <span class="n">cycles</span><span class="p">,</span> <span class="n">passes</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">meas</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_read_mda_calibrations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">'''</span>
+<span class="sd">        Read parameters and calibrations for mda frame</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict : dict with parameters</span>
+<span class="sd">        '''</span>
+        <span class="n">_current_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+        <span class="n">calibrations</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1">#parameters length for further parsings</span>
+        <span class="n">_len_tot</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+        <span class="n">_len_struct</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+
+        <span class="n">_pos_after_struct</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span> <span class="o">+</span> <span class="n">_len_struct</span>
+
+        <span class="n">_len_name</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+        <span class="n">_len_comment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+        <span class="n">_len_unit</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+
+        <span class="n">calibrations</span><span class="p">[</span><span class="s1">'si_unit'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint64</span><span class="p">()</span>
+        <span class="n">calibrations</span><span class="p">[</span><span class="s1">'accuracy'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_float64</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">shift_position</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+        <span class="n">calibrations</span><span class="p">[</span><span class="s1">'bias'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_float64</span><span class="p">()</span>
+        <span class="n">calibrations</span><span class="p">[</span><span class="s1">'scale'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_float64</span><span class="p">()</span>
+        <span class="n">calibrations</span><span class="p">[</span><span class="s1">'min_index'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint64</span><span class="p">()</span>
+        <span class="n">calibrations</span><span class="p">[</span><span class="s1">'max_index'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint64</span><span class="p">()</span>
+        <span class="n">calibrations</span><span class="p">[</span><span class="s1">'data_type'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_int32</span><span class="p">()</span> <span class="c1">#signed integer</span>
+        <span class="n">calibrations</span><span class="p">[</span><span class="s1">'length'</span><span class="p">]</span> <span class="o">=</span> <span class="n">calibrations</span><span class="p">[</span><span class="s1">'max_index'</span><span class="p">]</span> <span class="o">-</span> <span class="n">calibrations</span><span class="p">[</span><span class="s1">'min_index'</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+
+
+        <span class="n">_len_author</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read_uint32</span><span class="p">()</span>
+
+        <span class="c1">#?</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">_pos_after_struct</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">_len_name</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">calibrations</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">extract_string</span><span class="p">(</span><span class="n">_len_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">_len_comment</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">calibrations</span><span class="p">[</span><span class="s1">'comment'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">extract_string</span><span class="p">(</span><span class="n">_len_comment</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">_len_unit</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">calibrations</span><span class="p">[</span><span class="s1">'unit'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">extract_string</span><span class="p">(</span><span class="n">_len_unit</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">_len_author</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">calibrations</span><span class="p">[</span><span class="s1">'author'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">extract_string</span><span class="p">(</span><span class="n">_len_author</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">_current_pos</span> <span class="o">+</span> <span class="n">_len_tot</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">calibrations</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_2d_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">'''</span>
+<span class="sd">        Extract data from 2d scan</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        sidpy.Dataset : 2d dataset object with AFM image data</span>
+<span class="sd">        '''</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measurands</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">total_len</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="s1">'length'</span><span class="p">]</span> <span class="o">*</span> <span class="n">y</span><span class="p">[</span><span class="s1">'length'</span><span class="p">]</span>
+
+        <span class="n">xreal</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="s1">'scale'</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">'length'</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">yreal</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="s1">'scale'</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="s1">'length'</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+
+        <span class="n">read_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MDT_data_types</span><span class="p">[</span><span class="n">z</span><span class="p">[</span><span class="s1">'data_type'</span><span class="p">]]</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">total_len</span><span class="p">)</span>
+
+        <span class="c1">#read data</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">z</span><span class="p">[</span><span class="s1">'bias'</span><span class="p">]</span> <span class="o">+</span> <span class="n">z</span><span class="p">[</span><span class="s1">'scale'</span><span class="p">]</span> <span class="o">*</span> <span class="n">read_data</span><span class="p">()</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">rot90</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">'length'</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="s1">'length'</span><span class="p">])),</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="c1"># Convert it to sidpy dataset object</span>
+        <span class="n">data_set</span> <span class="o">=</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">'Image'</span>
+
+        <span class="c1"># Add quantity and units</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">z</span><span class="p">[</span><span class="s1">'unit'</span><span class="p">]</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">quantity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">':'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># Add dimension info</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">xreal</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="s1">'length'</span><span class="p">]),</span>
+                                                <span class="n">name</span><span class="o">=</span><span class="s1">'y'</span><span class="p">,</span>
+                                                <span class="n">units</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="s1">'unit'</span><span class="p">],</span> <span class="n">quantity</span><span class="o">=</span><span class="s1">'y'</span><span class="p">,</span>
+                                                <span class="n">dimension_type</span><span class="o">=</span><span class="s1">'spatial'</span><span class="p">))</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">yreal</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="s1">'length'</span><span class="p">]),</span>
+                                                <span class="n">name</span><span class="o">=</span><span class="s1">'x'</span><span class="p">,</span>
+                                                <span class="n">units</span><span class="o">=</span><span class="n">y</span><span class="p">[</span><span class="s1">'unit'</span><span class="p">],</span> <span class="n">quantity</span><span class="o">=</span><span class="s1">'x'</span><span class="p">,</span>
+                                                <span class="n">dimension_type</span><span class="o">=</span><span class="s1">'spatial'</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">data_set</span>
+
+    <span class="c1">#helper methods</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">xml_to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">text</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">element</span><span class="p">:</span>
+            <span class="n">child_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xml_to_dict</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child_data</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="p">],</span> <span class="n">child_data</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="n">child_data</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+<div class="viewcode-block" id="Frame.restore_guid">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.mdt.Frame.html#SciFiReaders.readers.microscopy.spm.afm.mdt.Frame.restore_guid">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">restore_guid</span><span class="p">(</span><span class="n">b_list</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">'''</span>
+<span class="sd">        Restoring GUID of frame from binary list</span>
+<span class="sd">        '''</span>
+        <span class="n">hex_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">b_list</span><span class="p">]</span>
+        <span class="n">ind</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">16</span><span class="p">]</span>
+        <span class="n">hex_list_cor</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">part</span> <span class="o">=</span> <span class="n">hex_list</span><span class="p">[</span><span class="n">ind</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">ind</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]]</span>
+            <span class="k">if</span> <span class="n">ind</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+                <span class="n">part</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+            <span class="n">str_part</span> <span class="o">=</span> <span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+            <span class="n">hex_list_cor</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">str_part</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="s1">'-'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">hex_list_cor</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Pycroscopy contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2020, Pycroscopy contributors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

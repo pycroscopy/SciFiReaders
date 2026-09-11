@@ -1,109 +1,366 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SciFiReaders.readers.SID.Nsid_reader &mdash; SciFiReaders 0.0.4 documentation</title>
-      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
-        <script src="../../../../_static/jquery.js"></script>
-        <script src="../../../../_static/underscore.js"></script>
-        <script src="../../../../_static/doctools.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../../../../_static/js/theme.js"></script>
-    <link rel="author" title="About these documents" href="../../../../about.html" />
-    <link rel="index" title="Index" href="../../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../../search.html" /> 
-</head>
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-            <a href="../../../../index.html" class="icon icon-home"> SciFiReaders
-          </a>
-              <div class="version">
-                0.0.4
-              </div>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SciFiReaders.readers.SID.Nsid_reader &#8212; SciFiReaders 0.12.7 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../../_static/documentation_options.js?v=7cf6be21"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/SciFiReaders/readers/SID/Nsid_reader';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">SciFiReaders</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../about.html">SciFiReaders</a></li>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SciFiReaders 0.12.7 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../index.html">
+                    SciFiReaders
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../available_readers.html">Available Readers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../contact.html">Contact us</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/00_developing_a_reader/index.html">Creating a Reader</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/01_using_readers/index.html">Using Readers</a></li>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples by method</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../notebooks/00_developing_a_reader/index.html">Creating a Reader</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/00_developing_a_reader/developing_a_reader.html">Creating a Reader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../notebooks/01_electron_microscopy/index.html">Electron microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/01_electron_microscopy/read_dm3_files.html">Reading a DM3 File with ScopeReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/01_electron_microscopy/read_nion_files.html">Reading a Nion File with ScopeReader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../notebooks/02_scanning_probe_microscopy/index.html">Scanning probe microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/02_scanning_probe_microscopy/read_mdt_files.html">Parsing .mdt experimental files. Basic example.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/02_scanning_probe_microscopy/read_fsexp_files.html"><strong>Parsing .fsexp FusionScope HDF5 Experiment Files</strong></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../notebooks/03_data_formats_and_converters/index.html">Data formats and converters</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/03_data_formats_and_converters/convert_hyperspy.html">Working with Hyperspy Data</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api.html">API reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../_autosummary/SciFiReaders.html">SciFiReaders</a></li>
+</ul>
+</details></li>
 </ul>
 
-        </div>
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
       </div>
-    </nav>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../../index.html">SciFiReaders</a>
-      </nav>
+<div class="sbt-scroll-pixel-helper"></div>
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../../index.html">Module code</a> &raquo;</li>
-      <li>SciFiReaders.readers.SID.Nsid_reader</li>
-      <li class="wy-breadcrumbs-aside">
-      </li>
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders/issues/new?title=Issue%20on%20page%20%2F_modules/SciFiReaders/readers/SID/Nsid_reader.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
   </ul>
-  <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <h1>Source code for SciFiReaders.readers.SID.Nsid_reader</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">Reader capable of reading one or all NSID datasets present in a given HDF5 file</span>
 
 <span class="sd">Created on Fri May 22 16:29:25 2020</span>
 
 <span class="sd">@author: Gerd Duscher, Suhas Somnath, Maxim Ziadtinov</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
-                        <span class="n">unicode_literals</span><span class="p">)</span>
-
-<span class="kn">import</span> <span class="nn">sys</span>
-
-<span class="kn">import</span> <span class="nn">h5py</span>
-<span class="kn">import</span> <span class="nn">sidpy</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">pyNSID.io.hdf_utils</span> <span class="kn">import</span> <span class="n">check_if_main</span><span class="p">,</span> <span class="n">get_all_main</span><span class="p">,</span> \
-        <span class="n">read_h5py_dataset</span>
-<span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
-    <span class="n">check_if_main</span> <span class="o">=</span> <span class="n">get_all_main</span> <span class="o">=</span> <span class="n">read_h5py_dataset</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="sd">"""</span>
 
 
-<div class="viewcode-block" id="NSIDReader"><a class="viewcode-back" href="../../../../_autosummary/SciFiReaders.readers.SID.Nsid_reader.NSIDReader.html#SciFiReaders.readers.SID.Nsid_reader.NSIDReader">[docs]</a><span class="k">class</span> <span class="nc">NSIDReader</span><span class="p">(</span><span class="n">sidpy</span><span class="o">.</span><span class="n">Reader</span><span class="p">):</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">h5py</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sidpy</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyNSID.io.hdf_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_if_main</span><span class="p">,</span> <span class="n">get_all_main</span><span class="p">,</span> <span class="n">read_h5py_dataset</span>
+
+
+<div class="viewcode-block" id="NSIDReader">
+<a class="viewcode-back" href="../../../../_autosummary/SciFiReaders.readers.SID.Nsid_reader.NSIDReader.html#SciFiReaders.readers.SID.Nsid_reader.NSIDReader">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">NSIDReader</span><span class="p">(</span><span class="n">sidpy</span><span class="o">.</span><span class="n">Reader</span><span class="p">):</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Creates an instance of NSIDReader which can read one or more HDF5</span>
 <span class="sd">        datasets formatted according to NSID into sidpy.Dataset objects</span>
 
@@ -118,21 +375,23 @@
 <span class="sd">        Please consider using the ``self._h5_file`` object to get handles to</span>
 <span class="sd">        specific datasets or sub-trees that need to be read instead of opening</span>
 <span class="sd">        the file again outside the context of this Reader.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">NSIDReader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">check_if_main</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ModuleNotFoundError</span><span class="p">(</span><span class="s1">&#39;Please install pyNSID to use this Reader&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ModuleNotFoundError</span><span class="p">(</span><span class="s1">'Please install pyNSID to use this Reader'</span><span class="p">)</span>
 
         <span class="c1"># Let h5py raise an OS error if a non-HDF5 file was provided</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_h5_file</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r+&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_h5_file</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'r+'</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_main_dsets</span> <span class="o">=</span> <span class="n">get_all_main</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_h5_file</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># DO NOT close HDF5 file. Dask array will fail if you do so.</span>
 
-<div class="viewcode-block" id="NSIDReader.can_read"><a class="viewcode-back" href="../../../../_autosummary/SciFiReaders.readers.SID.Nsid_reader.NSIDReader.html#SciFiReaders.readers.SID.Nsid_reader.NSIDReader.can_read">[docs]</a>    <span class="k">def</span> <span class="nf">can_read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NSIDReader.can_read">
+<a class="viewcode-back" href="../../../../_autosummary/SciFiReaders.readers.SID.Nsid_reader.NSIDReader.html#SciFiReaders.readers.SID.Nsid_reader.NSIDReader.can_read">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">can_read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Checks whether or not this Reader can read the provided file</span>
 
 <span class="sd">        Returns</span>
@@ -140,11 +399,14 @@
 <span class="sd">        bool :</span>
 <span class="sd">            True if this Reader can read the provided file and if this file</span>
 <span class="sd">            contains at least one NSID-formatted main dataset. Else, False</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_main_dsets</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="NSIDReader.read"><a class="viewcode-back" href="../../../../_autosummary/SciFiReaders.readers.SID.Nsid_reader.NSIDReader.html#SciFiReaders.readers.SID.Nsid_reader.NSIDReader.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h5_object</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="NSIDReader.read">
+<a class="viewcode-back" href="../../../../_autosummary/SciFiReaders.readers.SID.Nsid_reader.NSIDReader.html#SciFiReaders.readers.SID.Nsid_reader.NSIDReader.read">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h5_object</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Reads all available NSID main datasets or the specified h5_object</span>
 
 <span class="sd">        Parameters</span>
@@ -155,23 +417,29 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        sidpy.Dataset or list of sidpy.Dataset objects</span>
+<span class="sd">        dictionary of sidpy.Dataset objects</span>
 <span class="sd">            Datasets present in the provided file</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">h5_object</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_all</span><span class="p">(</span><span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">h5_object</span><span class="p">,</span> <span class="p">(</span><span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">,</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Dataset</span><span class="p">)):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Provided h5_object was not a h5py.Dataset or &#39;</span>
-                            <span class="s1">&#39;h5py.Group object but was of type: </span><span class="si">{}</span><span class="s1">&#39;</span>
-                            <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">h5_object</span><span class="p">)))</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">'Provided h5_object was not a h5py.Dataset or '</span>
+                            <span class="s1">'h5py.Group object but was of type: </span><span class="si">{}</span><span class="s1">'</span>
+                            <span class="s1">''</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">h5_object</span><span class="p">)))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__validate_obj_in_same_file</span><span class="p">(</span><span class="n">h5_object</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">h5_object</span><span class="p">,</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">read_h5py_dataset</span><span class="p">(</span><span class="n">h5_object</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_all</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">h5_object</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">__validate_obj_in_same_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h5_object</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        
+        <span class="c1">#TODO: We need to add the ability to read functions in any sidpy datasets.</span>
+        <span class="c1"># We will assume that fitting functions are contained within a dictionary of the same name. </span>
+        <span class="c1">#They will have been saved with dill and encoded. To decode them, use:</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__validate_obj_in_same_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h5_object</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Internal function that ensures that the provided HDF5 object is within</span>
 <span class="sd">        the same file as that provided in __init__</span>
 
@@ -183,16 +451,18 @@
 <span class="sd">        Raises</span>
 <span class="sd">        ------</span>
 <span class="sd">        OSError - if the provded object is in a different HDF5 file.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">h5_object</span><span class="o">.</span><span class="n">file</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_h5_file</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="s1">&#39;The file containing the provided h5_object: </span><span class="si">{}</span><span class="s1"> is &#39;</span>
-                          <span class="s1">&#39;not the same as provided HDF5 file when &#39;</span>
-                          <span class="s1">&#39;instantiating this object: </span><span class="si">{}</span><span class="s1">&#39;</span>
-                          <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">h5_object</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
+            <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="s1">'The file containing the provided h5_object: </span><span class="si">{}</span><span class="s1"> is '</span>
+                          <span class="s1">'not the same as provided HDF5 file when '</span>
+                          <span class="s1">'instantiating this object: </span><span class="si">{}</span><span class="s1">'</span>
+                          <span class="s1">''</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">h5_object</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
                                     <span class="bp">self</span><span class="o">.</span><span class="n">_h5_file</span><span class="o">.</span><span class="n">filename</span><span class="p">))</span>
 
-<div class="viewcode-block" id="NSIDReader.read_all"><a class="viewcode-back" href="../../../../_autosummary/SciFiReaders.readers.SID.Nsid_reader.NSIDReader.html#SciFiReaders.readers.SID.Nsid_reader.NSIDReader.read_all">[docs]</a>    <span class="k">def</span> <span class="nf">read_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NSIDReader.read_all">
+<a class="viewcode-back" href="../../../../_autosummary/SciFiReaders.readers.SID.Nsid_reader.NSIDReader.html#SciFiReaders.readers.SID.Nsid_reader.NSIDReader.read_all">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Reads all HDF5 datasets formatted according to NSID specifications.</span>
 
 <span class="sd">        Parameters</span>
@@ -205,59 +475,106 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        sidpy.Dataset or list of sidpy.Dataset objects</span>
+<span class="sd">        dictionary of sidpy.Dataset objects</span>
 <span class="sd">            Datasets present in the provided file</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">h5_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_h5_file</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Group</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;parent should be a h5py.Group object&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">'parent should be a h5py.Group object'</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__validate_obj_in_same_file</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
             <span class="n">h5_group</span> <span class="o">=</span> <span class="n">parent</span>
 
         <span class="k">if</span> <span class="n">recursive</span><span class="p">:</span>
             <span class="n">list_of_main</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_main_dsets</span>
+            <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Channel_</span><span class="si">{:03}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">list_of_main</span><span class="p">))]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">list_of_main</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">keys</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">h5_group</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">h5_group</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
                     <span class="k">if</span> <span class="n">check_if_main</span><span class="p">(</span><span class="n">h5_group</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
                         <span class="n">list_of_main</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h5_group</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+                        <span class="n">keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 
         <span class="c1"># Go through each of the identified</span>
-        <span class="n">list_of_datasets</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">dset</span> <span class="ow">in</span> <span class="n">list_of_main</span><span class="p">:</span>
-            <span class="n">list_of_datasets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">read_h5py_dataset</span><span class="p">(</span><span class="n">dset</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">list_of_datasets</span></div></div>
+        <span class="n">dictionary_of_datasets</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">dset</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">list_of_main</span><span class="p">):</span>
+            <span class="n">dictionary_of_datasets</span><span class="p">[</span><span class="n">keys</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">read_h5py_dataset</span><span class="p">(</span><span class="n">dset</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dictionary_of_datasets</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_h5_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
 </pre></div>
 
-           </div>
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
           </div>
-          <footer>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Pycroscopy contributors
+</p>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2020, Pycroscopy contributors.</p>
   </div>
+  
+  <div class="footer-item">
+    
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+  <p class="copyright">
+    
+      © Copyright 2020, Pycroscopy contributors.
+      <br/>
+    
+  </p>
 
-</footer>
-        </div>
-      </div>
-    </section>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
 
-</body>
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
 </html>

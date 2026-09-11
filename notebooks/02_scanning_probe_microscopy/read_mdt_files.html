@@ -1,0 +1,2226 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Parsing .mdt experimental files. Basic example. &#8212; SciFiReaders 0.12.7 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=7cf6be21"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/02_scanning_probe_microscopy/read_mdt_files';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Parsing .fsexp FusionScope HDF5 Experiment Files" href="read_fsexp_files.html" />
+    <link rel="prev" title="Scanning probe microscopy" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SciFiReaders 0.12.7 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    SciFiReaders
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../available_readers.html">Available Readers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contact.html">Contact us</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples by method</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../00_developing_a_reader/index.html">Creating a Reader</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../00_developing_a_reader/developing_a_reader.html">Creating a Reader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_electron_microscopy/index.html">Electron microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_electron_microscopy/read_dm3_files.html">Reading a DM3 File with ScopeReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_electron_microscopy/read_nion_files.html">Reading a Nion File with ScopeReader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Scanning probe microscopy</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Parsing .mdt experimental files. Basic example.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="read_fsexp_files.html"><strong>Parsing .fsexp FusionScope HDF5 Experiment Files</strong></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../03_data_formats_and_converters/index.html">Data formats and converters</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../03_data_formats_and_converters/convert_hyperspy.html">Working with Hyperspy Data</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api.html">API reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/SciFiReaders.html">SciFiReaders</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders/issues/new?title=Issue%20on%20page%20%2Fnotebooks/02_scanning_probe_microscopy/read_mdt_files.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/02_scanning_probe_microscopy/read_mdt_files.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Parsing .mdt experimental files. Basic example.</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Key-Naming-Convention">Key Naming Convention</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Output-structure">Output structure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Image">Image</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="Parsing-.mdt-experimental-files.-Basic-example.">
+<h1>Parsing .mdt experimental files. Basic example.<a class="headerlink" href="#Parsing-.mdt-experimental-files.-Basic-example." title="Link to this heading">#</a></h1>
+<p><strong>Boris Slautin</strong></p>
+<p>10/31/2025</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#install the latest version of SciFiReaders</span>
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>scifireaders
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Requirement already satisfied: scifireaders in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (0.11.6)
+Requirement already satisfied: cytoolz in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from scifireaders) (0.12.1)
+Requirement already satisfied: numba&gt;=0.59.0rc1 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from scifireaders) (0.60.0)
+Requirement already satisfied: dask&gt;=2.20.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from scifireaders) (2023.3.2)
+Requirement already satisfied: setuptools in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from scifireaders) (65.6.3)
+Requirement already satisfied: ipython&gt;=7.1.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from scifireaders) (8.15.0)
+Requirement already satisfied: gdown in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from scifireaders) (5.2.0)
+Requirement already satisfied: toolz in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from scifireaders) (0.12.0)
+Requirement already satisfied: mrcfile in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from scifireaders) (1.5.4)
+Requirement already satisfied: sidpy&gt;=0.11.2 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from scifireaders) (0.12.6)
+Requirement already satisfied: pyUSID in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from scifireaders) (0.0.10.post2)
+Requirement already satisfied: numpy in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from scifireaders) (1.26.4)
+Requirement already satisfied: partd&gt;=1.2.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from dask&gt;=2.20.0-&gt;scifireaders) (1.3.0)
+Requirement already satisfied: fsspec&gt;=0.6.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from dask&gt;=2.20.0-&gt;scifireaders) (2023.3.0)
+Requirement already satisfied: pyyaml&gt;=5.3.1 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from dask&gt;=2.20.0-&gt;scifireaders) (6.0)
+Requirement already satisfied: click&gt;=7.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from dask&gt;=2.20.0-&gt;scifireaders) (8.1.3)
+Requirement already satisfied: importlib-metadata&gt;=4.13.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from dask&gt;=2.20.0-&gt;scifireaders) (6.1.0)
+Requirement already satisfied: cloudpickle&gt;=1.1.1 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from dask&gt;=2.20.0-&gt;scifireaders) (2.2.1)
+Requirement already satisfied: packaging&gt;=20.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from dask&gt;=2.20.0-&gt;scifireaders) (25.0)
+Requirement already satisfied: pickleshare in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipython&gt;=7.1.0-&gt;scifireaders) (0.7.5)
+Requirement already satisfied: decorator in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipython&gt;=7.1.0-&gt;scifireaders) (5.1.1)
+Requirement already satisfied: pexpect&gt;4.3 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipython&gt;=7.1.0-&gt;scifireaders) (4.8.0)
+Requirement already satisfied: stack-data in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipython&gt;=7.1.0-&gt;scifireaders) (0.2.0)
+Requirement already satisfied: jedi&gt;=0.16 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipython&gt;=7.1.0-&gt;scifireaders) (0.18.1)
+Requirement already satisfied: matplotlib-inline in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipython&gt;=7.1.0-&gt;scifireaders) (0.1.6)
+Requirement already satisfied: pygments&gt;=2.4.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipython&gt;=7.1.0-&gt;scifireaders) (2.17.2)
+Requirement already satisfied: backcall in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipython&gt;=7.1.0-&gt;scifireaders) (0.2.0)
+Requirement already satisfied: traitlets&gt;=5 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipython&gt;=7.1.0-&gt;scifireaders) (5.7.1)
+Requirement already satisfied: exceptiongroup in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipython&gt;=7.1.0-&gt;scifireaders) (1.2.0)
+Requirement already satisfied: appnope in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipython&gt;=7.1.0-&gt;scifireaders) (0.1.2)
+Requirement already satisfied: prompt-toolkit!=3.0.37,&lt;3.1.0,&gt;=3.0.30 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipython&gt;=7.1.0-&gt;scifireaders) (3.0.36)
+Requirement already satisfied: llvmlite&lt;0.44,&gt;=0.43.0dev0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from numba&gt;=0.59.0rc1-&gt;scifireaders) (0.43.0)
+Requirement already satisfied: distributed&gt;=2.0.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from sidpy&gt;=0.11.2-&gt;scifireaders) (2023.3.2)
+Requirement already satisfied: psutil in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from sidpy&gt;=0.11.2-&gt;scifireaders) (5.9.0)
+Requirement already satisfied: scipy in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from sidpy&gt;=0.11.2-&gt;scifireaders) (1.15.3)
+Requirement already satisfied: dill in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from sidpy&gt;=0.11.2-&gt;scifireaders) (0.3.9)
+Requirement already satisfied: matplotlib&gt;=2.0.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from sidpy&gt;=0.11.2-&gt;scifireaders) (3.8.2)
+Requirement already satisfied: scikit-learn in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from sidpy&gt;=0.11.2-&gt;scifireaders) (1.7.0)
+Requirement already satisfied: ipykernel in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from sidpy&gt;=0.11.2-&gt;scifireaders) (6.19.2)
+Requirement already satisfied: joblib&gt;=0.11.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from sidpy&gt;=0.11.2-&gt;scifireaders) (1.2.0)
+Requirement already satisfied: h5py&gt;=2.6.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from sidpy&gt;=0.11.2-&gt;scifireaders) (3.11.0)
+Requirement already satisfied: ase in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from sidpy&gt;=0.11.2-&gt;scifireaders) (3.22.1)
+Requirement already satisfied: ipywidgets in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from sidpy&gt;=0.11.2-&gt;scifireaders) (8.0.4)
+Requirement already satisfied: ipympl in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from sidpy&gt;=0.11.2-&gt;scifireaders) (0.9.3)
+Requirement already satisfied: filelock in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from gdown-&gt;scifireaders) (3.12.3)
+Requirement already satisfied: tqdm in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from gdown-&gt;scifireaders) (4.64.1)
+Requirement already satisfied: beautifulsoup4 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from gdown-&gt;scifireaders) (4.11.1)
+Requirement already satisfied: requests[socks] in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from gdown-&gt;scifireaders) (2.28.1)
+Requirement already satisfied: six in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from pyUSID-&gt;scifireaders) (1.16.0)
+Requirement already satisfied: pillow in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from pyUSID-&gt;scifireaders) (9.4.0)
+Requirement already satisfied: msgpack&gt;=1.0.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from distributed&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (1.0.5)
+Requirement already satisfied: jinja2&gt;=2.10.3 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from distributed&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (3.1.2)
+Requirement already satisfied: sortedcontainers&gt;=2.0.5 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from distributed&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (2.4.0)
+Requirement already satisfied: tornado&gt;=6.0.3 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from distributed&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (6.2)
+Requirement already satisfied: urllib3&gt;=1.24.3 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from distributed&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (1.26.14)
+Requirement already satisfied: tblib&gt;=1.6.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from distributed&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (1.7.0)
+Requirement already satisfied: locket&gt;=1.0.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from distributed&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (1.0.0)
+Requirement already satisfied: zict&gt;=2.1.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from distributed&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (2.2.0)
+Requirement already satisfied: zipp&gt;=0.5 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from importlib-metadata&gt;=4.13.0-&gt;dask&gt;=2.20.0-&gt;scifireaders) (3.15.0)
+Requirement already satisfied: parso&lt;0.9.0,&gt;=0.8.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from jedi&gt;=0.16-&gt;ipython&gt;=7.1.0-&gt;scifireaders) (0.8.3)
+Requirement already satisfied: contourpy&gt;=1.0.1 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from matplotlib&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (1.0.5)
+Requirement already satisfied: python-dateutil&gt;=2.7 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from matplotlib&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (2.8.2)
+Requirement already satisfied: cycler&gt;=0.10 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from matplotlib&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (0.11.0)
+Requirement already satisfied: kiwisolver&gt;=1.3.1 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from matplotlib&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (1.4.4)
+Requirement already satisfied: fonttools&gt;=4.22.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from matplotlib&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (4.25.0)
+Requirement already satisfied: pyparsing&gt;=2.3.1 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from matplotlib&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (3.0.9)
+Requirement already satisfied: ptyprocess&gt;=0.5 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from pexpect&gt;4.3-&gt;ipython&gt;=7.1.0-&gt;scifireaders) (0.7.0)
+Requirement already satisfied: wcwidth in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from prompt-toolkit!=3.0.37,&lt;3.1.0,&gt;=3.0.30-&gt;ipython&gt;=7.1.0-&gt;scifireaders) (0.2.5)
+Requirement already satisfied: soupsieve&gt;1.2 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from beautifulsoup4-&gt;gdown-&gt;scifireaders) (2.3.2.post1)
+Requirement already satisfied: typing-extensions&gt;=4.7.1 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from filelock-&gt;gdown-&gt;scifireaders) (4.14.0)
+Requirement already satisfied: nest-asyncio in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipykernel-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (1.5.6)
+Requirement already satisfied: pyzmq&gt;=17 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipykernel-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (23.2.0)
+Requirement already satisfied: jupyter-client&gt;=6.1.12 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipykernel-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (7.4.9)
+Requirement already satisfied: debugpy&gt;=1.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipykernel-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (1.5.1)
+Requirement already satisfied: comm&gt;=0.1.1 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipykernel-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (0.1.2)
+Requirement already satisfied: ipython-genutils in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipympl-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (0.2.0)
+Requirement already satisfied: widgetsnbextension~=4.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (4.0.5)
+Requirement already satisfied: jupyterlab-widgets~=3.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from ipywidgets-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (3.0.5)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from requests[socks]-&gt;gdown-&gt;scifireaders) (2024.2.2)
+Requirement already satisfied: charset-normalizer&lt;3,&gt;=2 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from requests[socks]-&gt;gdown-&gt;scifireaders) (2.0.4)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from requests[socks]-&gt;gdown-&gt;scifireaders) (3.4)
+Requirement already satisfied: PySocks!=1.5.7,&gt;=1.5.6 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from requests[socks]-&gt;gdown-&gt;scifireaders) (1.7.1)
+Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from scikit-learn-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (3.1.0)
+Requirement already satisfied: pure-eval in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from stack-data-&gt;ipython&gt;=7.1.0-&gt;scifireaders) (0.2.2)
+Requirement already satisfied: asttokens in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from stack-data-&gt;ipython&gt;=7.1.0-&gt;scifireaders) (2.0.5)
+Requirement already satisfied: executing in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from stack-data-&gt;ipython&gt;=7.1.0-&gt;scifireaders) (0.8.3)
+Requirement already satisfied: MarkupSafe&gt;=2.0 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from jinja2&gt;=2.10.3-&gt;distributed&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (2.1.2)
+Requirement already satisfied: jupyter-core&gt;=4.9.2 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from jupyter-client&gt;=6.1.12-&gt;ipykernel-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (5.2.0)
+Requirement already satisfied: entrypoints in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from jupyter-client&gt;=6.1.12-&gt;ipykernel-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (0.4)
+Requirement already satisfied: heapdict in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from zict&gt;=2.1.0-&gt;distributed&gt;=2.0.0-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (1.0.1)
+Requirement already satisfied: platformdirs&gt;=2.5 in /Users/borisslautin/miniconda3/lib/python3.10/site-packages (from jupyter-core&gt;=4.9.2-&gt;jupyter-client&gt;=6.1.12-&gt;ipykernel-&gt;sidpy&gt;=0.11.2-&gt;scifireaders) (2.5.2)
+</pre></div></div>
+</div>
+<p><strong>restart session to enable interactive plots</strong></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#import libs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">SciFiReaders</span><span class="w"> </span><span class="kn">import</span> <span class="n">MDTReader</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> widget
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#upload test file</span>
+<span class="o">!</span>wget<span class="w"> </span>https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/f7ab03ccc2b8c0253e98385ce31f4bf4eeeb053b/data/microscopy/spm/afm/test_mdt.mdt
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+--2025-11-26 02:01:57--  https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/f7ab03ccc2b8c0253e98385ce31f4bf4eeeb053b/data/microscopy/spm/afm/test_mdt.mdt
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 2606:50c0:8000::154, 2606:50c0:8001::154, 2606:50c0:8002::154, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|2606:50c0:8000::154|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2041504 (1,9M) [application/octet-stream]
+Saving to: ‘test_mdt.mdt.2’
+
+test_mdt.mdt.2      100%[===================&gt;]   1,95M  11,8MB/s    in 0,2s
+
+2025-11-26 02:01:58 (11,8 MB/s) - ‘test_mdt.mdt.2’ saved [2041504/2041504]
+
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#initialize reader</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">MDTReader</span><span class="p">(</span><span class="s2">"test_mdt.mdt"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#read file</span>
+<span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;000_Unknown&#39;: None,
+ &#39;001_1F:Iprobe&#39;: sidpy.Dataset of type IMAGE with:
+  dask.array&lt;array, shape=(256, 256), dtype=float64, chunksize=(256, 256), chunktype=numpy.ndarray&gt;
+  data contains: Iprobe (nA)
+  and Dimensions:
+ x:  x (um) of size (256,)
+ y:  y (um) of size (256,)
+  with metadata: [&#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+ &#39;002_Point_Cloud&#39;: {&#39;point_0&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_1&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_2&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_3&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_4&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_5&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_6&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_7&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_8&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_9&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_10&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_11&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_12&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_13&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_14&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_15&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_16&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_17&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_18&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_19&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_20&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_21&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_22&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_23&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;],
+  &#39;point_24&#39;: sidpy.Dataset of type SPECTRUM with:
+   dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+   data contains: Iprobe (nA)
+   and Dimensions:
+  x:  BVValue (V) of size (3522,)
+  channel:  generic (generic) of size (1,)
+   with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;]}}
+</pre></div></div>
+</div>
+<section id="Overview">
+<h2>Overview<a class="headerlink" href="#Overview" title="Link to this heading">#</a></h2>
+<p><strong>MDT binary</strong> files have a complex internal structure, combining multiple types of experimental data, such as images, spectra, and point clouds (sparse arrays), all stored within a single file.</p>
+<p>Some auxilary types of data such as text are not currently supported.</p>
+<p>To handle this diversity efficiently, we have restructured the <code class="docutils literal notranslate"><span class="pre">MDTReader</span></code> to provide a clear and consistent output format.</p>
+<p>The reader returns a Python dictionary, where each key represents a <strong>single</strong> measurement from the file.</p>
+</section>
+<hr class="docutils" />
+<section id="Key-Naming-Convention">
+<h2>Key Naming Convention<a class="headerlink" href="#Key-Naming-Convention" title="Link to this heading">#</a></h2>
+<p>Each dictionary key follows this pattern:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>00N_Name
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">N</span></code> — the sequential number of the measurement (e.g., 001, 002, …).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Name</span></code> — the original measurement name from the MDT file (e.g. Height, 1F:IProbe, etc.).</p></li>
+</ul>
+<p>Some data types in MDT files do not have explicit names. For these, we use standardized labels:</p>
+<ul class="simple">
+<li><p>Spectral data: <code class="docutils literal notranslate"><span class="pre">00N_Spectrum</span></code></p></li>
+<li><p>Point cloud data: <code class="docutils literal notranslate"><span class="pre">00N_Point_Cloud</span></code></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="Output-structure">
+<h2>Output structure<a class="headerlink" href="#Output-structure" title="Link to this heading">#</a></h2>
+<p>The reader returns a Python dictionary, where each key represents a single measurement from the file.</p>
+<p>Each entry is represented by a <code class="docutils literal notranslate"><span class="pre">sidpy.Dataset</span></code>, which includes both the data and its assiciated metadata.</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">Point</span> <span class="pre">Cloud</span></code> measurements, the reader produces a nested dictionary instead of a single dataset. In this case, each individual spectrum is stored under a key of the form: <code class="docutils literal notranslate"><span class="pre">point_N</span></code></p>
+<p>More about <code class="docutils literal notranslate"><span class="pre">sidpy</span></code> format and pycroscopy: <a class="reference external" href="https://pycroscopy.github.io/pycroscopy/ecosystem.html">link</a></p>
+</section>
+<section id="Image">
+<h2>Image<a class="headerlink" href="#Image" title="Link to this heading">#</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#@title scan</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">scan</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'001_1F:Iprobe'</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">scan</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+sidpy.Dataset of type IMAGE with:
+ dask.array&lt;array, shape=(256, 256), dtype=float64, chunksize=(256, 256), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  x (um) of size (256,)
+y:  y (um) of size (256,)
+ with metadata: [&#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#metadata</span>
+<span class="n">scan</span><span class="o">.</span><span class="n">original_metadata</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;TextComment&#39;: {},
+ &#39;Parameters&#39;: {&#39;Measurement&#39;: {&#39;Scanning&#39;: {&#39;Location&#39;: {&#39;Location&#39;: &#39;0&#39;},
+    &#39;Angle&#39;: {&#39;Angle&#39;: &#39;0&#39;}}},
+  &#39;Scan&#39;: {&#39;SignalCID&#39;: {&#39;SignalCID&#39;: &#39;268435463&#39;},
+   &#39;ReadyPointsX&#39;: {&#39;ReadyPointsX&#39;: &#39;256&#39;},
+   &#39;ReadyPointsY&#39;: {&#39;ReadyPointsY&#39;: &#39;256&#39;},
+   &#39;ReadyPointsZ&#39;: {&#39;ReadyPointsZ&#39;: &#39;1&#39;},
+   &#39;XYZConseq&#39;: {&#39;XYZConseq&#39;: &#39;0&#39;},
+   &#39;IsScanFrame1D&#39;: {&#39;IsScanFrame1D&#39;: &#39;false&#39;},
+   &#39;StartTime&#39;: {&#39;StartTime&#39;: &#39;16:55:45&#39;},
+   &#39;ExecTime&#39;: {&#39;ExecTime&#39;: &#39;0:08:37&#39;},
+   &#39;ScanDrive&#39;: {&#39;ScanDrive&#39;: &#39;Tube Scanner&#39;},
+   &#39;ScanMode&#39;: {&#39;ScanMode&#39;: &#39;Spreading Resistance&#39;}},
+  &#39;Common&#39;: {&#39;BuildID&#39;: {&#39;BuildID&#39;: &#39;Nova_Px 3.4.0.17277&#39;},
+   &#39;Date&#39;: {&#39;Date&#39;: &#39;26.12.2022&#39;},
+   &#39;Technic&#39;: {&#39;Technic&#39;: &#39;Contact&#39;},
+   &#39;Probe&#39;: {&#39;Material&#39;: {&#39;Material&#39;: &#39;Si&#39;},
+    &#39;Coating&#39;: {&#39;Coating&#39;: &#39;Unknown&#39;},
+    &#39;Shape&#39;: {&#39;Shape&#39;: &#39;Rectangular&#39;},
+    &#39;FreqMin&#39;: {&#39;FreqMin&#39;: &#39;50&#39;},
+    &#39;FreqMax&#39;: {&#39;FreqMax&#39;: &#39;100&#39;},
+    &#39;ID&#39;: {&#39;ID&#39;: &#39;FMG01&#39;},
+    &#39;Length&#39;: {&#39;Length&#39;: &#39;225&#39;},
+    &#39;Width&#39;: {&#39;Width&#39;: &#39;32&#39;},
+    &#39;Thickness&#39;: {&#39;Thickness&#39;: &#39;2.5&#39;},
+    &#39;TipRadius&#39;: {&#39;TipRadius&#39;: &#39;10&#39;},
+    &#39;TipAngle&#39;: {&#39;TipAngle&#39;: &#39;22&#39;},
+    &#39;QualityFactor&#39;: {&#39;QualityFactor&#39;: &#39;238.01&#39;},
+    &#39;ThermoAmp&#39;: {&#39;ThermoAmp&#39;: &#39;1&#39;},
+    &#39;ResFreq&#39;: {&#39;ResFreq&#39;: &#39;55.35&#39;},
+    &#39;LiqQualityFactor&#39;: {&#39;LiqQualityFactor&#39;: &#39;10&#39;},
+    &#39;LiqResFreq&#39;: {&#39;LiqResFreq&#39;: &#39;20&#39;},
+    &#39;Stiffness&#39;: {&#39;Stiffness&#39;: &#39;2.043&#39;},
+    &#39;InvOptSens&#39;: {&#39;InvOptSens&#39;: &#39;9&#39;},
+    &#39;HeadName&#39;: {&#39;HeadName&#39;: &#39;SF005&amp;AU007NTF&#39;}},
+   &#39;Humidity&#39;: {&#39;Humidity&#39;: &#39;4.56&#39;},
+   &#39;Temperature&#39;: {&#39;Temperature&#39;: &#39;25.21&#39;}},
+  &#39;DeviceType&#39;: {&#39;DeviceType&#39;: &#39;NtegraEx&#39;},
+  &#39;Motors&#39;: {&#39;SampleX&#39;: {&#39;SampleX&#39;: &#39;282.60024&#39;},
+   &#39;SampleY&#39;: {&#39;SampleY&#39;: &#39;128916.0224&#39;},
+   &#39;Appr1&#39;: {&#39;Appr1&#39;: &#39;0&#39;},
+   &#39;Appr2&#39;: {&#39;Appr2&#39;: &#39;-315.95992&#39;}},
+  &#39;ScanShell&#39;: {&#39;scshRateUnits&#39;: {&#39;scshRateUnits&#39;: &#39;um/sec&#39;},
+   &#39;scshRate&#39;: {&#39;scshRate&#39;: &#39;2.99976563189274&#39;},
+   &#39;scshXParam&#39;: {&#39;scshXParam&#39;: &#39;PosX&#39;},
+   &#39;scshYParam&#39;: {&#39;scshYParam&#39;: &#39;PosY&#39;},
+   &#39;scshZParam&#39;: {&#39;scshZParam&#39;: &#39;PosZ&#39;},
+   &#39;scshSpecParam&#39;: {&#39;scshSpecParam&#39;: &#39;XValue&#39;},
+   &#39;scshXCentre&#39;: {&#39;scshXCentre&#39;: &#39;54.0978347853011&#39;},
+   &#39;scshYCentre&#39;: {&#39;scshYCentre&#39;: &#39;62.5396504286851&#39;},
+   &#39;scshZFrom&#39;: {&#39;scshZFrom&#39;: &#39;0&#39;},
+   &#39;scshSpecFrom&#39;: {&#39;scshSpecFrom&#39;: &#39;0&#39;},
+   &#39;scshAngle&#39;: {&#39;scshAngle&#39;: &#39;0&#39;},
+   &#39;scshXSize&#39;: {&#39;scshXSize&#39;: &#39;3.00083354418604&#39;},
+   &#39;scshYSize&#39;: {&#39;scshYSize&#39;: &#39;3.00083354418604&#39;},
+   &#39;scshZSize&#39;: {&#39;scshZSize&#39;: &#39;2.29372&#39;},
+   &#39;scshSpecSize&#39;: {&#39;scshSpecSize&#39;: &#39;32767.5&#39;},
+   &#39;scshXPoints&#39;: {&#39;scshXPoints&#39;: &#39;256&#39;},
+   &#39;scshYPoints&#39;: {&#39;scshYPoints&#39;: &#39;256&#39;},
+   &#39;scshZPoints&#39;: {&#39;scshZPoints&#39;: &#39;2&#39;},
+   &#39;scshSpecPoints&#39;: {&#39;scshSpecPoints&#39;: &#39;1&#39;},
+   &#39;scshDirXY&#39;: {&#39;scshDirXY&#39;: &#39;HLT&#39;},
+   &#39;scshFastOverPoints&#39;: {&#39;scshFastOverPoints&#39;: &#39;5&#39;},
+   &#39;scshXDir&#39;: {&#39;scshXDir&#39;: &#39;X +&#39;},
+   &#39;scshYDir&#39;: {&#39;scshYDir&#39;: &#39;Y -&#39;},
+   &#39;scshZDir&#39;: {&#39;scshZDir&#39;: &#39;Z +&#39;},
+   &#39;scshSpecDir&#39;: {&#39;scshSpecDir&#39;: &#39;Pos&#39;},
+   &#39;scshXYZConseq&#39;: {&#39;scshXYZConseq&#39;: &#39;XY+Z&#39;},
+   &#39;scshCyclicSave&#39;: {&#39;scshCyclicSave&#39;: &#39;Off&#39;},
+   &#39;scshNLCorr&#39;: {&#39;scshNLCorr&#39;: &#39;Off&#39;},
+   &#39;scshScanCount&#39;: {&#39;scshScanCount&#39;: &#39;1&#39;},
+   &#39;scshVertexDelay&#39;: {&#39;scshVertexDelay&#39;: &#39;0&#39;},
+   &#39;scshOperation&#39;: {&#39;scshOperation&#39;: &#39;Normal&#39;},
+   &#39;scshPointMeasMode&#39;: {&#39;scshPointMeasMode&#39;: &#39;Dynamic&#39;}},
+  &#39;ScanMode&#39;: {&#39;ParamCount&#39;: {&#39;ParamCount&#39;: &#39;58&#39;},
+   &#39;par40_scanDZ&#39;: {&#39;par40_scanDZ&#39;: &#39;0&#39;},
+   &#39;par41_scanDU&#39;: {&#39;par41_scanDU&#39;: &#39;0&#39;},
+   &#39;par42_scanDZRate&#39;: {&#39;par42_scanDZRate&#39;: &#39;100&#39;},
+   &#39;par37_scanPassProfile&#39;: {&#39;par37_scanPassProfile&#39;: &#39;One Pass&#39;},
+   &#39;par38_scanMoveType&#39;: {&#39;par38_scanMoveType&#39;: &#39;Line&#39;},
+   &#39;par43_scanPassLines&#39;: {&#39;par43_scanPassLines&#39;: &#39;1&#39;},
+   &#39;par44_scanFFType&#39;: {&#39;par44_scanFFType&#39;: &#39;Off&#39;},
+   &#39;par45_scanFFScaleFB&#39;: {&#39;par45_scanFFScaleFB&#39;: &#39;0&#39;},
+   &#39;par46_scanFFScalePar&#39;: {&#39;par46_scanFFScalePar&#39;: &#39;0&#39;},
+   &#39;par47_scanFFParam&#39;: {&#39;par47_scanFFParam&#39;: &#39;ZOffset&#39;},
+   &#39;par31_scanSignal1&#39;: {&#39;par31_scanSignal1&#39;: &#39;Height&#39;},
+   &#39;par287_scanSignal2&#39;: {&#39;par287_scanSignal2&#39;: &#39;Iprobe&#39;},
+   &#39;par543_scanSignal3&#39;: {&#39;par543_scanSignal3&#39;: &#39;Iprobe&#39;},
+   &#39;par799_scanSignal4&#39;: {&#39;par799_scanSignal4&#39;: &#39;---&#39;},
+   &#39;par1055_scanSignal5&#39;: {&#39;par1055_scanSignal5&#39;: &#39;---&#39;},
+   &#39;par1311_scanSignal6&#39;: {&#39;par1311_scanSignal6&#39;: &#39;---&#39;},
+   &#39;par1567_scanSignal7&#39;: {&#39;par1567_scanSignal7&#39;: &#39;---&#39;},
+   &#39;par1823_scanSignal8&#39;: {&#39;par1823_scanSignal8&#39;: &#39;---&#39;},
+   &#39;par32_scanSignalDir1&#39;: {&#39;par32_scanSignalDir1&#39;: &#39;Forward&#39;},
+   &#39;par288_scanSignalDir2&#39;: {&#39;par288_scanSignalDir2&#39;: &#39;Forward&#39;},
+   &#39;par544_scanSignalDir3&#39;: {&#39;par544_scanSignalDir3&#39;: &#39;Backward&#39;},
+   &#39;par800_scanSignalDir4&#39;: {&#39;par800_scanSignalDir4&#39;: &#39;Forward&#39;},
+   &#39;par1056_scanSignalDir5&#39;: {&#39;par1056_scanSignalDir5&#39;: &#39;Forward&#39;},
+   &#39;par1312_scanSignalDir6&#39;: {&#39;par1312_scanSignalDir6&#39;: &#39;Forward&#39;},
+   &#39;par1568_scanSignalDir7&#39;: {&#39;par1568_scanSignalDir7&#39;: &#39;Forward&#39;},
+   &#39;par1824_scanSignalDir8&#39;: {&#39;par1824_scanSignalDir8&#39;: &#39;Forward&#39;},
+   &#39;par33_scanSignalAver1&#39;: {&#39;par33_scanSignalAver1&#39;: &#39;1&#39;},
+   &#39;par289_scanSignalAver2&#39;: {&#39;par289_scanSignalAver2&#39;: &#39;1&#39;},
+   &#39;par545_scanSignalAver3&#39;: {&#39;par545_scanSignalAver3&#39;: &#39;1&#39;},
+   &#39;par801_scanSignalAver4&#39;: {&#39;par801_scanSignalAver4&#39;: &#39;1&#39;},
+   &#39;par1057_scanSignalAver5&#39;: {&#39;par1057_scanSignalAver5&#39;: &#39;1&#39;},
+   &#39;par1313_scanSignalAver6&#39;: {&#39;par1313_scanSignalAver6&#39;: &#39;1&#39;},
+   &#39;par1569_scanSignalAver7&#39;: {&#39;par1569_scanSignalAver7&#39;: &#39;1&#39;},
+   &#39;par1825_scanSignalAver8&#39;: {&#39;par1825_scanSignalAver8&#39;: &#39;1&#39;},
+   &#39;par34_scanSignalPass1&#39;: {&#39;par34_scanSignalPass1&#39;: &#39;I&#39;},
+   &#39;par290_scanSignalPass2&#39;: {&#39;par290_scanSignalPass2&#39;: &#39;I&#39;},
+   &#39;par546_scanSignalPass3&#39;: {&#39;par546_scanSignalPass3&#39;: &#39;I&#39;},
+   &#39;par802_scanSignalPass4&#39;: {&#39;par802_scanSignalPass4&#39;: &#39;I&#39;},
+   &#39;par1058_scanSignalPass5&#39;: {&#39;par1058_scanSignalPass5&#39;: &#39;I&#39;},
+   &#39;par1314_scanSignalPass6&#39;: {&#39;par1314_scanSignalPass6&#39;: &#39;I&#39;},
+   &#39;par1570_scanSignalPass7&#39;: {&#39;par1570_scanSignalPass7&#39;: &#39;I&#39;},
+   &#39;par1826_scanSignalPass8&#39;: {&#39;par1826_scanSignalPass8&#39;: &#39;I&#39;},
+   &#39;par35_scanSignalDim1&#39;: {&#39;par35_scanSignalDim1&#39;: &#39;2D&#39;},
+   &#39;par291_scanSignalDim2&#39;: {&#39;par291_scanSignalDim2&#39;: &#39;2D&#39;},
+   &#39;par547_scanSignalDim3&#39;: {&#39;par547_scanSignalDim3&#39;: &#39;2D&#39;},
+   &#39;par803_scanSignalDim4&#39;: {&#39;par803_scanSignalDim4&#39;: &#39;2D&#39;},
+   &#39;par1059_scanSignalDim5&#39;: {&#39;par1059_scanSignalDim5&#39;: &#39;2D&#39;},
+   &#39;par1315_scanSignalDim6&#39;: {&#39;par1315_scanSignalDim6&#39;: &#39;2D&#39;},
+   &#39;par1571_scanSignalDim7&#39;: {&#39;par1571_scanSignalDim7&#39;: &#39;2D&#39;},
+   &#39;par1827_scanSignalDim8&#39;: {&#39;par1827_scanSignalDim8&#39;: &#39;2D&#39;},
+   &#39;par36_scanSignalHide1&#39;: {&#39;par36_scanSignalHide1&#39;: &#39;Off&#39;},
+   &#39;par292_scanSignalHide2&#39;: {&#39;par292_scanSignalHide2&#39;: &#39;Off&#39;},
+   &#39;par548_scanSignalHide3&#39;: {&#39;par548_scanSignalHide3&#39;: &#39;Off&#39;},
+   &#39;par804_scanSignalHide4&#39;: {&#39;par804_scanSignalHide4&#39;: &#39;Off&#39;},
+   &#39;par1060_scanSignalHide5&#39;: {&#39;par1060_scanSignalHide5&#39;: &#39;Off&#39;},
+   &#39;par1316_scanSignalHide6&#39;: {&#39;par1316_scanSignalHide6&#39;: &#39;Off&#39;},
+   &#39;par1572_scanSignalHide7&#39;: {&#39;par1572_scanSignalHide7&#39;: &#39;Off&#39;},
+   &#39;par1828_scanSignalHide8&#39;: {&#39;par1828_scanSignalHide8&#39;: &#39;Off&#39;}},
+  &#39;Scheme&#39;: {&#39;par0_pi_hvValueX&#39;: {&#39;par0_pi_hvValueX&#39;: &#39;26833&#39;},
+   &#39;par1_pi_hvScaleX&#39;: {&#39;par1_pi_hvScaleX&#39;: &#39;0.1&#39;},
+   &#39;par2_pi_hvOffsetX&#39;: {&#39;par2_pi_hvOffsetX&#39;: &#39;39322&#39;},
+   &#39;par4_pi_hvValueY&#39;: {&#39;par4_pi_hvValueY&#39;: &#39;21408&#39;},
+   &#39;par5_pi_hvScaleY&#39;: {&#39;par5_pi_hvScaleY&#39;: &#39;0.1&#39;},
+   &#39;par6_pi_hvOffsetY&#39;: {&#39;par6_pi_hvOffsetY&#39;: &#39;39322&#39;},
+   &#39;par8_pi_hvValueZ&#39;: {&#39;par8_pi_hvValueZ&#39;: &#39;24048&#39;},
+   &#39;par9_pi_hvScaleZ&#39;: {&#39;par9_pi_hvScaleZ&#39;: &#39;0.1&#39;},
+   &#39;par10_pi_hvOffsetZ&#39;: {&#39;par10_pi_hvOffsetZ&#39;: &#39;49155&#39;},
+   &#39;par27_pi_Laser&#39;: {&#39;par27_pi_Laser&#39;: &#39;On&#39;},
+   &#39;par30_pi_MotorSin&#39;: {&#39;par30_pi_MotorSin&#39;: &#39;0.00016073&#39;},
+   &#39;par31_pi_MotorCos&#39;: {&#39;par31_pi_MotorCos&#39;: &#39;0.00016073&#39;},
+   &#39;par36_pi_IsoDac1&#39;: {&#39;par36_pi_IsoDac1&#39;: &#39;0&#39;},
+   &#39;par37_pi_IsoDac2&#39;: {&#39;par37_pi_IsoDac2&#39;: &#39;0&#39;},
+   &#39;par38_pi_StrOut1&#39;: {&#39;par38_pi_StrOut1&#39;: &#39;0&#39;},
+   &#39;par39_pi_StrOut2&#39;: {&#39;par39_pi_StrOut2&#39;: &#39;0&#39;},
+   &#39;par58_pi_Gen1SelfFreq&#39;: {&#39;par58_pi_Gen1SelfFreq&#39;: &#39;Off&#39;},
+   &#39;par59_pi_RelayZ&#39;: {&#39;par59_pi_RelayZ&#39;: &#39;Off&#39;},
+   &#39;par60_pi_RelayXY&#39;: {&#39;par60_pi_RelayXY&#39;: &#39;Off&#39;},
+   &#39;par61_pi_RelayIpr&#39;: {&#39;par61_pi_RelayIpr&#39;: &#39;On&#39;},
+   &#39;par62_pi_RelayAppr&#39;: {&#39;par62_pi_RelayAppr&#39;: &#39;Off&#39;},
+   &#39;par65_pi_fltDFL&#39;: {&#39;par65_pi_fltDFL&#39;: &#39;1000&#39;},
+   &#39;par66_pi_fltLF&#39;: {&#39;par66_pi_fltLF&#39;: &#39;1000&#39;},
+   &#39;par67_pi_fltMSin&#39;: {&#39;par67_pi_fltMSin&#39;: &#39;2000&#39;},
+   &#39;par68_pi_fltMCos&#39;: {&#39;par68_pi_fltMCos&#39;: &#39;2000&#39;},
+   &#39;par69_pi_fltBV&#39;: {&#39;par69_pi_fltBV&#39;: &#39;2000&#39;},
+   &#39;par70_pi_fltIprobe&#39;: {&#39;par70_pi_fltIprobe&#39;: &#39;6944.5&#39;},
+   &#39;par71_pi_fltGND&#39;: {&#39;par71_pi_fltGND&#39;: &#39;0&#39;},
+   &#39;par72_pi_fltLaser&#39;: {&#39;par72_pi_fltLaser&#39;: &#39;1736&#39;},
+   &#39;par73_pi_fltExt1&#39;: {&#39;par73_pi_fltExt1&#39;: &#39;1000&#39;},
+   &#39;par74_pi_fltExt2&#39;: {&#39;par74_pi_fltExt2&#39;: &#39;1000&#39;},
+   &#39;par75_pi_fltExt3&#39;: {&#39;par75_pi_fltExt3&#39;: &#39;200&#39;},
+   &#39;par76_pi_fltHvX&#39;: {&#39;par76_pi_fltHvX&#39;: &#39;1736&#39;},
+   &#39;par77_pi_fltHvY&#39;: {&#39;par77_pi_fltHvY&#39;: &#39;1736&#39;},
+   &#39;par78_pi_fltHvZ&#39;: {&#39;par78_pi_fltHvZ&#39;: &#39;1736&#39;},
+   &#39;par82_pi_fltSensX&#39;: {&#39;par82_pi_fltSensX&#39;: &#39;1736&#39;},
+   &#39;par83_pi_fltSensY&#39;: {&#39;par83_pi_fltSensY&#39;: &#39;1736&#39;},
+   &#39;par84_pi_fltSensZ&#39;: {&#39;par84_pi_fltSensZ&#39;: &#39;2000&#39;},
+   &#39;par88_pi_fltMSin1&#39;: {&#39;par88_pi_fltMSin1&#39;: &#39;2000&#39;},
+   &#39;par89_pi_fltMCos1&#39;: {&#39;par89_pi_fltMCos1&#39;: &#39;2000&#39;},
+   &#39;par90_pi_fltIso&#39;: {&#39;par90_pi_fltIso&#39;: &#39;1736&#39;},
+   &#39;par97_pi_FreqX&#39;: {&#39;par97_pi_FreqX&#39;: &#39;0&#39;},
+   &#39;par98_pi_AmpX&#39;: {&#39;par98_pi_AmpX&#39;: &#39;0&#39;},
+   &#39;par99_pi_PhaseX&#39;: {&#39;par99_pi_PhaseX&#39;: &#39;0&#39;},
+   &#39;par100_pi_FreqY&#39;: {&#39;par100_pi_FreqY&#39;: &#39;0&#39;},
+   &#39;par101_pi_AmpY&#39;: {&#39;par101_pi_AmpY&#39;: &#39;0&#39;},
+   &#39;par102_pi_PhaseY&#39;: {&#39;par102_pi_PhaseY&#39;: &#39;0&#39;},
+   &#39;par103_pi_FreqZ&#39;: {&#39;par103_pi_FreqZ&#39;: &#39;0&#39;},
+   &#39;par104_pi_AmpZ&#39;: {&#39;par104_pi_AmpZ&#39;: &#39;0&#39;},
+   &#39;par105_pi_PhaseZ&#39;: {&#39;par105_pi_PhaseZ&#39;: &#39;0&#39;},
+   &#39;par121_pi_fbEnabledX&#39;: {&#39;par121_pi_fbEnabledX&#39;: &#39;On&#39;},
+   &#39;par122_pi_fbSignalX&#39;: {&#39;par122_pi_fbSignalX&#39;: &#39;SensX&#39;},
+   &#39;par123_pi_fbSetPointX&#39;: {&#39;par123_pi_fbSetPointX&#39;: &#39;1.091393208735&#39;},
+   &#39;par124_pi_fbPScaleX&#39;: {&#39;par124_pi_fbPScaleX&#39;: &#39;0&#39;},
+   &#39;par125_pi_fbDScaleX&#39;: {&#39;par125_pi_fbDScaleX&#39;: &#39;0&#39;},
+   &#39;par126_pi_fbIScaleX&#39;: {&#39;par126_pi_fbIScaleX&#39;: &#39;0.97&#39;},
+   &#39;par127_pi_fbEnabledY&#39;: {&#39;par127_pi_fbEnabledY&#39;: &#39;On&#39;},
+   &#39;par128_pi_fbSignalY&#39;: {&#39;par128_pi_fbSignalY&#39;: &#39;SensY&#39;},
+   &#39;par129_pi_fbSetPointY&#39;: {&#39;par129_pi_fbSetPointY&#39;: &#39;0.094528918953&#39;},
+   &#39;par130_pi_fbPScaleY&#39;: {&#39;par130_pi_fbPScaleY&#39;: &#39;0&#39;},
+   &#39;par131_pi_fbDScaleY&#39;: {&#39;par131_pi_fbDScaleY&#39;: &#39;0&#39;},
+   &#39;par132_pi_fbIScaleY&#39;: {&#39;par132_pi_fbIScaleY&#39;: &#39;1&#39;},
+   &#39;par175_pi_snsBandX&#39;: {&#39;par175_pi_snsBandX&#39;: &#39;4500&#39;},
+   &#39;par176_pi_snsBiasX&#39;: {&#39;par176_pi_snsBiasX&#39;: &#39;47479&#39;},
+   &#39;par177_pi_snsPhaseX&#39;: {&#39;par177_pi_snsPhaseX&#39;: &#39;0&#39;},
+   &#39;par178_pi_snsScaleX&#39;: {&#39;par178_pi_snsScaleX&#39;: &#39;15423&#39;},
+   &#39;par179_pi_snsFreqX&#39;: {&#39;par179_pi_snsFreqX&#39;: &#39;360&#39;},
+   &#39;par181_pi_snsAdcBiasX&#39;: {&#39;par181_pi_snsAdcBiasX&#39;: &#39;0&#39;},
+   &#39;par182_pi_snsBandY&#39;: {&#39;par182_pi_snsBandY&#39;: &#39;1283&#39;},
+   &#39;par183_pi_snsBiasY&#39;: {&#39;par183_pi_snsBiasY&#39;: &#39;42947&#39;},
+   &#39;par184_pi_snsPhaseY&#39;: {&#39;par184_pi_snsPhaseY&#39;: &#39;0&#39;},
+   &#39;par185_pi_snsScaleY&#39;: {&#39;par185_pi_snsScaleY&#39;: &#39;14036&#39;},
+   &#39;par186_pi_snsFreqY&#39;: {&#39;par186_pi_snsFreqY&#39;: &#39;250&#39;},
+   &#39;par188_pi_snsAdcBiasY&#39;: {&#39;par188_pi_snsAdcBiasY&#39;: &#39;0&#39;},
+   &#39;par189_pi_snsBandZ&#39;: {&#39;par189_pi_snsBandZ&#39;: &#39;4000&#39;},
+   &#39;par190_pi_snsBiasZ&#39;: {&#39;par190_pi_snsBiasZ&#39;: &#39;55123&#39;},
+   &#39;par191_pi_snsPhaseZ&#39;: {&#39;par191_pi_snsPhaseZ&#39;: &#39;0&#39;},
+   &#39;par192_pi_snsScaleZ&#39;: {&#39;par192_pi_snsScaleZ&#39;: &#39;7546&#39;},
+   &#39;par193_pi_snsFreqZ&#39;: {&#39;par193_pi_snsFreqZ&#39;: &#39;180&#39;},
+   &#39;par195_pi_snsAdcBiasZ&#39;: {&#39;par195_pi_snsAdcBiasZ&#39;: &#39;0&#39;},
+   &#39;par217_pi_scrZSaveDelta&#39;: {&#39;par217_pi_scrZSaveDelta&#39;: &#39;0.01&#39;},
+   &#39;par218_pi_scrZCLState&#39;: {&#39;par218_pi_scrZCLState&#39;: &#39;Off&#39;},
+   &#39;par219_pi_scrXYCLState&#39;: {&#39;par219_pi_scrXYCLState&#39;: &#39;On&#39;},
+   &#39;par223_pi_scrPosX&#39;: {&#39;par223_pi_scrPosX&#39;: &#39;54.0978347853011&#39;},
+   &#39;par224_pi_scrPosY&#39;: {&#39;par224_pi_scrPosY&#39;: &#39;62.5396504286851&#39;},
+   &#39;par225_pi_scrPosZ&#39;: {&#39;par225_pi_scrPosZ&#39;: &#39;6.21977456348055&#39;},
+   &#39;par226_pi_Height&#39;: {&#39;par226_pi_Height&#39;: &#39;6.0849315&#39;},
+   &#39;par246_pi_IndentFrD&#39;: {&#39;par246_pi_IndentFrD&#39;: &#39;7000&#39;},
+   &#39;par247_pi_IndentQ&#39;: {&#39;par247_pi_IndentQ&#39;: &#39;10.565&#39;},
+   &#39;par248_pi_IndentFreq&#39;: {&#39;par248_pi_IndentFreq&#39;: &#39;7000&#39;},
+   &#39;par249_pi_IndentAmp&#39;: {&#39;par249_pi_IndentAmp&#39;: &#39;5&#39;},
+   &#39;par250_pi_IndentCorr&#39;: {&#39;par250_pi_IndentCorr&#39;: &#39;0&#39;},
+   &#39;par251_pi_IndentShift&#39;: {&#39;par251_pi_IndentShift&#39;: &#39;0&#39;},
+   &#39;par252_pi_IndentCur&#39;: {&#39;par252_pi_IndentCur&#39;: &#39;0&#39;},
+   &#39;par257_pi_Lock3Input&#39;: {&#39;par257_pi_Lock3Input&#39;: &#39;DFL&#39;},
+   &#39;par258_pi_Lock3Gain&#39;: {&#39;par258_pi_Lock3Gain&#39;: &#39;1&#39;},
+   &#39;par288_pi_LPF1Inp&#39;: {&#39;par288_pi_LPF1Inp&#39;: &#39;Cos1&#39;},
+   &#39;par289_pi_LPF2Inp&#39;: {&#39;par289_pi_LPF2Inp&#39;: &#39;Sin1&#39;},
+   &#39;par290_pi_LPF3Inp&#39;: {&#39;par290_pi_LPF3Inp&#39;: &#39;Iprobe&#39;},
+   &#39;par291_pi_LPF4Inp&#39;: {&#39;par291_pi_LPF4Inp&#39;: &#39;Iprobe&#39;},
+   &#39;par296_pi_LPF1Freq&#39;: {&#39;par296_pi_LPF1Freq&#39;: &#39;3000&#39;},
+   &#39;par297_pi_LPF2Freq&#39;: {&#39;par297_pi_LPF2Freq&#39;: &#39;3000&#39;},
+   &#39;par298_pi_LPF3Freq&#39;: {&#39;par298_pi_LPF3Freq&#39;: &#39;0&#39;},
+   &#39;par299_pi_LPF4Freq&#39;: {&#39;par299_pi_LPF4Freq&#39;: &#39;0&#39;},
+   &#39;par300_pi_Lock3Freq&#39;: {&#39;par300_pi_Lock3Freq&#39;: &#39;0.992063492063492&#39;},
+   &#39;par301_pi_Lock4Input&#39;: {&#39;par301_pi_Lock4Input&#39;: &#39;DFL&#39;},
+   &#39;par302_pi_Lock4Gain&#39;: {&#39;par302_pi_Lock4Gain&#39;: &#39;1&#39;},
+   &#39;par303_pi_Lock4Freq&#39;: {&#39;par303_pi_Lock4Freq&#39;: &#39;1.98412698412698&#39;},
+   &#39;par304_pi_BVFreq&#39;: {&#39;par304_pi_BVFreq&#39;: &#39;0.992063492063492&#39;},
+   &#39;par305_pi_BVAmp&#39;: {&#39;par305_pi_BVAmp&#39;: &#39;1&#39;},
+   &#39;par306_pi_BVPhase&#39;: {&#39;par306_pi_BVPhase&#39;: &#39;0&#39;},
+   &#39;par307_pi_Lock4Harm&#39;: {&#39;par307_pi_Lock4Harm&#39;: &#39;2&#39;},
+   &#39;par308_pi_BVGenOn&#39;: {&#39;par308_pi_BVGenOn&#39;: &#39;GND&#39;},
+   &#39;par309_pi_srcIProbe&#39;: {&#39;par309_pi_srcIProbe&#39;: &#39;Iprobe&#39;},
+   &#39;par310_pi_srcDFL&#39;: {&#39;par310_pi_srcDFL&#39;: &#39;DFL&#39;},
+   &#39;par311_pi_srcLF&#39;: {&#39;par311_pi_srcLF&#39;: &#39;LF&#39;},
+   &#39;par312_pi_srcCos1&#39;: {&#39;par312_pi_srcCos1&#39;: &#39;Cos1&#39;},
+   &#39;par313_pi_srcSin1&#39;: {&#39;par313_pi_srcSin1&#39;: &#39;Sin1&#39;},
+   &#39;par314_pi_srcCos2&#39;: {&#39;par314_pi_srcCos2&#39;: &#39;Cos2&#39;},
+   &#39;par315_pi_srcSin2&#39;: {&#39;par315_pi_srcSin2&#39;: &#39;Sin2&#39;},
+   &#39;par316_pi_fltMSin3&#39;: {&#39;par316_pi_fltMSin3&#39;: &#39;1700&#39;},
+   &#39;par317_pi_fltMCos3&#39;: {&#39;par317_pi_fltMCos3&#39;: &#39;1700&#39;},
+   &#39;par318_pi_fltMSin4&#39;: {&#39;par318_pi_fltMSin4&#39;: &#39;100&#39;},
+   &#39;par319_pi_fltMCos4&#39;: {&#39;par319_pi_fltMCos4&#39;: &#39;100&#39;},
+   &#39;par320_pi_fltMSin5&#39;: {&#39;par320_pi_fltMSin5&#39;: &#39;100&#39;},
+   &#39;par321_pi_fltMCos5&#39;: {&#39;par321_pi_fltMCos5&#39;: &#39;100&#39;},
+   &#39;par322_pi_Lock5Input&#39;: {&#39;par322_pi_Lock5Input&#39;: &#39;DFL&#39;},
+   &#39;par323_pi_Lock5Gain&#39;: {&#39;par323_pi_Lock5Gain&#39;: &#39;1&#39;},
+   &#39;par324_pi_Lock5Freq&#39;: {&#39;par324_pi_Lock5Freq&#39;: &#39;2.97619047619048&#39;},
+   &#39;par325_pi_Lock5Harm&#39;: {&#39;par325_pi_Lock5Harm&#39;: &#39;3&#39;},
+   &#39;par419_pi_Lock6Gain&#39;: {&#39;par419_pi_Lock6Gain&#39;: &#39;0&#39;}},
+  &#39;SchemeSW0&#39;: {&#39;par12_pi_hvValueBV&#39;: {&#39;par12_pi_hvValueBV&#39;: &#39;2.0000708&#39;},
+   &#39;par13_pi_hvScaleBV&#39;: {&#39;par13_pi_hvScaleBV&#39;: &#39;1&#39;},
+   &#39;par14_pi_hvOffsetBV&#39;: {&#39;par14_pi_hvOffsetBV&#39;: &#39;0&#39;},
+   &#39;par28_pi_SampleIn&#39;: {&#39;par28_pi_SampleIn&#39;: &#39;BV&#39;},
+   &#39;par29_pi_ProbeIn&#39;: {&#39;par29_pi_ProbeIn&#39;: &#39;GND&#39;},
+   &#39;par40_pi_NFAdcGain&#39;: {&#39;par40_pi_NFAdcGain&#39;: &#39;x1&#39;},
+   &#39;par41_pi_NFAdcBias&#39;: {&#39;par41_pi_NFAdcBias&#39;: &#39;-0.00014446&#39;},
+   &#39;par42_pi_LFAdcGain&#39;: {&#39;par42_pi_LFAdcGain&#39;: &#39;x1&#39;},
+   &#39;par43_pi_LFAdcBias&#39;: {&#39;par43_pi_LFAdcBias&#39;: &#39;-0.00014446&#39;},
+   &#39;par44_pi_LFAdcOn&#39;: {&#39;par44_pi_LFAdcOn&#39;: &#39;Off&#39;},
+   &#39;par45_pi_LockInput&#39;: {&#39;par45_pi_LockInput&#39;: &#39;GND&#39;},
+   &#39;par46_pi_LockGain&#39;: {&#39;par46_pi_LockGain&#39;: &#39;10&#39;},
+   &#39;par47_pi_LockInput1&#39;: {&#39;par47_pi_LockInput1&#39;: &#39;GND&#39;},
+   &#39;par48_pi_LockGain1&#39;: {&#39;par48_pi_LockGain1&#39;: &#39;10&#39;},
+   &#39;par49_pi_Ext6Inp&#39;: {&#39;par49_pi_Ext6Inp&#39;: &#39;GND&#39;},
+   &#39;par50_pi_CeramInp&#39;: {&#39;par50_pi_CeramInp&#39;: &#39;GND&#39;},
+   &#39;par51_pi_CeramBias&#39;: {&#39;par51_pi_CeramBias&#39;: &#39;-0.00014446&#39;},
+   &#39;par52_pi_BVInp&#39;: {&#39;par52_pi_BVInp&#39;: &#39;GND&#39;},
+   &#39;par53_pi_Mod2Input&#39;: {&#39;par53_pi_Mod2Input&#39;: &#39;GND&#39;},
+   &#39;par54_pi_Modx10&#39;: {&#39;par54_pi_Modx10&#39;: &#39;Off&#39;},
+   &#39;par55_pi_Gen1x10&#39;: {&#39;par55_pi_Gen1x10&#39;: &#39;Off&#39;},
+   &#39;par56_pi_Harmonic&#39;: {&#39;par56_pi_Harmonic&#39;: &#39;1&#39;},
+   &#39;par57_pi_Harmonic1&#39;: {&#39;par57_pi_Harmonic1&#39;: &#39;1&#39;},
+   &#39;par91_pi_NFx10Ena&#39;: {&#39;par91_pi_NFx10Ena&#39;: &#39;On&#39;},
+   &#39;par92_pi_LFx10Ena&#39;: {&#39;par92_pi_LFx10Ena&#39;: &#39;On&#39;},
+   &#39;par93_pi_Ext1x10Ena&#39;: {&#39;par93_pi_Ext1x10Ena&#39;: &#39;On&#39;},
+   &#39;par94_pi_Iprx10Ena&#39;: {&#39;par94_pi_Iprx10Ena&#39;: &#39;On&#39;},
+   &#39;par95_pi_BNCSignal&#39;: {&#39;par95_pi_BNCSignal&#39;: &#39;10&#39;},
+   &#39;par96_pi_DacRes&#39;: {&#39;par96_pi_DacRes&#39;: &#39;5&#39;},
+   &#39;par115_pi_FreqMod&#39;: {&#39;par115_pi_FreqMod&#39;: &#39;0&#39;},
+   &#39;par116_pi_AmpMod&#39;: {&#39;par116_pi_AmpMod&#39;: &#39;0&#39;},
+   &#39;par117_pi_PhaseMod&#39;: {&#39;par117_pi_PhaseMod&#39;: &#39;0&#39;},
+   &#39;par118_pi_FreqGen1&#39;: {&#39;par118_pi_FreqGen1&#39;: &#39;0&#39;},
+   &#39;par119_pi_AmpGen1&#39;: {&#39;par119_pi_AmpGen1&#39;: &#39;0&#39;},
+   &#39;par120_pi_PhaseGen1&#39;: {&#39;par120_pi_PhaseGen1&#39;: &#39;0&#39;},
+   &#39;par133_pi_fbEnabledZ&#39;: {&#39;par133_pi_fbEnabledZ&#39;: &#39;On&#39;},
+   &#39;par134_pi_fbSignalZ&#39;: {&#39;par134_pi_fbSignalZ&#39;: &#39;DFL&#39;},
+   &#39;par135_pi_fbSetPointZ&#39;: {&#39;par135_pi_fbSetPointZ&#39;: &#39;0.09994583168&#39;},
+   &#39;par136_pi_fbPScaleZ&#39;: {&#39;par136_pi_fbPScaleZ&#39;: &#39;0&#39;},
+   &#39;par137_pi_fbDScaleZ&#39;: {&#39;par137_pi_fbDScaleZ&#39;: &#39;0&#39;},
+   &#39;par138_pi_fbIScaleZ&#39;: {&#39;par138_pi_fbIScaleZ&#39;: &#39;0.8&#39;},
+   &#39;par157_pi_fbEnabledU&#39;: {&#39;par157_pi_fbEnabledU&#39;: &#39;Off&#39;},
+   &#39;par158_pi_fbSignalU&#39;: {&#39;par158_pi_fbSignalU&#39;: &#39;MCos1&#39;},
+   &#39;par159_pi_fbSetPointU&#39;: {&#39;par159_pi_fbSetPointU&#39;: &#39;0&#39;},
+   &#39;par160_pi_fbPScaleU&#39;: {&#39;par160_pi_fbPScaleU&#39;: &#39;0&#39;},
+   &#39;par161_pi_fbDScaleU&#39;: {&#39;par161_pi_fbDScaleU&#39;: &#39;0&#39;},
+   &#39;par162_pi_fbIScaleU&#39;: {&#39;par162_pi_fbIScaleU&#39;: &#39;0.2&#39;},
+   &#39;par163_pi_fbEnabledF&#39;: {&#39;par163_pi_fbEnabledF&#39;: &#39;Off&#39;},
+   &#39;par164_pi_fbSignalF&#39;: {&#39;par164_pi_fbSignalF&#39;: &#39;Phase1&#39;},
+   &#39;par165_pi_fbSetPointF&#39;: {&#39;par165_pi_fbSetPointF&#39;: &#39;-5&#39;},
+   &#39;par166_pi_fbPScaleF&#39;: {&#39;par166_pi_fbPScaleF&#39;: &#39;0&#39;},
+   &#39;par167_pi_fbDScaleF&#39;: {&#39;par167_pi_fbDScaleF&#39;: &#39;0&#39;},
+   &#39;par168_pi_fbIScaleF&#39;: {&#39;par168_pi_fbIScaleF&#39;: &#39;5&#39;},
+   &#39;par169_pi_fbEnabledA&#39;: {&#39;par169_pi_fbEnabledA&#39;: &#39;Off&#39;},
+   &#39;par170_pi_fbSignalA&#39;: {&#39;par170_pi_fbSignalA&#39;: &#39;DFL&#39;},
+   &#39;par171_pi_fbSetPointA&#39;: {&#39;par171_pi_fbSetPointA&#39;: &#39;0&#39;},
+   &#39;par172_pi_fbPScaleA&#39;: {&#39;par172_pi_fbPScaleA&#39;: &#39;0&#39;},
+   &#39;par173_pi_fbDScaleA&#39;: {&#39;par173_pi_fbDScaleA&#39;: &#39;0&#39;},
+   &#39;par174_pi_fbIScaleA&#39;: {&#39;par174_pi_fbIScaleA&#39;: &#39;1&#39;},
+   &#39;par180_pi_snsADCGainX&#39;: {&#39;par180_pi_snsADCGainX&#39;: &#39;x1&#39;},
+   &#39;par187_pi_snsADCGainY&#39;: {&#39;par187_pi_snsADCGainY&#39;: &#39;x1&#39;},
+   &#39;par194_pi_snsADCGainZ&#39;: {&#39;par194_pi_snsADCGainZ&#39;: &#39;x1&#39;},
+   &#39;par231_pi_scrZFBInp&#39;: {&#39;par231_pi_scrZFBInp&#39;: &#39;DFL&#39;},
+   &#39;par232_pi_scrZFBSetPoint&#39;: {&#39;par232_pi_scrZFBSetPoint&#39;: &#39;0.09994583168&#39;},
+   &#39;par233_pi_scrZFBScaleI&#39;: {&#39;par233_pi_scrZFBScaleI&#39;: &#39;0.8&#39;},
+   &#39;par234_pi_scrZFBScaleP&#39;: {&#39;par234_pi_scrZFBScaleP&#39;: &#39;0&#39;},
+   &#39;par235_pi_scrZFBScaleD&#39;: {&#39;par235_pi_scrZFBScaleD&#39;: &#39;0&#39;},
+   &#39;par236_pi_scrZFBState&#39;: {&#39;par236_pi_scrZFBState&#39;: &#39;On&#39;},
+   &#39;par254_pi_PMT1&#39;: {&#39;par254_pi_PMT1&#39;: &#39;0&#39;},
+   &#39;par255_pi_PMT2&#39;: {&#39;par255_pi_PMT2&#39;: &#39;0&#39;},
+   &#39;par332_pi_ProbingAmp&#39;: {&#39;par332_pi_ProbingAmp&#39;: &#39;0&#39;},
+   &#39;par333_pi_LockPhase1&#39;: {&#39;par333_pi_LockPhase1&#39;: &#39;128.858863302&#39;},
+   &#39;par334_pi_LockPhase2&#39;: {&#39;par334_pi_LockPhase2&#39;: &#39;0&#39;},
+   &#39;par335_pi_ACInput&#39;: {&#39;par335_pi_ACInput&#39;: &#39;Gen1&#39;},
+   &#39;par356_pi_BVExtAmp&#39;: {&#39;par356_pi_BVExtAmp&#39;: &#39;0&#39;},
+   &#39;par415_pi_PMTg&#39;: {&#39;par415_pi_PMTg&#39;: &#39;1.9999823&#39;}},
+  &#39;SchemeSW1&#39;: {&#39;par12_pi_hvValueBV&#39;: {&#39;par12_pi_hvValueBV&#39;: &#39;0&#39;},
+   &#39;par13_pi_hvScaleBV&#39;: {&#39;par13_pi_hvScaleBV&#39;: &#39;1&#39;},
+   &#39;par14_pi_hvOffsetBV&#39;: {&#39;par14_pi_hvOffsetBV&#39;: &#39;0&#39;},
+   &#39;par28_pi_SampleIn&#39;: {&#39;par28_pi_SampleIn&#39;: &#39;GND&#39;},
+   &#39;par29_pi_ProbeIn&#39;: {&#39;par29_pi_ProbeIn&#39;: &#39;GND&#39;},
+   &#39;par40_pi_NFAdcGain&#39;: {&#39;par40_pi_NFAdcGain&#39;: &#39;x1&#39;},
+   &#39;par41_pi_NFAdcBias&#39;: {&#39;par41_pi_NFAdcBias&#39;: &#39;-0.00014446&#39;},
+   &#39;par42_pi_LFAdcGain&#39;: {&#39;par42_pi_LFAdcGain&#39;: &#39;x1&#39;},
+   &#39;par43_pi_LFAdcBias&#39;: {&#39;par43_pi_LFAdcBias&#39;: &#39;-0.00014446&#39;},
+   &#39;par44_pi_LFAdcOn&#39;: {&#39;par44_pi_LFAdcOn&#39;: &#39;Off&#39;},
+   &#39;par45_pi_LockInput&#39;: {&#39;par45_pi_LockInput&#39;: &#39;GND&#39;},
+   &#39;par46_pi_LockGain&#39;: {&#39;par46_pi_LockGain&#39;: &#39;10&#39;},
+   &#39;par47_pi_LockInput1&#39;: {&#39;par47_pi_LockInput1&#39;: &#39;GND&#39;},
+   &#39;par48_pi_LockGain1&#39;: {&#39;par48_pi_LockGain1&#39;: &#39;10&#39;},
+   &#39;par49_pi_Ext6Inp&#39;: {&#39;par49_pi_Ext6Inp&#39;: &#39;GND&#39;},
+   &#39;par50_pi_CeramInp&#39;: {&#39;par50_pi_CeramInp&#39;: &#39;GND&#39;},
+   &#39;par51_pi_CeramBias&#39;: {&#39;par51_pi_CeramBias&#39;: &#39;-0.00014446&#39;},
+   &#39;par52_pi_BVInp&#39;: {&#39;par52_pi_BVInp&#39;: &#39;GND&#39;},
+   &#39;par53_pi_Mod2Input&#39;: {&#39;par53_pi_Mod2Input&#39;: &#39;GND&#39;},
+   &#39;par54_pi_Modx10&#39;: {&#39;par54_pi_Modx10&#39;: &#39;Off&#39;},
+   &#39;par55_pi_Gen1x10&#39;: {&#39;par55_pi_Gen1x10&#39;: &#39;Off&#39;},
+   &#39;par56_pi_Harmonic&#39;: {&#39;par56_pi_Harmonic&#39;: &#39;1&#39;},
+   &#39;par57_pi_Harmonic1&#39;: {&#39;par57_pi_Harmonic1&#39;: &#39;1&#39;},
+   &#39;par91_pi_NFx10Ena&#39;: {&#39;par91_pi_NFx10Ena&#39;: &#39;On&#39;},
+   &#39;par92_pi_LFx10Ena&#39;: {&#39;par92_pi_LFx10Ena&#39;: &#39;On&#39;},
+   &#39;par93_pi_Ext1x10Ena&#39;: {&#39;par93_pi_Ext1x10Ena&#39;: &#39;On&#39;},
+   &#39;par94_pi_Iprx10Ena&#39;: {&#39;par94_pi_Iprx10Ena&#39;: &#39;On&#39;},
+   &#39;par95_pi_BNCSignal&#39;: {&#39;par95_pi_BNCSignal&#39;: &#39;10&#39;},
+   &#39;par96_pi_DacRes&#39;: {&#39;par96_pi_DacRes&#39;: &#39;5&#39;},
+   &#39;par115_pi_FreqMod&#39;: {&#39;par115_pi_FreqMod&#39;: &#39;100&#39;},
+   &#39;par116_pi_AmpMod&#39;: {&#39;par116_pi_AmpMod&#39;: &#39;0.05&#39;},
+   &#39;par117_pi_PhaseMod&#39;: {&#39;par117_pi_PhaseMod&#39;: &#39;0&#39;},
+   &#39;par118_pi_FreqGen1&#39;: {&#39;par118_pi_FreqGen1&#39;: &#39;0&#39;},
+   &#39;par119_pi_AmpGen1&#39;: {&#39;par119_pi_AmpGen1&#39;: &#39;0&#39;},
+   &#39;par120_pi_PhaseGen1&#39;: {&#39;par120_pi_PhaseGen1&#39;: &#39;0&#39;},
+   &#39;par133_pi_fbEnabledZ&#39;: {&#39;par133_pi_fbEnabledZ&#39;: &#39;Off&#39;},
+   &#39;par134_pi_fbSignalZ&#39;: {&#39;par134_pi_fbSignalZ&#39;: &#39;DFL&#39;},
+   &#39;par135_pi_fbSetPointZ&#39;: {&#39;par135_pi_fbSetPointZ&#39;: &#39;2&#39;},
+   &#39;par136_pi_fbPScaleZ&#39;: {&#39;par136_pi_fbPScaleZ&#39;: &#39;0&#39;},
+   &#39;par137_pi_fbDScaleZ&#39;: {&#39;par137_pi_fbDScaleZ&#39;: &#39;0&#39;},
+   &#39;par138_pi_fbIScaleZ&#39;: {&#39;par138_pi_fbIScaleZ&#39;: &#39;1&#39;},
+   &#39;par157_pi_fbEnabledU&#39;: {&#39;par157_pi_fbEnabledU&#39;: &#39;Off&#39;},
+   &#39;par158_pi_fbSignalU&#39;: {&#39;par158_pi_fbSignalU&#39;: &#39;MCos1&#39;},
+   &#39;par159_pi_fbSetPointU&#39;: {&#39;par159_pi_fbSetPointU&#39;: &#39;0&#39;},
+   &#39;par160_pi_fbPScaleU&#39;: {&#39;par160_pi_fbPScaleU&#39;: &#39;0&#39;},
+   &#39;par161_pi_fbDScaleU&#39;: {&#39;par161_pi_fbDScaleU&#39;: &#39;0&#39;},
+   &#39;par162_pi_fbIScaleU&#39;: {&#39;par162_pi_fbIScaleU&#39;: &#39;0.2&#39;},
+   &#39;par163_pi_fbEnabledF&#39;: {&#39;par163_pi_fbEnabledF&#39;: &#39;Off&#39;},
+   &#39;par164_pi_fbSignalF&#39;: {&#39;par164_pi_fbSignalF&#39;: &#39;Phase1&#39;},
+   &#39;par165_pi_fbSetPointF&#39;: {&#39;par165_pi_fbSetPointF&#39;: &#39;-5&#39;},
+   &#39;par166_pi_fbPScaleF&#39;: {&#39;par166_pi_fbPScaleF&#39;: &#39;0&#39;},
+   &#39;par167_pi_fbDScaleF&#39;: {&#39;par167_pi_fbDScaleF&#39;: &#39;0&#39;},
+   &#39;par168_pi_fbIScaleF&#39;: {&#39;par168_pi_fbIScaleF&#39;: &#39;5&#39;},
+   &#39;par169_pi_fbEnabledA&#39;: {&#39;par169_pi_fbEnabledA&#39;: &#39;Off&#39;},
+   &#39;par170_pi_fbSignalA&#39;: {&#39;par170_pi_fbSignalA&#39;: &#39;DFL&#39;},
+   &#39;par171_pi_fbSetPointA&#39;: {&#39;par171_pi_fbSetPointA&#39;: &#39;0&#39;},
+   &#39;par172_pi_fbPScaleA&#39;: {&#39;par172_pi_fbPScaleA&#39;: &#39;0&#39;},
+   &#39;par173_pi_fbDScaleA&#39;: {&#39;par173_pi_fbDScaleA&#39;: &#39;0&#39;},
+   &#39;par174_pi_fbIScaleA&#39;: {&#39;par174_pi_fbIScaleA&#39;: &#39;1&#39;},
+   &#39;par180_pi_snsADCGainX&#39;: {&#39;par180_pi_snsADCGainX&#39;: &#39;x1&#39;},
+   &#39;par187_pi_snsADCGainY&#39;: {&#39;par187_pi_snsADCGainY&#39;: &#39;x1&#39;},
+   &#39;par194_pi_snsADCGainZ&#39;: {&#39;par194_pi_snsADCGainZ&#39;: &#39;x1&#39;},
+   &#39;par231_pi_scrZFBInp&#39;: {&#39;par231_pi_scrZFBInp&#39;: &#39;DFL&#39;},
+   &#39;par232_pi_scrZFBSetPoint&#39;: {&#39;par232_pi_scrZFBSetPoint&#39;: &#39;2&#39;},
+   &#39;par233_pi_scrZFBScaleI&#39;: {&#39;par233_pi_scrZFBScaleI&#39;: &#39;1&#39;},
+   &#39;par234_pi_scrZFBScaleP&#39;: {&#39;par234_pi_scrZFBScaleP&#39;: &#39;0&#39;},
+   &#39;par235_pi_scrZFBScaleD&#39;: {&#39;par235_pi_scrZFBScaleD&#39;: &#39;0&#39;},
+   &#39;par236_pi_scrZFBState&#39;: {&#39;par236_pi_scrZFBState&#39;: &#39;Off&#39;},
+   &#39;par254_pi_PMT1&#39;: {&#39;par254_pi_PMT1&#39;: &#39;0&#39;},
+   &#39;par255_pi_PMT2&#39;: {&#39;par255_pi_PMT2&#39;: &#39;0&#39;},
+   &#39;par332_pi_ProbingAmp&#39;: {&#39;par332_pi_ProbingAmp&#39;: &#39;0&#39;},
+   &#39;par333_pi_LockPhase1&#39;: {&#39;par333_pi_LockPhase1&#39;: &#39;128.858863302&#39;},
+   &#39;par334_pi_LockPhase2&#39;: {&#39;par334_pi_LockPhase2&#39;: &#39;0&#39;},
+   &#39;par335_pi_ACInput&#39;: {&#39;par335_pi_ACInput&#39;: &#39;Gen1&#39;},
+   &#39;par356_pi_BVExtAmp&#39;: {&#39;par356_pi_BVExtAmp&#39;: &#39;0.05&#39;},
+   &#39;par415_pi_PMTg&#39;: {&#39;par415_pi_PMTg&#39;: &#39;2.5&#39;}},
+  &#39;SchemeSW2&#39;: {&#39;par12_pi_hvValueBV&#39;: {&#39;par12_pi_hvValueBV&#39;: &#39;0&#39;},
+   &#39;par13_pi_hvScaleBV&#39;: {&#39;par13_pi_hvScaleBV&#39;: &#39;1&#39;},
+   &#39;par14_pi_hvOffsetBV&#39;: {&#39;par14_pi_hvOffsetBV&#39;: &#39;0&#39;},
+   &#39;par28_pi_SampleIn&#39;: {&#39;par28_pi_SampleIn&#39;: &#39;GND&#39;},
+   &#39;par29_pi_ProbeIn&#39;: {&#39;par29_pi_ProbeIn&#39;: &#39;GND&#39;},
+   &#39;par40_pi_NFAdcGain&#39;: {&#39;par40_pi_NFAdcGain&#39;: &#39;x1&#39;},
+   &#39;par41_pi_NFAdcBias&#39;: {&#39;par41_pi_NFAdcBias&#39;: &#39;-0.00014446&#39;},
+   &#39;par42_pi_LFAdcGain&#39;: {&#39;par42_pi_LFAdcGain&#39;: &#39;x1&#39;},
+   &#39;par43_pi_LFAdcBias&#39;: {&#39;par43_pi_LFAdcBias&#39;: &#39;-0.00014446&#39;},
+   &#39;par44_pi_LFAdcOn&#39;: {&#39;par44_pi_LFAdcOn&#39;: &#39;Off&#39;},
+   &#39;par45_pi_LockInput&#39;: {&#39;par45_pi_LockInput&#39;: &#39;GND&#39;},
+   &#39;par46_pi_LockGain&#39;: {&#39;par46_pi_LockGain&#39;: &#39;10&#39;},
+   &#39;par47_pi_LockInput1&#39;: {&#39;par47_pi_LockInput1&#39;: &#39;GND&#39;},
+   &#39;par48_pi_LockGain1&#39;: {&#39;par48_pi_LockGain1&#39;: &#39;10&#39;},
+   &#39;par49_pi_Ext6Inp&#39;: {&#39;par49_pi_Ext6Inp&#39;: &#39;GND&#39;},
+   &#39;par50_pi_CeramInp&#39;: {&#39;par50_pi_CeramInp&#39;: &#39;GND&#39;},
+   &#39;par51_pi_CeramBias&#39;: {&#39;par51_pi_CeramBias&#39;: &#39;-0.00014446&#39;},
+   &#39;par52_pi_BVInp&#39;: {&#39;par52_pi_BVInp&#39;: &#39;GND&#39;},
+   &#39;par53_pi_Mod2Input&#39;: {&#39;par53_pi_Mod2Input&#39;: &#39;GND&#39;},
+   &#39;par54_pi_Modx10&#39;: {&#39;par54_pi_Modx10&#39;: &#39;Off&#39;},
+   &#39;par55_pi_Gen1x10&#39;: {&#39;par55_pi_Gen1x10&#39;: &#39;Off&#39;},
+   &#39;par56_pi_Harmonic&#39;: {&#39;par56_pi_Harmonic&#39;: &#39;1&#39;},
+   &#39;par57_pi_Harmonic1&#39;: {&#39;par57_pi_Harmonic1&#39;: &#39;1&#39;},
+   &#39;par91_pi_NFx10Ena&#39;: {&#39;par91_pi_NFx10Ena&#39;: &#39;On&#39;},
+   &#39;par92_pi_LFx10Ena&#39;: {&#39;par92_pi_LFx10Ena&#39;: &#39;On&#39;},
+   &#39;par93_pi_Ext1x10Ena&#39;: {&#39;par93_pi_Ext1x10Ena&#39;: &#39;On&#39;},
+   &#39;par94_pi_Iprx10Ena&#39;: {&#39;par94_pi_Iprx10Ena&#39;: &#39;On&#39;},
+   &#39;par95_pi_BNCSignal&#39;: {&#39;par95_pi_BNCSignal&#39;: &#39;10&#39;},
+   &#39;par96_pi_DacRes&#39;: {&#39;par96_pi_DacRes&#39;: &#39;5&#39;},
+   &#39;par115_pi_FreqMod&#39;: {&#39;par115_pi_FreqMod&#39;: &#39;100&#39;},
+   &#39;par116_pi_AmpMod&#39;: {&#39;par116_pi_AmpMod&#39;: &#39;0.05&#39;},
+   &#39;par117_pi_PhaseMod&#39;: {&#39;par117_pi_PhaseMod&#39;: &#39;0&#39;},
+   &#39;par118_pi_FreqGen1&#39;: {&#39;par118_pi_FreqGen1&#39;: &#39;0&#39;},
+   &#39;par119_pi_AmpGen1&#39;: {&#39;par119_pi_AmpGen1&#39;: &#39;0&#39;},
+   &#39;par120_pi_PhaseGen1&#39;: {&#39;par120_pi_PhaseGen1&#39;: &#39;0&#39;},
+   &#39;par133_pi_fbEnabledZ&#39;: {&#39;par133_pi_fbEnabledZ&#39;: &#39;Off&#39;},
+   &#39;par134_pi_fbSignalZ&#39;: {&#39;par134_pi_fbSignalZ&#39;: &#39;DFL&#39;},
+   &#39;par135_pi_fbSetPointZ&#39;: {&#39;par135_pi_fbSetPointZ&#39;: &#39;2&#39;},
+   &#39;par136_pi_fbPScaleZ&#39;: {&#39;par136_pi_fbPScaleZ&#39;: &#39;0&#39;},
+   &#39;par137_pi_fbDScaleZ&#39;: {&#39;par137_pi_fbDScaleZ&#39;: &#39;0&#39;},
+   &#39;par138_pi_fbIScaleZ&#39;: {&#39;par138_pi_fbIScaleZ&#39;: &#39;1&#39;},
+   &#39;par157_pi_fbEnabledU&#39;: {&#39;par157_pi_fbEnabledU&#39;: &#39;Off&#39;},
+   &#39;par158_pi_fbSignalU&#39;: {&#39;par158_pi_fbSignalU&#39;: &#39;MCos1&#39;},
+   &#39;par159_pi_fbSetPointU&#39;: {&#39;par159_pi_fbSetPointU&#39;: &#39;0&#39;},
+   &#39;par160_pi_fbPScaleU&#39;: {&#39;par160_pi_fbPScaleU&#39;: &#39;0&#39;},
+   &#39;par161_pi_fbDScaleU&#39;: {&#39;par161_pi_fbDScaleU&#39;: &#39;0&#39;},
+   &#39;par162_pi_fbIScaleU&#39;: {&#39;par162_pi_fbIScaleU&#39;: &#39;0.2&#39;},
+   &#39;par163_pi_fbEnabledF&#39;: {&#39;par163_pi_fbEnabledF&#39;: &#39;Off&#39;},
+   &#39;par164_pi_fbSignalF&#39;: {&#39;par164_pi_fbSignalF&#39;: &#39;Phase1&#39;},
+   &#39;par165_pi_fbSetPointF&#39;: {&#39;par165_pi_fbSetPointF&#39;: &#39;-5&#39;},
+   &#39;par166_pi_fbPScaleF&#39;: {&#39;par166_pi_fbPScaleF&#39;: &#39;0&#39;},
+   &#39;par167_pi_fbDScaleF&#39;: {&#39;par167_pi_fbDScaleF&#39;: &#39;0&#39;},
+   &#39;par168_pi_fbIScaleF&#39;: {&#39;par168_pi_fbIScaleF&#39;: &#39;5&#39;},
+   &#39;par169_pi_fbEnabledA&#39;: {&#39;par169_pi_fbEnabledA&#39;: &#39;Off&#39;},
+   &#39;par170_pi_fbSignalA&#39;: {&#39;par170_pi_fbSignalA&#39;: &#39;DFL&#39;},
+   &#39;par171_pi_fbSetPointA&#39;: {&#39;par171_pi_fbSetPointA&#39;: &#39;0&#39;},
+   &#39;par172_pi_fbPScaleA&#39;: {&#39;par172_pi_fbPScaleA&#39;: &#39;0&#39;},
+   &#39;par173_pi_fbDScaleA&#39;: {&#39;par173_pi_fbDScaleA&#39;: &#39;0&#39;},
+   &#39;par174_pi_fbIScaleA&#39;: {&#39;par174_pi_fbIScaleA&#39;: &#39;1&#39;},
+   &#39;par180_pi_snsADCGainX&#39;: {&#39;par180_pi_snsADCGainX&#39;: &#39;x1&#39;},
+   &#39;par187_pi_snsADCGainY&#39;: {&#39;par187_pi_snsADCGainY&#39;: &#39;x1&#39;},
+   &#39;par194_pi_snsADCGainZ&#39;: {&#39;par194_pi_snsADCGainZ&#39;: &#39;x1&#39;},
+   &#39;par231_pi_scrZFBInp&#39;: {&#39;par231_pi_scrZFBInp&#39;: &#39;DFL&#39;},
+   &#39;par232_pi_scrZFBSetPoint&#39;: {&#39;par232_pi_scrZFBSetPoint&#39;: &#39;2&#39;},
+   &#39;par233_pi_scrZFBScaleI&#39;: {&#39;par233_pi_scrZFBScaleI&#39;: &#39;1&#39;},
+   &#39;par234_pi_scrZFBScaleP&#39;: {&#39;par234_pi_scrZFBScaleP&#39;: &#39;0&#39;},
+   &#39;par235_pi_scrZFBScaleD&#39;: {&#39;par235_pi_scrZFBScaleD&#39;: &#39;0&#39;},
+   &#39;par236_pi_scrZFBState&#39;: {&#39;par236_pi_scrZFBState&#39;: &#39;Off&#39;},
+   &#39;par254_pi_PMT1&#39;: {&#39;par254_pi_PMT1&#39;: &#39;0&#39;},
+   &#39;par255_pi_PMT2&#39;: {&#39;par255_pi_PMT2&#39;: &#39;0&#39;},
+   &#39;par332_pi_ProbingAmp&#39;: {&#39;par332_pi_ProbingAmp&#39;: &#39;0&#39;},
+   &#39;par333_pi_LockPhase1&#39;: {&#39;par333_pi_LockPhase1&#39;: &#39;128.858863302&#39;},
+   &#39;par334_pi_LockPhase2&#39;: {&#39;par334_pi_LockPhase2&#39;: &#39;0&#39;},
+   &#39;par335_pi_ACInput&#39;: {&#39;par335_pi_ACInput&#39;: &#39;Gen1&#39;},
+   &#39;par356_pi_BVExtAmp&#39;: {&#39;par356_pi_BVExtAmp&#39;: &#39;0.05&#39;},
+   &#39;par415_pi_PMTg&#39;: {&#39;par415_pi_PMTg&#39;: &#39;2.5&#39;}},
+  &#39;Analysis&#39;: {&#39;SubInfo&#39;: {&#39;MethodID&#39;: {&#39;MethodID&#39;: &#39;-1&#39;}},
+   &#39;FiltInfo&#39;: {&#39;FilterID&#39;: {&#39;FilterID&#39;: &#39;-1&#39;}},
+   &#39;DataGUID&#39;: {&#39;DataGUID&#39;: &#39;{0A7F8A05-5656-47A8-B03E-11BE16C97F15}&#39;}}}}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#visualization</span>
+<span class="n">scan</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">scale_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'coolwarm'</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "359ce1a37bc94c9abb15cba5bebbbd78", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#scan as np.array</span>
+<span class="n">scan</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[ 0.00152589, -0.00877387, -0.02708456, ..., -0.03433254,
+        -0.0320437 , -0.02899192],
+       [-0.02517719,  0.00228884, -0.00381473, ..., -0.02708456,
+        -0.04005463, -0.04081757],
+       [-0.02975487, -0.02136247, -0.02288836, ..., -0.02174394,
+        -0.03700285, -0.0320437 ],
+       ...,
+       [-0.03433254, -0.00991829, -0.0194551 , ..., -0.03280665,
+        -0.03166223, -0.03433254],
+       [-0.0194551 , -0.02594014, -0.03356959, ..., -0.03051781,
+        -0.03852874, -0.03547696],
+       [-0.01716627, -0.02975487,  0.07515011, ..., -0.03280665,
+        -0.03433254, -0.02555867]])
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#@title spectrums and point clouds</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">pc</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'002_Point_Cloud'</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;point_0&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_1&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_2&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_3&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_4&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_5&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_6&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_7&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_8&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_9&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_10&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_11&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_12&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_13&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_14&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_15&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_16&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_17&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_18&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_19&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_20&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_21&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_22&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_23&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;], &#39;point_24&#39;: sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;]}
+</pre></div></div>
+</div>
+<p>The point cloud is initially loaded as a dictionary, where each entry corresponds to a spectrum.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">pc</span><span class="p">[</span><span class="s1">'point_1'</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+sidpy.Dataset of type SPECTRUM with:
+ dask.array&lt;array, shape=(3522, 1), dtype=float64, chunksize=(3522, 1), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+x:  BVValue (V) of size (3522,)
+channel:  generic (generic) of size (1,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;coordinate&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#short metadata, icluding point's coordinate</span>
+<span class="n">pc</span><span class="p">[</span><span class="s1">'point_1'</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;channels&#39;: [&#39;Iprobe&#39;],
+ &#39;units&#39;: [&#39;nA&#39;],
+ &#39;coordinate&#39;: array([53.4435177 , 62.31308374]),
+ &#39;date&#39;: &#39;4/5/2023 11:46:5&#39;,
+ &#39;version&#39;: 0.7000000000000001,
+ &#39;uuid&#39;: &#39;35225116-2439-4022-807D-7C6A5C86C632&#39;}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pc</span><span class="p">[</span><span class="s1">'point_1'</span><span class="p">]</span><span class="o">.</span><span class="n">original_metadata</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;TextComment&#39;: {},
+ &#39;Parameters&#39;: {&#39;Common&#39;: {&#39;BuildID&#39;: {&#39;BuildID&#39;: &#39;Nova_Px 3.4.0.17277&#39;},
+   &#39;Date&#39;: {&#39;Date&#39;: &#39;26.12.2022&#39;},
+   &#39;Technic&#39;: {&#39;Technic&#39;: &#39;Contact&#39;},
+   &#39;Probe&#39;: {&#39;Material&#39;: {&#39;Material&#39;: &#39;Si&#39;},
+    &#39;Coating&#39;: {&#39;Coating&#39;: &#39;Unknown&#39;},
+    &#39;Shape&#39;: {&#39;Shape&#39;: &#39;Rectangular&#39;},
+    &#39;FreqMin&#39;: {&#39;FreqMin&#39;: &#39;50&#39;},
+    &#39;FreqMax&#39;: {&#39;FreqMax&#39;: &#39;100&#39;},
+    &#39;ID&#39;: {&#39;ID&#39;: &#39;FMG01&#39;},
+    &#39;Length&#39;: {&#39;Length&#39;: &#39;225&#39;},
+    &#39;Width&#39;: {&#39;Width&#39;: &#39;32&#39;},
+    &#39;Thickness&#39;: {&#39;Thickness&#39;: &#39;2.5&#39;},
+    &#39;TipRadius&#39;: {&#39;TipRadius&#39;: &#39;10&#39;},
+    &#39;TipAngle&#39;: {&#39;TipAngle&#39;: &#39;22&#39;},
+    &#39;QualityFactor&#39;: {&#39;QualityFactor&#39;: &#39;238.01&#39;},
+    &#39;ThermoAmp&#39;: {&#39;ThermoAmp&#39;: &#39;1&#39;},
+    &#39;ResFreq&#39;: {&#39;ResFreq&#39;: &#39;55.35&#39;},
+    &#39;LiqQualityFactor&#39;: {&#39;LiqQualityFactor&#39;: &#39;10&#39;},
+    &#39;LiqResFreq&#39;: {&#39;LiqResFreq&#39;: &#39;20&#39;},
+    &#39;Stiffness&#39;: {&#39;Stiffness&#39;: &#39;2.043&#39;},
+    &#39;InvOptSens&#39;: {&#39;InvOptSens&#39;: &#39;9&#39;},
+    &#39;HeadName&#39;: {&#39;HeadName&#39;: &#39;SF005&amp;AU007NTF&#39;}},
+   &#39;Humidity&#39;: {&#39;Humidity&#39;: &#39;4.56&#39;},
+   &#39;Temperature&#39;: {&#39;Temperature&#39;: &#39;25.21&#39;}},
+  &#39;DeviceType&#39;: {&#39;DeviceType&#39;: &#39;NtegraEx&#39;},
+  &#39;Motors&#39;: {&#39;SampleX&#39;: {&#39;SampleX&#39;: &#39;282.60024&#39;},
+   &#39;SampleY&#39;: {&#39;SampleY&#39;: &#39;128916.0224&#39;},
+   &#39;Appr1&#39;: {&#39;Appr1&#39;: &#39;0&#39;},
+   &#39;Appr2&#39;: {&#39;Appr2&#39;: &#39;-315.95992&#39;}},
+  &#39;SpecShell&#39;: {&#39;Drive&#39;: {&#39;Drive&#39;: &#39;Tube Scanner&#39;},
+   &#39;Mode&#39;: {&#39;Mode&#39;: &#39;I_(BV)&#39;},
+   &#39;MoveMode&#39;: {&#39;MoveMode&#39;: &#39;Lift Z&#39;},
+   &#39;CustMode&#39;: {&#39;CustMode&#39;: &#39;CustomOff&#39;},
+   &#39;chemeMode&#39;: {&#39;chemeMode&#39;: &#39;SchemeNone&#39;},
+   &#39;Param&#39;: {&#39;Param&#39;: &#39;BVValue&#39;},
+   &#39;AbsMode&#39;: {&#39;AbsMode&#39;: &#39;Absolute&#39;},
+   &#39;BackLimEna&#39;: {&#39;BackLimEna&#39;: &#39;On&#39;},
+   &#39;LimGate&#39;: {&#39;LimGate&#39;: &#39;0&#39;},
+   &#39;BackEna&#39;: {&#39;BackEna&#39;: &#39;On&#39;},
+   &#39;FinitEna&#39;: {&#39;FinitEna&#39;: &#39;On&#39;},
+   &#39;CurveCount&#39;: {&#39;CurveCount&#39;: &#39;3&#39;},
+   &#39;DelayInit&#39;: {&#39;DelayInit&#39;: &#39;0&#39;},
+   &#39;DelayForw&#39;: {&#39;DelayForw&#39;: &#39;0&#39;},
+   &#39;DelayBack&#39;: {&#39;DelayBack&#39;: &#39;0&#39;},
+   &#39;InitTime&#39;: {&#39;InitTime&#39;: &#39;100&#39;},
+   &#39;FinitTime&#39;: {&#39;FinitTime&#39;: &#39;100&#39;},
+   &#39;RateUnit&#39;: {&#39;RateUnit&#39;: &#39;sec&#39;},
+   &#39;MeasUnit&#39;: {&#39;MeasUnit&#39;: &#39;pnt&#39;},
+   &#39;SignalCount&#39;: {&#39;SignalCount&#39;: &#39;1&#39;},
+   &#39;Signal0&#39;: {&#39;SignalName&#39;: {&#39;SignalName&#39;: &#39;Iprobe&#39;},
+    &#39;SignalUnit&#39;: {&#39;SignalUnit&#39;: &#39;nA&#39;}},
+   &#39;sNax-1&#39;: {&#39;NaxCount&#39;: {&#39;NaxCount&#39;: &#39;0&#39;}},
+   &#39;PointCount&#39;: {&#39;PointCount&#39;: &#39;25&#39;},
+   &#39;Point0&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;53.4435176967192&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.0752357135135&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;ParamUnit&#39;: {&#39;ParamUnit&#39;: &#39;V&#39;},
+   &#39;Point1&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;53.4435176967192&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.313083735656&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point2&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;53.4435176967192&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.5509317577986&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point3&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;53.4435176967192&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.7887797799412&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point4&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;53.4435176967192&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;63.0266278020837&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point5&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;53.6898267156969&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.0752357135135&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point6&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;53.6898267156969&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.313083735656&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point7&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;53.6898267156969&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.5509317577986&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point8&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;53.6898267156969&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.7887797799412&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point9&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;53.6898267156969&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;63.0266278020837&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point10&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;53.9361357346745&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.0752357135135&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point11&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;53.9361357346745&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.313083735656&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point12&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;53.9361357346745&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.5509317577986&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point13&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;53.9361357346745&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.7887797799412&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point14&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;53.9361357346745&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;63.0266278020837&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point15&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;54.1824447536522&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.0752357135135&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point16&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;54.1824447536522&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.313083735656&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point17&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;54.1824447536522&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.5509317577986&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point18&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;54.1824447536522&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.7887797799412&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point19&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;54.1824447536522&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;63.0266278020837&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point20&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;54.4287537726299&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.0752357135135&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point21&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;54.4287537726299&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.313083735656&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point22&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;54.4287537726299&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.5509317577986&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point23&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;54.4287537726299&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;62.7887797799412&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}},
+   &#39;Point24&#39;: {&#39;From&#39;: {&#39;From&#39;: &#39;-2.99985697&#39;},
+    &#39;To&#39;: {&#39;To&#39;: &#39;2.99987324&#39;},
+    &#39;ForwRate&#39;: {&#39;ForwRate&#39;: &#39;0.3&#39;},
+    &#39;BackRate&#39;: {&#39;BackRate&#39;: &#39;0.3&#39;},
+    &#39;ForwPoints&#39;: {&#39;ForwPoints&#39;: &#39;600&#39;},
+    &#39;BackPoints&#39;: {&#39;BackPoints&#39;: &#39;600&#39;},
+    &#39;Signal-1&#39;: {&#39;Aver&#39;: {&#39;Aver&#39;: &#39;1&#39;},
+     &#39;LimEna&#39;: {&#39;LimEna&#39;: &#39;Off&#39;},
+     &#39;MinLim&#39;: {&#39;MinLim&#39;: &#39;-50&#39;},
+     &#39;MaxLim&#39;: {&#39;MaxLim&#39;: &#39;50&#39;}},
+    &#39;X&#39;: {&#39;X&#39;: &#39;54.4287537726299&#39;},
+    &#39;Y&#39;: {&#39;Y&#39;: &#39;63.0266278020837&#39;},
+    &#39;Z&#39;: {&#39;Z&#39;: &#39;-1&#39;}}},
+  &#39;Name&#39;: {&#39;Name&#39;: &#39;I_(BV)&#39;}}}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#row spectra in each point</span>
+<span class="n">pc</span><span class="p">[</span><span class="s1">'point_1'</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "b6df75a79586484eb6de702af5ea3e4a", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<p>Because the number of points varies slightly between locations, the original spectra cannot be combined into a single sparse array. For this reason, we provide the raw, unprocessed data as a dictionary of spectra. However, applying a minimal interpolation step allows us to convert the measurement into a uniform <code class="docutils literal notranslate"><span class="pre">Point</span> <span class="pre">Cloud</span></code> format.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#convert to Point Cloud</span>
+
+<span class="n">pc_conv</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">to_point_cloud</span><span class="p">(</span><span class="n">pc</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pc_conv</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+sidpy.Dataset of type POINT_CLOUD with:
+ dask.array&lt;array, shape=(25, 1, 3522), dtype=float64, chunksize=(25, 1, 3522), chunktype=numpy.ndarray&gt;
+ data contains: Iprobe (nA)
+ and Dimensions:
+point number:  Point number (generic) of size (25,)
+channel:  generic (generic) of size (1,)
+x:  BVValue (V) of size (3522,)
+ with metadata: [&#39;channels&#39;, &#39;units&#39;, &#39;date&#39;, &#39;version&#39;, &#39;uuid&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#location coordinates are stored in .point_cloud attribute</span>
+<span class="n">pc_conv</span><span class="o">.</span><span class="n">point_cloud</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;coordinates&#39;: array([[53.4435177 , 62.07523571],
+        [53.4435177 , 62.31308374],
+        [53.4435177 , 62.55093176],
+        [53.4435177 , 62.78877978],
+        [53.4435177 , 63.0266278 ],
+        [53.68982672, 62.07523571],
+        [53.68982672, 62.31308374],
+        [53.68982672, 62.55093176],
+        [53.68982672, 62.78877978],
+        [53.68982672, 63.0266278 ],
+        [53.93613573, 62.07523571],
+        [53.93613573, 62.31308374],
+        [53.93613573, 62.55093176],
+        [53.93613573, 62.78877978],
+        [53.93613573, 63.0266278 ],
+        [54.18244475, 62.07523571],
+        [54.18244475, 62.31308374],
+        [54.18244475, 62.55093176],
+        [54.18244475, 62.78877978],
+        [54.18244475, 63.0266278 ],
+        [54.42875377, 62.07523571],
+        [54.42875377, 62.31308374],
+        [54.42875377, 62.55093176],
+        [54.42875377, 62.78877978],
+        [54.42875377, 63.0266278 ]])}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pc_conv</span><span class="o">.</span><span class="n">metadata</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;channels&#39;: [&#39;Iprobe&#39;],
+ &#39;units&#39;: [&#39;nA&#39;],
+ &#39;date&#39;: &#39;4/5/2023 11:46:5&#39;,
+ &#39;version&#39;: 0.7000000000000001,
+ &#39;uuid&#39;: &#39;35225116-2439-4022-807D-7C6A5C86C632&#39;}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pc_conv</span><span class="o">.</span><span class="n">plot</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "72a1df6140254ac7b02aa002645a181c", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "d8ec1366cf1b4511ae3ffa04a42e2fb4", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Scanning probe microscopy</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="read_fsexp_files.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><strong>Parsing .fsexp FusionScope HDF5 Experiment Files</strong></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Key-Naming-Convention">Key Naming Convention</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Output-structure">Output structure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Image">Image</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Pycroscopy contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2020, Pycroscopy contributors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

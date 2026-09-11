@@ -1,0 +1,929 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SciFiReaders.readers.microscopy.spm.afm.nanosurf &#8212; SciFiReaders 0.12.7 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../../../../_static/documentation_options.js?v=7cf6be21"></script>
+    <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/SciFiReaders/readers/microscopy/spm/afm/nanosurf';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SciFiReaders 0.12.7 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../index.html">
+                    SciFiReaders
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../available_readers.html">Available Readers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../contact.html">Contact us</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples by method</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/00_developing_a_reader/index.html">Creating a Reader</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/00_developing_a_reader/developing_a_reader.html">Creating a Reader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/index.html">Electron microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/read_dm3_files.html">Reading a DM3 File with ScopeReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/read_nion_files.html">Reading a Nion File with ScopeReader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/index.html">Scanning probe microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/read_mdt_files.html">Parsing .mdt experimental files. Basic example.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/read_fsexp_files.html"><strong>Parsing .fsexp FusionScope HDF5 Experiment Files</strong></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/03_data_formats_and_converters/index.html">Data formats and converters</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/03_data_formats_and_converters/convert_hyperspy.html">Working with Hyperspy Data</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../api.html">API reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../_autosummary/SciFiReaders.html">SciFiReaders</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders/issues/new?title=Issue%20on%20page%20%2F_modules/SciFiReaders/readers/microscopy/spm/afm/nanosurf.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for SciFiReaders.readers.microscopy.spm.afm.nanosurf</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="c1">#This reader comes from NanoSurf (https://github.com/syrupface/NSFopen/blob/master/NSFopen/read/read.py)</span>
+
+<span class="sd">"""</span>
+<span class="sd">Created on Mon Apr 23 15:17:03 2018</span>
+
+<span class="sd">Copyright (c) 2018 nelson&lt;at&gt;nanosurf.com</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="sd">of this software and associated documentation files (the "Software"), to deal</span>
+<span class="sd">in the Software without restriction, including without limitation the rights</span>
+<span class="sd">to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="sd">copies of the Software, and to permit persons to whom the Software is</span>
+<span class="sd">furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all</span>
+<span class="sd">copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="sd">IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="sd">FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="sd">AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="sd">LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="sd">OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span>
+<span class="sd">SOFTWARE.</span>
+
+<span class="sd">"""</span>
+
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">h5py</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sidpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sidpy.sid</span><span class="w"> </span><span class="kn">import</span> <span class="n">Reader</span>
+
+<div class="viewcode-block" id="nid_read">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.nanosurf.nid_read.html#SciFiReaders.readers.microscopy.spm.afm.nanosurf.nid_read">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">nid_read</span><span class="p">():</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dataframe</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dataframe</span> <span class="o">=</span> <span class="n">dataframe</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        <span class="c1"># names of the channels that can be opened.  Can be added to.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Spec forward'</span><span class="p">,</span> <span class="s1">'Spec backward'</span><span class="p">,</span> <span class="s1">'Spec fwd pause'</span><span class="p">,</span> <span class="s1">'Spec bwd pause'</span><span class="p">,</span>
+                           <span class="s1">'Scan forward'</span><span class="p">,</span> <span class="s1">'Scan backward'</span><span class="p">,</span> <span class="s1">'2nd scan forward'</span><span class="p">,</span> <span class="s1">'2nd scan backward'</span><span class="p">,</span>
+                           <span class="s1">'Frequency sweep'</span><span class="p">,</span> <span class="s1">'Frequency sweep SHO'</span><span class="p">,</span> <span class="s1">'Spectrum FFT'</span><span class="p">,</span> <span class="s1">'Spectrum Fit'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_types</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">File required!</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="n">encode</span> <span class="o">=</span> <span class="s1">'ANSI'</span>
+        <span class="c1"># encode = 'UTF-8'</span>
+        <span class="n">encode</span> <span class="o">=</span> <span class="s1">'ISO-8859-1'</span>
+
+        <span class="c1"># isolates header from data file</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Reading Header"</span><span class="p">)</span>
+
+        <span class="n">fid</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'rb'</span><span class="p">)</span>
+        <span class="n">data_in</span> <span class="o">=</span> <span class="n">fid</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s1">'</span><span class="se">\n\r\n\r</span><span class="s1">'</span><span class="p">)</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="n">head</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_in</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s1">'</span><span class="se">\r\n</span><span class="s1">'</span><span class="p">))</span>
+        <span class="n">boo</span> <span class="o">=</span> <span class="n">head</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">''</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">boo</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">!=</span> <span class="n">boo</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">head</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">indices</span><span class="p">)</span>
+
+        <span class="n">head</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">head</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">header</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">head</span><span class="p">:</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">encode</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">encode</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'='</span><span class="p">)</span>
+                <span class="n">values</span><span class="p">[</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+            <span class="n">header</span><span class="p">[</span><span class="n">title</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span>
+
+        <span class="n">param</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">from_array</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">param</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">param</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">','</span><span class="p">)[</span><span class="mi">4</span><span class="p">])</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">get_values</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">param</span><span class="p">):</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="n">header</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">param</span><span class="p">]</span>
+
+            <span class="n">ty</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">unit</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">'(\S)\[(.*)\]\*\[(.*)\]'</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">ty</span> <span class="o">==</span> <span class="s1">'D'</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ty</span> <span class="o">==</span> <span class="s1">'B'</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ty</span> <span class="o">==</span> <span class="s1">'L'</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ty</span> <span class="o">==</span> <span class="s1">'V'</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">val</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">','</span><span class="p">)]</span>
+                <span class="n">unit</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">unit</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">','</span><span class="p">)]</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">'Value'</span><span class="p">:</span> <span class="n">val</span><span class="p">,</span> <span class="s1">'Unit'</span><span class="p">:</span> <span class="n">unit</span><span class="p">}</span>
+
+        <span class="n">groupNames</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">dataSet</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">ds</span> <span class="o">=</span> <span class="s1">'DataSet'</span>
+        <span class="n">grCnt</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="n">ds</span><span class="p">][</span><span class="s1">'GroupCount'</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">gr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">grCnt</span><span class="p">):</span>
+            <span class="n">groupNames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="n">ds</span><span class="p">][</span><span class="s1">'Gr'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">gr</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'-Name'</span><span class="p">])</span>
+            <span class="n">gc</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="n">ds</span><span class="p">][</span><span class="s1">'Gr'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">gr</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'-Count'</span><span class="p">])</span>
+
+            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gc</span><span class="p">):</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="s1">'Gr'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">gr</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'-Ch'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">header</span><span class="p">[</span><span class="n">ds</span><span class="p">]:</span>
+                    <span class="n">dataSet</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="n">ds</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
+
+        <span class="n">terms</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Frame'</span><span class="p">,</span> <span class="s1">'Points'</span><span class="p">,</span> <span class="s1">'Lines'</span><span class="p">,</span> <span class="s1">'SaveBits'</span><span class="p">,</span>
+                 <span class="s1">'Dim0Min'</span><span class="p">,</span> <span class="s1">'Dim0Range'</span><span class="p">,</span> <span class="s1">'Dim0Unit'</span><span class="p">,</span>
+                 <span class="s1">'Dim1Min'</span><span class="p">,</span> <span class="s1">'Dim1Range'</span><span class="p">,</span> <span class="s1">'Dim1Unit'</span><span class="p">,</span>
+                 <span class="s1">'Dim2Min'</span><span class="p">,</span> <span class="s1">'Dim2Range'</span><span class="p">,</span> <span class="s1">'Dim2Unit'</span><span class="p">,</span>
+                 <span class="s1">'Dim2Name'</span><span class="p">]</span>
+
+        <span class="n">types</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                 <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                 <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                 <span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># 0 = string, 1 = integer, 2 = float</span>
+        <span class="n">typ</span> <span class="o">=</span> <span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>
+     
+        <span class="k">for</span> <span class="n">term</span><span class="p">,</span> <span class="n">ty</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">terms</span><span class="p">,</span> <span class="n">types</span><span class="p">):</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dataSet</span><span class="p">:</span>
+                <span class="n">h</span> <span class="o">=</span> <span class="n">header</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">h</span><span class="p">:</span>
+                    <span class="n">val</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">typ</span><span class="p">[</span><span class="n">ty</span><span class="p">](</span><span class="n">h</span><span class="p">[</span><span class="n">term</span><span class="p">]))</span>
+
+            <span class="n">param</span><span class="p">[</span><span class="n">term</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+
+        <span class="c1"># for spectroscopy with maps</span>
+        <span class="n">dataPoints</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dataSet</span><span class="p">:</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">header</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
+            <span class="n">linePoints</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="s1">'LineDim0Min'</span> <span class="ow">in</span> <span class="n">h</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">h</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">'LineDim\d*Points'</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+                        <span class="n">linePoints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+            <span class="n">dataPoints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">linePoints</span><span class="p">))</span>
+        <span class="n">param</span><span class="p">[</span><span class="s1">'LinePoints'</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataPoints</span>
+        
+        <span class="n">cantilever</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s1">'DataSet</span><span class="se">\\</span><span class="s1">Calibration</span><span class="se">\\</span><span class="s1">Cantilever'</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">header</span><span class="p">:</span>
+            <span class="n">cantilever</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Manufacturer'</span><span class="p">:</span> <span class="n">header</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">'Manufacturer'</span><span class="p">],</span> <span class="s1">'Name'</span><span class="p">:</span> <span class="n">header</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">'Name'</span><span class="p">]}</span>
+
+            <span class="n">propcount</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">'PropCount'</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">propcount</span><span class="p">):</span>
+                <span class="n">cantilever</span><span class="p">[</span><span class="s1">'Prop'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">get_values</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s1">'Prop'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+
+        <span class="n">key</span> <span class="o">=</span> <span class="s1">'DataSet</span><span class="se">\\</span><span class="s1">Calibration</span><span class="se">\\</span><span class="s1">Scanhead'</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">header</span><span class="p">:</span>
+            <span class="n">sens</span> <span class="o">=</span> <span class="n">from_array</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s1">'In5'</span><span class="p">)</span>
+            <span class="n">cantilever</span><span class="p">[</span><span class="s1">'Sensitivity'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Value'</span><span class="p">:</span> <span class="n">sens</span> <span class="o">/</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">'Unit'</span><span class="p">:</span> <span class="s1">'m'</span><span class="p">}</span>
+
+        <span class="n">mapTable</span> <span class="o">=</span> <span class="p">{}</span>  
+        <span class="n">key</span> <span class="o">=</span> <span class="s1">'DataSet</span><span class="se">\\</span><span class="s1">SpecInfos'</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">header</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">'SubSectionCount'</span><span class="p">])</span>
+            <span class="n">secNames</span> <span class="o">=</span> <span class="p">[</span><span class="n">header</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">'SubSection'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+            
+            <span class="n">specMode</span> <span class="o">=</span> <span class="n">header</span><span class="p">[</span><span class="n">key</span> <span class="o">+</span> <span class="s1">'</span><span class="se">\\</span><span class="s1">'</span> <span class="o">+</span> <span class="n">secNames</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">'SpecMode'</span><span class="p">]</span>
+            
+            <span class="n">count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="n">key</span> <span class="o">+</span> <span class="s1">'</span><span class="se">\\</span><span class="s1">'</span> <span class="o">+</span> <span class="n">secNames</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="s1">'Count'</span><span class="p">])</span>
+            
+            <span class="n">mapTable</span> <span class="o">=</span> <span class="p">[</span><span class="n">header</span><span class="p">[</span><span class="n">key</span> <span class="o">+</span> <span class="s1">'</span><span class="se">\\</span><span class="s1">'</span> <span class="o">+</span> <span class="n">secNames</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="n">specMode</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">';'</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">count</span><span class="p">)]</span>
+            <span class="n">mapTable</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mapTable</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+            
+        <span class="n">scanOffset</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s1">'DataSet</span><span class="se">\\</span><span class="s1">Parameters</span><span class="se">\\</span><span class="s1">Imaging'</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">header</span><span class="p">:</span>
+            <span class="n">scanOffset</span> <span class="o">=</span> <span class="n">get_values</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s1">'ScanOffset'</span><span class="p">)</span>
+        
+        <span class="n">thermal</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s1">'DataSet-Info'</span>
+        <span class="k">if</span> <span class="s1">'-- Thermal Tuning --'</span> <span class="ow">in</span> <span class="n">header</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="s1">'k'</span> <span class="ow">in</span> <span class="n">header</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">'Q Factor:'</span><span class="p">]:</span>
+                <span class="n">Q</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">'Q Factor:'</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="mf">1e3</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">Q</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">'Q Factor:'</span><span class="p">])</span>
+            <span class="n">Freq</span> <span class="o">=</span> <span class="n">header</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">'Frequency:'</span><span class="p">]</span>
+            <span class="n">SpringK</span> <span class="o">=</span> <span class="n">header</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">'Spring Constant:'</span><span class="p">]</span>
+            <span class="n">Peak</span> <span class="o">=</span> <span class="n">header</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">'Peak Value:'</span><span class="p">]</span>
+            
+            <span class="n">gr</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">'(\d+\.\d+)(\S*)'</span><span class="p">,</span> <span class="n">Freq</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+            <span class="n">Freq</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Value'</span><span class="p">:</span> <span class="n">gr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">'Unit'</span><span class="p">:</span> <span class="n">gr</span><span class="p">[</span><span class="mi">1</span><span class="p">]}</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">gr</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">'(\d+\.\d+)\s(\S*)'</span><span class="p">,</span> <span class="n">SpringK</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+               <span class="n">gr</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">'(\d)\s(\S*)'</span><span class="p">,</span> <span class="n">SpringK</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+            <span class="n">SpringK</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Value'</span><span class="p">:</span> <span class="n">gr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">'Unit'</span><span class="p">:</span> <span class="n">gr</span><span class="p">[</span><span class="mi">1</span><span class="p">]}</span>
+            
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">gr</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">'(\d+\.\d+)(\S*)'</span><span class="p">,</span> <span class="n">Peak</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">gr</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">'(\d)(\S*)'</span><span class="p">,</span> <span class="n">Peak</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+            <span class="n">Peak</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Value'</span><span class="p">:</span> <span class="n">gr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">'Unit'</span><span class="p">:</span> <span class="n">gr</span><span class="p">[</span><span class="mi">1</span><span class="p">]}</span>
+            
+            <span class="n">thermal</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Frequency'</span><span class="p">:</span> <span class="n">Freq</span><span class="p">,</span> <span class="s1">'Q Factor'</span><span class="p">:</span> <span class="n">Q</span><span class="p">,</span> <span class="s1">'Spring Constant'</span><span class="p">:</span> <span class="n">SpringK</span><span class="p">,</span> <span class="s1">'Peak'</span><span class="p">:</span> <span class="n">Peak</span><span class="p">}</span>
+        
+        <span class="n">required_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="o">*</span><span class="n">c</span><span class="o">/</span><span class="mi">8</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s1">'Points'</span><span class="p">],</span>
+                                                            <span class="n">param</span><span class="p">[</span><span class="s1">'Lines'</span><span class="p">],</span>
+                                                            <span class="n">param</span><span class="p">[</span><span class="s1">'SaveBits'</span><span class="p">])]))</span>
+        
+        <span class="n">q</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">param</span><span class="p">[</span><span class="s1">'SaveBits'</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">z0</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">q</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">param</span><span class="p">[</span><span class="s1">'SaveBits'</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">16</span><span class="p">:</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int16</span>
+        <span class="k">elif</span> <span class="n">param</span><span class="p">[</span><span class="s1">'SaveBits'</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">32</span><span class="p">:</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">'Reading Data'</span><span class="p">)</span>
+        
+        <span class="n">fid</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'rb'</span><span class="p">)</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="o">-</span><span class="n">required_size</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">data_in</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">required_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">data_in</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_in</span> <span class="o">+</span> <span class="n">z0</span><span class="p">)</span> <span class="o">/</span> <span class="n">q</span>
+        <span class="n">fid</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="n">data_in</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">data_in</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">([</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s1">'Points'</span><span class="p">],</span>
+                                                                     <span class="n">param</span><span class="p">[</span><span class="s1">'Lines'</span><span class="p">])]))</span>
+        <span class="n">data_in</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># reshape and rescale data</span>
+        <span class="k">for</span> <span class="n">datain</span><span class="p">,</span> <span class="n">pts</span><span class="p">,</span> <span class="n">lns</span><span class="p">,</span> <span class="n">zran</span><span class="p">,</span> <span class="n">zmin</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data_in</span><span class="p">,</span>
+                                                <span class="n">param</span><span class="p">[</span><span class="s1">'Points'</span><span class="p">],</span>
+                                                <span class="n">param</span><span class="p">[</span><span class="s1">'Lines'</span><span class="p">],</span>
+                                                <span class="n">param</span><span class="p">[</span><span class="s1">'Dim2Range'</span><span class="p">],</span>
+                                                <span class="n">param</span><span class="p">[</span><span class="s1">'Dim2Min'</span><span class="p">]):</span>
+
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">datain</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">lns</span><span class="p">,</span> <span class="n">pts</span><span class="p">))</span><span class="o">.</span><span class="fm">__mul__</span><span class="p">(</span><span class="n">zran</span><span class="p">)</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="n">zmin</span><span class="p">))</span>
+
+        <span class="n">data_crop</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">numP</span><span class="p">,</span> <span class="n">dSet</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s1">'LinePoints'</span><span class="p">],</span> <span class="n">data</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">numP</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">numP</span><span class="p">,</span> <span class="n">dSet</span><span class="p">):</span>
+                    <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">[:</span><span class="n">n</span><span class="p">])</span>
+                <span class="n">data_crop</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">data_crop</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dSet</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_crop</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+        <span class="c1"># this is the index of the channels that will be output.</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">frame</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s1">'Frame'</span><span class="p">])</span> <span class="k">if</span> <span class="n">frame</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_names</span><span class="p">]</span>
+
+        <span class="c1"># only take data from approved list in name</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="n">frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s1">'Frame'</span><span class="p">])[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="s1">'Dim2Name'</span><span class="p">])[</span><span class="n">idx</span><span class="p">]</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">frame</span><span class="p">,</span> <span class="n">chan</span><span class="p">,</span> <span class="n">dat</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">frame</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">out</span><span class="p">:</span>
+                <span class="n">out</span><span class="p">[</span><span class="n">frame</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">if</span> <span class="n">chan</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">out</span><span class="p">[</span><span class="n">frame</span><span class="p">]:</span>
+                <span class="n">out</span><span class="p">[</span><span class="n">frame</span><span class="p">][</span><span class="n">chan</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">out</span><span class="p">[</span><span class="n">frame</span><span class="p">][</span><span class="n">chan</span><span class="p">]</span> <span class="o">=</span> <span class="n">dat</span>
+    
+        <span class="n">image</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">spectrum</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">out</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_types</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">name</span><span class="p">)]</span>
+            <span class="k">if</span> <span class="n">dt</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">'Scan forward'</span><span class="p">:</span>
+                    <span class="n">image</span><span class="p">[</span><span class="s1">'Forward'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">'Scan backward'</span><span class="p">:</span>
+                    <span class="n">image</span><span class="p">[</span><span class="s1">'Backward'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">'2nd scan forward'</span><span class="p">:</span>
+                    <span class="n">image</span><span class="p">[</span><span class="s1">'2nd Forward'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">'2nd scan backward'</span><span class="p">:</span>
+                    <span class="n">image</span><span class="p">[</span><span class="s1">'2nd Backward'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">pass</span>
+            <span class="k">if</span> <span class="n">dt</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">'Spec forward'</span><span class="p">:</span>
+                    <span class="n">spec</span><span class="p">[</span><span class="s1">'Forward'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">'Spec backward'</span><span class="p">:</span>
+                    <span class="n">spec</span><span class="p">[</span><span class="s1">'Backward'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">'Spec fwd pause'</span><span class="p">:</span>
+                    <span class="n">spec</span><span class="p">[</span><span class="s1">'Pause Forward'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">'Spec bwd pause'</span><span class="p">:</span>
+                    <span class="n">spec</span><span class="p">[</span><span class="s1">'Pause Backward'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">pass</span>
+            <span class="k">if</span> <span class="n">dt</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">'Spectrum FFT'</span><span class="p">:</span>
+                    <span class="n">spectrum</span><span class="p">[</span><span class="s1">'FFT'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">'Spectrum Fit'</span><span class="p">:</span>
+                    <span class="n">spectrum</span><span class="p">[</span><span class="s1">'Fit'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">'Frequency sweep'</span><span class="p">:</span>
+                    <span class="n">spectrum</span><span class="p">[</span><span class="s1">'Sweep'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">'Frequency sweep SHO'</span><span class="p">:</span>
+                    <span class="n">spectrum</span><span class="p">[</span><span class="s1">'SHO'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">pass</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="s1">'min'</span><span class="p">,</span> <span class="s1">'range'</span><span class="p">,</span> <span class="s1">'units'</span><span class="p">],</span>
+                     <span class="p">[</span><span class="n">param</span><span class="p">[</span><span class="s1">'Dim0Min'</span><span class="p">],</span> <span class="n">param</span><span class="p">[</span><span class="s1">'Dim0Range'</span><span class="p">],</span> <span class="n">param</span><span class="p">[</span><span class="s1">'Dim0Unit'</span><span class="p">]]))</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="s1">'min'</span><span class="p">,</span> <span class="s1">'range'</span><span class="p">,</span> <span class="s1">'units'</span><span class="p">],</span>
+                     <span class="p">[</span><span class="n">param</span><span class="p">[</span><span class="s1">'Dim1Min'</span><span class="p">],</span> <span class="n">param</span><span class="p">[</span><span class="s1">'Dim1Range'</span><span class="p">],</span> <span class="n">param</span><span class="p">[</span><span class="s1">'Dim1Unit'</span><span class="p">]]))</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="s1">'min'</span><span class="p">,</span> <span class="s1">'range'</span><span class="p">,</span> <span class="s1">'units'</span><span class="p">],</span>
+                     <span class="p">[</span><span class="n">param</span><span class="p">[</span><span class="s1">'Dim2Min'</span><span class="p">],</span> <span class="n">param</span><span class="p">[</span><span class="s1">'Dim2Range'</span><span class="p">],</span> <span class="n">param</span><span class="p">[</span><span class="s1">'Dim2Unit'</span><span class="p">]]))</span>
+        <span class="n">specMap</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="s1">'maps'</span><span class="p">],</span> <span class="p">[</span><span class="n">mapTable</span><span class="p">]))</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="s1">'offset'</span><span class="p">],</span> <span class="p">[</span><span class="n">scanOffset</span><span class="p">]))</span>
+
+        <span class="n">parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="s1">'Tip'</span><span class="p">,</span> <span class="s1">'X'</span><span class="p">,</span> <span class="s1">'Y'</span><span class="p">,</span> <span class="s1">'Z'</span><span class="p">,</span> <span class="s1">'SpecMap'</span><span class="p">,</span> <span class="s1">'OffSet'</span><span class="p">,</span> <span class="s1">'Tune'</span><span class="p">,</span> <span class="s1">'Header Dump'</span><span class="p">],</span>
+                              <span class="p">[</span><span class="n">cantilever</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">specMap</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">thermal</span><span class="p">,</span> <span class="n">header</span><span class="p">]))</span>
+
+        <span class="n">dataout</span> <span class="o">=</span> <span class="p">[</span><span class="n">image</span><span class="p">,</span> <span class="n">spec</span><span class="p">,</span> <span class="n">spectrum</span><span class="p">]</span>
+        <span class="n">datanames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Image'</span><span class="p">,</span> <span class="s1">'Spec'</span><span class="p">,</span> <span class="s1">'Sweep'</span><span class="p">]</span>
+
+        <span class="n">valid_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span> <span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataout</span><span class="p">)</span> <span class="k">if</span> <span class="n">val</span><span class="p">]</span>
+        <span class="n">valid_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">datanames</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataout</span><span class="p">)</span> <span class="k">if</span> <span class="n">val</span><span class="p">]</span>
+
+        <span class="n">dataout</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">valid_names</span><span class="p">,</span> <span class="n">valid_data</span><span class="p">))</span>
+        <span class="n">t_end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">'Elapsed Time: </span><span class="si">%3.2f</span><span class="s1"> sec</span><span class="se">\n</span><span class="s1">'</span> <span class="o">%</span> <span class="n">t_end</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dataframe</span><span class="p">:</span>
+            <span class="c1"># import pandas as pd</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_pd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__toPandaDF</span><span class="p">(</span><span class="n">dataout</span><span class="p">)</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">dataout</span><span class="c1">#self.__toPandaDF(dataout).unstack(level=0)</span>
+            <span class="c1"># self.specunits = pd.DataFrame(specUnits)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">param</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__toPandaSeries</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">dataout</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">param</span> <span class="o">=</span> <span class="n">parameters</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__toPandaDF</span><span class="p">(</span><span class="n">user_dict</span><span class="p">):</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span> <span class="n">user_dict</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+                                     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">user_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                                     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">user_dict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()},</span> <span class="n">orient</span><span class="o">=</span><span class="s1">'index'</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">df</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__toPandaSeries</span><span class="p">(</span><span class="n">user_dict</span><span class="p">):</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span> <span class="n">user_dict</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">user_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">user_dict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()})</span>
+        <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="nhf_read">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.nanosurf.nhf_read.html#SciFiReaders.readers.microscopy.spm.afm.nanosurf.nhf_read">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">nhf_read</span><span class="p">():</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fopen</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="c1"># measurement</span>
+        <span class="n">group_name</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fopen</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="c1"># forward/backward</span>
+        <span class="n">segment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fopen</span><span class="p">[</span><span class="n">group_name</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">seg_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">segment</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        <span class="n">s_prop</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">attrs</span>
+        <span class="n">prop_s</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="n">s_prop</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">s_prop</span><span class="p">)}</span>
+
+        <span class="n">DAC_max</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">31</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">data_out</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">prop</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">seg_names</span><span class="p">:</span>
+            <span class="n">meas</span> <span class="o">=</span> <span class="n">segment</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
+            <span class="n">direction</span> <span class="o">=</span> <span class="n">meas</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span>
+            <span class="n">data_out</span><span class="p">[</span><span class="n">direction</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            
+            <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">meas</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">meas</span><span class="p">[</span><span class="n">m</span><span class="p">]</span>
+                <span class="n">d_prop</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">attrs</span>
+                
+                <span class="n">Nx</span> <span class="o">=</span> <span class="n">prop_s</span><span class="p">[</span><span class="s1">'image_points_per_line'</span><span class="p">]</span>
+                <span class="n">Ny</span> <span class="o">=</span> <span class="n">prop_s</span><span class="p">[</span><span class="s1">'image_number_of_lines'</span><span class="p">]</span>
+                
+                <span class="n">prop</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="n">name</span><span class="p">:</span><span class="n">d_prop</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">d_prop</span><span class="p">)})</span>
+                
+                <span class="n">bit</span> <span class="o">=</span> <span class="n">d_prop</span><span class="p">[</span><span class="s1">'dataset_size'</span><span class="p">]</span>
+                <span class="n">mx</span> <span class="o">=</span> <span class="n">d_prop</span><span class="p">[</span><span class="s1">'value_max'</span><span class="p">]</span>
+                <span class="n">mn</span><span class="o">=</span> <span class="n">d_prop</span><span class="p">[</span><span class="s1">'value_min'</span><span class="p">]</span>
+                <span class="n">cal_max</span> <span class="o">=</span> <span class="n">d_prop</span><span class="p">[</span><span class="s1">'base_calibration_max'</span><span class="p">]</span>
+                <span class="n">cal_min</span> <span class="o">=</span> <span class="n">d_prop</span><span class="p">[</span><span class="s1">'base_calibration_min'</span><span class="p">]</span>
+                
+                <span class="n">channel</span> <span class="o">=</span> <span class="n">d_prop</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span>
+                <span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="n">cal_max</span><span class="o">-</span><span class="n">cal_min</span><span class="p">)</span><span class="o">/</span><span class="n">DAC_max</span><span class="o">/</span><span class="mi">2</span>
+                
+                <span class="n">data_out</span><span class="p">[</span><span class="n">direction</span><span class="p">][</span><span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">data</span><span class="p">[:],</span> <span class="p">[</span><span class="n">Nx</span><span class="p">,</span> <span class="n">Ny</span><span class="p">])</span><span class="o">*</span><span class="n">scale</span>
+        
+        
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_pd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_out</span><span class="p">)</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prop</span> <span class="o">=</span> <span class="n">prop_s</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data_out</span></div>
+
+
+  
+<div class="viewcode-block" id="NanoSurfNIDReader">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.nanosurf.NanoSurfNIDReader.html#SciFiReaders.readers.microscopy.spm.afm.nanosurf.NanoSurfNIDReader">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">NanoSurfNIDReader</span><span class="p">(</span><span class="n">Reader</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Reads files obtained via NanoSurf controllers in .NID files.</span>
+
+<span class="sd">    """</span>
+
+<div class="viewcode-block" id="NanoSurfNIDReader.read">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.nanosurf.NanoSurfNIDReader.html#SciFiReaders.readers.microscopy.spm.afm.nanosurf.NanoSurfNIDReader.read">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Reads the file given in file_path into a sidpy dataset</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        verbose : Boolean (Optional)</span>
+<span class="sd">            Whether or not to show  print statements for debugging</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        sidpy.Dataset : List of sidpy.Dataset objects.</span>
+<span class="sd">            Multi-channel inputs are separated into individual dataset objects</span>
+<span class="sd">        """</span>
+
+        <span class="n">file_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_file_path</span>
+        <span class="n">folder_path</span><span class="p">,</span> <span class="n">file_name</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        
+        <span class="c1"># Extracting the raw data into memory</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">nid_read</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="n">data_raw</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">param</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="n">channel_units</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[(</span><span class="s1">'Z'</span><span class="p">,</span> <span class="s1">'units'</span><span class="p">)]</span>
+        <span class="n">datasets</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">ind_l1</span><span class="p">,</span> <span class="n">key_l1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data_raw</span><span class="p">[</span><span class="s1">'Image'</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="k">for</span> <span class="n">ind_l2</span><span class="p">,</span> <span class="n">key_l2</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data_raw</span><span class="p">[</span><span class="s1">'Image'</span><span class="p">][</span><span class="n">key_l1</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+
+                <span class="n">raw_data</span> <span class="o">=</span> <span class="n">data_raw</span><span class="p">[</span><span class="s1">'Image'</span><span class="p">][</span><span class="n">key_l1</span><span class="p">][</span><span class="n">key_l2</span><span class="p">]</span>
+                <span class="n">data_set</span> <span class="o">=</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">raw_data</span><span class="p">[:],</span> <span class="n">name</span><span class="o">=</span><span class="n">key_l2</span><span class="p">)</span>
+
+                <span class="n">data_set</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">'Image'</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">channel_units</span><span class="p">[</span><span class="n">ind_l1</span><span class="p">]</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">quantity</span> <span class="o">=</span> <span class="n">key_l2</span>
+
+
+                <span class="n">x_min</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[(</span><span class="s1">'X'</span><span class="p">,</span> <span class="s1">'min'</span><span class="p">)][</span><span class="n">ind_l1</span><span class="p">]</span>
+                <span class="n">x_max</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[(</span><span class="s1">'X'</span><span class="p">,</span> <span class="s1">'range'</span><span class="p">)][</span><span class="n">ind_l1</span><span class="p">]</span>
+                <span class="n">x_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">data_set</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+                <span class="n">y_min</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[(</span><span class="s1">'Y'</span><span class="p">,</span> <span class="s1">'min'</span><span class="p">)][</span><span class="n">ind_l1</span><span class="p">]</span>
+                <span class="n">y_max</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[(</span><span class="s1">'Y'</span><span class="p">,</span> <span class="s1">'range'</span><span class="p">)][</span><span class="n">ind_l1</span><span class="p">]</span>
+                <span class="n">y_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="n">data_set</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+                <span class="c1"># Add dimension info</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">x_vec</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'X'</span><span class="p">,</span>
+                                                        <span class="n">units</span><span class="o">=</span><span class="n">channel_units</span><span class="p">[</span><span class="n">ind_l1</span><span class="p">],</span> <span class="n">quantity</span><span class="o">=</span><span class="s1">'X'</span><span class="p">,</span>
+                                                        <span class="n">dimension_type</span><span class="o">=</span><span class="n">sid</span><span class="o">.</span><span class="n">DimensionType</span><span class="o">.</span><span class="n">SPATIAL</span><span class="p">))</span>
+
+                <span class="n">data_set</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">y_vec</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'Y'</span><span class="p">,</span>
+                                                        <span class="n">units</span><span class="o">=</span><span class="n">channel_units</span><span class="p">[</span><span class="n">ind_l1</span><span class="p">],</span> <span class="n">quantity</span><span class="o">=</span><span class="s1">'Y'</span><span class="p">,</span>
+                                                        <span class="n">dimension_type</span><span class="o">=</span><span class="n">sid</span><span class="o">.</span><span class="n">DimensionType</span><span class="o">.</span><span class="n">SPATIAL</span><span class="p">))</span>
+
+                <span class="c1"># append metadata</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">original_metadata</span> <span class="o">=</span> <span class="n">parameters</span>
+                <span class="n">key_name</span> <span class="o">=</span> <span class="n">key_l1</span> <span class="o">+</span> <span class="s2">" "</span> <span class="o">+</span> <span class="n">key_l2</span>
+                <span class="n">datasets</span><span class="p">[</span><span class="n">key_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_set</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                
+                <span class="c1"># sidpy.Dataset.copy() drops original_metadata</span>
+                <span class="n">datasets</span><span class="p">[</span><span class="n">key_name</span><span class="p">]</span><span class="o">.</span><span class="n">original_metadata</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+               
+        <span class="k">return</span> <span class="n">datasets</span></div>
+
+
+   
+<div class="viewcode-block" id="NanoSurfNIDReader.can_read">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.nanosurf.NanoSurfNIDReader.html#SciFiReaders.readers.microscopy.spm.afm.nanosurf.NanoSurfNIDReader.can_read">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">can_read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Tests whether or not the provided file has a .asc extension</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        """</span>
+
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">NanoSurfNIDReader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">can_read</span><span class="p">(</span><span class="n">extension</span><span class="o">=</span><span class="s1">'nid'</span><span class="p">)</span></div>
+</div>
+
+
+
+
+   
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Pycroscopy contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2020, Pycroscopy contributors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

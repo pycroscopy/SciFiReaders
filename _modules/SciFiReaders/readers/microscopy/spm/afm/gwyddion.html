@@ -1,0 +1,769 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SciFiReaders.readers.microscopy.spm.afm.gwyddion &#8212; SciFiReaders 0.12.7 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../../../../_static/documentation_options.js?v=7cf6be21"></script>
+    <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/SciFiReaders/readers/microscopy/spm/afm/gwyddion';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SciFiReaders 0.12.7 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../index.html">
+                    SciFiReaders
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../available_readers.html">Available Readers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../contact.html">Contact us</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples by method</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/00_developing_a_reader/index.html">Creating a Reader</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/00_developing_a_reader/developing_a_reader.html">Creating a Reader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/index.html">Electron microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/read_dm3_files.html">Reading a DM3 File with ScopeReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/read_nion_files.html">Reading a Nion File with ScopeReader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/index.html">Scanning probe microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/read_mdt_files.html">Parsing .mdt experimental files. Basic example.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/read_fsexp_files.html"><strong>Parsing .fsexp FusionScope HDF5 Experiment Files</strong></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/03_data_formats_and_converters/index.html">Data formats and converters</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/03_data_formats_and_converters/convert_hyperspy.html">Working with Hyperspy Data</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../api.html">API reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../_autosummary/SciFiReaders.html">SciFiReaders</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders/issues/new?title=Issue%20on%20page%20%2F_modules/SciFiReaders/readers/microscopy/spm/afm/gwyddion.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for SciFiReaders.readers.microscopy.spm.afm.gwyddion</h1><div class="highlight"><pre>
+<span></span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">modulefinder</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>  <span class="c1"># For array operations</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sidpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sidpy.sid</span><span class="w"> </span><span class="kn">import</span> <span class="n">Reader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">os</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="n">unicode</span> <span class="o">=</span> <span class="nb">str</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">gwyfile</span>
+<span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"You don't have gwyfile installed. </span><span class="se">\</span>
+<span class="s2">    If you wish to open .gwy files, you will need to </span><span class="se">\</span>
+<span class="s2">     install it (pip install gwyfile) before attempting."</span><span class="p">)</span>
+    <span class="n">gwyfile</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="GwyddionReader">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.gwyddion.GwyddionReader.html#SciFiReaders.readers.microscopy.spm.afm.gwyddion.GwyddionReader">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GwyddionReader</span><span class="p">(</span><span class="n">Reader</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Extracts data and metadata from Igor Binary Wave (.ibw) files containing</span>
+<span class="sd">    images or force curves</span>
+<span class="sd">    """</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">gwyfile</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ModuleNotFoundError</span><span class="p">(</span><span class="s1">'You attempted to load a Gwyddion file, but this requires gwyfile.</span><span class="se">\n</span><span class="s1"> </span><span class="se">\</span>
+<span class="s1">    Please Load it with pip install gwyfile , restart and retry'</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GwyddionReader.read">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.gwyddion.GwyddionReader.html#SciFiReaders.readers.microscopy.spm.afm.gwyddion.GwyddionReader.read">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">parm_encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Reads the file given in file_path into a sidpy dataset</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        verbose : Boolean (Optional)</span>
+<span class="sd">            Whether or not to show  print statements for debugging</span>
+<span class="sd">     </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        sidpy.Dataset : List of sidpy.Dataset objects.</span>
+<span class="sd">            Multi-channel inputs are separated into individual dataset objects</span>
+<span class="sd">        """</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_file_path</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">unicode</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">'file_path should be a string!'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">file_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'.gsf'</span><span class="p">)</span> <span class="ow">or</span> <span class="n">file_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'.gwy'</span><span class="p">)):</span>
+            <span class="c1"># TODO: Gwyddion is weird, it doesn't append the file extension some times.</span>
+            <span class="c1"># In theory, you could identify the kind of file by looking at the header (line 38 in gsf_read()).</span>
+            <span class="c1"># Ideally the header check should be used instead of the extension check</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'file_path must have a .gsf or .gwy extension!'</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">file_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'.gsf'</span><span class="p">):</span>
+            <span class="n">datasets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gsf_read</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">file_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'.gwy'</span><span class="p">):</span>
+            <span class="n">datasets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gwy_read</span><span class="p">()</span>
+        
+        <span class="c1"># Return the dataset</span>
+        <span class="k">return</span> <span class="n">datasets</span></div>
+
+
+<div class="viewcode-block" id="GwyddionReader.gsf_read">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.gwyddion.GwyddionReader.html#SciFiReaders.readers.microscopy.spm.afm.gwyddion.GwyddionReader.gsf_read">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">gsf_read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Read a Gwyddion Simple Field 1.0 file format</span>
+<span class="sd">        http://gwyddion.net/documentation/user-guide-en/gsf.html</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file_name : string</span>
+<span class="sd">            path to the file</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        metadata : dict)</span>
+<span class="sd">            Additional metadata to be included in the file</span>
+<span class="sd">        data : numpy.ndarray</span>
+<span class="sd">            An arbitrarily sized 2D array of arbitrary numeric type</span>
+<span class="sd">        """</span>
+       
+        <span class="n">gsf_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_input_file_path</span><span class="p">,</span> <span class="s1">'rb'</span><span class="p">)</span>
+        
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="c1"># check if header is OK</span>
+        <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">gsf_file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'UTF-8'</span><span class="p">)</span> <span class="o">==</span> <span class="s1">'Gwyddion Simple Field 1.0</span><span class="se">\n</span><span class="s1">'</span><span class="p">):</span>
+            <span class="n">gsf_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'File has wrong header'</span><span class="p">)</span>
+            
+        <span class="n">term</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">'00'</span>
+        <span class="c1"># read metadata header</span>
+        <span class="k">while</span> <span class="n">term</span> <span class="o">!=</span> <span class="sa">b</span><span class="s1">'</span><span class="se">\x00</span><span class="s1">'</span><span class="p">:</span>
+            <span class="n">line_string</span> <span class="o">=</span> <span class="n">gsf_file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'UTF-8'</span><span class="p">)</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="n">line_string</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="s1">' = '</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">line_string</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="s1">'='</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="n">gsf_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">gsf_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        
+        <span class="n">gsf_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span> <span class="o">-</span> <span class="n">gsf_file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span>
+        
+        <span class="c1"># fix known metadata types from .gsf file specs</span>
+        <span class="c1"># first the mandatory ones...</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">'XRes'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'XRes'</span><span class="p">])</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">'YRes'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'YRes'</span><span class="p">])</span>
+        
+        <span class="c1"># now check for the optional ones</span>
+        <span class="k">if</span> <span class="s1">'XReal'</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">:</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="s1">'XReal'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'XReal'</span><span class="p">])</span>
+        
+        <span class="k">if</span> <span class="s1">'YReal'</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">:</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="s1">'YReal'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'YReal'</span><span class="p">])</span>
+                    
+        <span class="k">if</span> <span class="s1">'XOffset'</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">:</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="s1">'XOffset'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'XOffset'</span><span class="p">])</span>
+        
+        <span class="k">if</span> <span class="s1">'YOffset'</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">:</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="s1">'YOffset'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'YOffset'</span><span class="p">])</span>
+        
+        <span class="n">datasets</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">gsf_file</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'float32'</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'YRes'</span><span class="p">],</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">'XRes'</span><span class="p">])</span>
+        
+        <span class="n">gsf_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">num_cols</span><span class="p">,</span> <span class="n">num_rows</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">data_set</span> <span class="o">=</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'Title'</span><span class="p">])</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">'Image'</span>
+
+        <span class="c1">#Add quantity and units</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data_set</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">'ZUnits'</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># If an error occurs, fall back to using "a.u"</span>
+            <span class="n">data_set</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="s2">"a.u"</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">quantity</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">'Title'</span><span class="p">]</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">units</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">'XYUnits'</span><span class="p">],</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># If an error occurs, fall back to using "a.u"</span>
+            <span class="n">units</span><span class="o">=</span> <span class="s2">"a.u"</span>
+
+        <span class="c1">#Add dimension info</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">'XReal'</span><span class="p">],</span> <span class="n">num_cols</span><span class="p">),</span>
+                                                <span class="n">name</span> <span class="o">=</span> <span class="s1">'x'</span><span class="p">,</span>
+                                                <span class="n">units</span><span class="o">=</span> <span class="n">units</span><span class="p">,</span>
+                                                <span class="n">quantity</span> <span class="o">=</span> <span class="s1">'x'</span><span class="p">,</span>
+                                                <span class="n">dimension_type</span><span class="o">=</span><span class="s1">'spatial'</span><span class="p">))</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">'YReal'</span><span class="p">],</span> <span class="n">num_rows</span><span class="p">),</span>
+                                                <span class="n">name</span> <span class="o">=</span> <span class="s1">'y'</span><span class="p">,</span>
+                                                <span class="n">units</span> <span class="o">=</span> <span class="n">units</span><span class="p">,</span>
+                                                <span class="n">quantity</span> <span class="o">=</span> <span class="s1">'y'</span><span class="p">,</span>
+                                                <span class="n">dimension_type</span><span class="o">=</span><span class="s1">'spatial'</span><span class="p">))</span>
+
+        <span class="c1"># append metadata</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">original_metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">'image'</span>
+
+        <span class="c1">#Finally, append it</span>
+        <span class="n">datasets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_set</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">datasets</span></div>
+
+
+
+<div class="viewcode-block" id="GwyddionReader.gwy_read">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.spm.afm.gwyddion.GwyddionReader.html#SciFiReaders.readers.microscopy.spm.afm.gwyddion.GwyddionReader.gwy_read">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">gwy_read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file_path</span>
+<span class="sd">        meas_grp</span>
+<span class="sd">        For more information on the .gwy file format visit the link below -</span>
+<span class="sd">        http://gwyddion.net/documentation/user-guide-en/gwyfile-format.html</span>
+<span class="sd">        """</span>
+
+        <span class="c1"># Need to build a set of channels to test against and a function-level variable to write to</span>
+        <span class="n">channels</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Read the data in from the specified file</span>
+        <span class="n">gwy_data</span> <span class="o">=</span> <span class="n">gwyfile</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_input_file_path</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">gwy_data</span><span class="p">:</span>
+            <span class="n">gwy_key</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># if the second index of the gwy_key can be cast into an int then</span>
+                <span class="c1"># it needs to be processed either as an image or a graph</span>
+                
+                <span class="nb">int</span><span class="p">(</span><span class="n">gwy_key</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                
+                <span class="k">if</span> <span class="n">gwy_key</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'graph'</span><span class="p">:</span>
+                    <span class="c1"># graph processing</span>
+                   
+                    <span class="n">channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_translate_graph</span><span class="p">(</span><span class="n">gwy_data</span><span class="p">,</span>
+                                                        <span class="n">obj</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">obj</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'data'</span><span class="p">):</span>
+                   
+                    <span class="n">channels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_translate_image_stack</span><span class="p">(</span> <span class="n">gwy_data</span><span class="p">,</span>
+                                                            <span class="n">obj</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">continue</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="c1"># if the second index of the gwy_key cannot be cast into an int</span>
+                <span class="c1"># then it needs to be processed wither as a spectra, volume or xyz</span>
+                
+                <span class="k">if</span> <span class="n">gwy_key</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'sps'</span><span class="p">:</span>
+                
+                    <span class="n">channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_translate_spectra</span><span class="p">(</span><span class="n">gwy_data</span><span class="p">,</span>
+                                                        <span class="n">obj</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">gwy_key</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'brick'</span><span class="p">:</span>
+                 
+                    <span class="n">channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_translate_volume</span><span class="p">(</span><span class="n">gwy_data</span><span class="p">,</span>
+                                                        <span class="n">obj</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">gwy_key</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'xyz'</span><span class="p">:</span>
+                 
+                    <span class="n">channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_translate_xyz</span><span class="p">(</span><span class="n">gwy_data</span><span class="p">,</span><span class="n">obj</span><span class="p">)</span>
+         
+        <span class="k">return</span> <span class="n">channels</span></div>
+
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_translate_image_stack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gwy_data</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Use this function to write data corresponding to a stack of scan images (most common)</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        """</span>        
+    
+        <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'data'</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">gwy_data</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">gwy_data</span><span class="p">[</span><span class="n">obj</span><span class="o">+</span><span class="s1">'/title'</span><span class="p">]</span>
+            <span class="n">keys</span> <span class="o">=</span> <span class="n">gwy_data</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+            <span class="n">meta_data</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">'data'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+                    <span class="n">meta_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">gwy_data</span><span class="p">[</span><span class="n">obj</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> 
+
+            <span class="n">x_range</span> <span class="o">=</span> <span class="n">gwy_data</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'xreal'</span><span class="p">)</span>
+            <span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x_range</span><span class="p">,</span> <span class="n">gwy_data</span><span class="p">[</span><span class="n">obj</span><span class="p">][</span><span class="s1">'xres'</span><span class="p">])</span>
+          
+            <span class="n">y_range</span> <span class="o">=</span> <span class="n">gwy_data</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'yreal'</span><span class="p">)</span>
+            <span class="n">y_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">y_range</span><span class="p">,</span> <span class="n">gwy_data</span><span class="p">[</span><span class="n">obj</span><span class="p">][</span><span class="s1">'yres'</span><span class="p">])</span>
+
+            <span class="n">data_set</span> <span class="o">=</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
+            <span class="n">data_set</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">'Image'</span>
+
+            <span class="c1">#Add quantity and units</span>
+            <span class="k">if</span> <span class="s1">'si_unit_z'</span> <span class="ow">in</span> <span class="n">gwy_data</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> 
+                <span class="n">data_set</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">gwy_data</span><span class="p">[</span><span class="n">obj</span><span class="p">][</span><span class="s1">'si_unit_z'</span><span class="p">][</span><span class="s1">'unitstr'</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="s1">'a.u.'</span>
+
+            <span class="n">data_set</span><span class="o">.</span><span class="n">quantity</span> <span class="o">=</span> <span class="n">title</span> 
+
+            <span class="k">if</span> <span class="s1">'si_unit_xy'</span> <span class="ow">in</span> <span class="n">gwy_data</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">x_unit</span> <span class="o">=</span> <span class="n">y_unit</span> <span class="o">=</span> <span class="n">gwy_data</span><span class="p">[</span><span class="n">obj</span><span class="p">][</span><span class="s1">'si_unit_xy'</span><span class="p">][</span><span class="s1">'unitstr'</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">x_unit</span><span class="o">=</span><span class="n">y_unit</span><span class="o">=</span><span class="s1">'a.u.'</span>
+
+            <span class="c1">#Add dimension info</span>
+            <span class="n">dataset_is_transposed</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="n">data_set</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_vals</span><span class="p">):</span>
+                <span class="n">dataset_is_transposed</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">dataset_is_transposed</span><span class="p">:</span>
+
+                <span class="n">data_set</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span>
+                                                        <span class="n">name</span> <span class="o">=</span> <span class="s1">'x'</span><span class="p">,</span>
+                                                        <span class="n">units</span><span class="o">=</span><span class="n">x_unit</span><span class="p">,</span> <span class="n">quantity</span> <span class="o">=</span> <span class="s1">'x'</span><span class="p">,</span>
+                                                        <span class="n">dimension_type</span><span class="o">=</span><span class="s1">'spatial'</span><span class="p">))</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">y_vals</span><span class="p">,</span>
+                                                        <span class="n">name</span> <span class="o">=</span> <span class="s1">'y'</span><span class="p">,</span>
+                                                        <span class="n">units</span><span class="o">=</span><span class="n">y_unit</span><span class="p">,</span> <span class="n">quantity</span> <span class="o">=</span> <span class="s1">'y'</span><span class="p">,</span>
+                                                        <span class="n">dimension_type</span><span class="o">=</span><span class="s1">'spatial'</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">data_set</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">y_vals</span><span class="p">,</span>
+                                                        <span class="n">name</span> <span class="o">=</span> <span class="s1">'y'</span><span class="p">,</span>
+                                                        <span class="n">units</span><span class="o">=</span><span class="n">y_unit</span><span class="p">,</span> <span class="n">quantity</span> <span class="o">=</span> <span class="s1">'y'</span><span class="p">,</span>
+                                                        <span class="n">dimension_type</span><span class="o">=</span><span class="s1">'spatial'</span><span class="p">))</span>
+                
+                <span class="n">data_set</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span>
+                                                        <span class="n">name</span> <span class="o">=</span> <span class="s1">'x'</span><span class="p">,</span>
+                                                        <span class="n">units</span><span class="o">=</span><span class="n">x_unit</span><span class="p">,</span> <span class="n">quantity</span> <span class="o">=</span> <span class="s1">'x'</span><span class="p">,</span>
+                                                        <span class="n">dimension_type</span><span class="o">=</span><span class="s1">'spatial'</span><span class="p">))</span>
+
+            <span class="c1"># append metadata</span>
+            <span class="n">data_set</span><span class="o">.</span><span class="n">original_metadata</span> <span class="o">=</span> <span class="n">meta_data</span>
+            <span class="n">data_set</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">'image'</span>
+       
+        <span class="k">return</span> <span class="n">data_set</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_translate_spectra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gwy_data</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Use this to translate simple 1D data like force curves</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        """</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="n">gwy_data</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="n">meta_data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">'data'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+                <span class="n">meta_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">gwy_data</span><span class="p">[</span><span class="n">obj</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> 
+
+        <span class="n">title</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">'title'</span><span class="p">]</span>
+        <span class="n">unitstr</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">'unitstr'</span><span class="p">]</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">'coords'</span><span class="p">]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'res'</span><span class="p">]</span>
+        <span class="n">real</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'real'</span><span class="p">]</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'off'</span><span class="p">]</span>
+        <span class="n">x_units</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'si_unit_x'</span><span class="p">][</span><span class="s1">'unitstr'</span><span class="p">]</span>
+        <span class="n">y_units</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'si_unit_y'</span><span class="p">][</span><span class="s1">'unitstr'</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'data'</span><span class="p">]</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">'selected'</span><span class="p">]</span>
+        <span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">real</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span>
+
+        <span class="n">data_set</span> <span class="o">=</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">'line_plot'</span>
+
+        <span class="c1">#Add quantity and units</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">y_units</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">quantity</span> <span class="o">=</span> <span class="n">title</span> 
+    
+        <span class="c1">#Add dimension info</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sid</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span>
+                                                <span class="n">name</span> <span class="o">=</span> <span class="s1">'x'</span><span class="p">,</span>
+                                                <span class="n">units</span> <span class="o">=</span> <span class="n">x_units</span><span class="p">,</span> <span class="n">quantity</span> <span class="o">=</span> <span class="s1">'x'</span><span class="p">,</span>
+                                                <span class="n">dimension_type</span><span class="o">=</span><span class="s1">'spectral'</span><span class="p">))</span>
+
+        <span class="c1"># append metadata</span>
+        <span class="n">data_set</span><span class="o">.</span><span class="n">original_metadata</span> <span class="o">=</span> <span class="n">meta_data</span>
+
+        <span class="k">return</span> <span class="n">data_set</span>
+
+
+    <span class="c1">#TODO: This stuff is not yet supported. Need to work on it...</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_translate_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>  <span class="n">gwy_data</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Use this to translate graphs</span>
+<span class="sd">        Returns</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> 
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_translate_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gwy_data</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> 
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_translate_xyz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gwy_data</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> </div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Pycroscopy contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2020, Pycroscopy contributors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

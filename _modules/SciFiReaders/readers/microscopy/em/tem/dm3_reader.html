@@ -1,0 +1,1071 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SciFiReaders.readers.microscopy.em.tem.dm3_reader &#8212; SciFiReaders 0.12.7 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../../../../_static/documentation_options.js?v=7cf6be21"></script>
+    <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/SciFiReaders/readers/microscopy/em/tem/dm3_reader';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SciFiReaders 0.12.7 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../index.html">
+                    SciFiReaders
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../available_readers.html">Available Readers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../contact.html">Contact us</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples by method</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/00_developing_a_reader/index.html">Creating a Reader</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/00_developing_a_reader/developing_a_reader.html">Creating a Reader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/index.html">Electron microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/read_dm3_files.html">Reading a DM3 File with ScopeReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/read_nion_files.html">Reading a Nion File with ScopeReader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/index.html">Scanning probe microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/read_mdt_files.html">Parsing .mdt experimental files. Basic example.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/read_fsexp_files.html"><strong>Parsing .fsexp FusionScope HDF5 Experiment Files</strong></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/03_data_formats_and_converters/index.html">Data formats and converters</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/03_data_formats_and_converters/convert_hyperspy.html">Working with Hyperspy Data</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../api.html">API reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../_autosummary/SciFiReaders.html">SciFiReaders</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders/issues/new?title=Issue%20on%20page%20%2F_modules/SciFiReaders/readers/microscopy/em/tem/dm3_reader.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for SciFiReaders.readers.microscopy.em.tem.dm3_reader</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: iso-8859-1 -*-</span>
+<span class="sd">"""</span>
+<span class="sd">Reader for Gatan DigitalMicrograph (DM3) files into sidpy.Dataset, including all metadata.</span>
+
+<span class="sd">Tested on EELS spectra, spectrum images, single images and image stacks.</span>
+
+<span class="sd">Based on the DM3_Reader plug-in (v1.3.4) for ImageJ by Greg Jefferis</span>
+<span class="sd">(http://rsb.info.nih.gov/ij/plugins/DM3_Reader.html) and its Python adaptation</span>
+<span class="sd">by Pierre-Ivan Raynal (http://microscopies.med.univ-tours.fr/).</span>
+<span class="sd">Extended for EELS support by Gerd Duscher, UTK 2012; rewritten for sidpy in 2020.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sidpy</span>
+
+<span class="n">version</span> <span class="o">=</span> <span class="s1">'0.1beta'</span>
+
+<span class="n">debugLevel</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 0=none, 1-3=basic, 4-5=simple, 6-10 verbose</span>
+
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="n">unicode</span> <span class="o">=</span> <span class="nb">str</span>
+
+
+<span class="c1"># ### utility functions ###</span>
+
+<span class="c1"># ## binary data reading functions ###</span>
+
+
+<div class="viewcode-block" id="read_long">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_long.html#SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_long">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_long</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Read 4 bytes as integer in file f"""</span>
+    <span class="n">read_bytes</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'&gt;l'</span><span class="p">,</span> <span class="n">read_bytes</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="read_64_long">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_64_long.html#SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_64_long">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_64_long</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="n">read_bytes</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'&gt;Q'</span><span class="p">,</span> <span class="n">read_bytes</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="read_short">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_short.html#SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_short">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_short</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Read 2 bytes as integer in file f"""</span>
+    <span class="n">read_bytes</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'&gt;h'</span><span class="p">,</span> <span class="n">read_bytes</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="read_byte">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_byte.html#SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_byte">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_byte</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Read 1 byte as integer in file f"""</span>
+    <span class="n">read_bytes</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'&gt;b'</span><span class="p">,</span> <span class="n">read_bytes</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="read_bool">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_bool.html#SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_bool">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_bool</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Read 1 byte as boolean in file f"""</span>
+    <span class="n">read_val</span> <span class="o">=</span> <span class="n">read_byte</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">read_val</span> <span class="o">!=</span> <span class="mi">0</span></div>
+
+
+
+<div class="viewcode-block" id="read_char">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_char.html#SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_char">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_char</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Read 1 byte as char in file f"""</span>
+    <span class="n">read_bytes</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'c'</span><span class="p">,</span> <span class="n">read_bytes</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="read_string">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_string.html#SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_string">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_string</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Read len bytes as a string in file f"""</span>
+    <span class="n">read_bytes</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+    <span class="n">str_fmt</span> <span class="o">=</span> <span class="s1">'&gt;'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">length</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'s'</span>
+    <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">str_fmt</span><span class="p">,</span> <span class="n">read_bytes</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="read_le_short">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_le_short.html#SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_le_short">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_le_short</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Read 2 bytes as *little endian* integer in file f"""</span>
+    <span class="n">read_bytes</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'&lt;h'</span><span class="p">,</span> <span class="n">read_bytes</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="read_le_long">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_le_long.html#SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_le_long">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_le_long</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Read 4 bytes as *little endian* integer in file f"""</span>
+    <span class="n">read_bytes</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'&lt;l'</span><span class="p">,</span> <span class="n">read_bytes</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="read_leu_short">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_leu_short.html#SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_leu_short">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_leu_short</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Read 2 bytes as *little endian* unsigned integer in file f"""</span>
+    <span class="n">read_bytes</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'&lt;H'</span><span class="p">,</span> <span class="n">read_bytes</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="read_leu_long">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_leu_long.html#SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_leu_long">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_leu_long</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Read 4 bytes as *little endian* unsigned integer in file f"""</span>
+    <span class="n">read_bytes</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'&lt;L'</span><span class="p">,</span> <span class="n">read_bytes</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="read_le_float">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_le_float.html#SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_le_float">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_le_float</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Read 4 bytes as *little endian* float in file f"""</span>
+    <span class="n">read_bytes</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'&lt;f'</span><span class="p">,</span> <span class="n">read_bytes</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="read_le_double">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_le_double.html#SciFiReaders.readers.microscopy.em.tem.dm3_reader.read_le_double">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_le_double</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Read 8 bytes as *little endian* double in file f"""</span>
+    <span class="n">read_bytes</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'&lt;d'</span><span class="p">,</span> <span class="n">read_bytes</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+
+<span class="c1"># constants for encoded data types ##</span>
+<span class="n">SHORT</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">LONG</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">USHORT</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">ULONG</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">FLOAT</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">DOUBLE</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">BOOLEAN</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">CHAR</span> <span class="o">=</span> <span class="mi">9</span>
+<span class="n">OCTET</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">STRUCT</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">STRING</span> <span class="o">=</span> <span class="mi">18</span>
+<span class="n">ARRAY</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="c1"># - association data type &lt;--&gt; reading function</span>
+<span class="n">readFunc</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">SHORT</span><span class="p">:</span> <span class="n">read_le_short</span><span class="p">,</span>
+    <span class="n">LONG</span><span class="p">:</span> <span class="n">read_le_long</span><span class="p">,</span>
+    <span class="n">USHORT</span><span class="p">:</span> <span class="n">read_leu_short</span><span class="p">,</span>
+    <span class="n">ULONG</span><span class="p">:</span> <span class="n">read_leu_long</span><span class="p">,</span>
+    <span class="n">FLOAT</span><span class="p">:</span> <span class="n">read_le_float</span><span class="p">,</span>
+    <span class="n">DOUBLE</span><span class="p">:</span> <span class="n">read_le_double</span><span class="p">,</span>
+    <span class="n">BOOLEAN</span><span class="p">:</span> <span class="n">read_bool</span><span class="p">,</span>
+    <span class="n">CHAR</span><span class="p">:</span> <span class="n">read_char</span><span class="p">,</span>
+    <span class="n">OCTET</span><span class="p">:</span> <span class="n">read_char</span><span class="p">,</span>  <span class="c1"># difference with char???</span>
+<span class="p">}</span>
+
+<span class="c1"># other constants ##</span>
+<span class="n">IMGLIST</span> <span class="o">=</span> <span class="s2">"root.ImageList."</span>
+<span class="n">OBJLIST</span> <span class="o">=</span> <span class="s2">"root.DocumentObjectList."</span>
+<span class="n">MAXDEPTH</span> <span class="o">=</span> <span class="mi">64</span>
+
+
+<span class="c1"># END constants ##</span>
+
+<div class="viewcode-block" id="DM3Reader">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.tem.dm3_reader.DM3Reader.html#SciFiReaders.readers.microscopy.em.tem.dm3_reader.DM3Reader">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DM3Reader</span><span class="p">(</span><span class="n">sidpy</span><span class="o">.</span><span class="n">Reader</span><span class="p">):</span>
+    <span class="n">debugLevel</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    file_path: filepath to dm3 file.</span>
+
+<span class="sd">    warn('This Reader will eventually be moved to the ScopeReaders package'</span>
+<span class="sd">         '. Be prepared to change your import statements',</span>
+<span class="sd">         FutureWarning)</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+
+        <span class="c1"># initialize variables ##</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span> <span class="o">=</span> <span class="n">file_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__chosen_image</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="c1"># - open file for reading</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">,</span> <span class="s1">'rb'</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s1">'File not found'</span><span class="p">)</span>
+
+        <span class="c1"># - create Tags repositories</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stored_tags</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'DM'</span><span class="p">:</span> <span class="p">{}}</span>
+
+        <span class="c1"># check if this is valid DM3 file</span>
+        <span class="n">is_dm</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="c1"># read header (first 3 4-byte int)</span>
+        <span class="c1"># get version</span>
+        <span class="n">file_version</span> <span class="o">=</span> <span class="n">read_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+
+        <span class="c1"># get indicated file size</span>
+        <span class="k">if</span> <span class="n">file_version</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">file_size</span> <span class="o">=</span> <span class="n">read_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">file_version</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">file_size</span> <span class="o">=</span> <span class="n">read_64_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">is_dm</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># get byte-ordering</span>
+        <span class="n">le</span> <span class="o">=</span> <span class="n">read_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+        <span class="n">little_endian</span> <span class="o">=</span> <span class="p">(</span><span class="n">le</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">little_endian</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">endian_str</span> <span class="o">=</span> <span class="s1">'&gt;'</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">endian_str</span> <span class="o">=</span> <span class="s1">'&lt;'</span>
+
+        <span class="c1"># check file header, raise Exception if not DM3</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_dm</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"</span><span class="si">%s</span><span class="s2"> does not appear to be a DM3 or DM4 file."</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="si">%s</span><span class="s2"> appears to be a DM3 file"</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_version</span> <span class="o">=</span> <span class="n">file_version</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_size</span> <span class="o">=</span> <span class="n">file_size</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Header info.:"</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"- file version:"</span><span class="p">,</span> <span class="n">file_version</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"- le:"</span><span class="p">,</span> <span class="n">le</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"- file size:"</span><span class="p">,</span> <span class="n">file_size</span><span class="p">,</span> <span class="s2">"bytes"</span><span class="p">)</span>
+
+        <span class="c1"># don't read but close file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">,</span> <span class="s1">'rb'</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s1">'File not found'</span><span class="p">)</span>
+
+        <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">file_version</span> <span class="o">=</span> <span class="n">read_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+
+        <span class="c1"># get indicated file size</span>
+        <span class="k">if</span> <span class="n">file_version</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">file_size</span> <span class="o">=</span> <span class="n">read_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">file_version</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">file_size</span> <span class="o">=</span> <span class="n">read_64_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">is_dm</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># get byte-ordering</span>
+        <span class="n">le</span> <span class="o">=</span> <span class="n">read_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+        <span class="n">little_endian</span> <span class="o">=</span> <span class="p">(</span><span class="n">le</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">little_endian</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">endian_str</span> <span class="o">=</span> <span class="s1">'&gt;'</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">endian_str</span> <span class="o">=</span> <span class="s1">'&lt;'</span>
+
+        <span class="c1"># ... then read it</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stored_tags</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'DM'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'file_version'</span><span class="p">:</span> <span class="n">file_version</span><span class="p">,</span> <span class="s1">'file_size'</span><span class="p">:</span> <span class="n">file_size</span><span class="p">}}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__read_tag_group</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__stored_tags</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"-- </span><span class="si">%s</span><span class="s2"> Tags read --"</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__stored_tags</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"| parse DM3 file: </span><span class="si">%.3g</span><span class="s2"> s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span><span class="p">))</span>
+
+        <span class="n">path</span><span class="p">,</span> <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span>
+        <span class="n">basename</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_cube</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">basename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stored_tags</span><span class="p">[</span><span class="s1">'DM'</span><span class="p">][</span><span class="s1">'chosen_image'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__chosen_image</span>
+        <span class="n">dataset</span><span class="o">.</span><span class="n">original_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tags</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_dimensions</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_data_type</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+        <span class="c1"># convert linescan to spectral image</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectral_dim</span> <span class="ow">and</span> <span class="n">dataset</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">old_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">meta</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">original_metadata</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">basename</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">basename</span><span class="p">)</span>
+            <span class="n">dataset</span><span class="o">.</span><span class="n">original_metadata</span> <span class="o">=</span> <span class="n">meta</span>
+            <span class="n">dataset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">old_dataset</span><span class="o">.</span><span class="n">dim_0</span><span class="p">)</span>
+
+            <span class="n">dataset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dimension</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">'y'</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">'pixels'</span><span class="p">,</span>
+                                                     <span class="n">quantity</span><span class="o">=</span><span class="s1">'distance'</span><span class="p">,</span> <span class="n">dimension_type</span><span class="o">=</span><span class="s1">'spatial'</span><span class="p">))</span>
+            <span class="n">dataset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">old_dataset</span><span class="o">.</span><span class="n">dim_1</span><span class="p">)</span>
+            <span class="n">dataset</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">DataType</span><span class="o">.</span><span class="n">SPECTRAL_IMAGE</span>  <span class="c1"># 'linescan'</span>
+
+
+        <span class="n">dataset</span><span class="o">.</span><span class="n">quantity</span> <span class="o">=</span> <span class="s1">'intensity'</span>
+        <span class="n">dataset</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="s1">'counts'</span>
+        <span class="n">dataset</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">basename</span>
+        <span class="n">dataset</span><span class="o">.</span><span class="n">modality</span> <span class="o">=</span> <span class="s1">'generic'</span>
+        <span class="n">dataset</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="s1">'DM3Reader'</span>
+        <span class="n">dataset</span><span class="o">.</span><span class="n">original_metadata</span><span class="p">[</span><span class="s1">'DM'</span><span class="p">][</span><span class="s1">'full_file_name'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span>
+
+        <span class="k">return</span> <span class="n">dataset</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_data_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
+        <span class="n">spectral_dim</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># print(dataset._axes)</span>
+        <span class="k">for</span> <span class="n">dim</span><span class="p">,</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">_axes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">axis</span><span class="o">.</span><span class="n">dimension_type</span> <span class="o">==</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">DimensionType</span><span class="o">.</span><span class="n">SPECTRAL</span><span class="p">:</span>
+                <span class="n">spectral_dim</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spectral_dim</span> <span class="o">=</span> <span class="n">spectral_dim</span>
+
+        <span class="n">dataset</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">'unknown'</span>
+        <span class="k">if</span> <span class="s1">'ImageTags'</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">original_metadata</span><span class="p">[</span><span class="s1">'ImageList'</span><span class="p">][</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__chosen_image</span><span class="p">)]:</span>
+            <span class="n">image_tags</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">original_metadata</span><span class="p">[</span><span class="s1">'ImageList'</span><span class="p">][</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__chosen_image</span><span class="p">)][</span><span class="s1">'ImageTags'</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s1">'SI'</span> <span class="ow">in</span> <span class="n">image_tags</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="n">dataset</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">DataType</span><span class="o">.</span><span class="n">SPECTRAL_IMAGE</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">spectral_dim</span><span class="p">:</span>
+                        <span class="n">dataset</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">DataType</span><span class="o">.</span><span class="n">SPECTRAL_IMAGE</span>  <span class="c1"># 'linescan'</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">dataset</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">DataType</span><span class="o">.</span><span class="n">IMAGE</span>
+                        <span class="n">dataset</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'image_type'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'survey image'</span>
+
+        <span class="k">if</span> <span class="n">dataset</span><span class="o">.</span><span class="n">data_type</span> <span class="o">==</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">DataType</span><span class="o">.</span><span class="n">UNKNOWN</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">'Data_type not implemented yet'</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">spectral_dim</span><span class="p">:</span>
+                    <span class="n">dataset</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">DataType</span><span class="o">.</span><span class="n">SPECTRAL_IMAGE</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">dataset</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">'image_stack'</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">spectral_dim</span><span class="p">:</span>
+                    <span class="n">basename</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">name</span>
+                    <span class="n">dataset</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">DataType</span><span class="o">.</span><span class="n">SPECTRAL_IMAGE</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">dataset</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">'image'</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">spectral_dim</span><span class="p">:</span>
+                    <span class="n">dataset</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">DataType</span><span class="o">.</span><span class="n">SPECTRUM</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">dataset</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">DataType</span><span class="o">.</span><span class="n">LINE_PLOT</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_dimensions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
+        <span class="n">dimensions_dict</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">original_metadata</span><span class="p">[</span><span class="s1">'ImageList'</span><span class="p">][</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__chosen_image</span><span class="p">)][</span><span class="s1">'ImageData'</span><span class="p">][</span><span class="s1">'Calibrations'</span><span class="p">][</span>
+            <span class="s1">'Dimension'</span><span class="p">]</span>
+
+        <span class="n">reciprocal_name</span> <span class="o">=</span> <span class="s1">'u'</span>
+        <span class="n">spatial_name</span> <span class="o">=</span> <span class="s1">'x'</span>
+
+        <span class="k">for</span> <span class="n">dim</span><span class="p">,</span> <span class="n">dimension_tags</span> <span class="ow">in</span> <span class="n">dimensions_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Fix annoying scale of spectrum_images in Zeiss  and SEM images</span>
+            <span class="k">if</span> <span class="n">dimension_tags</span><span class="p">[</span><span class="s1">'Units'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'ï¿½m'</span><span class="p">:</span>
+                <span class="n">dimension_tags</span><span class="p">[</span><span class="s1">'Units'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'nm'</span>
+                <span class="n">dimension_tags</span><span class="p">[</span><span class="s1">'Scale'</span><span class="p">]</span> <span class="o">*=</span> <span class="mf">1000.0</span>
+
+            <span class="k">if</span> <span class="n">dimension_tags</span><span class="p">[</span><span class="s1">'Units'</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s1">''</span><span class="p">:</span>
+                <span class="n">units</span> <span class="o">=</span> <span class="s1">'counts'</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">units</span> <span class="o">=</span> <span class="n">dimension_tags</span><span class="p">[</span><span class="s1">'Units'</span><span class="p">]</span>
+
+            <span class="n">values</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">dim</span><span class="p">)])</span> <span class="o">-</span> <span class="n">dimension_tags</span><span class="p">[</span><span class="s1">'Origin'</span><span class="p">])</span> <span class="o">*</span> <span class="n">dimension_tags</span><span class="p">[</span><span class="s1">'Scale'</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="s1">'eV'</span> <span class="o">==</span> <span class="n">units</span><span class="p">:</span>
+                <span class="n">dataset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">dim</span><span class="p">),</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'energy_loss'</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">,</span>
+                                                                <span class="n">quantity</span><span class="o">=</span><span class="s1">'energy-loss'</span><span class="p">,</span>
+                                                                <span class="n">dimension_type</span><span class="o">=</span><span class="n">sidpy</span><span class="o">.</span><span class="n">DimensionType</span><span class="o">.</span><span class="n">SPECTRAL</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="s1">'eV'</span> <span class="ow">in</span> <span class="n">units</span><span class="p">:</span>
+                <span class="n">dataset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">dim</span><span class="p">),</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'energy'</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">,</span>
+                                                                <span class="n">quantity</span><span class="o">=</span><span class="s1">'energy'</span><span class="p">,</span>
+                                                                <span class="n">dimension_type</span><span class="o">=</span><span class="n">sidpy</span><span class="o">.</span><span class="n">DimensionType</span><span class="o">.</span><span class="n">SPECTRAL</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="s1">'1/'</span> <span class="ow">in</span> <span class="n">units</span> <span class="ow">or</span> <span class="n">units</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'mrad'</span><span class="p">,</span> <span class="s1">'rad'</span><span class="p">]:</span>
+                <span class="n">dataset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">dim</span><span class="p">),</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">reciprocal_name</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">,</span>
+                                                                <span class="n">quantity</span><span class="o">=</span><span class="s1">'reciprocal distance'</span><span class="p">,</span>
+                                                                <span class="n">dimension_type</span><span class="o">=</span><span class="n">sidpy</span><span class="o">.</span><span class="n">DimensionType</span><span class="o">.</span><span class="n">RECIPROCAL</span><span class="p">))</span>
+                <span class="n">reciprocal_name</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">reciprocal_name</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">units</span> <span class="o">=</span> <span class="s1">'counts'</span>
+                <span class="n">dataset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">dim</span><span class="p">),</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">spatial_name</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">,</span>
+                                                                <span class="n">quantity</span><span class="o">=</span><span class="s1">'distance'</span><span class="p">,</span>
+                                                                <span class="n">dimension_type</span><span class="o">=</span><span class="n">sidpy</span><span class="o">.</span><span class="n">DimensionType</span><span class="o">.</span><span class="n">SPATIAL</span><span class="p">))</span>
+                <span class="n">spatial_name</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">spatial_name</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># utility functions</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__read_tag_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tags</span><span class="p">):</span>
+
+        <span class="n">g_sorted</span> <span class="o">=</span> <span class="n">read_byte</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+        <span class="c1"># is the group open?</span>
+        <span class="n">opened</span> <span class="o">=</span> <span class="n">read_byte</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+        <span class="c1"># number of Tags</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_version</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">n_tags</span> <span class="o">=</span> <span class="n">read_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_tags</span> <span class="o">=</span> <span class="n">read_64_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+
+        <span class="c1"># read Tags</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_tags</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">read_byte</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+            <span class="n">is_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span> <span class="o">==</span> <span class="mi">21</span><span class="p">)</span>
+
+            <span class="n">len_tag_label</span> <span class="o">=</span> <span class="n">read_short</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">len_tag_label</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">tag_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">len_tag_label</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'latin-1'</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tag_label</span> <span class="o">=</span> <span class="s1">'0'</span>
+                <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                        <span class="n">tag_label</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">is_data</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__read_any_data</span><span class="p">()</span>
+                <span class="n">tags</span><span class="p">[</span><span class="n">tag_label</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tags</span><span class="p">[</span><span class="n">tag_label</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__read_tag_group</span><span class="p">(</span><span class="n">tags</span><span class="p">[</span><span class="n">tag_label</span><span class="p">])</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__encoded_type_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">et</span><span class="p">):</span>
+        <span class="c1"># returns the size in bytes of the data type</span>
+        <span class="k">if</span> <span class="n">et</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">elif</span> <span class="n">et</span> <span class="ow">in</span> <span class="p">(</span><span class="n">BOOLEAN</span><span class="p">,</span> <span class="n">CHAR</span><span class="p">,</span> <span class="n">OCTET</span><span class="p">):</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">et</span> <span class="ow">in</span> <span class="p">(</span><span class="n">SHORT</span><span class="p">,</span> <span class="n">USHORT</span><span class="p">):</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="k">elif</span> <span class="n">et</span> <span class="ow">in</span> <span class="p">(</span><span class="n">LONG</span><span class="p">,</span> <span class="n">ULONG</span><span class="p">,</span> <span class="n">FLOAT</span><span class="p">):</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="k">elif</span> <span class="n">et</span> <span class="o">==</span> <span class="n">DOUBLE</span><span class="p">:</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="mi">8</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># returns -1 for unrecognised types</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="n">width</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__read_any_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_version</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">tag_byte_length</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack_from</span><span class="p">(</span><span class="s1">'&gt;Q'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">8</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># DM4 specifies this property as always big endian</span>
+
+        <span class="n">delim</span> <span class="o">=</span> <span class="n">read_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">delim</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">"</span><span class="si">%%%%</span><span class="s2">"</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="o">.</span><span class="n">tell</span><span class="p">())</span> <span class="o">+</span> <span class="s2">": Tag Type delimiter not </span><span class="si">%%%%</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_version</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">n_in_tag</span> <span class="o">=</span> <span class="n">read_64_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_in_tag</span> <span class="o">=</span> <span class="n">read_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+        <span class="c1"># higher level function dispatching to handling data types to other functions</span>
+        <span class="c1"># - get Type category (short, long, array...)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_version</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">encoded_type</span> <span class="o">=</span> <span class="n">read_64_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">encoded_type</span> <span class="o">=</span> <span class="n">read_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+        <span class="c1"># - calc size of encoded_type</span>
+        <span class="n">et_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__encoded_type_size</span><span class="p">(</span><span class="n">encoded_type</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">et_size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__read_native_data</span><span class="p">(</span><span class="n">encoded_type</span><span class="p">,</span> <span class="n">et_size</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">encoded_type</span> <span class="o">==</span> <span class="n">STRING</span><span class="p">:</span>
+            <span class="n">string_size</span> <span class="o">=</span> <span class="n">read_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__read_string_data</span><span class="p">(</span><span class="n">string_size</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">encoded_type</span> <span class="o">==</span> <span class="n">STRUCT</span><span class="p">:</span>
+            <span class="n">struct_types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__read_struct_types</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__read_struct_data</span><span class="p">(</span><span class="n">struct_types</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">encoded_type</span> <span class="o">==</span> <span class="n">ARRAY</span><span class="p">:</span>
+            <span class="n">array_types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__read_array_types</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__read_array_data</span><span class="p">(</span><span class="n">array_types</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">"rAnD, "</span> <span class="o">+</span> <span class="nb">hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="o">.</span><span class="n">tell</span><span class="p">())</span> <span class="o">+</span> <span class="s2">": Can't understand encoded type"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__read_native_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encoded_type</span><span class="p">,</span> <span class="n">et_size</span><span class="p">):</span>
+        <span class="c1"># reads ordinary data types</span>
+        <span class="k">if</span> <span class="n">encoded_type</span> <span class="ow">in</span> <span class="n">readFunc</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">readFunc</span><span class="p">[</span><span class="n">encoded_type</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">"rND, "</span> <span class="o">+</span> <span class="nb">hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="o">.</span><span class="n">tell</span><span class="p">())</span> <span class="o">+</span> <span class="s2">": Unknown data type "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">encoded_type</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">val</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__read_string_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string_size</span><span class="p">):</span>
+        <span class="c1"># reads string data</span>
+        <span class="k">if</span> <span class="n">string_size</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">r_string</span> <span class="o">=</span> <span class="s2">""</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># !!! *Unicode* string (UTF-16)... convert to Python unicode str</span>
+            <span class="n">r_string</span> <span class="o">=</span> <span class="n">read_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">,</span> <span class="n">string_size</span><span class="p">)</span>
+            <span class="n">r_string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">r_string</span><span class="p">,</span> <span class="s2">"utf_16_le"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">r_string</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__read_array_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># determines the data types in an array data type</span>
+        <span class="n">array_type</span> <span class="o">=</span> <span class="n">read_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+        <span class="n">item_types</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">array_type</span> <span class="o">==</span> <span class="n">STRUCT</span><span class="p">:</span>
+            <span class="n">item_types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__read_struct_types</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">array_type</span> <span class="o">==</span> <span class="n">ARRAY</span><span class="p">:</span>
+            <span class="n">item_types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__read_array_types</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">item_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">array_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">item_types</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__read_array_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array_types</span><span class="p">):</span>
+        <span class="c1"># reads array data</span>
+        <span class="n">array_size</span> <span class="o">=</span> <span class="n">read_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+        <span class="n">item_size</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">encoded_type</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array_types</span><span class="p">)):</span>
+            <span class="n">encoded_type</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">array_types</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">et_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__encoded_type_size</span><span class="p">(</span><span class="n">encoded_type</span><span class="p">)</span>
+            <span class="n">item_size</span> <span class="o">+=</span> <span class="n">et_size</span>
+        <span class="n">buf_size</span> <span class="o">=</span> <span class="n">array_size</span> <span class="o">*</span> <span class="n">item_size</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">array_types</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">encoded_type</span> <span class="o">==</span> <span class="n">USHORT</span> \
+                <span class="ow">and</span> <span class="n">array_size</span> <span class="o">&lt;</span> <span class="mi">256</span><span class="p">:</span>
+            <span class="c1"># treat as string</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__read_string_data</span><span class="p">(</span><span class="n">buf_size</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># treat as binary data</span>
+            <span class="c1"># - store data size and offset as tags</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">buf_size</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">val</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__read_struct_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># analyses data types in a struct</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_version</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">struct_name_length</span> <span class="o">=</span> <span class="n">read_64_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+            <span class="n">n_fields</span> <span class="o">=</span> <span class="n">read_64_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">struct_name_length</span> <span class="o">=</span> <span class="n">read_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+            <span class="n">n_fields</span> <span class="o">=</span> <span class="n">read_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+
+        <span class="n">field_types</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">name_length</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_fields</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_version</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="n">name_length</span> <span class="o">=</span> <span class="n">read_64_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+                <span class="n">field_type</span> <span class="o">=</span> <span class="n">read_64_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">name_length</span> <span class="o">=</span> <span class="n">read_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+                <span class="n">field_type</span> <span class="o">=</span> <span class="n">read_long</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__f</span><span class="p">)</span>
+            <span class="n">field_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">field_types</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__read_struct_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">struct_types</span><span class="p">):</span>
+        <span class="c1"># reads struct data based on type info in structType</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">struct_types</span><span class="p">)):</span>
+            <span class="n">encoded_type</span> <span class="o">=</span> <span class="n">struct_types</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">et_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__encoded_type_size</span><span class="p">(</span><span class="n">encoded_type</span><span class="p">)</span>
+            <span class="c1"># get data</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__read_native_data</span><span class="p">(</span><span class="n">encoded_type</span><span class="p">,</span> <span class="n">et_size</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+    <span class="c1"># ## END utility functions ###</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span>
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">get_filename</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stored_tags</span>
+
+    <span class="n">tags</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">get_tags</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DM3Reader.get_raw">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.tem.dm3_reader.DM3Reader.html#SciFiReaders.readers.microscopy.em.tem.dm3_reader.DM3Reader.get_raw">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Extracts  data as np array"""</span>
+
+        <span class="c1"># DataTypes for image data &lt;--&gt; PIL decoders</span>
+        <span class="n">data_types</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="mi">1</span><span class="p">:</span> <span class="s1">'&lt;u2'</span><span class="p">,</span>  <span class="c1"># 2 byte integer signed ("short")</span>
+            <span class="mi">2</span><span class="p">:</span> <span class="s1">'&lt;f4'</span><span class="p">,</span>  <span class="c1"># 4 byte real (IEEE 754)</span>
+            <span class="mi">3</span><span class="p">:</span> <span class="s1">'&lt;c8'</span><span class="p">,</span>  <span class="c1"># 8 byte complex (real, imaginary)</span>
+            <span class="mi">4</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>  <span class="c1"># ?</span>
+            <span class="c1"># 4 byte packed complex (see below)</span>
+            <span class="mi">5</span><span class="p">:</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">int16</span><span class="p">,</span> <span class="p">{</span><span class="s1">'real'</span><span class="p">:</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">int8</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="s1">'imaginary'</span><span class="p">:</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">int8</span><span class="p">,</span> <span class="mi">1</span><span class="p">)}),</span>
+            <span class="mi">6</span><span class="p">:</span> <span class="s1">'&lt;u1'</span><span class="p">,</span>  <span class="c1"># 1 byte integer unsigned ("byte")</span>
+            <span class="mi">7</span><span class="p">:</span> <span class="s1">'&lt;i4'</span><span class="p">,</span>  <span class="c1"># 4 byte integer signed ("long")</span>
+            <span class="c1"># I do not have any dm3 file with this format to test it.</span>
+            <span class="mi">8</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>  <span class="c1"># rgb view, 4 bytes/pixel, unused, red, green, blue?</span>
+            <span class="mi">9</span><span class="p">:</span> <span class="s1">'&lt;i1'</span><span class="p">,</span>  <span class="c1"># byte integer signed</span>
+            <span class="mi">10</span><span class="p">:</span> <span class="s1">'&lt;u2'</span><span class="p">,</span>  <span class="c1"># 2 byte integer unsigned</span>
+            <span class="mi">11</span><span class="p">:</span> <span class="s1">'&lt;u4'</span><span class="p">,</span>  <span class="c1"># 4 byte integer unsigned</span>
+            <span class="mi">12</span><span class="p">:</span> <span class="s1">'&lt;f8'</span><span class="p">,</span>  <span class="c1"># 8 byte real</span>
+            <span class="mi">13</span><span class="p">:</span> <span class="s1">'&lt;c16'</span><span class="p">,</span>  <span class="c1"># byte complex</span>
+            <span class="mi">14</span><span class="p">:</span> <span class="s1">'bool'</span><span class="p">,</span>  <span class="c1"># 1 byte binary (ie 0 or 1)</span>
+            <span class="c1"># Packed RGB. It must be a recent addition to the format because it does</span>
+            <span class="c1"># not appear in http://www.microscopy.cen.dtu.dk/~cbb/info/dmformat/</span>
+            <span class="mi">23</span><span class="p">:</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+                 <span class="p">{</span><span class="s1">'R'</span><span class="p">:</span> <span class="p">(</span><span class="s1">'&lt;u1'</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="s1">'G'</span><span class="p">:</span> <span class="p">(</span><span class="s1">'&lt;u1'</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">'B'</span><span class="p">:</span> <span class="p">(</span><span class="s1">'&lt;u1'</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="s1">'A'</span><span class="p">:</span> <span class="p">(</span><span class="s1">'&lt;u1'</span><span class="p">,</span> <span class="mi">3</span><span class="p">)}),</span>
+        <span class="p">}</span>
+
+        <span class="c1"># find main image</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stored_tags</span><span class="p">[</span><span class="s1">'ImageList'</span><span class="p">]:</span>
+
+            <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                <span class="k">if</span> <span class="s1">'ImageData'</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stored_tags</span><span class="p">[</span><span class="s1">'ImageList'</span><span class="p">][</span><span class="n">key</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="s1">'Data'</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stored_tags</span><span class="p">[</span><span class="s1">'ImageList'</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">'ImageData'</span><span class="p">]</span> \
+                            <span class="ow">and</span> <span class="s1">'DataType'</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stored_tags</span><span class="p">[</span><span class="s1">'ImageList'</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">'ImageData'</span><span class="p">]</span> \
+                            <span class="ow">and</span> <span class="s1">'Dimensions'</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stored_tags</span><span class="p">[</span><span class="s1">'ImageList'</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">'ImageData'</span><span class="p">]:</span>
+                        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__chosen_image</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">__chosen_image</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__chosen_image</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">'Did not find data in file'</span><span class="p">)</span>
+
+        <span class="c1"># get relevant Tags</span>
+        <span class="n">byte_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stored_tags</span><span class="p">[</span><span class="s1">'ImageList'</span><span class="p">][</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__chosen_image</span><span class="p">)][</span><span class="s1">'ImageData'</span><span class="p">][</span><span class="s1">'Data'</span><span class="p">]</span>
+        <span class="n">data_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stored_tags</span><span class="p">[</span><span class="s1">'ImageList'</span><span class="p">][</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__chosen_image</span><span class="p">)][</span><span class="s1">'ImageData'</span><span class="p">][</span><span class="s1">'DataType'</span><span class="p">]</span>
+        <span class="n">dimensions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__stored_tags</span><span class="p">[</span><span class="s1">'ImageList'</span><span class="p">][</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__chosen_image</span><span class="p">)][</span><span class="s1">'ImageData'</span><span class="p">][</span><span class="s1">'Dimensions'</span><span class="p">]</span>
+
+        <span class="c1"># get shape from Dimensions</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">:</span>
+            <span class="n">shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dimensions</span><span class="p">[</span><span class="n">dim</span><span class="p">])</span>
+
+        <span class="c1"># get data_type and reformat into numpy array</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">data_types</span><span class="p">[</span><span class="n">data_type</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">dt</span> <span class="o">==</span> <span class="s1">''</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">'The datatype is not supported'</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">raw_data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">byte_data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">cumprod</span><span class="p">(</span><span class="n">shape</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">'F'</span><span class="p">)</span>
+        <span class="c1"># delete byte data in dictionary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__stored_tags</span><span class="p">[</span><span class="s1">'ImageList'</span><span class="p">][</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__chosen_image</span><span class="p">)][</span><span class="s1">'ImageData'</span><span class="p">][</span><span class="s1">'Data'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'read'</span>
+        <span class="k">return</span> <span class="n">raw_data</span></div>
+
+
+    <span class="n">data_cube</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">get_raw</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+    <span class="k">pass</span>  <span class="c1"># print "DM3lib v.%s"%version</span>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Pycroscopy contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2020, Pycroscopy contributors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

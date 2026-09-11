@@ -1,0 +1,718 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SciFiReaders.readers.microscopy.em.sem.bruker_reader &#8212; SciFiReaders 0.12.7 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../../../../_static/documentation_options.js?v=7cf6be21"></script>
+    <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/SciFiReaders/readers/microscopy/em/sem/bruker_reader';</script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SciFiReaders 0.12.7 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../../../index.html">
+                    SciFiReaders
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../available_readers.html">Available Readers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../contact.html">Contact us</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples by method</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/00_developing_a_reader/index.html">Creating a Reader</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/00_developing_a_reader/developing_a_reader.html">Creating a Reader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/index.html">Electron microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/read_dm3_files.html">Reading a DM3 File with ScopeReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/01_electron_microscopy/read_nion_files.html">Reading a Nion File with ScopeReader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/index.html">Scanning probe microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/read_mdt_files.html">Parsing .mdt experimental files. Basic example.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/02_scanning_probe_microscopy/read_fsexp_files.html"><strong>Parsing .fsexp FusionScope HDF5 Experiment Files</strong></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../notebooks/03_data_formats_and_converters/index.html">Data formats and converters</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../notebooks/03_data_formats_and_converters/convert_hyperspy.html">Working with Hyperspy Data</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../api.html">API reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../_autosummary/SciFiReaders.html">SciFiReaders</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders/issues/new?title=Issue%20on%20page%20%2F_modules/SciFiReaders/readers/microscopy/em/sem/bruker_reader.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for SciFiReaders.readers.microscopy.em.sem.bruker_reader</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">Reader for Bruker .rto SEM files into sidpy.Dataset, including all metadata.</span>
+
+<span class="sd">Written by Gerd Duscher, UTK 2025</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">codecs</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xml</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sidpy</span>
+
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">'0.1beta'</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"BrukerReader"</span><span class="p">,</span> <span class="s2">"__version__"</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="get_bruker_dictionary">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.sem.bruker_reader.get_bruker_dictionary.html#SciFiReaders.readers.microscopy.em.sem.bruker_reader.get_bruker_dictionary">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_bruker_dictionary</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">""" Convert xm, style .rto file to python dictionary</span>
+
+<span class="sd">    The problem is that there are xml sections with same name (spectrum, image) that need to be numbered</span>
+<span class="sd">    """</span>
+    <span class="n">tree</span> <span class="o">=</span> <span class="n">xml</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">ElementTree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+    <span class="n">spectrum_number</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">image_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">overlay_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">tags</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">iter</span><span class="p">():</span>
+        <span class="k">if</span> <span class="s1">'Type'</span> <span class="ow">in</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">'TRTCrossOverlayElement'</span> <span class="ow">in</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'Type'</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="s1">'Spectrum'</span> <span class="ow">in</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">]:</span>
+                    <span class="n">overlay_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">if</span> <span class="s1">'overlay'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+                        <span class="n">tags</span><span class="p">[</span><span class="s1">'overlay'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="k">if</span> <span class="s1">'image'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">image_count</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">[</span><span class="s1">'overlay'</span><span class="p">]:</span>
+                        <span class="n">tags</span><span class="p">[</span><span class="s1">'overlay'</span><span class="p">][</span><span class="s1">'image'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">image_count</span><span class="p">)]</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="n">tags</span><span class="p">[</span><span class="s1">'overlay'</span><span class="p">][</span><span class="s1">'image'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">image_count</span><span class="p">)][</span><span class="n">neighbor</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+
+                    <span class="n">over</span> <span class="o">=</span> <span class="n">tags</span><span class="p">[</span><span class="s1">'overlay'</span><span class="p">][</span><span class="s1">'image'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">image_count</span><span class="p">)][</span><span class="n">neighbor</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">]]</span>
+
+                    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">iter</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="s1">'verlay'</span> <span class="ow">in</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="p">:</span>
+                            <span class="n">pos</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'./Pos'</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">pos</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                                <span class="n">over</span><span class="p">[</span><span class="s1">'pos_x'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'./PosX'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+                                <span class="n">over</span><span class="p">[</span><span class="s1">'pos_y'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'./PosY'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+                                <span class="n">over</span><span class="p">[</span><span class="s1">'position'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">over</span><span class="p">[</span><span class="s1">'pos_x'</span><span class="p">],</span> <span class="n">over</span><span class="p">[</span><span class="s1">'pos_y'</span><span class="p">]]</span>
+                                <span class="n">over</span><span class="p">[</span><span class="s1">'type'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'spot'</span>
+                                <span class="n">over</span><span class="p">[</span><span class="s1">'label'</span><span class="p">]</span> <span class="o">=</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s1">'TRTImageData'</span> <span class="ow">in</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'Type'</span><span class="p">]:</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">"./ClassInstance[@Type='TRTCrossOverlayElement']"</span><span class="p">)</span>
+                <span class="n">image</span> <span class="o">=</span> <span class="n">neighbor</span>
+                <span class="k">if</span> <span class="s1">'image'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+                    <span class="n">tags</span><span class="p">[</span><span class="s1">'image'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">tags</span><span class="p">[</span><span class="s1">'image'</span><span class="p">][</span><span class="n">image_count</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">im</span> <span class="o">=</span> <span class="n">tags</span><span class="p">[</span><span class="s1">'image'</span><span class="p">][</span><span class="n">image_count</span><span class="p">]</span>
+                <span class="n">im</span><span class="p">[</span><span class="s1">'width'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'./Width'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>  <span class="c1"># in pixels</span>
+                <span class="n">im</span><span class="p">[</span><span class="s1">'height'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'./Height'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>  <span class="c1"># in pixels</span>
+                <span class="n">im</span><span class="p">[</span><span class="s1">'dtype'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'u'</span> <span class="o">+</span> <span class="n">image</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'./ItemSize'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>  <span class="c1"># in bytes ('u1','u2','u4')</span>
+                <span class="n">im</span><span class="p">[</span><span class="s1">'scale_x'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'./XCalibration'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+                <span class="n">im</span><span class="p">[</span><span class="s1">'scale_y'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'./YCalibration'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+                <span class="n">im</span><span class="p">[</span><span class="s1">'plane_count'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'./PlaneCount'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+                <span class="n">im</span><span class="p">[</span><span class="s1">'date'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">((</span><span class="n">image</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'./Date'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+                <span class="n">im</span><span class="p">[</span><span class="s1">'time'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">((</span><span class="n">image</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'./Time'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+                <span class="n">im</span><span class="p">[</span><span class="s1">'data'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">im</span><span class="p">[</span><span class="s1">'plane_count'</span><span class="p">]):</span>
+                    <span class="n">img</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">"./Plane"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+                    <span class="n">raw</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">decode</span><span class="p">((</span><span class="n">img</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'./Data'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">'ascii'</span><span class="p">),</span> <span class="s1">'base64'</span><span class="p">)</span>
+                    <span class="n">array1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">im</span><span class="p">[</span><span class="s1">'dtype'</span><span class="p">])</span>
+                    <span class="n">im</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">array1</span><span class="p">,</span> <span class="p">(</span><span class="n">im</span><span class="p">[</span><span class="s1">'height'</span><span class="p">],</span> <span class="n">im</span><span class="p">[</span><span class="s1">'width'</span><span class="p">]))</span>
+                <span class="n">image_count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="s1">'TRTDetectorHeader'</span> <span class="o">==</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'Type'</span><span class="p">]:</span>
+                <span class="n">detector</span> <span class="o">=</span> <span class="n">neighbor</span>
+                <span class="n">tags</span><span class="p">[</span><span class="s1">'detector'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">detector</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s2">"WindowLayers"</span><span class="p">:</span>
+                        <span class="n">tags</span><span class="p">[</span><span class="s1">'detector'</span><span class="p">][</span><span class="s1">'layers'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                        <span class="k">for</span> <span class="n">child2</span> <span class="ow">in</span> <span class="n">child</span><span class="p">:</span>
+                            <span class="n">tags</span><span class="p">[</span><span class="s1">'detector'</span><span class="p">][</span><span class="s1">'layers'</span><span class="p">][</span><span class="n">child2</span><span class="o">.</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                            <span class="n">tags</span><span class="p">[</span><span class="s1">'detector'</span><span class="p">][</span><span class="s1">'layers'</span><span class="p">][</span><span class="n">child2</span><span class="o">.</span><span class="n">tag</span><span class="p">][</span><span class="s1">'Z'</span><span class="p">]</span> <span class="o">=</span> <span class="n">child2</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">"Atom"</span><span class="p">]</span>
+                            <span class="n">tags</span><span class="p">[</span><span class="s1">'detector'</span><span class="p">][</span><span class="s1">'layers'</span><span class="p">][</span><span class="n">child2</span><span class="o">.</span><span class="n">tag</span><span class="p">][</span><span class="s1">'thickness'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                                <span class="n">child2</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">"Thickness"</span><span class="p">])</span> <span class="o">*</span> <span class="mf">1e-6</span>  <span class="c1"># now in m</span>
+                            <span class="k">if</span> <span class="s1">'RelativeArea'</span> <span class="ow">in</span> <span class="n">child2</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+                                <span class="n">tags</span><span class="p">[</span><span class="s1">'detector'</span><span class="p">][</span><span class="s1">'layers'</span><span class="p">][</span><span class="n">child2</span><span class="o">.</span><span class="n">tag</span><span class="p">][</span><span class="s1">'relative_area'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                                    <span class="n">child2</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">"RelativeArea"</span><span class="p">])</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">!=</span> <span class="s1">'ResponseFunction'</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                                <span class="n">tags</span><span class="p">[</span><span class="s1">'detector'</span><span class="p">][</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">text</span>
+
+                                <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">'SiDeadLayerThickness'</span><span class="p">:</span>
+                                    <span class="n">tags</span><span class="p">[</span><span class="s1">'detector'</span><span class="p">][</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e-6</span>
+
+                                <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">'DetectorThickness'</span><span class="p">:</span>
+                                    <span class="n">tags</span><span class="p">[</span><span class="s1">'detector'</span><span class="p">][</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e-1</span>
+
+            <span class="c1"># ESMA could stand for Electron Scanning Microscope Analysis</span>
+            <span class="k">if</span> <span class="s1">'TRTESMAHeader'</span> <span class="o">==</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'Type'</span><span class="p">]:</span>
+                <span class="n">esma</span> <span class="o">=</span> <span class="n">neighbor</span>
+                <span class="n">tags</span><span class="p">[</span><span class="s1">'esma'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">esma</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'PrimaryEnergy'</span><span class="p">,</span> <span class="s1">'ElevationAngle'</span><span class="p">,</span> <span class="s1">'AzimutAngle'</span><span class="p">,</span> <span class="s1">'Magnification'</span><span class="p">,</span>
+                                     <span class="s1">'WorkingDistance'</span><span class="p">]:</span>
+                        <span class="n">tags</span><span class="p">[</span><span class="s1">'esma'</span><span class="p">][</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s1">'TRTSpectrum'</span> <span class="o">==</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">'Type'</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="s1">'spectrum'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+                    <span class="n">tags</span><span class="p">[</span><span class="s1">'spectrum'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">if</span> <span class="s1">'Name'</span> <span class="ow">in</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+                    <span class="n">spectrum</span> <span class="o">=</span> <span class="n">neighbor</span>
+                    <span class="n">trt_header</span> <span class="o">=</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'./TRTHeaderedClass'</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">trt_header</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">hardware_header</span> <span class="o">=</span> <span class="n">trt_header</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">"./ClassInstance[@Type='TRTSpectrumHardwareHeader']"</span><span class="p">)</span>
+                        <span class="n">spectrum_header</span> <span class="o">=</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">"./ClassInstance[@Type='TRTSpectrumHeader']"</span><span class="p">)</span>
+                        <span class="n">result_header</span> <span class="o">=</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">"./ClassInstance[@Type='TRTResult']"</span><span class="p">)</span>
+                        <span class="n">tags</span><span class="p">[</span><span class="s1">'spectrum'</span><span class="p">][</span><span class="n">spectrum_number</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                        <span class="n">tags</span><span class="p">[</span><span class="s1">'spectrum'</span><span class="p">][</span><span class="n">spectrum_number</span><span class="p">][</span><span class="s1">'hardware_header'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                        <span class="k">if</span> <span class="n">hardware_header</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">hardware_header</span><span class="p">:</span>
+                                <span class="n">tags</span><span class="p">[</span><span class="s1">'spectrum'</span><span class="p">][</span><span class="n">spectrum_number</span><span class="p">][</span><span class="s1">'hardware_header'</span><span class="p">][</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">text</span>
+                        <span class="n">tags</span><span class="p">[</span><span class="s1">'spectrum'</span><span class="p">][</span><span class="n">spectrum_number</span><span class="p">][</span><span class="s1">'detector_header'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                        <span class="n">tags</span><span class="p">[</span><span class="s1">'spectrum'</span><span class="p">][</span><span class="n">spectrum_number</span><span class="p">][</span><span class="s1">'spectrum_header'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">spectrum_header</span><span class="p">:</span>
+                            <span class="n">tags</span><span class="p">[</span><span class="s1">'spectrum'</span><span class="p">][</span><span class="n">spectrum_number</span><span class="p">][</span><span class="s1">'spectrum_header'</span><span class="p">][</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">text</span>
+                        <span class="n">tags</span><span class="p">[</span><span class="s1">'spectrum'</span><span class="p">][</span><span class="n">spectrum_number</span><span class="p">][</span><span class="s1">'results'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                        <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">result_header</span><span class="p">:</span>
+                            <span class="n">result_tag</span> <span class="o">=</span> <span class="p">{}</span>
+                            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+                                <span class="n">result_tag</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">text</span>
+                            <span class="k">if</span> <span class="s1">'Atom'</span> <span class="ow">in</span> <span class="n">result_tag</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="n">result_tag</span><span class="p">[</span><span class="s1">'Atom'</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">[</span><span class="s1">'spectrum'</span><span class="p">][</span><span class="n">spectrum_number</span><span class="p">][</span><span class="s1">'results'</span><span class="p">]:</span>
+                                    <span class="n">tags</span><span class="p">[</span><span class="s1">'spectrum'</span><span class="p">][</span><span class="n">spectrum_number</span><span class="p">][</span><span class="s1">'results'</span><span class="p">][</span><span class="n">result_tag</span><span class="p">[</span><span class="s1">'Atom'</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+                                <span class="n">tags</span><span class="p">[</span><span class="s1">'spectrum'</span><span class="p">][</span><span class="n">spectrum_number</span><span class="p">][</span><span class="s1">'results'</span><span class="p">][</span><span class="n">result_tag</span><span class="p">[</span><span class="s1">'Atom'</span><span class="p">]]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">result_tag</span><span class="p">)</span>
+                        <span class="n">tags</span><span class="p">[</span><span class="s1">'spectrum'</span><span class="p">][</span><span class="n">spectrum_number</span><span class="p">][</span><span class="s1">'data'</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">spectrum</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">'./Channels'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> 
+                                                                                  <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">","</span><span class="p">)</span>
+                        <span class="n">spectrum_number</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">tags</span></div>
+
+
+
+<div class="viewcode-block" id="get_image">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.sem.bruker_reader.get_image.html#SciFiReaders.readers.microscopy.em.sem.bruker_reader.get_image">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_image</span><span class="p">(</span><span class="n">tags</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">""" Convert image part of dictionary to sidpy dataset"""</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">tags</span><span class="p">[</span><span class="s1">'image'</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'x'</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">]</span>
+    <span class="n">units</span> <span class="o">=</span> <span class="s1">'nm'</span>
+    <span class="n">quantity</span> <span class="o">=</span> <span class="s1">'distance'</span>
+    <span class="n">dimension_type</span> <span class="o">=</span> <span class="s1">'spatial'</span>
+    <span class="n">to_nm</span> <span class="o">=</span> <span class="mf">1e3</span>
+
+    <span class="n">scale_x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="s1">'scale_x'</span><span class="p">])</span> <span class="o">*</span> <span class="n">to_nm</span>
+    <span class="n">scale_y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="s1">'scale_y'</span><span class="p">])</span> <span class="o">*</span> <span class="n">to_nm</span>
+
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'0'</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">'image'</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="s1">'counts'</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">quantity</span> <span class="o">=</span> <span class="s1">'intensity'</span>
+
+    <span class="n">dataset</span><span class="o">.</span><span class="n">modality</span> <span class="o">=</span> <span class="s1">'SEM'</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s1">'image'</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">add_provenance</span><span class="p">(</span><span class="s1">'SciFiReader'</span><span class="p">,</span> <span class="s1">'BrukerReader'</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">'0'</span><span class="p">,</span> <span class="n">linked_data</span><span class="o">=</span><span class="s1">'File: '</span><span class="p">)</span>
+
+    <span class="n">dataset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'0'</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">scale_x</span><span class="p">,</span>
+                                             <span class="n">name</span><span class="o">=</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">,</span>
+                                             <span class="n">quantity</span><span class="o">=</span><span class="n">quantity</span><span class="p">,</span>
+                                             <span class="n">dimension_type</span><span class="o">=</span><span class="n">dimension_type</span><span class="p">))</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'0'</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">scale_y</span><span class="p">,</span>
+                                             <span class="n">name</span><span class="o">=</span><span class="n">names</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">,</span>
+                                             <span class="n">quantity</span><span class="o">=</span><span class="n">quantity</span><span class="p">,</span>
+                                             <span class="n">dimension_type</span><span class="o">=</span><span class="n">dimension_type</span><span class="p">))</span>
+
+    <span class="n">dataset</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'experiment'</span><span class="p">]</span> <span class="o">=</span> <span class="n">tags</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'esma'</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'annotations'</span><span class="p">]</span> <span class="o">=</span> <span class="n">tags</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'overlay'</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'image1'</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">dataset</span></div>
+
+
+
+<div class="viewcode-block" id="get_spectrum">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.sem.bruker_reader.get_spectrum.html#SciFiReaders.readers.microscopy.em.sem.bruker_reader.get_spectrum">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_spectrum</span><span class="p">(</span><span class="n">tags</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">""" Convert spectrum part of dictionary to sipdy dataset"""</span>
+    <span class="n">spectrum</span> <span class="o">=</span> <span class="n">tags</span><span class="p">[</span><span class="s1">'spectrum'</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">spectrum</span><span class="p">[</span><span class="s1">'spectrum_header'</span><span class="p">][</span><span class="s1">'CalibAbs'</span><span class="p">])</span>
+    <span class="n">scale</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">spectrum</span><span class="p">[</span><span class="s1">'spectrum_header'</span><span class="p">][</span><span class="s1">'CalibLin'</span><span class="p">])</span>
+
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">spectrum</span><span class="p">[</span><span class="s1">'data'</span><span class="p">])</span>
+    <span class="n">energy_scale</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">))</span> <span class="o">*</span> <span class="n">scale</span> <span class="o">+</span> <span class="n">offset</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="s1">'counts'</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">quantity</span> <span class="o">=</span> <span class="s1">'intensity'</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="s1">'spectrum'</span>
+
+    <span class="n">dataset</span><span class="o">.</span><span class="n">modality</span> <span class="o">=</span> <span class="s1">'EDS'</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s1">'spectrum'</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">set_dimension</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sidpy</span><span class="o">.</span><span class="n">Dimension</span><span class="p">(</span><span class="n">energy_scale</span><span class="p">,</span>
+                                             <span class="n">name</span><span class="o">=</span><span class="s1">'energy_scale'</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">'eV'</span><span class="p">,</span>
+                                             <span class="n">quantity</span><span class="o">=</span><span class="s1">'energy'</span><span class="p">,</span>
+                                             <span class="n">dimension_type</span><span class="o">=</span><span class="s1">'spectral'</span><span class="p">))</span>
+
+    <span class="n">dataset</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'experiment'</span><span class="p">]</span> <span class="o">=</span> <span class="n">tags</span><span class="p">[</span><span class="s1">'esma'</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">acceleration_voltage</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">tags</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'experiment'</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'PrimaryEnergy'</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">*</span><span class="mf">1000.</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'experiment'</span><span class="p">][</span><span class="s1">'acceleration_voltage'</span><span class="p">]</span> <span class="o">=</span>  <span class="n">acceleration_voltage</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'EDS'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'detector'</span><span class="p">:</span> <span class="n">tags</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'detector'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)}</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'EDS'</span><span class="p">][</span><span class="s1">'results'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span>  <span class="n">result</span> <span class="ow">in</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'results'</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">if</span> <span class="s1">'Name'</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">dataset</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'EDS'</span><span class="p">][</span><span class="s1">'results'</span><span class="p">][</span><span class="n">result</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">]]</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">dataset</span></div>
+
+
+
+<div class="viewcode-block" id="BrukerReader">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.sem.bruker_reader.BrukerReader.html#SciFiReaders.readers.microscopy.em.sem.bruker_reader.BrukerReader">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">BrukerReader</span><span class="p">(</span><span class="n">sidpy</span><span class="o">.</span><span class="n">Reader</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Creates an instance of BrukerReader which can read .rto files</span>
+<span class="sd">    datasets formatted in the Bruker format</span>
+
+<span class="sd">    We can read Images, and Spectra.</span>
+<span class="sd">    Please note that all original metadata are retained in each sidpy dataset.</span>
+<span class="sd">    ToDo: evaluate if this should this be a point cloud</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file_path : str</span>
+<span class="sd">        Path to a Bruker rto file</span>
+<span class="sd">    Return</span>
+<span class="sd">    ------</span>
+<span class="sd">    datasets: dict</span>
+<span class="sd">        dictionary of sidpy.Datasets</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        file_path: filepath to rto file.</span>
+<span class="sd">        """</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+
+        <span class="c1"># initialize variables ##</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span> <span class="o">=</span> <span class="n">file_path</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tags</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="s1">'rto'</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">extension</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tags</span> <span class="o">=</span> <span class="n">get_bruker_dictionary</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"File </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">__filename</span><span class="si">}</span><span class="s2"> does not seem to be of Bruker's .rto format"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="BrukerReader.can_read">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.sem.bruker_reader.BrukerReader.html#SciFiReaders.readers.microscopy.em.sem.bruker_reader.BrukerReader.can_read">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">can_read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">""" Checks if the reader can read the file format """</span>
+        <span class="k">return</span> <span class="s1">'rto'</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">extension</span></div>
+
+
+<div class="viewcode-block" id="BrukerReader.read">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.sem.bruker_reader.BrukerReader.html#SciFiReaders.readers.microscopy.em.sem.bruker_reader.BrukerReader.read">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">""" Parses the dictionary that was extracted from the xml type file of Bruker .rto file</span>
+<span class="sd">        Reads images and spectra</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="s1">'image'</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tags</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"Channel_</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">)</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">"</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_image</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tags</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basename</span><span class="o">+</span><span class="s1">'_image'</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">add_provenance</span><span class="p">(</span><span class="s1">'SciFiReader'</span><span class="p">,</span> <span class="s1">'BrukerReader'</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span>
+                                              <span class="n">linked_data</span><span class="o">=</span><span class="sa">f</span><span class="s1">'File: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">basename</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">extension</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">'spectrum'</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tags</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">spectrum_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tags</span><span class="p">[</span><span class="s1">'spectrum'</span><span class="p">]:</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"Channel_</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span><span class="p">)</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">"</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tags</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">spectrum_key</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">channel_number</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basename</span> <span class="o">+</span> <span class="s1">'_spectrum_'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">spectrum_key</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">add_provenance</span><span class="p">(</span><span class="s1">'SciFiReader'</span><span class="p">,</span> <span class="s1">'BrukerReader'</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span>
+                                                  <span class="n">linked_data</span><span class="o">=</span><span class="sa">f</span><span class="s1">'File: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">basename</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">extension</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span></div>
+
+
+<div class="viewcode-block" id="BrukerReader.get_filename">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.sem.bruker_reader.BrukerReader.html#SciFiReaders.readers.microscopy.em.sem.bruker_reader.BrukerReader.get_filename">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">""" Returns the filename of the Bruker file"""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filename</span></div>
+
+
+<div class="viewcode-block" id="BrukerReader.get_datasets">
+<a class="viewcode-back" href="../../../../../../_autosummary/SciFiReaders.readers.microscopy.em.sem.bruker_reader.BrukerReader.html#SciFiReaders.readers.microscopy.em.sem.bruker_reader.BrukerReader.get_datasets">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_datasets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">""" Returns the datasets created by the reader"""</span> 
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span></div>
+
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">get_filename</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Pycroscopy contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2020, Pycroscopy contributors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,182 +1,659 @@
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader &mdash; SciFiReaders 0.0.4 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader &#8212; SciFiReaders 0.12.7 documentation</title>
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/js/theme.js"></script>
-    <link rel="author" title="About these documents" href="../about.html" />
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
-</head>
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> SciFiReaders
-          </a>
-              <div class="version">
-                0.0.4
-              </div>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=7cf6be21"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_autosummary/SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">SciFiReaders</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../about.html">SciFiReaders</a></li>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SciFiReaders 0.12.7 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    SciFiReaders
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../available_readers.html">Available Readers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contact.html">Contact us</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../notebooks/00_developing_a_reader/index.html">Creating a Reader</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../notebooks/01_using_readers/index.html">Using Readers</a></li>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples by method</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../notebooks/00_developing_a_reader/index.html">Creating a Reader</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/00_developing_a_reader/developing_a_reader.html">Creating a Reader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../notebooks/01_electron_microscopy/index.html">Electron microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/01_electron_microscopy/read_dm3_files.html">Reading a DM3 File with ScopeReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/01_electron_microscopy/read_nion_files.html">Reading a Nion File with ScopeReader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../notebooks/02_scanning_probe_microscopy/index.html">Scanning probe microscopy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/02_scanning_probe_microscopy/read_mdt_files.html">Parsing .mdt experimental files. Basic example.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/02_scanning_probe_microscopy/read_fsexp_files.html"><strong>Parsing .fsexp FusionScope HDF5 Experiment Files</strong></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../notebooks/03_data_formats_and_converters/index.html">Data formats and converters</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/03_data_formats_and_converters/convert_hyperspy.html">Working with Hyperspy Data</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api.html">API reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="SciFiReaders.html">SciFiReaders</a></li>
+</ul>
+</details></li>
 </ul>
 
-        </div>
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">SciFiReaders</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/_autosummary/SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
+    </div>
+</nav></div>
+    </div>
   
-<style>
-/* CSS overrides for sphinx_rtd_theme */
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
 
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
 
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
+<div class="sbt-scroll-pixel-helper"></div>
 
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="scifireaders-readers-microscopy-em-tem-emd-reader-emdreader">
-<h1>SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader<a class="headerlink" href="#scifireaders-readers-microscopy-em-tem-emd-reader-emdreader" title="Permalink to this headline">¶</a></h1>
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pycroscopy/SciFiReaders/issues/new?title=Issue%20on%20page%20%2F_autosummary/SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/_autosummary/SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader"><code class="docutils literal notranslate"><span class="pre">EMDReader</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader._h5_file"><code class="docutils literal notranslate"><span class="pre">EMDReader._h5_file</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.datasets"><code class="docutils literal notranslate"><span class="pre">EMDReader.datasets</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.channel_number"><code class="docutils literal notranslate"><span class="pre">EMDReader.channel_number</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.key"><code class="docutils literal notranslate"><span class="pre">EMDReader.key</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.data_array"><code class="docutils literal notranslate"><span class="pre">EMDReader.data_array</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.metadata"><code class="docutils literal notranslate"><span class="pre">EMDReader.metadata</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.label_dict"><code class="docutils literal notranslate"><span class="pre">EMDReader.label_dict</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.no_eds"><code class="docutils literal notranslate"><span class="pre">EMDReader.no_eds</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.sum_frames"><code class="docutils literal notranslate"><span class="pre">EMDReader.sum_frames</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.number_of_frames"><code class="docutils literal notranslate"><span class="pre">EMDReader.number_of_frames</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.can_read"><code class="docutils literal notranslate"><span class="pre">EMDReader.can_read()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.close"><code class="docutils literal notranslate"><span class="pre">EMDReader.close()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.extract_crucial_metadata"><code class="docutils literal notranslate"><span class="pre">EMDReader.extract_crucial_metadata()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_data"><code class="docutils literal notranslate"><span class="pre">EMDReader.get_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_eds"><code class="docutils literal notranslate"><span class="pre">EMDReader.get_eds()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_eds_spectrum"><code class="docutils literal notranslate"><span class="pre">EMDReader.get_eds_spectrum()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_image"><code class="docutils literal notranslate"><span class="pre">EMDReader.get_image()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.read"><code class="docutils literal notranslate"><span class="pre">EMDReader.read()</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="scifireaders-readers-microscopy-em-tem-emd-reader-emdreader">
+<h1>SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader<a class="headerlink" href="#scifireaders-readers-microscopy-em-tem-emd-reader-emdreader" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">SciFiReaders.readers.microscopy.em.tem.emd_reader.</span></span><span class="sig-name descname"><span class="pre">EMDReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/SciFiReaders/readers/microscopy/em/tem/emd_reader.html#EMDReader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sidpy.sid.reader.Reader</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">SciFiReaders.readers.microscopy.em.tem.emd_reader.</span></span><span class="sig-name descname"><span class="pre">EMDReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sum_frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_eds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eds_stream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/SciFiReaders/readers/microscopy/em/tem/emd_reader.html#EMDReader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Reader</span></code></p>
 <p>Creates an instance of EMDReader which can read one or more HDF5
 datasets formatted in the FEI Velox style EDM file</p>
 <p>We can read Images, and SpectrumStreams (SpectrumImages and Spectra).
 Please note that all original metadata are retained in each sidpy dataset.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>file_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Path to a HDF5 file</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Path to a HDF5 file</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>datasets</strong> – dictionary of sidpy.Datasets</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
 </dd>
 </dl>
+<p>Initialize an EMDReader instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Path to the HDF5 (.emd) file to be read.</p></li>
+<li><p><strong>sum_frames</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, sum all frames in the dataset. Defaults to False.</p></li>
+<li><p><strong>no_eds</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, disables EDS (Energy Dispersive Spectroscopy)</p></li>
+<li><p><strong>False.</strong> (<em>data handling. Defaults to</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader._h5_file">
+<span class="sig-name descname"><span class="pre">_h5_file</span></span><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader._h5_file" title="Link to this definition">#</a></dt>
+<dd><p>The opened HDF5 file object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.h5py.org/en/latest/high/file.html#h5py.File" title="(in h5py v3.17)">h5py.File</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.datasets">
+<span class="sig-name descname"><span class="pre">datasets</span></span><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.datasets" title="Link to this definition">#</a></dt>
+<dd><p>Dictionary to store dataset references.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.channel_number">
+<span class="sig-name descname"><span class="pre">channel_number</span></span><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.channel_number" title="Link to this definition">#</a></dt>
+<dd><p>The current channel number (default is 0).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.key">
+<span class="sig-name descname"><span class="pre">key</span></span><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.key" title="Link to this definition">#</a></dt>
+<dd><p>Formatted string key for the current channel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.data_array">
+<span class="sig-name descname"><span class="pre">data_array</span></span><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.data_array" title="Link to this definition">#</a></dt>
+<dd><p>Array to hold data from the file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.metadata" title="Link to this definition">#</a></dt>
+<dd><p>Metadata extracted from the file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.label_dict">
+<span class="sig-name descname"><span class="pre">label_dict</span></span><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.label_dict" title="Link to this definition">#</a></dt>
+<dd><p>Dictionary for label mapping.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.no_eds">
+<span class="sig-name descname"><span class="pre">no_eds</span></span><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.no_eds" title="Link to this definition">#</a></dt>
+<dd><p>Indicates if EDS data handling is disabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.sum_frames">
+<span class="sig-name descname"><span class="pre">sum_frames</span></span><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.sum_frames" title="Link to this definition">#</a></dt>
+<dd><p>Indicates if frames should be summed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.number_of_frames">
+<span class="sig-name descname"><span class="pre">number_of_frames</span></span><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.number_of_frames" title="Link to this definition">#</a></dt>
+<dd><p>Number of frames in the dataset (default is 1).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.can_read" title="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.can_read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">can_read</span></code></a></p></td>
 <td><p>Checks whether or not this Reader can read the provided file</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code></p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.close" title="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code></a></p></td>
+<td><p>Close the h5 file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_data</span></code></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.extract_crucial_metadata" title="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.extract_crucial_metadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_crucial_metadata</span></code></a></p></td>
+<td><p>Extract some crucial metadata from the original metadata.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_eds</span></code></p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_data" title="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_data</span></code></a></p></td>
+<td><p>Get the image data and metadata from the file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_eds_spectrum</span></code></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_eds" title="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_eds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_eds</span></code></a></p></td>
+<td><p>Get the EDS data from the file.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_image</span></code></p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_eds_spectrum" title="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_eds_spectrum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_eds_spectrum</span></code></a></p></td>
+<td><p>Get the EDS spectrum.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_metadata</span></code></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_image" title="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_image"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_image</span></code></a></p></td>
+<td><p>Get the image data.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.read" title="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a></p></td>
 <td><p>Reads all available datasets in FEI Velox style hdf5 files with .edm</p></td>
 </tr>
 </tbody>
 </table>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.can_read">
-<span class="sig-name descname"><span class="pre">can_read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/SciFiReaders/readers/microscopy/em/tem/emd_reader.html#EMDReader.can_read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.can_read" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">can_read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/SciFiReaders/readers/microscopy/em/tem/emd_reader.html#EMDReader.can_read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.can_read" title="Link to this definition">#</a></dt>
 <dd><p>Checks whether or not this Reader can read the provided file</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>True if this Reader can read the provided file
 Else, False</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/SciFiReaders/readers/microscopy/em/tem/emd_reader.html#EMDReader.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.close" title="Link to this definition">#</a></dt>
+<dd><p>Close the h5 file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.extract_crucial_metadata">
+<span class="sig-name descname"><span class="pre">extract_crucial_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/SciFiReaders/readers/microscopy/em/tem/emd_reader.html#EMDReader.extract_crucial_metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.extract_crucial_metadata" title="Link to this definition">#</a></dt>
+<dd><p>Extract some crucial metadata from the original metadata.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/SciFiReaders/readers/microscopy/em/tem/emd_reader.html#EMDReader.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_data" title="Link to this definition">#</a></dt>
+<dd><p>Get the image data and metadata from the file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_eds">
+<span class="sig-name descname"><span class="pre">get_eds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eds_stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/SciFiReaders/readers/microscopy/em/tem/emd_reader.html#EMDReader.get_eds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_eds" title="Link to this definition">#</a></dt>
+<dd><p>Get the EDS data from the file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_eds_spectrum">
+<span class="sig-name descname"><span class="pre">get_eds_spectrum</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="../_modules/SciFiReaders/readers/microscopy/em/tem/emd_reader.html#EMDReader.get_eds_spectrum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_eds_spectrum" title="Link to this definition">#</a></dt>
+<dd><p>Get the EDS spectrum.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_image">
+<span class="sig-name descname"><span class="pre">get_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/SciFiReaders/readers/microscopy/em/tem/emd_reader.html#EMDReader.get_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_image" title="Link to this definition">#</a></dt>
+<dd><p>Get the image data.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.read">
-<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eds_stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/SciFiReaders/readers/microscopy/em/tem/emd_reader.html#EMDReader.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.read" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eds_stream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_xy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/SciFiReaders/readers/microscopy/em/tem/emd_reader.html#EMDReader.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.read" title="Link to this definition">#</a></dt>
 <dd><p>Reads all available datasets in FEI Velox style hdf5 files with .edm</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>eds_stream</strong> (<em>boolean</em>) – switch to return spectrum image (default - False) or original spectrum stream (True)</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>eds_stream</strong> (<em>boolean</em>) – switch to return spectrum image (default - False) or original spectrum stream (True)</p></li>
+<li><p><strong>bin_xy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – binning factor for EDS spectrum size reduction</p></li>
+</ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>datasets</strong> – Datasets present in the provided file</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list of sidpy.Dataset objects</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a> of sidpy.Dataset objects</p>
 </dd>
 </dl>
 </dd></dl>
@@ -186,31 +663,105 @@ Else, False</p>
 </section>
 
 
-           </div>
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader"><code class="docutils literal notranslate"><span class="pre">EMDReader</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader._h5_file"><code class="docutils literal notranslate"><span class="pre">EMDReader._h5_file</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.datasets"><code class="docutils literal notranslate"><span class="pre">EMDReader.datasets</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.channel_number"><code class="docutils literal notranslate"><span class="pre">EMDReader.channel_number</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.key"><code class="docutils literal notranslate"><span class="pre">EMDReader.key</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.data_array"><code class="docutils literal notranslate"><span class="pre">EMDReader.data_array</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.metadata"><code class="docutils literal notranslate"><span class="pre">EMDReader.metadata</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.label_dict"><code class="docutils literal notranslate"><span class="pre">EMDReader.label_dict</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.no_eds"><code class="docutils literal notranslate"><span class="pre">EMDReader.no_eds</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.sum_frames"><code class="docutils literal notranslate"><span class="pre">EMDReader.sum_frames</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.number_of_frames"><code class="docutils literal notranslate"><span class="pre">EMDReader.number_of_frames</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.can_read"><code class="docutils literal notranslate"><span class="pre">EMDReader.can_read()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.close"><code class="docutils literal notranslate"><span class="pre">EMDReader.close()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.extract_crucial_metadata"><code class="docutils literal notranslate"><span class="pre">EMDReader.extract_crucial_metadata()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_data"><code class="docutils literal notranslate"><span class="pre">EMDReader.get_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_eds"><code class="docutils literal notranslate"><span class="pre">EMDReader.get_eds()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_eds_spectrum"><code class="docutils literal notranslate"><span class="pre">EMDReader.get_eds_spectrum()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.get_image"><code class="docutils literal notranslate"><span class="pre">EMDReader.get_image()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SciFiReaders.readers.microscopy.em.tem.emd_reader.EMDReader.read"><code class="docutils literal notranslate"><span class="pre">EMDReader.read()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
           </div>
-          <footer>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Pycroscopy contributors
+</p>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2020, Pycroscopy contributors.</p>
   </div>
+  
+  <div class="footer-item">
+    
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+  <p class="copyright">
+    
+      © Copyright 2020, Pycroscopy contributors.
+      <br/>
+    
+  </p>
 
-</footer>
-        </div>
-      </div>
-    </section>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
 
-</body>
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
 </html>

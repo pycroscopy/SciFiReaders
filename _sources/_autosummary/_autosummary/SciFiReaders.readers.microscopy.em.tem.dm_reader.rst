@@ -1,0 +1,20 @@
+SciFiReaders.readers.microscopy.em.tem.dm\_reader
+=================================================
+
+.. automodule:: SciFiReaders.readers.microscopy.em.tem.dm_reader
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      read_header_dm
+      read_string
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      DM3Reader
+      DMReader
+   
