@@ -1,5 +1,5 @@
 """
-Tools to read, data in from generic files
+Converters from other packages' data objects to sidpy.Dataset
 
 Submodules
 ----------
@@ -7,7 +7,7 @@ Submodules
 .. autosummary::
     :toctree: _autosummary
 
-    ImageReader
+    hyperspy
 """
 
 from .hyperspy import convert_hyperspy

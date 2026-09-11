@@ -7,8 +7,8 @@ Submodules
 .. autosummary::
     :toctree: _autosummary
 
-    dm_reader
-    nion_reader
+    edax_reader
+    bruker_reader
 """
 
 from .edax_reader import EDAXReader

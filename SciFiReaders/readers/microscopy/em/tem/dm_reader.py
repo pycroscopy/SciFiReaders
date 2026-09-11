@@ -1,25 +1,23 @@
 """
 Part of SciFiReaders, a pycroscopy module
 Author: Gerd Duscher
-################################################################################
-# Python class for reading GATAN DM3/DM4 (DigitalMicrograph) files
-# and extracting all metadata
-# --
-# tested on EELS spectra, spectrum images and single-image files and image-stacks
-# --
-# based on the DM3_Reader plug-in (v 1.3.4) for ImageJ by Greg Jefferis <jefferis@stanford.edu>
-# http://rsb.info.nih.gov/ij/plugins/DM3_Reader.html
-# --
-# Python adaptation: Pierre-Ivan Raynal <raynal@med.univ-tours.fr>
-# http://microscopies.med.univ-tours.fr/
-#
-# Extended for EELS support by Gerd Duscher, UTK 2012
-# Rewritten for integration of sidpy 2020
-# Rewritten for added support of DM4 2021
-#    gleaned some ideas from https://github.com/jamesra/dm4reader
-# Works for python 3
-#
-################################################################################
+
+Python class for reading GATAN DM3/DM4 (DigitalMicrograph) files
+and extracting all metadata
+--
+tested on EELS spectra, spectrum images and single-image files and image-stacks
+--
+based on the DM3_Reader plug-in (v 1.3.4) for ImageJ by Greg Jefferis <jefferis@stanford.edu>
+http://rsb.info.nih.gov/ij/plugins/DM3_Reader.html
+--
+Python adaptation: Pierre-Ivan Raynal <raynal@med.univ-tours.fr>
+http://microscopies.med.univ-tours.fr/
+
+Extended for EELS support by Gerd Duscher, UTK 2012
+Rewritten for integration of sidpy 2020
+Rewritten for added support of DM4 2021
+    gleaned some ideas from https://github.com/jamesra/dm4reader
+
 """
 
 from __future__ import division, print_function, absolute_import, unicode_literals

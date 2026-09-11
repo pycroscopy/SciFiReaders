@@ -70,6 +70,11 @@ instance/
 # Sphinx documentation
 docs/_static
 docs/_build
+docs/source/_autosummary/
+docs/source/notebooks/
+
+# claude
+Claude outputs/
 
 # PyBuilder
 target/
@@ -135,3 +140,7 @@ PEA_BDA_film.axz.zip
 PEA_BDA_film.axz.zip
 PEA_BDA_film.axz.zip
 PEA_BDA_film.axz.zip
+
+
+
+notebooks/03_data_formats_and_converters/test_nsid.hf5

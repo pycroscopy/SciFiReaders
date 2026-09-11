@@ -1,15 +1,10 @@
-################################################################################
-# Python class for reading FEI Velox 4D STEM .mrc files into sidpy Dataset
-# and extracting all metadata
-#
-# Written by Austin Houston, UTK 2024
-#
-# based on MRC2014 file format:
-# https://www.ccpem.ac.uk/mrc_format/mrc2014.php
-#
-# and corresponding mrcfile package:
-# https://pypi.org/project/mrcfile/
-################################################################################
+"""
+Reader for FEI Velox 4D-STEM (.mrc) files into sidpy.Dataset, including all metadata.
+
+Written by Austin Houston, UTK 2024.
+Based on the MRC2014 file format (https://www.ccpem.ac.uk/mrc_format/mrc2014.php)
+and the mrcfile package (https://pypi.org/project/mrcfile/).
+"""
 
 
 import json

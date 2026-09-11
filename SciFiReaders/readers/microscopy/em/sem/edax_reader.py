@@ -1,19 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 
-################################################################################
-# Python class for reading EDAX .h5 files into sidpy Dataset
-# and extracting all metadata
-#
-# Written by Gerd Duscher, UTK 2023
-#
-# Works for python 3
-#
-################################################################################
+"""
+Reader for Bruker EDAX .h5 files into sidpy.Dataset, including all metadata.
+
+Written by Gerd Duscher, UTK 2023
+"""
 
 import struct
 import h5py
-# from warnings import warn
+
 import sys
 import numpy as np
 import os

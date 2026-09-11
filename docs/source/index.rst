@@ -1,40 +1,62 @@
-.. SciFiReaders documentation master file, created by
-   sphinx-quickstart on Sun Jul 12 16:57:01 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+SciFiReaders
+============
 
-SciFiReaders Documentation
-==========================
+Tools for extracting data and metadata from scientific data files.
 
-**Tools for extracting data and metadata from scientific data files**
+What it does
+------------
 
-* Please the side panel on the left for other documentation pages on ``SciFiReaders``
-* Jump to our `GitHub project <https://github.com/pycroscopy/SciFiReaders>`_ to access the source code
+Every instrument vendor saves data in its own file format. SciFiReaders is a collection of
+``Reader`` classes, one per format, that open these files and return the data as
+`sidpy.Dataset <https://pycroscopy.github.io/sidpy/_autosummary/sidpy.sid.dataset.Dataset.html>`_
+objects. A ``sidpy.Dataset`` holds the raw array together with its axes, units, and the
+instrument metadata, so the same analysis code works no matter which instrument produced the file.
+
+Main ideas
+----------
+
+* One reader per file format. All readers share the same interface: ``Reader(path).read()``.
+* The result is a ``sidpy.Dataset`` (or a dictionary of them when a file holds several channels).
+  It behaves like a NumPy/Dask array and carries axes, units, and metadata with it.
+* Readers only read. Writing to a standard HDF5 layout is done with ``NSIDWriter``
+  (see :doc:`notebooks/03_data_formats_and_converters/index`).
+* Readers are grouped by scientific method: electron microscopy, scanning probe microscopy,
+  spectroscopy, and so on. The package layout under ``SciFiReaders/readers`` follows the same grouping.
+* Adding a new format takes a few lines once you can already parse the file.
+  See :doc:`notebooks/00_developing_a_reader/index`.
+
+Quick example
+-------------
+
+.. code-block:: python
+
+   import SciFiReaders as sr
+
+   reader = sr.DM3Reader('EELS_STO.dm3')
+   dataset = reader.read()
+
+   print(dataset)            # shape, axes, units
+   dataset.plot()            # quick look
 
 .. toctree::
-   :glob:
    :maxdepth: 1
-   :caption: SciFiReaders
+   :caption: Getting started
 
-   about
    install
    available_readers
    contact
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Examples by method
 
-Source code API
----------------
-.. autosummary::
-   :toctree: _autosummary
-   :template: custom-module-template.rst
-   :recursive:
-   SciFiReaders
-
-* :ref:`modindex`
+   notebooks/00_developing_a_reader/index
+   notebooks/01_electron_microscopy/index
+   notebooks/02_scanning_probe_microscopy/index
+   notebooks/03_data_formats_and_converters/index
 
 .. toctree::
-   :glob:
-   :maxdepth: 2
-   :caption: Examples
+   :maxdepth: 1
+   :caption: Reference
 
-   notebooks/**/index
+   api

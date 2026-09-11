@@ -1,14 +1,10 @@
 
-""" 
-################################################################################
-# Python class for reading FEI Velox .emd files into sidpy Dataset
-# and extracting all metadata
-#
-# Written by Gerd Duscher, UTK 2021
-# update 08/2025 - improved EDS data reading
-#
-################################################################################
 """
+Reader for FEI/Thermo Fisher Velox (.emd) files into sidpy.Dataset, including all metadata.
+
+Written by Gerd Duscher, UTK 2021. Updated 08/2025 with improved EDS data reading.
+"""
+
 import json
 import h5py
 import numpy as np

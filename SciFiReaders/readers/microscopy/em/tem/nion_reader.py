@@ -1,15 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 
-################################################################################
-# Python class for reading Nion Swift files into sidpy Dataset
-# and extracting all metadata
-#
-# Written by Gerd Duscher, UTK 2020
-#
-# Works for python 3
-#
-################################################################################
+"""
+Reader for Nion Swift files into sidpy.Dataset, including all metadata.
+
+Written by Gerd Duscher, UTK 2020.
+"""
+
 from __future__ import division, print_function, absolute_import, unicode_literals
 
 import json
