@@ -72,14 +72,15 @@ jobs:
         verbose: true
         
     - name: Documentation build
-      if: ${{ matrix.python-version == env.PYTHON_MAIN_VERSION && github.ref == 'refs/heads/master'}}
+      if: ${{ matrix.python-version == env.PYTHON_MAIN_VERSION && github.ref == 'refs/heads/main'}}
       run: |
+        sudo apt-get install -y pandoc
         pip install "sphinx>=5" sphinx-book-theme sphinx-autodoc-typehints numpydoc nbsphinx
         sphinx-build -b html -aET docs/source docs/_build/html
         touch docs/_build/html/.nojekyll
         
     - name: Deploy to GitHub Pages
-      if: ${{ matrix.python-version == env.PYTHON_MAIN_VERSION && github.ref == 'refs/heads/master'}}
+      if: ${{ matrix.python-version == env.PYTHON_MAIN_VERSION && github.ref == 'refs/heads/main'}}
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
