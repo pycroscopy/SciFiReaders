@@ -362,7 +362,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -378,6 +380,18 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#electron-microscopy">Electron microscopy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scanning-probe-microscopy-afm">Scanning probe microscopy: AFM</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scanning-probe-microscopy-stm">Scanning probe microscopy: STM</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optical-microscopy-and-spectroscopy">Optical microscopy and spectroscopy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generic-and-pycroscopy-formats">Generic and pycroscopy formats</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -389,57 +403,213 @@ document.write(`
                   
   <section id="available-readers">
 <h1>Available Readers<a class="headerlink" href="#available-readers" title="Link to this heading">#</a></h1>
-<p>We currently have <code class="docutils literal notranslate"><span class="pre">Readers</span></code> for the following file formats. More are coming soon!</p>
-<p>Please <a class="reference external" href="./contact.html">get in touch with us</a> if you would like to contribute a <code class="docutils literal notranslate"><span class="pre">Reader</span></code>. We can help you.</p>
-<ul class="simple">
-<li><p>Generic:</p>
-<ul>
-<li><p>generic image formats</p></li>
-</ul>
-</li>
-<li><p>Microscopy:</p>
-<ul>
-<li><p>Transmission Electron microscopy:</p>
-<ul>
-<li><p>Nion Company</p></li>
-<li><p>Digital Micrograph (DM3)</p></li>
-</ul>
-</li>
-<li><p>Scanning probe microscopy:</p>
-<ul>
-<li><p>Atomic Force Microscopy:</p>
-<ul>
-<li><p>Asylum Research (ARhdf5)</p></li>
-<li><p>Asylum Research / Igor (ibw)</p></li>
-</ul>
-</li>
-<li><p>Scanning Tunnelling Microscopy:</p>
-<ul>
-<li><p>Omicron (asc)</p></li>
-<li><p>Nanonis (dat)</p></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Spectroscopy</p>
-<ul>
-<li><p>Princeton Instruments CCD camera - Raman (SPE)</p></li>
-</ul>
-</li>
-<li><p>Pycroscopy Output formats:</p>
-<ul>
-<li><p>USID (Universal spectral imaging data model)</p></li>
-<li><p>NSID (N-dimensional spectral imaging data model)</p></li>
-</ul>
-</li>
-<li><p>Other libraries:</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">HyperSpy.Signal</span></code></p></li>
-</ul>
-</li>
-</ul>
+<p>Each reader is a <code class="docutils literal notranslate"><span class="pre">sidpy.Reader</span></code> subclass. Import it from the package and call
+<code class="docutils literal notranslate"><span class="pre">.read()</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">SciFiReaders</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sr</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">sr</span><span class="o">.</span><span class="n">NanonisSXMReader</span><span class="p">(</span><span class="s1">'scan.sxm'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Please <a class="reference external" href="./contact.html">get in touch</a> if you would like to contribute a reader.
+See <a class="reference external" href="./notebooks/00_developing_a_reader/index.html">Creating a Reader</a> for how.</p>
+<section id="electron-microscopy">
+<h2>Electron microscopy<a class="headerlink" href="#electron-microscopy" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Instrument / format</p></th>
+<th class="head"><p>Extensions</p></th>
+<th class="head"><p>Reader</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Gatan DigitalMicrograph</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.dm3</span></code>, <code class="docutils literal notranslate"><span class="pre">.dm4</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DMReader</span></code>, <code class="docutils literal notranslate"><span class="pre">DM3Reader</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Nion Swift</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.ndata</span></code>, <code class="docutils literal notranslate"><span class="pre">.h5</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NionReader</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Thermo Fisher / FEI Velox</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.emd</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">EMDReader</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>MRC (4D-STEM, Velox export)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.mrc</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MRCReader</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>EDAX EDS</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.h5</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">EDAXReader</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Bruker EDS</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.rto</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BrukerReader</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="scanning-probe-microscopy-afm">
+<h2>Scanning probe microscopy: AFM<a class="headerlink" href="#scanning-probe-microscopy-afm" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Instrument / format</p></th>
+<th class="head"><p>Extensions</p></th>
+<th class="head"><p>Reader</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Asylum Research (HDF5 export)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.h5</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ARhdf5Reader</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Asylum Research / Igor binary wave</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.ibw</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">IgorIBWReader</span></code>, <code class="docutils literal notranslate"><span class="pre">IgorMatrixReader</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Bruker Nano / NanoScope</p></td>
+<td><p>vendor files, no fixed extension</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BrukerAFMReader</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Gwyddion</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.gwy</span></code>, <code class="docutils literal notranslate"><span class="pre">.gsf</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GwyddionReader</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>NT-MDT</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.mdt</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MDTReader</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Nanosurf</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.nid</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NanoSurfNIDReader</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Quantum Design FusionScope</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.fsexp</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FSexpReader</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>WSxM</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.top</span></code>, <code class="docutils literal notranslate"><span class="pre">.stp</span></code>, <code class="docutils literal notranslate"><span class="pre">.cur</span></code>, <code class="docutils literal notranslate"><span class="pre">.gsi</span></code>, <code class="docutils literal notranslate"><span class="pre">.mpp</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">WSxM1DReader</span></code>, <code class="docutils literal notranslate"><span class="pre">WSxM2DReader</span></code>, <code class="docutils literal notranslate"><span class="pre">WSxM3DReader</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Molecular Vista PiFM</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">.int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PiFMReader</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Anfatec AXZ</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.axz</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AxzReader</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="scanning-probe-microscopy-stm">
+<h2>Scanning probe microscopy: STM<a class="headerlink" href="#scanning-probe-microscopy-stm" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Instrument / format</p></th>
+<th class="head"><p>Extensions</p></th>
+<th class="head"><p>Reader</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Nanonis scan</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.sxm</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NanonisSXMReader</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Nanonis spectroscopy</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.dat</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NanonisDatReader</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Nanonis grid spectroscopy</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.3ds</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Nanonis3dsReader</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Omicron</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.asc</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AscReader</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="optical-microscopy-and-spectroscopy">
+<h2>Optical microscopy and spectroscopy<a class="headerlink" href="#optical-microscopy-and-spectroscopy" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Instrument / format</p></th>
+<th class="head"><p>Extensions</p></th>
+<th class="head"><p>Reader</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Zeiss confocal</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.czi</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CZIReader</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Princeton Instruments (Raman)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.spe</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">RamanSpeReader</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="generic-and-pycroscopy-formats">
+<h2>Generic and pycroscopy formats<a class="headerlink" href="#generic-and-pycroscopy-formats" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Format</p></th>
+<th class="head"><p>Extensions</p></th>
+<th class="head"><p>Reader</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Images</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.png</span></code>, <code class="docutils literal notranslate"><span class="pre">.jpg</span></code>, <code class="docutils literal notranslate"><span class="pre">.tif</span></code>, <code class="docutils literal notranslate"><span class="pre">.tiff</span></code>, <code class="docutils literal notranslate"><span class="pre">.bmp</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ImageReader</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>NSID (N-dimensional spectral imaging data)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.h5</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NSIDReader</span></code>, <code class="docutils literal notranslate"><span class="pre">NSIDWriter</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>USID (Universal spectral imaging data)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.h5</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Usid_reader</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>HyperSpy signals (conversion, not a file reader)</p></td>
+<td><p>—</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">convert_hyperspy</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 </section>
 
 
@@ -477,6 +647,25 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#electron-microscopy">Electron microscopy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scanning-probe-microscopy-afm">Scanning probe microscopy: AFM</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scanning-probe-microscopy-stm">Scanning probe microscopy: STM</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optical-microscopy-and-spectroscopy">Optical microscopy and spectroscopy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generic-and-pycroscopy-formats">Generic and pycroscopy formats</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
