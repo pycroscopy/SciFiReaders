@@ -12,6 +12,8 @@ Key compatibility requirements (enforced here):
   matches the HDF5 dimension label, and must have attrs: name, quantity, units,
   dimension_type
 - Dimension labels MUST be unique (sidpy will error otherwise on readback)
+
+@author: Boris Slautin
 """
 
 from __future__ import annotations

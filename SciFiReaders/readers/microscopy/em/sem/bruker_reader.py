@@ -1,15 +1,9 @@
+"""
+Reader for Bruker .rto SEM files into sidpy.Dataset, including all metadata.
 
+Written by Gerd Duscher, UTK 2025
 """
-################################################################################
-# Python class for reading Bruker .rto files into sidpy Dataset
-# and extracting all metadata
-#
-# Written by Gerd Duscher, UTK 2025
-#
-# Works for python 3
-#
-################################################################################
-"""
+
 import os
 import codecs
 import xml

@@ -1,26 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 """
-Will move to Scope Reader
+Reader for Gatan DigitalMicrograph (DM3) files into sidpy.Dataset, including all metadata.
 
-################################################################################
-# Python class for reading GATAN DM3 (DigitalMicrograph) files
-# and extracting all metadata
-# --
-# tested on EELS spectra, spectrum images and single-image files and image-stacks
-# --
-# based on the DM3_Reader plug-in (v 1.3.4) for ImageJ by Greg Jefferis <jefferis@stanford.edu>
-# http://rsb.info.nih.gov/ij/plugins/DM3_Reader.html
-# --
-# Python adaptation: Pierre-Ivan Raynal <raynal@med.univ-tours.fr>
-# http://microscopies.med.univ-tours.fr/
-#
-# Extended for EELS support by Gerd Duscher, UTK 2012
-# Rewritten for integration of sidpy 2020
-#
-# Works for python 3
-#
-################################################################################
+Tested on EELS spectra, spectrum images, single images and image stacks.
+
+Based on the DM3_Reader plug-in (v1.3.4) for ImageJ by Greg Jefferis
+(http://rsb.info.nih.gov/ij/plugins/DM3_Reader.html) and its Python adaptation
+by Pierre-Ivan Raynal (http://microscopies.med.univ-tours.fr/).
+Extended for EELS support by Gerd Duscher, UTK 2012; rewritten for sidpy in 2020.
 """
 
 from __future__ import division, print_function, absolute_import, unicode_literals
@@ -349,7 +337,7 @@ class DM3Reader(sidpy.Reader):
 
         for dim, dimension_tags in dimensions_dict.items():
             # Fix annoying scale of spectrum_images in Zeiss  and SEM images
-            if dimension_tags['Units'] == 'µm':
+            if dimension_tags['Units'] == 'ï¿½m':
                 dimension_tags['Units'] = 'nm'
                 dimension_tags['Scale'] *= 1000.0
 

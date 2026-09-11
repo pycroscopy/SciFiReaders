@@ -32,6 +32,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update -qq
+        sudo apt-get install pandoc
         python -m ensurepip --upgrade
         python -m pip install --upgrade setuptools 
         python -m pip install flake8
@@ -73,8 +74,7 @@ jobs:
     - name: Documentation build
       if: ${{ matrix.python-version == env.PYTHON_MAIN_VERSION && github.ref == 'refs/heads/master'}}
       run: |
-        pip install sphinx>=3.1.1 sphinx-gallery sphinx-rtd-theme>=0.5.0 sphinx-autodoc-typehints numpydoc wget nbsphinx
-        sudo apt-get install pandoc
+        pip install "sphinx>=5" sphinx-book-theme sphinx-autodoc-typehints numpydoc nbsphinx
         sphinx-build -b html -aET docs/source docs/_build/html
         touch docs/_build/html/.nojekyll
         
