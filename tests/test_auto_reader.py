@@ -43,9 +43,8 @@ CASES = [
      'https://www.dropbox.com/scl/fi/47o3lqye1zip4nsumc2c8/vpfmm_3.hf5'
      '?rlkey=y2jel58n9kkl6h3tt2ogq8pqp&dl=1', 'NSIDReader'),
      ('PTO_SS_00.h5',
-          'https://www.dropbox.com/scl/fi/r4dcstilxsdg8un2nl7g0/PTO_SS_00.h5'
-          '?rlkey=y4gmc0zq1vpvm8hzrigk5quy3&dl=1', 'ARhdf5Reader',
-          'ARhdf5Reader.can_read() ends in a bare return -> None'),
+     'https://www.dropbox.com/scl/fi/r4dcstilxsdg8un2nl7g0/PTO_SS_00.h5'
+     '?rlkey=y4gmc0zq1vpvm8hzrigk5quy3&dl=1', 'ARhdf5Reader'),
 ]
 
 # Files whose reader cannot currently be selected by AutoReader, with the
