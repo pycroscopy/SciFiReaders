@@ -228,7 +228,7 @@ class ARhdf5Reader(Reader):
             return False
         if not isinstance(h5_f['ForceMap'], h5py.Group):
             return False
-        return
+        return True
 
     def note_value(self, name):
         '''
