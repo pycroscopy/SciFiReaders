@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Mar 12 15:39:00 202`0`
+Created on Fri Mar 12 15:39:00 2020
 
 @author: Rama Vasudevan
+
+Modified: Ganesh Narasimha, 30 Sep 2026
 """
 
-import sys
 import numpy as np  # For array operations
 import sidpy as sid
 from sidpy.sid import Reader
-import re
-from os import path
+from .nanonis_base import _split_channel_name, _unique_key, _sweep_ramps
 
 
 class NanonisDatReader(Reader):
@@ -22,7 +22,7 @@ class NanonisDatReader(Reader):
 
     def read(self, verbose=False):
         """
-        Reads the file given in file_path into a sidpy dataset
+        Reads the file given in file_path into sidpy datasets
 
         Parameters
         ----------
@@ -31,67 +31,82 @@ class NanonisDatReader(Reader):
 
         Returns
         -------
-        sidpy.Dataset : List of sidpy.Dataset objects.
-            Multi-channel inputs are separated into individual dataset objects
+        dict of sidpy.Dataset objects, one per data column, keyed by the column
+        name as in the file without the unit ('Current', 'Current [bwd]').
+        Column 0 (the swept signal, e.g. 'Bias calc (V)') is the spectral
+        dimension of every dataset. Duplicate keys get a '_1', '_2', ... suffix.
         """
 
         file_path = self._input_file_path
-        folder_path, file_name = path.split(file_path)
 
-        # Extracting the raw data into memory
-        file_handle = open(file_path, 'r')
-        string_lines = file_handle.readlines()
-        file_handle.close()
+        # Extracting the raw data into memory (Nanonis writes latin-1 text)
+        with open(file_path, 'r', encoding='latin-1') as file_handle:
+            string_lines = file_handle.read().splitlines()
 
-        data_start = string_lines.index('[DATA]\n')
-        header = string_lines[:data_start - 1]
+        data_start = next((ind for ind, line in enumerate(string_lines)
+                           if line.strip() == '[DATA]'), None)
+        if data_start is None:
+            raise ValueError('{} is not a Nanonis .dat file: no [DATA] section found'.format(file_path))
+        header = string_lines[:data_start]
 
-        channel_names_with_units = string_lines[data_start+1].split('\t')
-        channel_names = [channel_names_with_units[ind].split('(')[0] for ind in range (len(channel_names_with_units))]
-        channel_units = [re.search(r'\((.*?)\)',channel_names_with_units[ind]).group(1) for ind in range (len(channel_names_with_units))]
+        column_names = [col for col in string_lines[data_start + 1].split('\t') if col.strip()]
+        columns = [_split_channel_name(col) for col in column_names]
 
-        # Extract parameters from the first few header lines
+        # Extract parameters from the header lines
         parm_dict = self._read_parms(header)
 
         if verbose:
             print('Found parameters dictionary {}'.format(parm_dict))
 
         # Extract the STS data from subsequent lines
-        raw_data = np.loadtxt(file_path, skiprows=data_start+2)
+        raw_data = np.loadtxt(string_lines[data_start + 2:], ndmin=2)
         if verbose:
             print('Read data of shape {}'.format(raw_data.shape))
 
-        # Generate the x / voltage ß/ spectroscopic axis:
-        volt_vec = raw_data[:,0]
+        # Generate the spectroscopic axis from column 0 (the swept signal)
+        spec_vec = raw_data[:, 0]
+        _, spec_name, _, spec_unit = columns[0]
         if verbose:
-            print('Found spectroscopic vector of size {}'.format(volt_vec.shape))
-            print('Spectroscopy vector has title {}'.format(channel_names[0]))
-            print('Spectrsocopy vector values: {}'.format(volt_vec))
-        datasets = [] #list of sidpy datasets that will be output
+            print('Found spectroscopic vector of size {}'.format(spec_vec.shape))
+            print('Spectroscopy vector has title {}'.format(spec_name))
+            print('Spectroscopy vector values: {}'.format(spec_vec))
 
-        # Add quantity and units
-        for chan_ind, chan_name in enumerate(channel_names[1:]): #start from 1 because 0th column is the spectral one
+        # Forward and [bwd] columns share column 0 (stored in forward order);
+        # in time, the forward sweep runs first -> last and [bwd] the other way.
+        fwd_ramp, bwd_ramp = _sweep_ramps(spec_vec)
+
+        dataset_dict = {}
+        for chan_ind, (column_name, (key, name, direction, unit)) in enumerate(zip(column_names, columns)):
+            if chan_ind == 0:  # 0th column is the spectral one
+                continue
+            key = _unique_key(key, dataset_dict)
 
             if verbose:
-                print('Making sidpy dataset with channel {}'.format(chan_name))
+                print('Making sidpy dataset with channel {}'.format(key))
 
             # now write it to the sidpy dataset object
-            data_set = sid.Dataset.from_array(raw_data[:,chan_ind+1], name=chan_name)
-            data_set.data_type = 'spectrum'
-            data_set.units = channel_units[chan_ind+1]
-            data_set.quantity = chan_name
+            data_set = sid.Dataset.from_array(raw_data[:, chan_ind], title=key)
+            data_set.data_type = sid.DataType.SPECTRUM
+            data_set.units = unit
+            data_set.quantity = name
 
             # Add dimension info
-            data_set.set_dimension(0, sid.Dimension(volt_vec, name=chan_name,
-                                                    units=channel_units[0], quantity='Voltage',
+            data_set.set_dimension(0, sid.Dimension(spec_vec, name=spec_name,
+                                                    units=spec_unit, quantity=spec_name,
                                                     dimension_type=sid.DimensionType.SPECTRAL))
 
-            # append metadata
-            data_set.original_metadata = parm_dict
-            datasets.append(data_set)
+            # append metadata: per-channel keys + a copy of the file header
+            chan_metadata = {'Name': name,
+                             'Direction': direction,
+                             'sweep_ramp': fwd_ramp if direction == 'forward' else bwd_ramp,
+                             'Unit': unit,
+                             'Channel': column_name.strip(),
+                             }
+            data_set.original_metadata = {**chan_metadata, **parm_dict}
+            dataset_dict[key] = data_set
 
-        # Return the sidy dataset
-        return datasets
+        # Return the sidpy datasets
+        return dataset_dict
 
     @staticmethod
     def _read_parms(header):
@@ -100,39 +115,43 @@ class NanonisDatReader(Reader):
 
         Parameters
         ----------
-        string_lines : list of strings
-            Lines from the data file in string representation
+        header : list of strings
+            Header lines of the data file (everything before [DATA])
 
         Returns
         -------
         parm_dict : dictionary
-            Dictionary of parameters regarding the experiment
+            Dictionary of parameters regarding the experiment. A single value
+            is converted to float where possible; several values are kept as
+            a list; an empty value is ''.
         """
-        # Reading parameters stored in the first few rows of the file
-        # "Look through the header and create a dictionary from it"
         parm_dict = {}
         for line in header:
-            vals = line.split('\t')
+            vals = [val.strip() for val in line.rstrip('\r\n').split('\t')]
             key = vals[0]
-            if len(vals[1:-1]) == 1:
+            if not key:
+                continue
+            vals = [val for val in vals[1:] if val != '']
+            if len(vals) == 0:
+                val = ''
+            elif len(vals) == 1:
                 try:
                     #If the key, value pair is a float, convert it
-                    val = float(vals[1:-1][0])
+                    val = float(vals[0])
                 except ValueError:
-                    val = vals[1:-1][0]
-            elif len(vals[1:-1]) == 0:
-                val = []
+                    val = vals[0]
             else:
-                val = vals[1:-1][0]
+                val = vals
             parm_dict[key] = val
         return parm_dict
 
     def can_read(self):
         """
-        Tests whether or not the provided file has a .asc extension
+        Tests whether or not the provided file has a .dat extension
         Returns
         -------
-
+        bool
+            True if the file has a .dat extension, False otherwise
         """
 
-        return super(NanonisDatReader, self).can_read(extension='dat')
+        return self._input_file_path.lower().endswith('.dat')

@@ -13,6 +13,7 @@ Read details about the license in the LICENSE file.
 """
 
 import os
+import re
 import warnings
 import numpy as np
 
@@ -241,22 +242,31 @@ class Grid(NanonisFile):
         data_format = self.data_format
         griddata = np.fromfile(f, dtype=data_format)
         f.close()
+        # convert big endian file data to native float32
+        griddata = griddata.astype(np.float32)
 
         # pixel size in bytes
         exp_size_per_pix = num_param + num_sweep*num_chan
 
-        # resize from 1d to 3d
-        griddata.resize((ny, nx, exp_size_per_pix))
+        # pad incomplete grids with NaN (instead of zeros) and reshape from 1d to 3d
+        n_total = ny * nx * exp_size_per_pix
+        if griddata.size < n_total:
+            griddata = np.concatenate([griddata, np.full(n_total - griddata.size, np.nan, dtype=np.float32)])
+        griddata = griddata[:n_total].reshape((ny, nx, exp_size_per_pix))
 
         # experimental parameters are first num_param of every pixel
         params = griddata[:, :, :num_param]
         data_dict['params'] = params
 
-        # extract data for each channel
+        # extract data for each channel; 'channel_data' keeps them in file order
+        # so channels with identical names are not lost in the name-keyed dict
+        data_dict['channel_data'] = []
         for i, chann in enumerate(self.header['channels']):
             start_ind = num_param + i * num_sweep
             stop_ind = num_param + (i+1) * num_sweep
-            data_dict[chann] = griddata[:, :, start_ind:stop_ind]
+            chann_data = griddata[:, :, start_ind:stop_ind]
+            data_dict[chann] = chann_data
+            data_dict['channel_data'].append(chann_data)
 
         return data_dict
 
@@ -265,16 +275,22 @@ class Grid(NanonisFile):
         Computer sweep signal.
 
         Based on start and stop points of sweep signal in header, and
-        number of sweep signal points.
+        number of sweep signal points. For multi-segment (Filetype=MLS)
+        sweeps the axis is built piecewise from the segment table in the
+        header, since the points are not evenly spaced.
 
         Returns
         -------
         numpy.ndarray
             1d sweep signal, should be sample bias in most cases.
         """
+        num_sweep_signal = self.header['num_sweep_signal']
+        mls = _mls_sweep_signal(self.header, num_sweep_signal)
+        if mls is not None:
+            return mls
+
         # find sweep signal start and end from a given pixel value
         sweep_start, sweep_end = self.signals['params'][0, 0, :2]
-        num_sweep_signal = self.header['num_sweep_signal']
 
         return np.linspace(sweep_start, sweep_end, num_sweep_signal, dtype=float)
 
@@ -284,18 +300,19 @@ class Grid(NanonisFile):
         pixel.
 
         The data is already extracted, though it lives in the signals
-        dict under the key 'parameters'. Currently the 4th column is the
-        Z (m) information at each pixel, should update this to be more
-        general in case the fixed/experimental parameters are not the
-        same for other Nanonis users.
+        dict under the key 'params'. The column is located by the name
+        'Z (m)' in the fixed + experimental parameter list.
 
         Returns
         -------
-        numpy.ndarray
+        numpy.ndarray or None
             Copy of already extracted data to be more easily accessible
-            in signals dict.
+            in signals dict. None if no 'Z (m)' parameter was recorded.
         """
-        return self.signals['params'][:, :, 4]
+        param_names = _as_list(self.header['fixed_parameters']) + _as_list(self.header['experimental_parameters'])
+        if 'Z (m)' not in param_names:
+            return None
+        return self.signals['params'][:, :, param_names.index('Z (m)')]
 
 
 class Scan(NanonisFile):
@@ -310,11 +327,9 @@ class Scan(NanonisFile):
     attribute so as to not include this as a datapoint.
 
     Data is structured a little differently from grid files, obviously.
-    For each pixel in the scan, each channel is recorded forwards and
-    backwards one after the other.
-
-    Currently cannot take scans that do not have both directions
-    recorded for each channel, nor incomplete scans.
+    Each channel is stored as one (ny, nx) block per recorded direction,
+    channel after channel; a channel with Direction 'both' has a forward
+    block followed by a backward block, otherwise a single block.
 
     Parameters
     ----------
@@ -357,14 +372,13 @@ class Scan(NanonisFile):
         Returns
         -------
         dict
-            Channel name keyed dict of each channel array.
+            Channel name keyed dict; each value is a dict keyed by the
+            recorded direction(s) ('forward' and/or 'backward').
         """
         channs = list(self.header['data_info']['Name'])
-        nchanns = len(channs)
+        directions = [_sxm_directions(d) for d in self.header['data_info']['Direction']]
         nx, ny = self.header['scan_pixels']
-
-        # assume both directions for now
-        ndir = 2
+        block = nx * ny
 
         data_dict = dict()
 
@@ -374,14 +388,21 @@ class Scan(NanonisFile):
         data_format = self.data_format
         scandata = np.fromfile(f, dtype=data_format)
         f.close()
+        # convert big endian file data to native float32
+        scandata = scandata.astype(np.float32)
 
-        # reshape
-        scandata_shaped = scandata.reshape(nchanns, ndir, ny, nx)
+        # pad a truncated file with NaN so every expected block exists
+        n_total = block * sum(len(d) for d in directions)
+        if scandata.size < n_total:
+            scandata = np.concatenate([scandata, np.full(n_total - scandata.size, np.nan, dtype=np.float32)])
 
-        # extract data for each channel
-        for i, chann in enumerate(channs):
-            chann_dict = dict(forward=scandata_shaped[i, 0, :, :],
-                              backward=scandata_shaped[i, 1, :, :])
+        # walk through the blocks: channel after channel, one block per recorded direction
+        i_block = 0
+        for chann, chann_dirs in zip(channs, directions):
+            chann_dict = dict()
+            for direction in chann_dirs:
+                chann_dict[direction] = scandata[i_block * block:(i_block + 1) * block].reshape(ny, nx)
+                i_block += 1
             data_dict[chann] = chann_dict
 
         return data_dict
@@ -551,21 +572,14 @@ def _parse_3ds_header(header_raw, header_override):
         header_dict['num_channels'] = len(header_dict['channels'])
         raw_dict.pop('Channels')
 
-        # measure delay
-        header_dict['measure_delay'] = float(raw_dict['Delay before measuring (s)'])
-        raw_dict.pop('Delay before measuring (s)')
+        # measure delay (optional in older files)
+        header_dict['measure_delay'] = float(raw_dict.pop('Delay before measuring (s)', 'nan'))
 
-        # metadata
-        header_dict['experiment_name'] = raw_dict['Experiment']
-        header_dict['start_time'] = raw_dict['Start time']
-        header_dict['end_time'] = raw_dict['End time']
-        header_dict['user'] = raw_dict['User']
-        header_dict['comment'] = raw_dict['Comment']
-        raw_dict.pop('Experiment')
-        raw_dict.pop('Start time')
-        raw_dict.pop('End time')
-        raw_dict.pop('User')
-        raw_dict.pop('Comment')
+        # metadata (optional; values may contain ';' and get split, so join them back)
+        for new_key, raw_key in [('experiment_name', 'Experiment'), ('start_time', 'Start time'),
+                                 ('end_time', 'End time'), ('user', 'User'), ('comment', 'Comment')]:
+            val = raw_dict.pop(raw_key, '')
+            header_dict[new_key] = ';'.join(val) if isinstance(val, list) else val
 
     except (KeyError, ValueError) as e:
         msg = ' You can edit your header file or provide an override value in header_override'
@@ -584,6 +598,99 @@ def _parse_3ds_header(header_raw, header_override):
         header_dict[key] = val
 
     return header_dict
+
+
+def _split_channel_name(chan_name):
+    """
+    Split a Nanonis channel / column name such as 'LI Demod 1 X [bwd] (A)'.
+    The unit may also be followed by tags, e.g. filtered columns 'Current (A) [bwd] [filt]'.
+
+    Returns (key, name, direction, unit):
+    key       - the name as written in the file without the '(unit)', e.g. 'LI Demod 1 X [bwd]',
+                'Current [bwd] [filt]'
+    name      - key without the '[bwd]' tag, e.g. 'LI Demod 1 X', 'Current [filt]'
+    direction - 'backward' if the name contains '[bwd]' (Nanonis return sweep), else 'forward'
+    unit      - text of the last '(...)', '' if there is none
+    """
+    chan_name = chan_name.strip()
+    matches = list(re.finditer(r'\(([^()]*)\)', chan_name))
+    if matches:
+        match = matches[-1]
+        key, unit = chan_name[:match.start()] + ' ' + chan_name[match.end():], match.group(1)
+    else:
+        key, unit = chan_name, ''
+    key = ' '.join(key.split())
+    direction = 'backward' if '[bwd]' in key else 'forward'
+    name = ' '.join(key.replace('[bwd]', '').split())
+    return key, name, direction, unit
+
+
+def _unique_key(key, existing):
+    """
+    Return key unchanged if unused, otherwise the first free 'key_1', 'key_2', ...
+    (with a warning). The first occurrence keeps the original name.
+    """
+    if key not in existing:
+        return key
+    i = 1
+    while '{}_{}'.format(key, i) in existing:
+        i += 1
+    new_key = '{}_{}'.format(key, i)
+    warnings.warn('Duplicate channel key {!r}; renamed to {!r}'.format(key, new_key))
+    return new_key
+
+
+def _sweep_ramps(sweep_values):
+    """
+    (forward, backward) ramp of a sweep axis stored in forward order:
+    'increasing' / 'decreasing' in time. The [bwd] sweep runs the other way.
+    A sweep that changes direction (e.g. a multi-segment 0 -> 1 -> 0 V sweep)
+    is 'mixed' for both.
+    """
+    steps = np.diff(np.asarray(sweep_values, dtype=float))
+    steps = steps[np.isfinite(steps) & (steps != 0)]
+    if np.any(steps > 0) and np.any(steps < 0):
+        return 'mixed', 'mixed'
+    fwd = 'increasing' if sweep_values[-1] >= sweep_values[0] else 'decreasing'
+    return fwd, ('decreasing' if fwd == 'increasing' else 'increasing')
+
+
+def _as_list(val):
+    """Header entries with a single value are str, multiple values are list."""
+    return [val] if isinstance(val, str) else list(val)
+
+
+def _mls_sweep_signal(header, num_points):
+    """
+    Build the sweep axis of a multi-segment (MLS) grid from the header's
+    'Segment Start (V), Segment End (V), ..., Steps (xn), ...' table.
+    Consecutive segments share their boundary point. Returns None if the
+    file is not MLS or the table is inconsistent with the number of points.
+    """
+    if header.get('Filetype') != 'MLS':
+        return None
+    key = next((k for k in header if k.startswith('Segment Start')), None)
+    if key is None:
+        return None
+    segs = [s.split(',') for s in _as_list(header[key]) if s.strip()]
+    try:
+        table = [(float(s[0]), float(s[1]), int(float(s[4]))) for s in segs]
+    except (IndexError, ValueError):
+        return None
+    parts = [np.linspace(a, b, n, dtype=float) for a, b, n in table]
+    n_sum = sum(len(p) for p in parts)
+    if n_sum == num_points:
+        return np.concatenate(parts)
+    if n_sum - (len(parts) - 1) == num_points:
+        return np.concatenate([parts[0]] + [p[1:] for p in parts[1:]])
+    warnings.warn('MLS segment table ({} points) does not match Points={}; '
+                  'falling back to a linear sweep axis'.format(n_sum, num_points))
+    return None
+
+
+def _sxm_directions(direction):
+    """SXM DATA_INFO direction ('both', 'forward', 'backward') -> list of recorded directions."""
+    return ['forward', 'backward'] if direction == 'both' else [direction]
 
 
 def _parse_sxm_header(header_raw):
@@ -649,6 +756,11 @@ def _parse_sxm_header(header_raw):
 
     for key in entries_to_be_split:
         header_dict[key] = header_dict[key].split()
+
+    # optional numeric entries, converted only when present
+    for key in ['scan_angle']:
+        if key in header_dict:
+            header_dict[key] = float(header_dict[key])
 
     for key in entries_to_be_floated:
         if isinstance(header_dict[key], list):

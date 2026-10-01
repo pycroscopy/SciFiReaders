@@ -3,11 +3,14 @@
 Created on Fri Nov 5 16:43:00 2021
 
 @author: Rama Vasudevan
+
+Modified: Ganesh Narasimha, 30 Sep 2026
 """
 import numpy as np  # For array operations
 import sidpy as sid
 from sidpy.sid import Reader, Dimension, DimensionType
-from .nanonis_base import Scan
+from .nanonis_base import Scan, _sxm_directions
+
 class NanonisSXMReader(Reader):
 
     def __init__(self, file_path, *args, **kwargs):
@@ -40,40 +43,40 @@ class NanonisSXMReader(Reader):
         single_channel_parms = {name: dict() for name in channel_names}
         for field_name, field_value, in info_dict.items():
             for channel_name, value in zip(channel_names, field_value):
+                if field_name in ('Calibration', 'Offset'):
+                    try:
+                        value = float(value)
+                    except ValueError:
+                        pass
                 single_channel_parms[channel_name][field_name] = value
-        for value in single_channel_parms.values():
-            if value['Direction'] == 'both':
-                value['Direction'] = ['forward', 'backward']
-            else:
-                direction = [value['Direction']]
         scan_dir = meas_parms['scan_dir']
         for name, parms in single_channel_parms.items():
-            for direction in parms['Direction']:
+            # 'both' -> one dataset per direction; a single-direction channel -> one dataset
+            for direction in _sxm_directions(parms['Direction']):
                 key = ' '.join((name, direction))
                 channel_parms[key] = dict(parms)
                 channel_parms[key]['Direction'] = direction
                 data = signal_dict[name][direction]
-                if scan_dir == 'up':
+                if scan_dir == 'down':                 # Flip the data vertically if the scan direction is down
                     data = np.flip(data, axis=0)
                 if direction == 'backward':
                     data = np.flip(data, axis=1)
                 data_dict[key] = data
         parm_dict['channel_parms'] = channel_parms
 
-        # Position dimensions
+        # Position dimensions. Images are (rows, cols) = (ny, nx): axis 0 is Y,
+        # axis 1 is X. After the flips above, row 0 is the bottom and column 0
+        # the left of the scan frame. Values are pixel positions in the (possibly
+        # rotated) frame starting at 0 with pitch range / pixels, as for .3ds;
+        # offset and angle are in the metadata ('scan_offset', 'scan_angle').
         num_cols, num_rows = header_dict['scan_pixels']
         width, height = header_dict['scan_range']
-        pos_names = ['X', 'Y']
-        pos_units = ['nm', 'nm']
-        pos_vals = np.vstack([
-            np.linspace(0, width, num_cols),
-            np.linspace(0, height, num_rows),
-        ])
-        pos_vals *= 1e9
-        dims = [Dimension(values, name=name, quantity='Length', units=unit,
-                          dimension_type=DimensionType.SPATIAL) for
-                name, unit, values
-                in zip(pos_names, pos_units, pos_vals)]
+        x_vals = np.arange(num_cols) * width / num_cols * 1e9
+        y_vals = np.arange(num_rows) * height / num_rows * 1e9
+        dims = [Dimension(y_vals, name='Y', quantity='Length', units='nm',
+                          dimension_type=DimensionType.SPATIAL),
+                Dimension(x_vals, name='X', quantity='Length', units='nm',
+                          dimension_type=DimensionType.SPATIAL)]
         data_dict['Dimensions'] = dims
 
         return parm_dict, data_dict
@@ -81,13 +84,14 @@ class NanonisSXMReader(Reader):
   
     def read(self):
         """
-        Reads data from .sxm files into sidpy.Dataset objects
-        Note that multiple channels are treated as separate dataset objects,
-        Thus returning a list of length N where N is the number of channels.
+        Reads data from .sxm files into sidpy.Dataset objects.
+        Each channel and recorded direction is a separate dataset.
 
         Returns
         -------
-        dataset_list: (list) of sidpy.Dataset objects
+        dataset_dict: dict of sidpy.Dataset objects keyed '<name> forward' /
+        '<name> backward'. Images are (ny, nx) with row 0 at the bottom and
+        column 0 at the left of the scan frame (plot with origin='lower').
         """
        
         reader = Scan
@@ -104,18 +108,17 @@ class NanonisSXMReader(Reader):
         self.data_dict = data_dict
 
         #Specify dimensions
-        x_dim = self.data_dict['Dimensions'][0]
-        y_dim = self.data_dict['Dimensions'][1]
+        y_dim, x_dim = self.data_dict['Dimensions']
 
-        dataset_list = []
+        dataset_dict = {}
         channel_parms = self.parm_dict['channel_parms']
 
-        for dataset_name in list(self.data_dict.keys())[:-1]:
+        for dataset_name in channel_parms:
             
             data_mat = self.data_dict[dataset_name]
             
             #Make a sidpy dataset
-            data_set = sid.Dataset.from_array(data_mat, name = dataset_name)
+            data_set = sid.Dataset.from_array(data_mat, title=dataset_name)
 
             #Set the data type
             data_set.data_type = sid.DataType.IMAGE
@@ -127,8 +130,8 @@ class NanonisSXMReader(Reader):
             data_set.quantity = metadata['Name']
 
             # Add dimension info
-            data_set.set_dimension(0, x_dim)
-            data_set.set_dimension(1, y_dim)
+            data_set.set_dimension(0, y_dim)
+            data_set.set_dimension(1, x_dim)
         
             # append metadata 
             def merge_dict(dict1, dict2):
@@ -139,15 +142,17 @@ class NanonisSXMReader(Reader):
             orig_metadata = self.parm_dict['meas_parms']
             
             data_set.original_metadata =  merge_dict(chan_metadata,orig_metadata)
-            dataset_list.append(data_set)
+            dataset_dict[dataset_name] = data_set
         
-        return dataset_list
+        return dataset_dict
 
     def can_read(self):
         """
-        Tests whether or not the provided file has a .dm3 extension
+        Tests whether or not the provided file has a .sxm extension
         Returns
         -------
+        bool
+            True if the file has a .sxm extension, False otherwise
         """
        
-        return 
+        return self._input_file_path.lower().endswith('.sxm')
